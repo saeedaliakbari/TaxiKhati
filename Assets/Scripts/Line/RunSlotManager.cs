@@ -1,0 +1,121 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class RunSlotManager : MonoBehaviour
+{
+    public RunSlot slotPrefab;
+    private List<RunSlot> listSlot = new List<RunSlot>();
+    private int numRun = 0;//تعداد ماشین های در حال حرکت
+    private float earningPerSec;
+    public float earnPerSec;
+    public TrimNumberText earningPerSecTxt;
+    public SpriteRenderer goal;
+    public Sprite[] goalSprites;
+    public SpeedButton speedBtn;
+
+    private bool hasSpeedX2 = false;
+
+    public float EarningPerSec
+    {
+        get
+        {
+            return earningPerSec;
+        }
+        set
+        {
+            earningPerSec = value;
+            UpdateEarningSpeedText();
+        }
+    }
+    void FixedUpdate()
+    {
+        if (hasSpeedX2 != (Manager.GetCurrentTime() < Manager.GetActionTime("speed_x2")))
+        {//اگر که سرعت دوبرابر فعال باشد و همچنین زمان فعلی از زمان سرعت دوبرابر کمتر بود
+            UpdateEarningSpeedText();
+            hasSpeedX2 = (Manager.GetCurrentTime() < Manager.GetActionTime("speed_x2"));
+            speedBtn.UpdateButtonState(hasSpeedX2);
+            //Music.instance.Play(hasSpeedX2 ? Music.Type.SpeedX2 : Music.Type.MainMusic);
+        }
+    }
+    public void UpdateEarningSpeedText()
+    {
+        int index = PlayerPrefs.GetInt("unlocked_airline", 1) - 1;//عدد آخرین هواپیمای باز شده
+        //Debug.Log("index unlocked_airline: " + index + ">>>earningPerSec: " + earningPerSec);
+        float ratio = ((Manager.GetCurrentTime() < Manager.GetActionTime("speed_x2")) ? 2 : 1) /** Const.AIRLINE_INCREASE_PERCENT[index]*/;//ریت بدست آوردن سکه
+        earnPerSec = Mathf.RoundToInt(earningPerSec * ratio * PlayerPrefs.GetFloat("incomeLine", 1));
+        earningPerSecTxt.text = earnPerSec + " /second";
+    }
+
+    public void InitSlots()
+    {
+        EarningPerSec = 0;
+        int num = PlayerPrefs.GetInt("num_of_slot", 2);//تعداد لاین های شروع 
+        for (int i = 0; i < num; i++)
+        {//به تعداد لاین هایی که هست ، لاین ایجاد می کند
+            SpawnASlot();
+        }
+        UpdatePosition();//موقعیت تمامی لاین ها را درست می کند
+        UpdateStartGoal();
+    }
+    public void SpawnASlot()
+    {
+        RunSlot slot = (RunSlot)Instantiate(slotPrefab, Vector3.zero, Quaternion.identity);//یک لاین ایجاد می کند
+        //Debug.Log("scale: " + slot.transform.localScale);
+        slot.transform.SetParent(transform);//پدر را در هایرارکی همین آبجکت قرار می دهد
+        slot.transform.localScale = Vector3.one;//اسکیل لاین را یک قرار می دهد
+        //Debug.Log("scale: " + slot.transform.localScale);
+        listSlot.Add(slot);//داخل لیستی که لاین ها هستن این لاین را اضافه می کندبه آخر لیست
+    }
+    public void UpdatePosition()
+    {
+        for (int i = 0; i < listSlot.Count; i++)
+        {//به تعداد لاین هایی که در لیست لاین ها هست
+            listSlot[i].transform.localPosition = new Vector3(0, (i - ((listSlot.Count - 1) / 2f)) * 0.2f);//موقعیت ایکس تغییری نمی کند. و موقعیت ایگری به نسبت شماره داخل لیست 
+        }
+    }
+    public void UpdateState()
+    {
+        for (int i = 0; i < listSlot.Count; i++)//با توجه به تعداد ایستگاه های استارت
+        {
+            listSlot[i].UpdateSprite(i < numRun);//حالات ایستگاه ها را آپدیت می کند
+        }
+    }
+    public void UpdateStartGoal()
+    {
+        UpdateState();
+        int index = PlayerPrefs.GetInt("unlocked_airline", 1) - 1;
+        goal.sprite = goalSprites[index];//اسپرایت خط پایان را با توجه به مدل لاین شروع تغییر می دهد
+        UpdateEarningSpeedText();
+    }
+    public bool IsFull()//آیا جایگاه های استارت پر است؟
+    {
+        return numRun == listSlot.Count;
+    }
+    public void RunACar(float earning)//تابع هنگام حرکت کردن یک ماشین فراخوانی می شود جهت آپدیت شدن بدست آوردن سکه و هچنین ایستگاه های شروع
+    {
+        if (!IsFull())
+        {
+            EarningPerSec += earning;
+            //Debug.Log("EarningPerSec: " + EarningPerSec + " + earning: " + earning);
+            numRun++;
+            UpdateState();
+        }
+    }
+    public void StopACar(float earning)//تابع هنگام ایستادن یک ماشین فراخوانی می شود جهت آپدیت شدن مقدار بدست آوردن سکه و همچنین ایستگاه های شروع
+    {
+        if (numRun >= 1)
+        {
+            EarningPerSec = Mathf.Max(0, EarningPerSec - earning);
+            numRun--;
+            UpdateState();
+        }
+    }
+
+    public void ShowGoalAnimation()
+    {
+        goal.GetComponent<Animator>().Play("ReachToGoal");
+        Controller.instance.ShowCoinEffect(goal.transform.position);
+    }
+}
