@@ -9,7 +9,7 @@ public class Controller : MonoBehaviour
     public Car[] carPrefabs;//ماشین ها
     public RangeLevel[] taxiDefferenceLvl;
     public GiftBox boxPrefab;
-    public Text buyPrice, txtGem,txtError,txtPanelMessage;
+    public Text buyPrice, txtGem, txtError, txtPanelMessage;
     public ParkingManager parkingManager;
     public RunSlotManager slotManager;
     public PlayerLevel playerLevel;
@@ -18,7 +18,7 @@ public class Controller : MonoBehaviour
     //public ExchangeSpeedDialog exchangeDialog;
     public MergeCar mergeCar;
     public LevelUpBonus levelBonus;
-    public GameObject deleteBin,panelMessage;
+    public GameObject deleteBin, panelMessage;
     public GameObject coinEffectPrefab;
     public OfflineEraning offEarning;
     public TrimNumberText txtCoin;
@@ -65,7 +65,6 @@ public class Controller : MonoBehaviour
             //guideManager.UpdateAfter(0.5f);
         }
     }
-
     public void UpdatePrice()
     {//قیمت ماشین ها را می گذارد
         int index = PlayerPrefs.GetInt("curr_car_index", 0);
@@ -180,6 +179,7 @@ public class Controller : MonoBehaviour
         car.transform.position = parkPlace.transform.position;//موقعیت به موقعبت مکان فعلی تغییر میکند
         car.parkingPlace = parkPlace;//پارکنینگ را بهش میده
         if (scaleUp) car.GetComponent<Animator>().Play("MergeDone");//انیمیشن تمام شدن مرج رو ماشین جدیدی که ساخته شده انجام میشه
+        PlayerPrefs.SetInt("checkLevel", 0);
         return car;//ماشین رو برمیگردونه
     }
     public GiftBox SpawnABox(int carIndex, ParkingPlace parkPlace)
@@ -380,7 +380,7 @@ public class Controller : MonoBehaviour
         SaveObject saveObj = JsonUtility.FromJson<SaveObject>(json);//رشته جیسون را بصورت کلاس ذخیره سازی تبدیل می کند
         if (saveObj.listCars.Count == 0)
         {
-            Debug.Log("Save Data is Empty");
+            //Debug.Log("Save Data is Empty");
             SaveObject newSaveObj = new SaveObject();
             CarObject carObj = new CarObject();
             carObj.driving = false;

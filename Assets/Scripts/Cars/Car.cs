@@ -63,6 +63,7 @@ public class Car : MonoBehaviour
                             Timer.Schedule(this, 0.5f, (Timer.Task)(() =>
                             {
                                 Controller.instance.SpawnACar((int)level, (ParkingPlace)nearPlace, (bool)true);//ماشین جدید ساخته می شه به جای ماشین که تاچ شه
+                                PlayerPrefs.SetInt("checkLevel", 0);
                                 Destroy(gameObject);//ماشین فعلی از بین میره
                             }));
                             int unlockedLevel = PlayerPrefs.GetInt("unlocked_car", 1);
@@ -76,10 +77,11 @@ public class Car : MonoBehaviour
                                 //Sound.instance.Play(Sound.Others.Merge);
                             }
                             //باید مقدار افزوده شدن ایکس پی اضافه شود
-                            Debug.Log("XP: " + PlayerPrefs.GetInt("Xp", 0));
+                            //Debug.Log("XP: " + PlayerPrefs.GetInt("Xp", 0));
                             PlayerPrefs.SetInt("Xp", PlayerPrefs.GetInt("Xp", 0) + xp);
-                            Debug.Log("XP: " + PlayerPrefs.GetInt("Xp", 0));
+                            //Debug.Log("XP: " + PlayerPrefs.GetInt("Xp", 0));
                             Controller.instance.playerLevel.UpdateProgress(/*(int)Mathf.Pow(1.5f, level)*/);//مقدار ایکس و لول ست شود
+
                         }
                         else
                         {//دوتاماشین با هم جابه جا می شوند
@@ -129,12 +131,14 @@ public class Car : MonoBehaviour
             }
         }
         GetComponent<SpriteRenderer>().sortingOrder = 2;
+        PlayerPrefs.SetInt("checkLevel", 0);
     }
     private void DismantleCar()
     {
         //Sound.instance.Play(Sound.Others.Goal);
         //CurrencyController.CreditBalance(0, Mathf.RoundToInt(Superpow.Utils.GetPrice(level - 1) * 0.5f));
         Controller.instance.ShowCoinEffect(Controller.instance.deleteBin.transform.position);//در موقعیت سطل آشغال یک افکت سکه ایجاد می کند
+        PlayerPrefs.SetInt("checkLevel", 0);
         Destroy(gameObject);//این ماشین را از بین می برد
     }
     public float GetEarningPerSecond()//مقدار بدست آوردن سکه در هر ثانیه

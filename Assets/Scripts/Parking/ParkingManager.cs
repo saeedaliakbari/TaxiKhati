@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class ParkingManager : MonoBehaviour
 {
     public ParkingPosManage[] parkPosManage;
@@ -13,6 +13,10 @@ public class ParkingManager : MonoBehaviour
     public ParkingPlaceVIP placeVIP;
     public Controller controller;
     private bool VipPlace = false;
+    public CarSpeedTycoonBoosts carSpeedTycoonBoosts;
+    public Button btnCarSpeed;
+    public Image imgSlideGreenCarSpeed;
+    public Text txtCarSpeed, txtSpeedRate;
     public void SpawnPlaces()
     {//با توجه به تعداد مکان ها ، پارکینگ ها را ایجاد می کند
         int numPlaces = PlayerPrefs.GetInt("num_of_places", 4);
@@ -23,6 +27,55 @@ public class ParkingManager : MonoBehaviour
         }
 
         UpdatePlacePosition();
+
+    }
+    void FixedUpdate()//برای چک کردن تعداد ماشین های هر لول در پارکینگ ها
+    {
+        if (PlayerPrefs.GetInt("checkLevel", 0) == 0)
+        {
+            PrintLevelsCarsInPark();
+        }
+    }
+    private void PrintLevelsCarsInPark()
+    {
+        int[] carsLevel = new int[50];
+        PlayerPrefs.SetInt("checkLevel", 1);
+        Timer.Schedule(this, 0.5f, (Timer.Task)(() =>
+        {
+            for (int i = 0; i < places.Count; i++)
+            {
+                if (!places[i].IsEmpty() && places[i].GetBox() == null)
+                {
+                    carsLevel[places[i].GetCar().level - 1] += 1;
+                }
+            }
+            CheckCarSpeedTycoon(carsLevel);
+        }));
+    }
+    private void CheckCarSpeedTycoon(int[] carsLevel)
+    {
+        txtCarSpeed.text = "Level Car Speed " + (PlayerPrefs.GetInt("carSpeedTycoonLevel", 0) + 1);
+        txtSpeedRate.text ="+ "+ Mathf.RoundToInt((carSpeedTycoonBoosts.incSpeed[PlayerPrefs.GetInt("carSpeedTycoonLevel", 0)] - 1) * 100).ToString() + "%";
+        imgSlideGreenCarSpeed.fillAmount = (carSpeedTycoonBoosts.incSpeed[PlayerPrefs.GetInt("carSpeedTycoonLevel", 0)] - 1) / 0.39f;
+        if (PlayerPrefs.GetInt("carSpeedTycoonLevel", 0) > 12)
+        {
+            Debug.Log("FULL ");
+        }
+        else {
+            if (carsLevel[carSpeedTycoonBoosts.level[PlayerPrefs.GetInt("carSpeedTycoonLevel", 0)]] >= 3)
+            {
+                Debug.Log("Get Gift" + carSpeedTycoonBoosts.level[PlayerPrefs.GetInt("carSpeedTycoonLevel", 0)]);
+                btnCarSpeed.interactable = true;
+            }
+        }
+    }
+    public void GetGiftCarSpeed()
+    {
+        btnCarSpeed.interactable = false;
+        PlayerPrefs.SetFloat("carsSpeedTycoon", carSpeedTycoonBoosts.incSpeed[PlayerPrefs.GetInt("carSpeedTycoonLevel", 0)]);
+        PlayerPrefs.SetInt("carSpeedTycoonLevel", PlayerPrefs.GetInt("carSpeedTycoonLevel", 0) + 1);
+        txtCarSpeed.text = "Level Car Speed " + (PlayerPrefs.GetInt("carSpeedTycoonLevel", 0) + 1);
+        PrintLevelsCarsInPark();
     }
     public void SpawnNewPlaceVIP()
     {//ایجاد پارکینگ جدید
@@ -140,4 +193,10 @@ public class ParkingPosManage
 {
     public int Tedad;
     public int[] RowColumns;
+}
+[System.Serializable]
+public class CarSpeedTycoonBoosts
+{
+    public int[] level;
+    public float[] incSpeed;
 }

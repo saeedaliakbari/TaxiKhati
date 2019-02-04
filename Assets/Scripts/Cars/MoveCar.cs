@@ -20,6 +20,7 @@ public class MoveCar : MonoBehaviour
     {
         getStart = true;
         float ratio = Manager.GetCurrentTime() < Manager.GetActionTime("speed_x2") ? 2 : 1;
+        ratio = ratio * PlayerPrefs.GetFloat("carsSpeedTycoon", 1);//carsSpeedBoostsTycoon
         Hashtable hash = iTween.Hash("path", iTweenPath.GetPath("Road"), "orienttopath", true, "speed", car.speed * ratio, "easetype", iTween.EaseType.linear,
             "oncomplete", "CompleteMoving");
         start = Time.realtimeSinceStartup;
