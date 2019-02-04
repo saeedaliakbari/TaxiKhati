@@ -14,7 +14,7 @@ public class ShopItemPanel : MonoBehaviour
     private float[] priceOffShopCar, offShopCar, priceUpIncome, upIncome;
     public void OpenPanel()
     {
-        PlayerPrefs.SetFloat("token", 1000000000);
+        //PlayerPrefs.SetFloat("token", 1000000000);
         txtPriceShopCar.text = ((int)PlayerPrefs.GetFloat("priceShopCar", priceOffShopCar[0])).ToString() + " token";
         txtPriceUpIncome.text = ((int)PlayerPrefs.GetFloat("priceUpIncomeLine", priceUpIncome[0])).ToString() + " token";
         Debug.Log("Off NOW: " + PlayerPrefs.GetFloat("offCar", 1));

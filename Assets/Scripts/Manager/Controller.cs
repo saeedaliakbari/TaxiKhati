@@ -22,6 +22,7 @@ public class Controller : MonoBehaviour
     public GameObject coinEffectPrefab;
     public OfflineEraning offEarning;
     public TrimNumberText txtCoin;
+    public TrimNumberText txtToken;
     //public RubyShop rubyShop;
     public static Controller instance;
 
@@ -39,6 +40,12 @@ public class Controller : MonoBehaviour
     {
         //Debug.Log(
         instance = this;
+        SetText();
+    }
+    public void SetText()
+    {
+        txtToken.text = PlayerPrefs.GetFloat("token", 0).ToString();
+        txtCoin.text = PlayerPrefs.GetFloat("coin", 0).ToString();
     }
     // Use this for initialization
     void Start()

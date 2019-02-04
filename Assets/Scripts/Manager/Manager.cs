@@ -24,6 +24,7 @@ public class Manager
         //PlayerPrefs.SetFloat(action + "_time", (float)time);
         //Debug.Log(action + "_time: " + PlayerPrefs.GetFloat(action + "_time"));
     }
+   
     public static string ChangeNumber(float number)
     {
         string outStr = number.ToString();
