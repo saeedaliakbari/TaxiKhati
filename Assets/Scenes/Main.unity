@@ -22090,7 +22090,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1922830188}
-        m_MethodName: GetGiftOfflineEran
+        m_MethodName: GetGiftExchangeRateDecline
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -28971,14 +28971,34 @@ MonoBehaviour:
     - 1.275
     - 1.3
     - 1.325
+  exchangeDeclineTycoonBoosts:
+    level: 0e0000001100000014000000170000001a0000001d000000200000002300000026000000290000002c0000002f00000032000000
+    rateDecline:
+    - 0.05
+    - 0.1
+    - 0.15
+    - 0.2
+    - 0.25
+    - 0.3
+    - 0.35
+    - 0.4
+    - 0.45
+    - 0.5
+    - 0.55
+    - 0.6
+    - 0.65
   btnCarSpeed: {fileID: 156563085}
   btnOfflineEarning: {fileID: 606232269}
+  btnExchangeDecline: {fileID: 1390305686}
   imgSlideGreenCarSpeed: {fileID: 1049831937}
   imgSlideGreenOfflineEarning: {fileID: 1825589019}
+  imgSlideGreenExchangeDecline: {fileID: 1955115883}
   txtCarSpeed: {fileID: 1117153006}
   txtSpeedRate: {fileID: 1353976305}
   txtOfflineEarning: {fileID: 1243885019}
   txtOfflineEarnRate: {fileID: 780978078}
+  txtExchangeDecline: {fileID: 1669108575}
+  txtExchangeDeclineRate: {fileID: 623560266}
 --- !u!1 &1937279386
 GameObject:
   m_ObjectHideFlags: 0
