@@ -14,9 +14,10 @@ public class ParkingManager : MonoBehaviour
     public Controller controller;
     private bool VipPlace = false;
     public CarSpeedTycoonBoosts carSpeedTycoonBoosts;
-    public Button btnCarSpeed;
-    public Image imgSlideGreenCarSpeed;
-    public Text txtCarSpeed, txtSpeedRate;
+    public EarningOfflineTycoonBoosts earningOfflineTycoonBoosts;
+    public Button btnCarSpeed, btnOfflineEarning;
+    public Image imgSlideGreenCarSpeed, imgSlideGreenOfflineEarning;
+    public Text txtCarSpeed, txtSpeedRate, txtOfflineEarning, txtOfflineEarnRate;
     public void SpawnPlaces()
     {//با توجه به تعداد مکان ها ، پارکینگ ها را ایجاد می کند
         int numPlaces = PlayerPrefs.GetInt("num_of_places", 4);
@@ -50,6 +51,7 @@ public class ParkingManager : MonoBehaviour
                 }
             }
             CheckCarSpeedTycoon(carsLevel);
+            CheckOfflineEarningTycoon(carsLevel);
         }));
     }
     private void CheckCarSpeedTycoon(int[] carsLevel)
@@ -59,12 +61,12 @@ public class ParkingManager : MonoBehaviour
         imgSlideGreenCarSpeed.fillAmount = (carSpeedTycoonBoosts.incSpeed[PlayerPrefs.GetInt("carSpeedTycoonLevel", 0)] - 1) / 0.39f;
         if (PlayerPrefs.GetInt("carSpeedTycoonLevel", 0) > 12)
         {
-            Debug.Log("FULL ");
+            //Debug.Log("FULL ");
         }
         else {
             if (carsLevel[carSpeedTycoonBoosts.level[PlayerPrefs.GetInt("carSpeedTycoonLevel", 0)]] >= 3)
             {
-                Debug.Log("Get Gift" + carSpeedTycoonBoosts.level[PlayerPrefs.GetInt("carSpeedTycoonLevel", 0)]);
+                //Debug.Log("Get Gift" + carSpeedTycoonBoosts.level[PlayerPrefs.GetInt("carSpeedTycoonLevel", 0)]);
                 btnCarSpeed.interactable = true;
             }
         }
@@ -75,6 +77,31 @@ public class ParkingManager : MonoBehaviour
         PlayerPrefs.SetFloat("carsSpeedTycoon", carSpeedTycoonBoosts.incSpeed[PlayerPrefs.GetInt("carSpeedTycoonLevel", 0)]);
         PlayerPrefs.SetInt("carSpeedTycoonLevel", PlayerPrefs.GetInt("carSpeedTycoonLevel", 0) + 1);
         txtCarSpeed.text = "Level Car Speed " + (PlayerPrefs.GetInt("carSpeedTycoonLevel", 0) + 1);
+        PrintLevelsCarsInPark();
+    }
+    private void CheckOfflineEarningTycoon(int[] carsLevel)
+    {
+        txtOfflineEarning.text = "Level Car Speed " + (PlayerPrefs.GetInt("offlineEarnTycoonLevel", 0) + 1);
+        txtOfflineEarnRate.text = "+ " + ((Mathf.RoundToInt((earningOfflineTycoonBoosts.incEarn[PlayerPrefs.GetInt("offlineEarnTycoonLevel", 0)] - 1f) * 1000))/10f).ToString() + "%";
+        imgSlideGreenOfflineEarning.fillAmount = (earningOfflineTycoonBoosts.incEarn[PlayerPrefs.GetInt("offlineEarnTycoonLevel", 0)] - 1f) / 0.325f;
+        if (PlayerPrefs.GetInt("offlineEarnTycoonLevel", 0) > 12)
+        {
+            //Debug.Log("FULL ");
+        }
+        else {
+            if (carsLevel[earningOfflineTycoonBoosts.level[PlayerPrefs.GetInt("offlineEarnTycoonLevel", 0)]] >= 3)
+            {
+                //Debug.Log("Get Gift" + earningOfflineTycoonBoosts.level[PlayerPrefs.GetInt("offlineEarnTycoonLevel", 0)]);
+                btnOfflineEarning.interactable = true;
+            }
+        }
+    }
+    public void GetGiftOfflineEran()
+    {
+        btnOfflineEarning.interactable = false;
+        PlayerPrefs.SetFloat("offlineEarnTycoonBoosts", earningOfflineTycoonBoosts.incEarn[PlayerPrefs.GetInt("offlineEarnTycoonLevel", 0)]);
+        PlayerPrefs.SetInt("offlineEarnTycoonLevel", PlayerPrefs.GetInt("offlineEarnTycoonLevel", 0) + 1);
+        txtOfflineEarning.text = "Level Offline Earn " + (PlayerPrefs.GetInt("offlineEarnTycoonLevel", 0) + 1);
         PrintLevelsCarsInPark();
     }
     public void SpawnNewPlaceVIP()
@@ -199,4 +226,10 @@ public class CarSpeedTycoonBoosts
 {
     public int[] level;
     public float[] incSpeed;
+}
+[System.Serializable]
+public class EarningOfflineTycoonBoosts
+{
+    public int[] level;
+    public float[] incEarn;
 }

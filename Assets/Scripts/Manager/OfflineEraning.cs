@@ -8,12 +8,13 @@ public class OfflineEraning : MonoBehaviour
     [HideInInspector]
     public TrimNumberText txtCoin;
     public GameObject btnDouble;
-    private int value;
+    private float value;
     [HideInInspector]
     public bool doubleCoin = false;
     public void ShowEarning(int time, float offlineEarningRate)
     {
-        value = (int)(Controller.instance.slotManager.EarningPerSec * time * offlineEarningRate / 100f);
+        value = Controller.instance.slotManager.EarningPerSec * time * offlineEarningRate / 100f;
+        value = value * PlayerPrefs.GetFloat("offlineEarnTycoonBoosts", 1);
         valueTxt.text = value.ToString();
     }
 
