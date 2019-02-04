@@ -40,12 +40,14 @@ public class Controller : MonoBehaviour
     {
         //Debug.Log(
         instance = this;
+        PlayerPrefs.SetInt("mainAchiv16", PlayerPrefs.GetInt("mainAchiv16", 0) + 1);
         SetText();
     }
     public void SetText()
     {
         txtToken.text = PlayerPrefs.GetFloat("token", 0).ToString();
         txtCoin.text = PlayerPrefs.GetFloat("coin", 0).ToString();
+        txtGem.text = PlayerPrefs.GetFloat("gem").ToString();
     }
     // Use this for initialization
     void Start()
@@ -101,6 +103,8 @@ public class Controller : MonoBehaviour
         Debug.Log("Price Car: " + price);
         if ((useGem ? PlayerPrefs.GetFloat("gem", 0) : PlayerPrefs.GetFloat("coin", 5000)) >= price)//روی سکه و روبی که اینجا نوشته شده است دقت شود که چه مقداری باید باشد
         {
+            PlayerPrefs.SetInt("mainAchiv8", PlayerPrefs.GetInt("mainAchiv8",0)+1);
+            PlayerPrefs.SetInt("mainAchiv14", PlayerPrefs.GetInt("mainAchiv14", 0) + 1);
             ParkingPlace parkPlace = parkingManager.GetEmptyPlace();
             if (parkPlace != null)
             {

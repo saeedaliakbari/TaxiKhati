@@ -47,8 +47,14 @@ public class ParkingManager : MonoBehaviour
                 if (!places[i].IsEmpty() && places[i].GetBox() == null)
                 {
                     carsLevel[places[i].GetCar().level - 1] += 1;
+                    
                 }
             }
+            PlayerPrefs.SetInt("mainAchiv1", carsLevel[4]);
+            PlayerPrefs.SetInt("mainAchiv2", carsLevel[6]);
+            PlayerPrefs.SetInt("mainAchiv3", carsLevel[10]);
+            PlayerPrefs.SetInt("mainAchiv6", carsLevel[14]);
+            PlayerPrefs.SetInt("mainAchiv7", carsLevel[24]);
             CheckCarSpeedTycoon(carsLevel);
             CheckOfflineEarningTycoon(carsLevel);
             CheckExchangeRateDecline(carsLevel);

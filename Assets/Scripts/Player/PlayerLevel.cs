@@ -20,6 +20,9 @@ public class PlayerLevel : MonoBehaviour
             Controller.instance.ShowLevelBonus(PlayerPrefs.GetInt("Level", 1) + 1);
             PlayerPrefs.SetInt("Xp", PlayerPrefs.GetInt("Xp", 0) - levelsInfo[PlayerPrefs.GetInt("Level", 1) - 1].maxXp);
             PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level", 1) + 1);
+            PlayerPrefs.SetInt("mainAchiv11", PlayerPrefs.GetInt("Level", 1));
+            PlayerPrefs.SetInt("mainAchiv12", PlayerPrefs.GetInt("Level", 1));
+            PlayerPrefs.SetInt("mainAchiv13", PlayerPrefs.GetInt("Level", 1));
             CheckLevel(PlayerPrefs.GetInt("Level", 1));
         }
         SetEleman();
