@@ -13,6 +13,10 @@ public class OfflineEraning : MonoBehaviour
     public bool doubleCoin = false;
     public void ShowEarning(int time, float offlineEarningRate)
     {
+        if (time>345600)//تایم بیشتر از 4 روز نباشد
+        {
+            time = 345600;
+        }
         value = Controller.instance.slotManager.EarningPerSec * time * offlineEarningRate / 100f;
         value = value * PlayerPrefs.GetFloat("offlineEarnTycoonBoosts", 1);
         valueTxt.text = value.ToString();

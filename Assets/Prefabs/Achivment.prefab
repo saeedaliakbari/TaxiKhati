@@ -329,7 +329,7 @@ MonoBehaviour:
   txtTitle: {fileID: 114934940979852312}
   txtGem: {fileID: 114645171853017212}
   objBtnGet: {fileID: 1750398241384846}
-  inActvie: {r: 0, g: 0, b: 0, a: 0.691}
+  inActvie: {r: 0, g: 0, b: 0, a: 0.784}
   imgBack: {fileID: 114359100549533702}
 --- !u!114 &114792703015290518
 MonoBehaviour:
