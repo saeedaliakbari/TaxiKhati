@@ -5,14 +5,24 @@ using UnityEngine;
 public class ShopPanel : MonoBehaviour
 {
     public CarItem[] carItems;
+    public Controller controller;
+    private int def = 0;
     public void UpdateCarItems()
     {
-        int unloacked = PlayerPrefs.GetInt("unlocked_car");
-        Debug.Log("unloacked" + unloacked);
-        carItems[0].UpdateCarItem(true);
+        int unloacked = PlayerPrefs.GetInt("unlocked_car", 1);
+        //Debug.Log("unloacked" + unloacked + "lastSalableLevel>" + controller.lastSalableLevel[unloacked - 1]);
+        carItems[0].UpdateCarItem(true, controller.lastSalableLevel[unloacked - 1], 0);
         for (int i = 1; i < carItems.Length; i++)
         {
-            carItems[i].UpdateCarItem(i < unloacked - 1);
+            if (unloacked == 2)
+            {
+                def = 1;
+            }
+            else
+            {
+                def = 2;
+            }
+            carItems[i].UpdateCarItem(i < controller.lastSalableLevel[unloacked - 1], controller.lastSalableLevel[unloacked - 1], def);
         }
     }
 

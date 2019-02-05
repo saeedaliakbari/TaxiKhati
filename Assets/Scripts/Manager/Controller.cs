@@ -9,7 +9,7 @@ public class Controller : MonoBehaviour
     public Car[] carPrefabs;//ماشین ها
     public RangeLevel[] taxiDefferenceLvl;
     public GiftBox boxPrefab;
-    public Text buyPrice, txtGem, txtError, txtPanelMessage;
+    public Text txtLevelBuyCar, txtGem, txtError, txtPanelMessage;
     public ParkingManager parkingManager;
     public RunSlotManager slotManager;
     public PlayerLevel playerLevel;
@@ -22,7 +22,7 @@ public class Controller : MonoBehaviour
     public GameObject coinEffectPrefab;
     public OfflineEraning offEarning;
     public TrimNumberText txtCoin;
-    public TrimNumberText txtToken;
+    public TrimNumberText txtToken, buyPrice;
     //public RubyShop rubyShop;
     public static Controller instance;
 
@@ -34,14 +34,19 @@ public class Controller : MonoBehaviour
     public float[] earning;
     public float[] speed;
     public float[] basePrice; public int[] increaseRate;
+    public float[] baseGemPrice;
     public float offlineEarningRate;
-
+    public int[] lastSalableLevel;
+    public int[] lastSalableCoreLevel;
+    private int def;
     void Awake()
     {
         //Debug.Log(
         instance = this;
         PlayerPrefs.SetInt("mainAchiv16", PlayerPrefs.GetInt("mainAchiv16", 0) + 1);
+        PlayerPrefs.SetFloat("gem", 225);
         SetText();
+
     }
     public void SetText()
     {
@@ -68,7 +73,6 @@ public class Controller : MonoBehaviour
         slotManager.InitSlots();//لاین های شروع را ایجاد می کند
         //CurrencyController.onBalanceChanged();
         UpdatePrice();
-        txtCoin.text = PlayerPrefs.GetFloat("coin", 5000).ToString();//برای نمایش تعداد سکه ها در ابتدای بازی
         if (PlayerPrefs.GetInt("returned_car", 0) == 0)//اگر راهنما به پایان نرسیده بود هنوز
         {
             //guideManager.UpdateAfter(0.5f);
@@ -76,13 +80,15 @@ public class Controller : MonoBehaviour
     }
     public void UpdatePrice()
     {//قیمت ماشین ها را می گذارد
-        int index = PlayerPrefs.GetInt("curr_car_index", 0);
-        buyPrice.text = PlayerPrefs.GetFloat("car_price_" + index, (float)(basePrice[index] * (1 + increaseRate[index]))).ToString();
+        int index = PlayerPrefs.GetInt("curr_car_index", 0);//az 0 shoro mishavad
+        buyPrice.text = PlayerPrefs.GetFloat("car_price_" + index, Mathf.Round(basePrice[index])).ToString();
+        txtLevelBuyCar.text = "Buy Taxi Level: " + (index+1);
     }
     public void OnBuyClick()
     {
         //Sound.instance.Play(Sound.Others.Buy);
         int index = PlayerPrefs.GetInt("curr_car_index", 0);
+        Debug.Log("current Car : " + index);
         CheckAndSpawnNewCar(index, false);
         if (PlayerPrefs.GetInt("returned_car", 0) == 0)
         {
@@ -94,16 +100,28 @@ public class Controller : MonoBehaviour
             //guideManager.UpdateAfter(1);
         }
     }
-    public const int GEM_CAR_INDEX = 51;
     public void CheckAndSpawnNewCar(int index, bool hasBox)
     {
-        bool useGem = index >= GEM_CAR_INDEX;//اگر عدد آیتمی که میخواد ساخته بشه بیشتر از یک مقداری بود نیاز به روبی دارد
+        int lastSalableTaxiLevel = lastSalableLevel[PlayerPrefs.GetInt("unlocked_car", 1) - 1];
+        if (lastSalableTaxiLevel == 1)
+        {
+            def = 0;
+        }
+        else if (lastSalableTaxiLevel == 2)
+        {
+            def = 1;
+        }
+        else
+        {
+            def = 2;
+        }
+        bool useGem = index >= (lastSalableTaxiLevel - def);//اگر عدد آیتمی که میخواد ساخته بشه بیشتر از یک مقداری بود نیاز به روبی دارد
 
-        float price = useGem ? PlayerPrefs.GetInt("car_price_gem_" + index, (int)Mathf.Pow(2, (index - 6))) : PlayerPrefs.GetFloat("car_price_" + index, (int)(basePrice[index] * (1 + increaseRate[index])));
+        float price = useGem ? baseGemPrice[index] : PlayerPrefs.GetFloat("car_price_" + index, Mathf.Round(basePrice[index]));
         Debug.Log("Price Car: " + price);
         if ((useGem ? PlayerPrefs.GetFloat("gem", 0) : PlayerPrefs.GetFloat("coin", 5000)) >= price)//روی سکه و روبی که اینجا نوشته شده است دقت شود که چه مقداری باید باشد
         {
-            PlayerPrefs.SetInt("mainAchiv8", PlayerPrefs.GetInt("mainAchiv8",0)+1);
+            PlayerPrefs.SetInt("mainAchiv8", PlayerPrefs.GetInt("mainAchiv8", 0) + 1);
             PlayerPrefs.SetInt("mainAchiv14", PlayerPrefs.GetInt("mainAchiv14", 0) + 1);
             ParkingPlace parkPlace = parkingManager.GetEmptyPlace();
             if (parkPlace != null)
@@ -133,10 +151,8 @@ public class Controller : MonoBehaviour
                     SpawnACar(index, parkPlace);
                 //}
 
-                float newPrice = useGem ? price + 2 : (float)(price * (1 + increaseRate[index] / 100f));
-                if (useGem)
-                    PlayerPrefs.SetFloat("car_price_gem_" + index, newPrice);
-                else
+                float newPrice = Mathf.Round(price * ((100 + increaseRate[index]) / 100f));//قیمت جدید را بدست می آورد
+                if (!useGem)
                     PlayerPrefs.SetFloat("car_price_" + index, newPrice);
                 UpdatePrice();
             }
@@ -189,6 +205,7 @@ public class Controller : MonoBehaviour
         car.transform.localScale = Vector3.one * 0.1f;
         car.transform.position = parkPlace.transform.position;//موقعیت به موقعبت مکان فعلی تغییر میکند
         car.parkingPlace = parkPlace;//پارکنینگ را بهش میده
+        car.controller = this;
         if (scaleUp) car.GetComponent<Animator>().Play("MergeDone");//انیمیشن تمام شدن مرج رو ماشین جدیدی که ساخته شده انجام میشه
         PlayerPrefs.SetInt("checkLevel", 0);
         return car;//ماشین رو برمیگردونه

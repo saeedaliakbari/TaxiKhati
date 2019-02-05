@@ -34,7 +34,7 @@ public class GiftBox : MonoBehaviour
 
     private void OnMouseUp()//با موس روش کلیک کنی وبرداری
     {
-        Debug.Log("On Mouse Up: "+opened);
+        //Debug.Log("On Mouse Up: "+opened);
         if (!opened)//اگر باز نشده بود
         {
             OpenBox();//انیمیشن باز شدن اجرا شود
