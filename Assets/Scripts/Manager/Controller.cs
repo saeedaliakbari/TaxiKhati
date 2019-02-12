@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Batch;
 
 public class Controller : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class Controller : MonoBehaviour
     public RunSlotManager slotManager;
     public PlayerLevel playerLevel;
     public VideoAds videoAds;
+    public BatchPlugin batchPlugin;
     //public ShopDialog shop;
     //public ExchangeSpeedDialog exchangeDialog;
     public MergeCar mergeCar;
@@ -57,6 +59,7 @@ public class Controller : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        ConfigBatch();
         PlayerPrefs.SetFloat("coin", 12323564264);
         iTween.dimensionMode = iTween.DimensionMode.mode2D;//دوبعدی کردن حرکت ماشین
         if (Manager.GetCurrentTime() < Manager.GetActionTime("speed_x2"))//اگر سرعت دو برابرنیست موزیک اصلی پخش شود
@@ -66,6 +69,15 @@ public class Controller : MonoBehaviour
         InitGame();
         LoadGame();
         NewCarTimeing();
+    }
+    private void ConfigBatch()
+    {
+        batchPlugin.Push.GCMSenderID = "762423700935";
+        Config config = new Config();
+        //config.IOSAPIKey = "YOUR_IOS_APIKEY";
+        //config.AndroidAPIKey = "DEV5C5B070CD71BEC4321C7EDCE35E";//devkey
+        config.AndroidAPIKey = "5C5B070CD6D0D775E8CA6C623F5CC1";//livekey
+        batchPlugin.StartPlugin(config);
     }
     private void InitGame()
     {
@@ -82,7 +94,7 @@ public class Controller : MonoBehaviour
     {//قیمت ماشین ها را می گذارد
         int index = PlayerPrefs.GetInt("curr_car_index", 0);//az 0 shoro mishavad
         buyPrice.text = PlayerPrefs.GetFloat("car_price_" + index, Mathf.Round(basePrice[index])).ToString();
-        txtLevelBuyCar.text = "Buy Taxi Level: " + (index+1);
+        txtLevelBuyCar.text = "Buy Taxi Level: " + (index + 1);
     }
     public void OnBuyClick()
     {

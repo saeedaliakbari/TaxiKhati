@@ -79,6 +79,7 @@ public class BazaarIABEventListener : MonoBehaviour
             else
             {
                 PlayerPrefs.SetInt("num_of_places_vip", 2);
+                iapCafeBazar.controller.parkingManager.SpawnPlaces();
             }
         }
     }
