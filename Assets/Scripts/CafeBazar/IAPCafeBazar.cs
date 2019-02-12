@@ -6,10 +6,10 @@ using CodeStage.AntiCheat.ObscuredTypes;
 
 public class IAPCafeBazar : MonoBehaviour
 {
-    [SerializeField]
-    private ObscuredString RSA;
-    [SerializeField]
+    public ObscuredString RSA;
     public ObscuredString[] skus;
+    public int[] gem;
+    public Controller controller;
     // Use this for initialization
     void Start()
     {
@@ -20,15 +20,15 @@ public class IAPCafeBazar : MonoBehaviour
                             //فراخوانی خواهد شد.
                             //BazaarIAB.unbindService();//زمانی که کارتان با پرداخت درون برنامه ای تمام شد این تابع را فراخوانی کنید
                             //BazaarIAB.areSubscriptionsSupported();//برای بررسی این که خرید اشتراک های ماهانه و سالانه پشتیبانی می شود یا خیر از این تابع استفاده کنید
-        
+
     }
 
     public void BtnPurchase(string sku)
     {
-        
+
         Debug.Log("btn Purchase: " + sku);
         ObscuredPrefs.SetString("developerPayload", Random.Range(10000, 99999).ToString() + Random.Range(10000, 99999).ToString());
-        BazaarIAB.purchaseProduct(sku,ObscuredPrefs.GetString("developerPayload"));
+        BazaarIAB.purchaseProduct(sku, ObscuredPrefs.GetString("developerPayload"));
         //purchaseSucceededEvent
         //است که زمانی که خرید موفقیت آمیز بود فراخوانی می شود
         //یا زمانی که تلاش می‌کنید محصولی که قبلا خریده‌اید ولی مصرف نکرده‌اید را دوباره بخرید.اگر هم خرید ناموفق باشد رخداد 
