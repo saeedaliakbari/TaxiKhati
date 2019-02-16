@@ -32,4 +32,5 @@ public class ShopPanel : MonoBehaviour
         UpdateCarItems();
     }
 
+
 }

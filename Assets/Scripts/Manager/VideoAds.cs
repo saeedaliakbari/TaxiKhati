@@ -10,7 +10,7 @@ public class VideoAds : MonoBehaviour
     public ShopPanel shopPanel;
     public RandomGift randomGift;
     public WheelFortuneScript wheelFortuneScript;
-    public GameObject panelTaxiUpVideo;
+    public GameObject panelTaxiUpVideo, panelNoAds;
     public Image imgNowCar, imgUpCar;
     [HideInInspector]
     public int indexCar = 0;
@@ -21,7 +21,7 @@ public class VideoAds : MonoBehaviour
 
     public Text txtPanelError;
 
-    public ZoneVideo zoneOfflineEarning, zoneShopCar, zoneCarUp, zoneGiftPanel, zoneWheelOfFurtune,zoneSpeedX2;
+    public ZoneVideo zoneOfflineEarning, zoneShopCar, zoneCarUp, zoneGiftPanel, zoneWheelOfFurtune, zoneSpeedX2, zoneShopClose;
     // Use this for initialization
     void Start()
     {
@@ -374,6 +374,59 @@ public class VideoAds : MonoBehaviour
         double nowtime = Math.Round(Manager.GetCurrentTime());
         double plusTime = Math.Round(150 + timeValue + Manager.GetCurrentTime());
         Manager.SetActionTime("speed_x2", plusTime);
+    }
+    #endregion
+    #region Close Shop Car
+    public void BtnCloseShopCar()
+    {
+        StartCoroutine(IEBtnCloseShopCar());
+    }
+    IEnumerator IEBtnCloseShopCar()
+    {
+        if (PlayerPrefs.GetInt(zoneShopClose.zoneId) == 0)
+        {
+            LoadAd(zoneShopClose);
+            //panelWait.SetActive(true);
+            Debug.Log("Wait");
+            yield return new WaitForSeconds(8f);
+            Debug.Log("Wait Done");
+            //panelWait.SetActive(false);
+        }
+        if (PlayerPrefs.GetInt(zoneShopClose.zoneId) == 1)
+        {
+            PlayerPrefs.SetInt(zoneShopClose.zoneId, 0);
+            ShowAd(zoneShopClose);
+            Tapsell.setRewardListener(
+                (TapsellAdFinishedResult result) =>
+                {
+                    GiftBtnCloseShopCar();
+                    LoadAd(zoneShopClose);
+                }
+            );
+        }
+        else
+        {
+            Debug.Log("Error");
+        }
+    }
+    private void GiftBtnCloseShopCar()
+    {
+        Debug.Log("Gift" + PlayerPrefs.GetInt("countCloseShop", 1));
+        PlayerPrefs.SetInt("countCloseShop", 1);
+        PlayerPrefs.SetInt("countShowAd", PlayerPrefs.GetInt("countShowAd", 1) + 1);
+        Debug.Log("Gift End" + PlayerPrefs.GetInt("countCloseShop", 1));
+        if (PlayerPrefs.GetInt("countShowAd", 1) > 5)
+        {
+            panelNoAds.SetActive(true);
+            PlayerPrefs.SetInt("countShowAd", 1);
+        }
+    }
+    public void LooadAdCloseShop()//داخل باز کردن فروشگاه ماشین انجام می شود
+    {
+        if (PlayerPrefs.GetInt(zoneShopClose.zoneId) == 0 && PlayerPrefs.GetInt("removeAds", 0) == 0)
+        {
+            LoadAd(zoneShopClose);
+        }
     }
     #endregion
     #region Main Methods

@@ -68,18 +68,35 @@ public class BazaarIABEventListener : MonoBehaviour
     void queryInventorySucceededEvent(List<BazaarPurchase> purchases, List<BazaarSkuInfo> skus)
     {
         PlayerPrefs.SetInt("num_of_places_vip", 0);
+        PlayerPrefs.SetInt("num_of_slot_vip", 0);
+        PlayerPrefs.SetFloat("offliceEarnVip", 1);
+        PlayerPrefs.SetInt("removeAds", 0);
+        PlayerPrefs.SetInt("gemPerDay", 0);
+        PlayerPrefs.SetFloat("speedVip", 1);
         //Debug.Log(string.Format("queryInventorySucceededEvent. total purchases: {0}, total skus: {1}", purchases.Count, skus.Count));
         for (int i = 0; i < purchases.Count; ++i)
         {
-            //Debug.Log(purchases[i].ToString());
-            if (purchases[i].ProductId != iapCafeBazar.skus[1])
+            if (purchases[i].ProductId == iapCafeBazar.skus[6])
             {
-                BazaarIAB.consumeProduct(purchases[i].ProductId);
+                //بقیه اطلاعات مربوط به اشتراک وارد شود
+                PlayerPrefs.SetInt("num_of_places_vip", 2);//added 2 parking
+                PlayerPrefs.SetInt("num_of_slot_vip", 2);//added 2 line
+                iapCafeBazar.controller.parkingManager.SpawnPlaces();
+                iapCafeBazar.controller.slotManager.InitSlots();
+                PlayerPrefs.SetFloat("offliceEarnVip", 1.2f);//added 20% offline earning
+                PlayerPrefs.SetInt("removeAds", 1);//remove ads in shop
+                PlayerPrefs.SetInt("gemPerDay", 1);//10 gem per day
+                PlayerPrefs.SetFloat("speedVip", 1.5f);//added 50% speed
+                iapCafeBazar.controller.slotManager.UpdateEarningSpeedText();
+                iapCafeBazar.controller.GiftDaily();
+            }
+            else if (purchases[i].ProductId == iapCafeBazar.skus[7])
+            {
+                PlayerPrefs.SetInt("removeAds", 1);//remove ads in shop
             }
             else
             {
-                PlayerPrefs.SetInt("num_of_places_vip", 2);
-                iapCafeBazar.controller.parkingManager.SpawnPlaces();
+                BazaarIAB.consumeProduct(purchases[i].ProductId);
             }
         }
     }
@@ -94,7 +111,7 @@ public class BazaarIABEventListener : MonoBehaviour
     private void querySkuDetailsSucceededEvent(List<BazaarSkuInfo> skus)
     {
         //Debug.Log(string.Format("querySkuDetailsSucceededEvent. total skus: {0}", skus.Count));
-        for (int i = 0; i < skus.Count; ++i)
+        for (int i = 0; i < skus.Count - 2; ++i)
         {
             txtTitle[i].text = skus[i].Title;
             txtPrice[i].text = skus[i].Price;
@@ -109,7 +126,7 @@ public class BazaarIABEventListener : MonoBehaviour
         BazaarIAB.querySkuDetails(str);
     }
     #endregion
-    #region NEMIDONAM
+    #region Baray Chand Kharid
     private void queryPurchasesSucceededEvent(List<BazaarPurchase> purchases)
     {
         Debug.Log(string.Format("queryPurchasesSucceededEvent. total purchases: {0}", purchases.Count));
@@ -141,18 +158,36 @@ public class BazaarIABEventListener : MonoBehaviour
             Debug.Log("developerPayload is Ok");
             if (purchase.PurchaseState == BazaarPurchase.BazaarPurchaseState.Purchased)
             {
-                if (purchase.ProductId == iapCafeBazar.skus[1])
+                if (purchase.ProductId == iapCafeBazar.skus[6])
                 {
                     PlayerPrefs.SetInt("num_of_places_vip", 2);
                     iapCafeBazar.controller.panelMessage.SetActive(true);
-                    iapCafeBazar.controller.txtPanelMessage.text = "اشتراک بازی برای شما فعال شد\nپارکینگ به خطوط شما اضافه شد";
+                    iapCafeBazar.controller.txtPanelMessage.text = "پارکینگ به خطوط شما اضافه شد";
                     iapCafeBazar.controller.parkingManager.SpawnNewPlace();
                     iapCafeBazar.controller.parkingManager.SpawnNewPlace();
+                    iapCafeBazar.controller.parkingManager.UpdatePlacePosition();
+                    PlayerPrefs.SetInt("num_of_slot_vip", 2);//added 2 line
+                    iapCafeBazar.controller.slotManager.SpawnASlot();
+                    iapCafeBazar.controller.slotManager.SpawnASlot();
+                    iapCafeBazar.controller.slotManager.UpdatePosition();
+                    PlayerPrefs.SetFloat("offliceEarnVip", 1.2f);//added 20% offline earning
+                    PlayerPrefs.SetInt("removeAds", 1);//remove ads in shop
+                    PlayerPrefs.SetInt("gemPerDay", 1);//10 gem per day
+                    PlayerPrefs.SetFloat("speedVip", 1.5f);//added 50% speed
+                    iapCafeBazar.controller.slotManager.UpdateEarningSpeedText();
+                    iapCafeBazar.controller.GiftDaily();
+                }
+                else if (purchase.ProductId == iapCafeBazar.skus[7])
+                {
+                    PlayerPrefs.SetInt("removeAds", 1);//remove ads in shop
+                    iapCafeBazar.controller.panelMessage.SetActive(true);
+                    iapCafeBazar.controller.txtPanelMessage.text = "تبلیغات بنری بازی حذف شد";
+                    iapCafeBazar.controller.videoAds.panelNoAds.SetActive(false);
                 }
                 else {
                     iapCafeBazar.controller.panelMessage.SetActive(true);
                     iapCafeBazar.controller.txtPanelMessage.text = "لطفا منتظر بمانید";
-                    BazaarIAB.queryInventory(str);
+                    BazaarIAB.queryInventory(new string[] { purchase.ProductId });
                 }
             }
             else if (purchase.PurchaseState == BazaarPurchase.BazaarPurchaseState.Canceled)

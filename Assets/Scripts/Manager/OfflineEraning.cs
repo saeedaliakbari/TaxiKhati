@@ -18,7 +18,7 @@ public class OfflineEraning : MonoBehaviour
             time = 345600;
         }
         value = Controller.instance.slotManager.EarningPerSec * time * offlineEarningRate / 100f;
-        value = value * PlayerPrefs.GetFloat("offlineEarnTycoonBoosts", 1);
+        value = value * PlayerPrefs.GetFloat("offlineEarnTycoonBoosts", 1)* PlayerPrefs.GetFloat("offliceEarnVip", 1);
         valueTxt.text = value.ToString();
     }
 

@@ -245,6 +245,7 @@ public class ParkingManager : MonoBehaviour
             pl.CheckAutoOpenGift();
         }
     }
+
 }
 [System.Serializable]
 public class ParkingPosManage

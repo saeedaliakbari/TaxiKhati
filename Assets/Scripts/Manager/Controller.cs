@@ -20,7 +20,7 @@ public class Controller : MonoBehaviour
     //public ExchangeSpeedDialog exchangeDialog;
     public MergeCar mergeCar;
     public LevelUpBonus levelBonus;
-    public GameObject deleteBin, panelMessage;
+    public GameObject deleteBin, panelMessage, panelShopGem;
     public GameObject coinEffectPrefab;
     public OfflineEraning offEarning;
     public TrimNumberText txtCoin;
@@ -69,14 +69,15 @@ public class Controller : MonoBehaviour
         InitGame();
         LoadGame();
         NewCarTimeing();
+        GiftDaily();//اگر عضو بود بهش الماس روزانه میدهد
     }
     private void ConfigBatch()
     {
         batchPlugin.Push.GCMSenderID = "762423700935";
         Config config = new Config();
-        //config.IOSAPIKey = "YOUR_IOS_APIKEY";
-        //config.AndroidAPIKey = "DEV5C5B070CD71BEC4321C7EDCE35E";//devkey
-        config.AndroidAPIKey = "5C5B070CD6D0D775E8CA6C623F5CC1";//livekey
+        //config.AndroidAPIKey = "DEV5C63FE3878D7620D2126816E614"; // dev key
+        config.AndroidAPIKey = "5C63FE3878A18A81983095D989590D";// live key
+        batchPlugin.Push.Setup();
         batchPlugin.StartPlugin(config);
     }
     private void InitGame()
@@ -94,7 +95,7 @@ public class Controller : MonoBehaviour
     {//قیمت ماشین ها را می گذارد
         int index = PlayerPrefs.GetInt("curr_car_index", 0);//az 0 shoro mishavad
         buyPrice.text = PlayerPrefs.GetFloat("car_price_" + index, Mathf.Round(basePrice[index])).ToString();
-        txtLevelBuyCar.text = "Buy Taxi Level: " + (index + 1);
+        txtLevelBuyCar.text = "خرید ماشین سطح " + (index + 1);
     }
     public void OnBuyClick()
     {
@@ -182,7 +183,11 @@ public class Controller : MonoBehaviour
         }
         else
         {
-            txtError.text = "مقدار کافی " + (useGem ? "جم " : "سکه ") + "ندارید!";
+            txtError.text = "مقدار کافی " + (useGem ? "الماس " : "سکه ") + "ندارید!";
+            if (useGem)
+            {
+                panelShopGem.SetActive(true);
+            }
             txtError.gameObject.SetActive(true);
             Timer.Schedule(this, 3f, () =>
             {
@@ -244,12 +249,28 @@ public class Controller : MonoBehaviour
     public void SpawnABoxTime()
     {
         ParkingPlace parkPlace = parkingManager.GetEmptyPlace();
+        Debug.Log("parkPlace: " + parkPlace.name);
         int taxiLvl = PlayerPrefs.GetInt("unlocked_car", 1);
         int index = taxiLvl - Random.Range(taxiDefferenceLvl[taxiLvl - 1].min, taxiDefferenceLvl[taxiLvl - 1].max);
         Debug.Log("taxiLvl: " + PlayerPrefs.GetInt("unlocked_car", 1) + " UNLOCK CAR : " + index);
-        if (parkPlace != null)
+        GameObject obj;
+        try
         {
-            SpawnABox(index - 1, parkPlace);
+            obj = parkPlace.GetComponentInChildren<GameObject>();
+            if (obj != null)
+            {
+                Debug.Log("parkPlace.GetComponentInChildren<GameObject>() != null");
+                SpawnABoxTime();
+            }
+        }
+        catch (System.Exception)
+        {
+            if (parkPlace != null)
+            {
+                Debug.Log("parkPlace != null");
+                SpawnABox(index - 1, parkPlace);
+
+            }
         }
     }
     //public void ShowCareerDialog()
@@ -308,34 +329,6 @@ public class Controller : MonoBehaviour
         //return mergeCar.gameObject.activeSelf || shop.gameObject.activeSelf /*|| career.gameObject.activeSelf*/ ||
         //    exchangeDialog.gameObject.activeSelf || speedX2Dialog.gameObject.activeSelf || levelBonus.gameObject.activeSelf;
     }
-
-    public void CloseDialog()
-    {
-        ////Sound.instance.PlayButton();
-        ////career.gameObject.SetActive(false);
-        //exchangeDialog.gameObject.SetActive(false);
-        //speedX2Dialog.gameObject.SetActive(false);
-    }
-
-    public void CloseShop()
-    {
-        ////Sound.instance.PlayButton();
-        //shop.gameObject.SetActive(false);
-        //parkingManager.OpenGiftBoxes();
-    }
-
-    public void CloseMergeCar()
-    {
-        //Sound.instance.PlayButton();
-        mergeCar.gameObject.SetActive(false);
-    }
-
-    public void CloseBonus()
-    {
-        ////Sound.instance.PlayButton();
-        //levelBonus.gameObject.SetActive(false);
-    }
-
     public void CloseOffEarning()
     {//بستن پنل بدست آوردن سکه
         //Sound.instance.PlayButton();
@@ -483,7 +476,38 @@ public class Controller : MonoBehaviour
         //eff.transform.localScale = Vector3.one;
         //eff.transform.position = position;
     }
-
+    public void GiftDaily()
+    {
+        if (PlayerPrefs.GetInt("gemPerDay", 0) == 1)
+        {
+            StartCoroutine(GetDateTime.IEGetDateTime((status) =>
+            {
+                int today = int.Parse(status.ToString("yyyyMMdd"));
+                if (PlayerPrefs.GetInt("todayDate", 19921030) < today)
+                {
+                    PlayerPrefs.SetInt("todayDate", today);
+                    PlayerPrefs.SetInt("gem", PlayerPrefs.GetInt("gem") + 10);
+                    panelMessage.SetActive(true);
+                    txtPanelMessage.text = "10 الماس به شما اضافه شد";
+                    SetText();
+                }
+            }));
+        }
+    }
+    public void ClosePanelShopCar()
+    {
+        if (PlayerPrefs.GetInt("removeAds", 0) == 0)//اگر تبلیغات براش فعال بود   
+        {
+            if (PlayerPrefs.GetInt("countCloseShop", 1) < 3)//اگر کمتر از 3 بار پنل باز شده بود
+            {
+                PlayerPrefs.SetInt("countCloseShop", PlayerPrefs.GetInt("countCloseShop", 1) + 1);
+            }
+            else
+            {
+                videoAds.BtnCloseShopCar();//نمایش تبلیغ بنری
+            }
+        }
+    }
 }
 [System.Serializable]
 public class RangeLevel

@@ -245,8 +245,8 @@ PlayerSettings:
   AndroidTargetDevice: 3
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: E:/MergeCars/MergeCars/taxi.keystore
-  AndroidKeyaliasName: taxi
+  AndroidKeystoreName: E:/TaxiKhati/taxikhati.keystore
+  AndroidKeyaliasName: taxikhati
   AndroidTVCompatibility: 1
   AndroidIsGame: 1
   AndroidEnableTango: 0

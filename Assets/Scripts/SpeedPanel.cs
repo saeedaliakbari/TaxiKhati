@@ -20,7 +20,7 @@ public class SpeedPanel : MonoBehaviour
         float timeValue = Mathf.Max(0, (float)(Math.Round(Manager.GetActionTime("speed_x2") - Manager.GetCurrentTime())));
         TimeSpan t = TimeSpan.FromSeconds(timeValue);
         TimeSpan max = new TimeSpan(0, 30, 0);
-        if (t>max)
+        if (t > max)
         {
             Manager.SetActionTime("speed_x2", (Manager.GetActionTime("speed_x2") - (t - max).TotalSeconds));
             t = max;
@@ -41,9 +41,10 @@ public class SpeedPanel : MonoBehaviour
         if (PlayerPrefs.GetFloat("gem", 0) >= COST)
         {
             PlayerPrefs.SetFloat("gem", PlayerPrefs.GetFloat("gem", 0) - COST);
+            controller.SetText();
             float timeValue = Mathf.Max(0, (float)(Manager.GetActionTime("speed_x2") - Manager.GetCurrentTime()));
             double nowtime = Math.Round(Manager.GetCurrentTime());
-            double plusTime = Math.Round(BUY_TIME + timeValue + Manager.GetCurrentTime());
+            double plusTime = Math.Round(150 + timeValue + Manager.GetCurrentTime());
             Manager.SetActionTime("speed_x2", plusTime);
         }
         else
