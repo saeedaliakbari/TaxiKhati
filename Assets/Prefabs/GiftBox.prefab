@@ -59,7 +59,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.89, y: 1.05}
+    oldSize: {x: 2.56, y: 2.56}
     newSize: {x: 0.89, y: 1.05}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -97,8 +97,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteBox: {fileID: 212783461751452974}
-  box1: {fileID: 21300000, guid: ed59ebfef6276f344ae0dded24760dbf, type: 3}
-  box2: {fileID: 21300000, guid: 3c7d4d2e51988f84c97b486409c6bc42, type: 3}
+  box1: {fileID: 21300000, guid: 7d867a0d796f2ba48b0c8dd2a54ba00c, type: 3}
+  box2: {fileID: 21300000, guid: 55d29f8d438ab94448c531d9d6b20e5e, type: 3}
   parkPlace: {fileID: 0}
   carIndex: 0
 --- !u!212 &212783461751452974
@@ -135,7 +135,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: ed59ebfef6276f344ae0dded24760dbf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7d867a0d796f2ba48b0c8dd2a54ba00c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

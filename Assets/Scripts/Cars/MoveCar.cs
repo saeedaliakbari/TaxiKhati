@@ -28,7 +28,7 @@ public class MoveCar : MonoBehaviour
     }
     private void CompleteMoving()//وقتی کامل شد یک دور حرکت
     {
-        //Debug.Log("complete time: " + (Time.realtimeSinceStartup - start));
+        Debug.Log("complete time: " + (Time.realtimeSinceStartup - start));
         DiverARound();
     }
     public void Return()

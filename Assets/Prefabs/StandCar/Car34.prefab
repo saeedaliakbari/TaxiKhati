@@ -70,7 +70,7 @@ Transform:
   m_GameObject: {fileID: 1468109838221088}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.71, y: -1.83, z: 0}
-  m_LocalScale: {x: 0.65, y: 0.65, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4714294491073324}
   - {fileID: 4305017230998900}
@@ -164,6 +164,7 @@ MonoBehaviour:
   txtCoin: {fileID: 0}
   moving: 0
   parkingPlace: {fileID: 0}
+  controller: {fileID: 0}
   moveCarPrefab: {fileID: 114583864635308874, guid: df9caa7433e7d7f48a5b3efdd984b560,
     type: 2}
 --- !u!212 &212096142702264042

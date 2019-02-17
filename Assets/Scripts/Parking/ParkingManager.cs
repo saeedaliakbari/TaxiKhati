@@ -47,7 +47,7 @@ public class ParkingManager : MonoBehaviour
                 if (!places[i].IsEmpty() && places[i].GetBox() == null)
                 {
                     carsLevel[places[i].GetCar().level - 1] += 1;
-                    
+
                 }
             }
             PlayerPrefs.SetInt("mainAchiv1", carsLevel[4]);
@@ -63,7 +63,7 @@ public class ParkingManager : MonoBehaviour
     private void CheckCarSpeedTycoon(int[] carsLevel)
     {
         txtCarSpeed.text = "Level Car Speed " + (PlayerPrefs.GetInt("carSpeedTycoonLevel", 0) + 1);
-        txtSpeedRate.text ="+ "+ Mathf.RoundToInt((carSpeedTycoonBoosts.incSpeed[PlayerPrefs.GetInt("carSpeedTycoonLevel", 0)] - 1) * 100).ToString() + "%";
+        txtSpeedRate.text = "+ " + Mathf.RoundToInt((carSpeedTycoonBoosts.incSpeed[PlayerPrefs.GetInt("carSpeedTycoonLevel", 0)] - 1) * 100).ToString() + "%";
         imgSlideGreenCarSpeed.fillAmount = (carSpeedTycoonBoosts.incSpeed[PlayerPrefs.GetInt("carSpeedTycoonLevel", 0)] - 1) / 0.39f;
         if (PlayerPrefs.GetInt("carSpeedTycoonLevel", 0) > 12)
         {
@@ -88,7 +88,7 @@ public class ParkingManager : MonoBehaviour
     private void CheckOfflineEarningTycoon(int[] carsLevel)
     {
         txtOfflineEarning.text = "Level Offline Earning " + (PlayerPrefs.GetInt("offlineEarnTycoonLevel", 0) + 1);
-        txtOfflineEarnRate.text = "+ " + ((Mathf.RoundToInt((earningOfflineTycoonBoosts.incEarn[PlayerPrefs.GetInt("offlineEarnTycoonLevel", 0)] - 1f) * 1000))/10f).ToString() + "%";
+        txtOfflineEarnRate.text = "+ " + ((Mathf.RoundToInt((earningOfflineTycoonBoosts.incEarn[PlayerPrefs.GetInt("offlineEarnTycoonLevel", 0)] - 1f) * 1000)) / 10f).ToString() + "%";
         imgSlideGreenOfflineEarning.fillAmount = (earningOfflineTycoonBoosts.incEarn[PlayerPrefs.GetInt("offlineEarnTycoonLevel", 0)] - 1f) / 0.325f;
         if (PlayerPrefs.GetInt("offlineEarnTycoonLevel", 0) > 12)
         {
@@ -140,7 +140,7 @@ public class ParkingManager : MonoBehaviour
 
         ParkingPlaceVIP place = (ParkingPlaceVIP)Instantiate(placeVIP, Vector3.zero, Quaternion.identity);
         place.transform.SetParent(transform);
-        place.transform.localScale = Vector3.one;
+        place.transform.localScale = Vector3.one * 0.6f;
         place.controller = controller;
         placesPosition.Add(place.gameObject);
         VipPlace = true;
@@ -161,7 +161,7 @@ public class ParkingManager : MonoBehaviour
         ParkingPlace place = (ParkingPlace)Instantiate(placePrefab, Vector3.zero, Quaternion.identity);
         //place.gameObject.name = "Place" + Random.RandomRange(0, 100000);
         place.transform.SetParent(transform);
-        place.transform.localScale = Vector3.one;
+        place.transform.localScale = Vector3.one * 0.6f;
         places.Add(place);//به لیست پارکینگ ها اضافه ش میکنیم
         placesPosition.Add(place.gameObject);
         int numPlacesVIP = PlayerPrefs.GetInt("num_of_places_vip", 0);

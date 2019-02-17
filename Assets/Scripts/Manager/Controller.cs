@@ -249,7 +249,6 @@ public class Controller : MonoBehaviour
     public void SpawnABoxTime()
     {
         ParkingPlace parkPlace = parkingManager.GetEmptyPlace();
-        Debug.Log("parkPlace: " + parkPlace.name);
         int taxiLvl = PlayerPrefs.GetInt("unlocked_car", 1);
         int index = taxiLvl - Random.Range(taxiDefferenceLvl[taxiLvl - 1].min, taxiDefferenceLvl[taxiLvl - 1].max);
         Debug.Log("taxiLvl: " + PlayerPrefs.GetInt("unlocked_car", 1) + " UNLOCK CAR : " + index);

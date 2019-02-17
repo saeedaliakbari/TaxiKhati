@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class RunSlotManager : MonoBehaviour
 {
@@ -15,6 +14,7 @@ public class RunSlotManager : MonoBehaviour
     public Sprite[] goalSprites;
     public SpeedButton speedBtn;
 
+    public TextMesh txtNum;
     private bool hasSpeedX2 = false;
 
     public float EarningPerSec
@@ -44,7 +44,7 @@ public class RunSlotManager : MonoBehaviour
         int index = PlayerPrefs.GetInt("unlocked_airline", 1) - 1;//عدد آخرین هواپیمای باز شده
         //Debug.Log("index unlocked_airline: " + index + ">>>earningPerSec: " + earningPerSec);
         float ratio = ((Manager.GetCurrentTime() < Manager.GetActionTime("speed_x2")) ? 2 : 1) /** Const.AIRLINE_INCREASE_PERCENT[index]*/;//ریت بدست آوردن سکه
-        earnPerSec = Mathf.RoundToInt(earningPerSec * ratio * PlayerPrefs.GetFloat("incomeLine", 1)* PlayerPrefs.GetFloat("speedVip", 1));
+        earnPerSec = Mathf.RoundToInt(earningPerSec * ratio * PlayerPrefs.GetFloat("incomeLine", 1) * PlayerPrefs.GetFloat("speedVip", 1));
         earningPerSecTxt.text = earnPerSec + " /second";
     }
 
@@ -52,7 +52,7 @@ public class RunSlotManager : MonoBehaviour
     {
         EarningPerSec = 0;
         int num = PlayerPrefs.GetInt("num_of_slot", 2);//تعداد لاین های شروع 
-        num+= PlayerPrefs.GetInt("num_of_slot_vip", 0);
+        num += PlayerPrefs.GetInt("num_of_slot_vip", 0);
         for (int i = 0; i < num; i++)
         {//به تعداد لاین هایی که هست ، لاین ایجاد می کند
             SpawnASlot();
@@ -75,13 +75,19 @@ public class RunSlotManager : MonoBehaviour
         {//به تعداد لاین هایی که در لیست لاین ها هست
             listSlot[i].transform.localPosition = new Vector3(0, (i - ((listSlot.Count - 1) / 2f)) * 0.4f);//موقعیت ایکس تغییری نمی کند. و موقعیت ایگری به نسبت شماره داخل لیست 
         }
+        txtNum.transform.localPosition = new Vector3(0, (listSlot.Count - ((listSlot.Count - 1) / 2f)) * 0.4f);
     }
     public void UpdateState()
     {
+        int countStartRun = 0;
         for (int i = 0; i < listSlot.Count; i++)//با توجه به تعداد ایستگاه های استارت
         {
             listSlot[i].UpdateSprite(i < numRun);//حالات ایستگاه ها را آپدیت می کند
+            if (i < numRun)
+                countStartRun += 1;
         }
+        txtNum.text = countStartRun + "/" + (PlayerPrefs.GetInt("num_of_slot", 2) + PlayerPrefs.GetInt("num_of_slot_vip", 0));
+        //Debug.Log(countStartRun + "/" + (PlayerPrefs.GetInt("num_of_slot", 2) + PlayerPrefs.GetInt("num_of_slot_vip", 0)));
     }
     public void UpdateStartGoal()
     {
