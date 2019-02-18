@@ -10,7 +10,8 @@ public class Controller : MonoBehaviour
     public Car[] carPrefabs;//ماشین ها
     public RangeLevel[] taxiDefferenceLvl;
     public GiftBox boxPrefab;
-    public Text txtLevelBuyCar, txtGem, txtError, txtPanelMessage;
+    public Text /*txtLevelBuyCar,*/ txtGem, txtError, txtPanelMessage;
+    public Image imgBuyCar;
     public ParkingManager parkingManager;
     public RunSlotManager slotManager;
     public PlayerLevel playerLevel;
@@ -95,7 +96,9 @@ public class Controller : MonoBehaviour
     {//قیمت ماشین ها را می گذارد
         int index = PlayerPrefs.GetInt("curr_car_index", 0);//az 0 shoro mishavad
         buyPrice.text = PlayerPrefs.GetFloat("car_price_" + index, Mathf.Round(basePrice[index])).ToString();
-        txtLevelBuyCar.text = "خرید ماشین سطح " + (index + 1);
+        //txtLevelBuyCar.text = "خرید ماشین سطح " + (index + 1);
+        Debug.Log("index Car : " + index + " sprite Name :" + activeCar[index].name);
+        imgBuyCar.sprite = activeCar[index];
     }
     public void OnBuyClick()
     {

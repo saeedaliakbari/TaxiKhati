@@ -5,29 +5,51 @@ using UnityEngine.UI;
 public class ExchangeToken : MonoBehaviour
 {
     public Controller controller;
-    public InputField inputCoinValue;
-    public TrimNumberText txtTokenValue;
+    public InputField inputTokenValue;
+    public TrimNumberText txtCoinValue;
     private float rate, tokenValue;
-
+    private float coin;
     // Use this for initialization
-    
+    public Button btnExchange;
     public void SetTxtTokenValue()
     {
         rate = (1 - PlayerPrefs.GetFloat("exchangeDeclineTycoon", 0)) * 10000;
         try
         {
-            txtTokenValue.text = Mathf.Floor(float.Parse(inputCoinValue.text) / rate).ToString();
+            coin = Mathf.Floor(float.Parse(inputTokenValue.text) * rate);
+            txtCoinValue.text = coin.ToString();
+            if (coin > PlayerPrefs.GetFloat("coin", 0))
+            {
+                btnExchange.interactable = false;
+            }
+            else
+            {
+                btnExchange.interactable = true;
+            }
+
         }
         catch (System.Exception)
         {
-            txtTokenValue.text = "0";
+            txtCoinValue.text = "0";
         }
+
     }
     public void BtnExchangeToken()
     {
-        tokenValue = Mathf.Floor(float.Parse(inputCoinValue.text) / rate);
+        tokenValue = Mathf.Floor(float.Parse(inputTokenValue.text) * rate);
         PlayerPrefs.SetFloat("token", PlayerPrefs.GetFloat("token", 0) + tokenValue);
         PlayerPrefs.SetFloat("coin", PlayerPrefs.GetFloat("coin", 0) - (tokenValue * rate));
         controller.SetText();
+    }
+    public void BtnPlus(int i)
+    {
+        try
+        {
+            inputTokenValue.text = (float.Parse(inputTokenValue.text) + i).ToString();
+        }
+        catch (System.Exception)
+        {
+            inputTokenValue.text = "1";
+        }
     }
 }

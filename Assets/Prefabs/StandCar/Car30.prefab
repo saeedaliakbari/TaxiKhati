@@ -159,7 +159,7 @@ MonoBehaviour:
   level: 30
   xp: 508
   earnings: 2.2153e+10
-  speed: 9.4631
+  speed: 15.8895
   increasePercent: 1
   txtCoin: {fileID: 0}
   moving: 0
