@@ -45,7 +45,7 @@ public class RunSlotManager : MonoBehaviour
         //Debug.Log("index unlocked_airline: " + index + ">>>earningPerSec: " + earningPerSec);
         float ratio = ((Manager.GetCurrentTime() < Manager.GetActionTime("speed_x2")) ? 2 : 1) /** Const.AIRLINE_INCREASE_PERCENT[index]*/;//ریت بدست آوردن سکه
         earnPerSec = Mathf.RoundToInt(earningPerSec * ratio * PlayerPrefs.GetFloat("incomeLine", 1) * PlayerPrefs.GetFloat("speedVip", 1));
-        earningPerSecTxt.text = earnPerSec + " /second";
+        earningPerSecTxt.text = "ﻪﯿﻧﺎﺛ / " + earnPerSec;
     }
 
     public void InitSlots()

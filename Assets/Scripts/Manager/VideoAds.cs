@@ -203,7 +203,8 @@ public class VideoAds : MonoBehaviour
                 {
                     if (result.completed && result.rewarded)
                     {
-                        GiftShopCar(index);
+                        PlayerPrefs.SetInt("mergeCarForVideo", 1);
+                        GiftShopCar(index-1);
                     }
                     else
                     {

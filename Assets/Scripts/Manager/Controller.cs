@@ -24,7 +24,7 @@ public class Controller : MonoBehaviour
     public GameObject deleteBin, panelMessage, panelShopGem;
     public GameObject coinEffectPrefab;
     public OfflineEraning offEarning;
-    public TrimNumberText txtCoin;
+    public TrimNumberText txtCoin, txtCoinTop;
     public TrimNumberText txtToken, buyPrice;
     //public RubyShop rubyShop;
     public static Controller instance;
@@ -54,14 +54,13 @@ public class Controller : MonoBehaviour
     public void SetText()
     {
         txtToken.text = PlayerPrefs.GetFloat("token", 0).ToString();
-        txtCoin.text = PlayerPrefs.GetFloat("coin", 0).ToString();
+        txtCoin.text = txtCoinTop.text = PlayerPrefs.GetFloat("coin", 0).ToString();
         txtGem.text = PlayerPrefs.GetFloat("gem").ToString();
     }
     // Use this for initialization
     void Start()
     {
         ConfigBatch();
-        PlayerPrefs.SetFloat("coin", 12323564264);
         iTween.dimensionMode = iTween.DimensionMode.mode2D;//دوبعدی کردن حرکت ماشین
         if (Manager.GetCurrentTime() < Manager.GetActionTime("speed_x2"))//اگر سرعت دو برابرنیست موزیک اصلی پخش شود
         {
@@ -150,7 +149,7 @@ public class Controller : MonoBehaviour
                 {
                     PlayerPrefs.SetFloat("coin", PlayerPrefs.GetFloat("coin", 5000) - price);
                 }
-                txtCoin.text = PlayerPrefs.GetFloat("coin", 5000).ToString();
+                txtCoin.text = txtCoinTop.text = PlayerPrefs.GetFloat("coin", 5000).ToString();
                 //if (index == 3)//این برای این است که بعضی مواقع ماشینی که خریده جدید پنل بالا بردن لول براش بیاد که که لولش بره بالا با ویدئو
                 //{
                 //    Debug.Log("index: " + index);

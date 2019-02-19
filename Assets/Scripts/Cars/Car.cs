@@ -58,6 +58,7 @@ public class Car : MonoBehaviour
                                 //HomeController.instance.guideManager.HideGuides();
                                 //HomeController.instance.guideManager.UpdateAfter(1);
                             }
+                            PlayerPrefs.SetInt("mergeCarForVideo", PlayerPrefs.GetInt("mergeCarForVideo", 1) + 1);
                             GetComponent<Animator>().Play("Merge");//انیمیشن مرج اجرا شود
                             GetComponent<SpriteRenderer>().enabled = false;
                             Destroy(car2.gameObject);//ماشین دومی را از بین می بریم که یک ماشین باقی بماند
@@ -73,7 +74,7 @@ public class Car : MonoBehaviour
                             if (level + 1 > unlockedLevel)
                             {//اگر لول بیشتر از لول ماشین ماکس باشد
                                 PlayerPrefs.SetInt("unlocked_car", level + 1);
-                                PlayerPrefs.SetInt("curr_car_index", controller.lastSalableCoreLevel[PlayerPrefs.GetInt("unlocked_car", 1) - 1]-1);
+                                PlayerPrefs.SetInt("curr_car_index", controller.lastSalableCoreLevel[PlayerPrefs.GetInt("unlocked_car", 1) - 1] - 1);
                                 Controller.instance.ShowMergeNewCar(level - 1);//در صورتی که ماشین جدید باز شود پنل مرج باز می شود که مرج انجام می شود
                             }
                             else {//در صورتی که ماشین لول جدید باز نشود با مرج و ماشین های قبلی تولید شود وقت صدای مرج پخش می شود

@@ -86,7 +86,7 @@ public class ShopItemPanel : MonoBehaviour
             }
             //Debug.Log("Plus Coin : " + runSlotManager.earnPerSec * houers * 60 * 60 + ">>" + controller.txtCoin.text);
             PlayerPrefs.SetFloat("coin", PlayerPrefs.GetFloat("coin", 5000) + (runSlotManager.earnPerSec * houers * 60 * 60));
-            controller.txtCoin.text = PlayerPrefs.GetFloat("coin", 5000).ToString();
+            controller.txtCoin.text = controller.txtCoinTop.text = PlayerPrefs.GetFloat("coin", 5000).ToString();
             PlayerPrefs.SetFloat("gem", PlayerPrefs.GetFloat("gem") - Gem);
             controller.txtGem.text = PlayerPrefs.GetFloat("gem").ToString();
             controller.txtError.text = Manager.ChangeNumber(runSlotManager.earnPerSec * houers * 60 * 60) + "سکه اضافه شد";
