@@ -36,6 +36,7 @@ TextureImporter:
     21300062: store_popup_31
     21300064: store_popup_32
     21300066: store_popup_33
+    21300068: store_popup_34
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -592,6 +593,20 @@ TextureImporter:
         y: 536
         width: 217
         height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: store_popup_34
+      rect:
+        serializedVersion: 2
+        x: 378
+        y: 14
+        width: 35
+        height: 35
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
