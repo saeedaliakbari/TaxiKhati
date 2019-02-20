@@ -390,7 +390,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 8
+  m_Text: 235000t
 --- !u!222 &8549316
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1194,7 +1194,7 @@ GameObject:
   m_Component:
   - component: {fileID: 34370172}
   m_Layer: 5
-  m_Name: ShopItemIncome (7)
+  m_Name: ShopItemEarn7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2604,7 +2604,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "%15 \u062A\u062E\u0641\u064A\u0641"
+  m_Text: "%75 \u062A\u062E\u0641\u064A\u0641"
 --- !u!222 &77402673
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5135,7 +5135,7 @@ GameObject:
   m_Component:
   - component: {fileID: 170938121}
   m_Layer: 5
-  m_Name: ShopItemIncome (3)
+  m_Name: ShopItemEarn3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5403,7 +5403,7 @@ GameObject:
   m_Component:
   - component: {fileID: 184529669}
   m_Layer: 5
-  m_Name: ShopItemIncome (2)
+  m_Name: ShopItemEarn2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6939,7 +6939,7 @@ GameObject:
   m_Component:
   - component: {fileID: 258761867}
   m_Layer: 5
-  m_Name: ShopItemEarn (10)
+  m_Name: ShopItemOff10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10216,7 +10216,7 @@ GameObject:
   m_Component:
   - component: {fileID: 352992199}
   m_Layer: 5
-  m_Name: ShopItemIncome (4)
+  m_Name: ShopItemEarn4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12317,7 +12317,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u062A\u062E\u0641\u064A\u0641 \u062E\u0631\u064A\u062F \u062A\u0627\u06A9\u0633\u064A
-    (\u0633\u0637\u062D 1 )"
+    (\u0633\u0637\u062D 10 )"
 --- !u!222 &409831942
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -12994,7 +12994,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u062A\u062E\u0641\u064A\u0641 \u062E\u0631\u064A\u062F \u062A\u0627\u06A9\u0633\u064A
-    (\u0633\u0637\u062D 1 )"
+    (\u0633\u0637\u062D 7 )"
 --- !u!222 &438650167
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13442,7 +13442,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u062A\u0627\u06A9\u0633\u064A \u0647\u0627 5 \u062F\u0631\u0635\u062F
+  m_Text: "\u062A\u0627\u06A9\u0633\u064A \u0647\u0627 85 \u062F\u0631\u0635\u062F
     \u0627\u0631\u0632\u0648\u0646 \u062A\u0631 \u062E\u0631\u064A\u062F\u0647 \u0645\u064A
     \u0634\u0646"
 --- !u!222 &474912642
@@ -14882,7 +14882,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &518335242
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15228,7 +15228,7 @@ GameObject:
   m_Component:
   - component: {fileID: 522257202}
   m_Layer: 5
-  m_Name: ShopItemEarn (5)
+  m_Name: ShopItemOff5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15647,7 +15647,7 @@ GameObject:
   m_Component:
   - component: {fileID: 542669875}
   m_Layer: 5
-  m_Name: ShopItemIncome (6)
+  m_Name: ShopItemEarn6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16126,7 +16126,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 8
+  m_Text: 29000b
 --- !u!222 &546765537
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -17028,7 +17028,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u062A\u0627\u06A9\u0633\u064A \u0647\u0627 5 \u062F\u0631\u0635\u062F
+  m_Text: "\u062A\u0627\u06A9\u0633\u064A \u0647\u0627 60 \u062F\u0631\u0635\u062F
     \u0627\u0631\u0632\u0648\u0646 \u062A\u0631 \u062E\u0631\u064A\u062F\u0647 \u0645\u064A
     \u0634\u0646"
 --- !u!222 &587634644
@@ -19100,7 +19100,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: +5%
+  m_Text: +160%
 --- !u!222 &669205223
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -20104,7 +20104,7 @@ GameObject:
   m_Component:
   - component: {fileID: 705704290}
   m_Layer: 5
-  m_Name: ShopItemEarn (2)
+  m_Name: ShopItemOff2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21708,7 +21708,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u0627\u0641\u0632\u0627\u064A\u0634 \u062F\u0631\u0622\u0645\u062F \u062E\u0637\u0648\u0637
-    (\u0633\u0637\u062D 1 )"
+    (\u0633\u0637\u062D 6 )"
 --- !u!222 &754025620
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -23155,7 +23155,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 8
+  m_Text: 1000m
 --- !u!222 &810140183
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -23951,7 +23951,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: +5%
+  m_Text: +500%
 --- !u!222 &824007994
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -24653,7 +24653,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u062A\u062E\u0641\u064A\u0641 \u062E\u0631\u064A\u062F \u062A\u0627\u06A9\u0633\u064A
-    (\u0633\u0637\u062D 1 )"
+    (\u0633\u0637\u062D 8 )"
 --- !u!222 &851903269
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -24858,7 +24858,7 @@ GameObject:
   m_Component:
   - component: {fileID: 864460979}
   m_Layer: 5
-  m_Name: ShopItemEarn (4)
+  m_Name: ShopItemOff4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25273,7 +25273,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u062A\u0627\u06A9\u0633\u064A \u0647\u0627 5 \u062F\u0631\u0635\u062F
+  m_Text: "\u062A\u0627\u06A9\u0633\u064A \u0647\u0627 160 \u062F\u0631\u0635\u062F
     \u0628\u064A\u0634\u062A\u0631 \u062F\u0631\u0622\u0645\u062F \u06A9\u0633\u0628
     \u0645\u064A \u06A9\u0646\u0646"
 --- !u!222 &877115666
@@ -26390,7 +26390,7 @@ GameObject:
   m_Component:
   - component: {fileID: 918567551}
   m_Layer: 5
-  m_Name: ShopItemEarn (9)
+  m_Name: ShopItemOff9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26661,7 +26661,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u062A\u0627\u06A9\u0633\u064A \u0647\u0627 5 \u062F\u0631\u0635\u062F
+  m_Text: "\u062A\u0627\u06A9\u0633\u064A \u0647\u0627 55 \u062F\u0631\u0635\u062F
     \u0627\u0631\u0632\u0648\u0646 \u062A\u0631 \u062E\u0631\u064A\u062F\u0647 \u0645\u064A
     \u0634\u0646"
 --- !u!222 &920550082
@@ -27678,7 +27678,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &955998244
 RectTransform:
   m_ObjectHideFlags: 0
@@ -28126,7 +28126,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 8
+  m_Text: 18000m
 --- !u!222 &986852762
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -28663,7 +28663,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: +5%
+  m_Text: +1000%
 --- !u!222 &1015207606
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -28826,7 +28826,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 8
+  m_Text: 18000b
 --- !u!222 &1022269499
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -30268,7 +30268,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "%15 \u062A\u062E\u0641\u064A\u0641"
+  m_Text: "%5 \u062A\u062E\u0641\u064A\u0641"
 --- !u!222 &1072288695
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -30429,7 +30429,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u0627\u0641\u0632\u0627\u064A\u0634 \u062F\u0631\u0622\u0645\u062F \u062E\u0637\u0648\u0637
-    (\u0633\u0637\u062D 1 )"
+    (\u0633\u0637\u062D 10 )"
 --- !u!222 &1079796683
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -30445,7 +30445,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1079803256}
   m_Layer: 5
-  m_Name: ShopItemEarn (8)
+  m_Name: ShopItemOff8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30554,7 +30554,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1081981521}
   m_Layer: 5
-  m_Name: ShopItemIncome (5)
+  m_Name: ShopItemEarn5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32238,7 +32238,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 8
+  m_Text: 24000t
 --- !u!222 &1111160898
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -32706,7 +32706,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 8
+  m_Text: 220000m
 --- !u!222 &1132489536
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -32996,7 +32996,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: +5%
+  m_Text: +225%
 --- !u!222 &1137565930
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -34599,7 +34599,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "%15 \u062A\u062E\u0641\u064A\u0641"
+  m_Text: "%55 \u062A\u062E\u0641\u064A\u0641"
 --- !u!222 &1169193861
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -34825,7 +34825,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1178294719}
   m_Layer: 5
-  m_Name: ShopItemIncome (8)
+  m_Name: ShopItemEarn8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35085,7 +35085,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1188398546
 RectTransform:
   m_ObjectHideFlags: 0
@@ -35929,7 +35929,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u0627\u0641\u0632\u0627\u064A\u0634 \u062F\u0631\u0622\u0645\u062F \u062E\u0637\u0648\u0637
-    (\u0633\u0637\u062D 1 )"
+    (\u0633\u0637\u062D 7 )"
 --- !u!222 &1220767832
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -36014,7 +36014,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1224088889}
   m_Layer: 5
-  m_Name: ShopItemIncome (10)
+  m_Name: ShopItemEarn10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39365,7 +39365,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1344265522
 RectTransform:
   m_ObjectHideFlags: 0
@@ -40287,7 +40287,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1367401702}
   m_Layer: 5
-  m_Name: ShopItemEarn (6)
+  m_Name: ShopItemOff6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42364,7 +42364,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 8
+  m_Text: 452000m
 --- !u!222 &1434657625
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -42834,7 +42834,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u0627\u0641\u0632\u0627\u064A\u0634 \u062F\u0631\u0622\u0645\u062F \u062E\u0637\u0648\u0637
-    (\u0633\u0637\u062D 1 )"
+    (\u0633\u0637\u062D 8 )"
 --- !u!222 &1452759013
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -43281,7 +43281,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u062A\u0627\u06A9\u0633\u064A \u0647\u0627 5 \u062F\u0631\u0635\u062F
+  m_Text: "\u062A\u0627\u06A9\u0633\u064A \u0647\u0627 1000 \u062F\u0631\u0635\u062F
     \u0628\u064A\u0634\u062A\u0631 \u062F\u0631\u0622\u0645\u062F \u06A9\u0633\u0628
     \u0645\u064A \u06A9\u0646\u0646"
 --- !u!222 &1467976606
@@ -44239,7 +44239,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1509306911}
   m_Layer: 5
-  m_Name: ShopItemEarn (7)
+  m_Name: ShopItemOff7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44778,7 +44778,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "%15 \u062A\u062E\u0641\u064A\u0641"
+  m_Text: "%85 \u062A\u062E\u0641\u064A\u0641"
 --- !u!222 &1531516522
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -45699,7 +45699,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u0627\u0641\u0632\u0627\u064A\u0634 \u062F\u0631\u0622\u0645\u062F \u062E\u0637\u0648\u0637
-    (\u0633\u0637\u062D 1 )"
+    (\u0633\u0637\u062D 9 )"
 --- !u!222 &1565720494
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -45977,7 +45977,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u062A\u0627\u06A9\u0633\u064A \u0647\u0627 5 \u062F\u0631\u0635\u062F
+  m_Text: "\u062A\u0627\u06A9\u0633\u064A \u0647\u0627 65 \u062F\u0631\u0635\u062F
     \u0627\u0631\u0632\u0648\u0646 \u062A\u0631 \u062E\u0631\u064A\u062F\u0647 \u0645\u064A
     \u0634\u0646"
 --- !u!222 &1574845098
@@ -47857,7 +47857,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1659781845
 RectTransform:
   m_ObjectHideFlags: 0
@@ -48809,7 +48809,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "%15 \u062A\u062E\u0641\u064A\u0641"
+  m_Text: "%65 \u062A\u062E\u0641\u064A\u0641"
 --- !u!222 &1689733694
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -49096,7 +49096,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1700708348}
   m_Layer: 5
-  m_Name: ShopItemIncome (9)
+  m_Name: ShopItemEarn9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49771,7 +49771,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1728389157}
   m_Layer: 5
-  m_Name: ShopItemEarn (1)
+  m_Name: ShopItemOff1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50224,7 +50224,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u062A\u0627\u06A9\u0633\u064A \u0647\u0627 5 \u062F\u0631\u0635\u062F
+  m_Text: "\u062A\u0627\u06A9\u0633\u064A \u0647\u0627 75 \u062F\u0631\u0635\u062F
     \u0627\u0631\u0632\u0648\u0646 \u062A\u0631 \u062E\u0631\u064A\u062F\u0647 \u0645\u064A
     \u0634\u0646"
 --- !u!222 &1737956549
@@ -50249,7 +50249,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1740089189
 RectTransform:
   m_ObjectHideFlags: 0
@@ -50382,7 +50382,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u062A\u062E\u0641\u064A\u0641 \u062E\u0631\u064A\u062F \u062A\u0627\u06A9\u0633\u064A
-    (\u0633\u0637\u062D 1 )"
+    (\u0633\u0637\u062D 9 )"
 --- !u!222 &1741766607
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -50637,8 +50637,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1758452206}
+  - component: {fileID: 1758452207}
   m_Layer: 5
-  m_Name: ShopItemIncome (1)
+  m_Name: ShopItemEarn1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50670,6 +50671,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 515, y: 218}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1758452207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1758452205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b2b8a3f9dae67c4a839d98f6847b274, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1761129268
 GameObject:
   m_ObjectHideFlags: 0
@@ -50687,7 +50699,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1761129269
 RectTransform:
   m_ObjectHideFlags: 0
@@ -53319,7 +53331,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: +5%
+  m_Text: +110%
 --- !u!222 &1845145568
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -53969,7 +53981,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u062A\u062E\u0641\u064A\u0641 \u062E\u0631\u064A\u062F \u062A\u0627\u06A9\u0633\u064A
-    (\u0633\u0637\u062D 1 )"
+    (\u0633\u0637\u062D 6 )"
 --- !u!222 &1862896980
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -54193,7 +54205,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u062A\u0627\u06A9\u0633\u064A \u0647\u0627 5 \u062F\u0631\u0635\u062F
+  m_Text: "\u062A\u0627\u06A9\u0633\u064A \u0647\u0627 110 \u062F\u0631\u0635\u062F
     \u0628\u064A\u0634\u062A\u0631 \u062F\u0631\u0622\u0645\u062F \u06A9\u0633\u0628
     \u0645\u064A \u06A9\u0646\u0646"
 --- !u!222 &1876676914
@@ -54353,7 +54365,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1884736935}
   m_Layer: 5
-  m_Name: ShopItemEarn (3)
+  m_Name: ShopItemOff3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -55858,7 +55870,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "%15 \u062A\u062E\u0641\u064A\u0641"
+  m_Text: "%60 \u062A\u062E\u0641\u064A\u0641"
 --- !u!222 &1927144859
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -56105,7 +56117,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 8
+  m_Text: 11000t
 --- !u!222 &1932188947
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -56910,7 +56922,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1965644285
 RectTransform:
   m_ObjectHideFlags: 0
@@ -57236,7 +57248,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1976440639
 RectTransform:
   m_ObjectHideFlags: 0
@@ -59503,7 +59515,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 8
+  m_Text: 183000b
 --- !u!222 &2049229271
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -59527,7 +59539,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2054739664
 RectTransform:
   m_ObjectHideFlags: 0
@@ -59980,6 +59992,7 @@ GameObject:
   - component: {fileID: 2074816523}
   - component: {fileID: 2074816522}
   - component: {fileID: 2074816524}
+  - component: {fileID: 2074816525}
   m_Layer: 5
   m_Name: PanelShopCar
   m_TagString: Untagged
@@ -60121,6 +60134,17 @@ MonoBehaviour:
   clrUnSel: {r: 0.07058824, g: 0.14901961, b: 0.28627452, a: 1}
   txtTaxi: {fileID: 1246437677}
   txtOther: {fileID: 1454963753}
+--- !u!114 &2074816525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2074816520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d2f93329ef47d54bbeb1748f21bfacc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2075793974
 GameObject:
   m_ObjectHideFlags: 0
@@ -61995,7 +62019,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u062A\u0627\u06A9\u0633\u064A \u0647\u0627 5 \u062F\u0631\u0635\u062F
+  m_Text: "\u062A\u0627\u06A9\u0633\u064A \u0647\u0627 225 \u062F\u0631\u0635\u062F
     \u0628\u064A\u0634\u062A\u0631 \u062F\u0631\u0622\u0645\u062F \u06A9\u0633\u0628
     \u0645\u064A \u06A9\u0646\u0646"
 --- !u!222 &2133592446
@@ -62218,7 +62242,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u062A\u0627\u06A9\u0633\u064A \u0647\u0627 5 \u062F\u0631\u0635\u062F
+  m_Text: "\u062A\u0627\u06A9\u0633\u064A \u0647\u0627 500 \u062F\u0631\u0635\u062F
     \u0628\u064A\u0634\u062A\u0631 \u062F\u0631\u0622\u0645\u062F \u06A9\u0633\u0628
     \u0645\u064A \u06A9\u0646\u0646"
 --- !u!222 &2144493961
