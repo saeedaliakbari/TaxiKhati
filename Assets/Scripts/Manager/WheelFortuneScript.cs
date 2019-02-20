@@ -6,29 +6,26 @@ using UnityEngine.UI;
 public class WheelFortuneScript : MonoBehaviour
 {
     public VideoAds videoAds;
-
-    public List<int> prize;
     public List<AnimationCurve> animationCurves;
-
     private bool spinning;
     private float anglePerItem, chornoTimeCounter;
+    public float[] maxRotaiton;
     private int randomTime;
     private int itemNumber;
 
     public Text txtNumVideoWheel, txtTimeRemain;
-    public GameObject objTimeVideo, objNumVideoWheel;
-    public Button btnWheelVideo;
+    public Button btnWheelVideo, btnWheelGem;
+    public GameObject objTimeVideo;
     public GameObject goWheel;
     private string[] timeWheel = { "timeWheel1", "timeWheel2", "timeWheel3" };
     void Start()
     {
         CheckVideoTime();
-        //objNumVideoWheel.SetActive(false);
     }
     private void CheckVideoTime()//این تابع در ابتدا مقادیر را داخل تکست باکس ها ست می کند و سپس با توجه به زمان فعلی و اینکه تعداد شانس ها کمتر از 3 باشد زمان شانس بعدی را می سنجد تا اضافه شود
     {
         //Debug.Log("CheckVideoTime >" + PlayerPrefs.GetInt("VideoWheel", 3));
-        txtNumVideoWheel.text = PlayerPrefs.GetInt("VideoWheel", 3).ToString();
+        txtNumVideoWheel.text = PlayerPrefs.GetInt("VideoWheel", 3).ToString() + "/3";
         string[] arr = PlayerPrefs.GetString("TimeVideoWheel", "1992,11,30,00,00,00").Split(',');
         DateTime wheelTime = new DateTime(Int32.Parse(arr[0]), Int32.Parse(arr[1]), Int32.Parse(arr[2]), Int32.Parse(arr[3]), Int32.Parse(arr[4]), Int32.Parse(arr[5]));
         if (PlayerPrefs.GetInt("VideoWheel", 3) < 3)
@@ -47,7 +44,7 @@ public class WheelFortuneScript : MonoBehaviour
                     {
                         Debug.Log("Up +1");
                         PlayerPrefs.SetInt("VideoWheel", PlayerPrefs.GetInt("VideoWheel", 3) + 1);
-                        txtNumVideoWheel.text = PlayerPrefs.GetInt("VideoWheel", 3).ToString();
+                        txtNumVideoWheel.text = PlayerPrefs.GetInt("VideoWheel", 3).ToString() + "/3";
                         reamainSec += 28800f;
                         TimeSpan nowTimeSpan = new TimeSpan(status.Day, status.Hour, status.Minute, status.Second);
                         TimeSpan plusTimeSpan = new TimeSpan(0, 8, 0, 0);
@@ -70,13 +67,16 @@ public class WheelFortuneScript : MonoBehaviour
                 }
             }));
         }
+        else
+        {
+            objTimeVideo.SetActive(false);
+        }
     }
     public void GiftWheelWithVideo()//وقتی که یک بار از ویدئو استفاده کرد برای چرخاندن گردونه شانس باید این تابع فراخوانی شود
     {
         Debug.Log("GiftWheelWithVideo");
         PlayerPrefs.SetInt("VideoWheel", PlayerPrefs.GetInt("VideoWheel", 3) - 1);
         Debug.Log("GiftWheelWithVideo" + PlayerPrefs.GetInt("VideoWheel", 3));
-        btnWheelVideo.interactable = false;
         if (PlayerPrefs.GetString("TimeVideoWheel", "NotSet") == "NotSet")
         {
             TimeSpan nowTimeSpan = new TimeSpan(DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
@@ -86,8 +86,7 @@ public class WheelFortuneScript : MonoBehaviour
             Debug.Log("NOT SET >>" + PlayerPrefs.GetString("TimeVideoWheel"));
         }
         CheckVideoTime();
-        WheelStart();
-        btnWheelVideo.interactable = true;
+        WheelStart(true);
     }
     IEnumerator IETimerVideoWheel(float deltaTime)//تابع تایمر ویدئو
     {
@@ -97,17 +96,18 @@ public class WheelFortuneScript : MonoBehaviour
             int s = (int)(deltaTime % 60);
             int m = (int)((deltaTime % 3600) / 60);
             int h = (int)(deltaTime / 3600);
-            txtTimeRemain.text = "" + h.ToString("D2") + ":" + m.ToString("D2") + ":" + s.ToString("D2");
+            txtTimeRemain.text = "" + h.ToString("D1") + ":" + m.ToString("D2") + ":" + s.ToString("D2");
             //Debug.Log("txtTimeRemain: " + txtTimeRemain.text);
             if (m == 0 && s == 1)
             {
-                txtTimeRemain.text = "00:00:00";
+                txtTimeRemain.text = "0:00:00";
             }
             yield return new WaitForSeconds(1f);
         }
         if (deltaTime == 0)
         {
-            txtTimeRemain.text = "00:00:00";
+            txtTimeRemain.text = "0:00:00";
+            objTimeVideo.SetActive(false);
             if (PlayerPrefs.GetInt("VideoWheel", 3) < 3)
             {
                 PlayerPrefs.SetInt("VideoWheel", PlayerPrefs.GetInt("VideoWheel", 1) + 1);
@@ -119,402 +119,128 @@ public class WheelFortuneScript : MonoBehaviour
     #region Wheel
     IEnumerator SpinTheWheel(float time, float maxAngle)
     {
-        //yield return new WaitForSeconds(2f);
         spinning = true;
-
         float timer = 0.0f;
-        float startAngle = goWheel.transform.eulerAngles.z;
-        maxAngle = maxAngle - startAngle + 90f;
-
         int animationCurveNumber = UnityEngine.Random.Range(0, animationCurves.Count);
-        Debug.Log("Animation Curve No. : " + animationCurveNumber);
-
         while (timer < time)
         {
             //to calculate rotation
             float angle = maxAngle * animationCurves[animationCurveNumber].Evaluate(timer / time);
-            goWheel.transform.eulerAngles = new Vector3(0.0f, 0.0f, angle + startAngle);
+            goWheel.transform.eulerAngles = new Vector3(0.0f, 0.0f, angle);
             timer += Time.deltaTime;
             yield return 0;
         }
-
-        goWheel.transform.eulerAngles = new Vector3(0.0f, 0.0f, maxAngle + startAngle);
+        goWheel.transform.eulerAngles = new Vector3(0.0f, 0.0f, maxAngle);
+        btnWheelGem.interactable = true;
+        btnWheelVideo.interactable = true;
         spinning = false;
-
-        Debug.Log("Prize: " + prize[itemNumber]);//use prize[itemNumnber] as per requirement
-        //if (prize[itemNumber] == 123)
-        //{
-        //    PlayerPrefs.SetInt("WheelOfFourune", 1);
-        //    txtNumVideoWheel.text = PlayerPrefs.GetInt("WheelOfFourune", 1).ToString();
-        //    Debug.Log("shans mojadad.");
-        //}
-        //else
-        //{
-        //    //PlayerPrefs.SetInt("coin", PlayerPrefs.GetInt("coin", 0) + prize[itemNumber]);
-        //    //txtCoin.text = PlayerPrefs.GetInt("coin", 0).ToString();
-        //    //panelMessage.gameObject.SetActive(true);
-        //}
-        //if (PlayerPrefs.GetInt("WheelOfFourune", 1) == 0)
-        //{
-        //    //btnWheel.interactable = false;
-        //    btnWheelVideo.interactable = false;
-        //}
-        //else
-        //{
-        //    btnWheelVideo.interactable = true;
-        //    //btnWheel.interactable = true;
-        //}
+        ManageGift(itemNumber);
     }
-    public void WheelStart()
+    public void WheelStart(bool video)
     {
-        if (!spinning)
-        {
-            goWheel.gameObject.SetActive(true);
-            //btnWheel.gameObject.SetActive(false);
-        }
-        else
-        {
-            //btnWheel.interactable = true;
-            btnWheelVideo.interactable = true;
-        }
-        txtNumVideoWheel.text = PlayerPrefs.GetInt("VideoWheel", 3).ToString();
-        randomTime = UnityEngine.Random.Range(1, 7);
+        btnWheelVideo.interactable = false;
+        btnWheelGem.interactable = false;
+        anglePerItem = 360 / maxRotaiton.Length;
+        txtNumVideoWheel.text = PlayerPrefs.GetInt("VideoWheel", 3).ToString() + "/3";
+        randomTime = UnityEngine.Random.Range(3, 8);
         int iPercent = UnityEngine.Random.Range(0, 100);
         Debug.Log("darsad>>" + iPercent);
-        if (iPercent < 5)
-        {//2000
-            itemNumber = 5;
+        if (video)
+        {
+            if (iPercent < 30)//5x Earning for 1m
+            {
+                itemNumber = 0;
+            }
+            else if (iPercent < 70)//2x Speed For 150s
+            {
+                itemNumber = 1;
+            }
+            else if (iPercent < 90)//4 Golden Box
+            {
+                itemNumber = 2;
+            }
+            else if (iPercent < 95)//4h time boost
+            {
+                itemNumber = 3;
+            }
+            else if (iPercent < 100)//20 Gem
+            {
+                itemNumber = 4;
+            }
         }
-        else if (iPercent < 20)
-        {//try
-            itemNumber = 3;
-        }
-        else if (iPercent < 40)
-        {//30
-            itemNumber = 7;
-        }
-        else if (iPercent < 55)
-        {//100
-            itemNumber = 0;
-        }
-        else if (iPercent < 70)
-        {//150
-            itemNumber = 1;
-        }
-        else if (iPercent < 80)
-        {//500
-            itemNumber = 2;
-        }
-        else if (iPercent < 90)
-        {//800
-            itemNumber = 4;
-        }
-        else if (iPercent < 100)
-        {//1000
-            itemNumber = 6;
+        else {
+            if (iPercent < 30)//5x Earning for 1m
+            {
+                itemNumber = 0;
+            }
+            else if (iPercent < 50)//2x Speed For 150s
+            {
+                itemNumber = 1;
+            }
+            else if (iPercent < 70)//4 Golden Box
+            {
+                itemNumber = 2;
+            }
+            else if (iPercent < 80)//4h time boost
+            {
+                itemNumber = 3;
+            }
+            else if (iPercent < 100)//20 Gem
+            {
+                itemNumber = 4;
+            }
         }
         Debug.Log("itemnum>>" + itemNumber);
-        float maxAngle = 360 * randomTime + (itemNumber * anglePerItem);
-
-        StartCoroutine(SpinTheWheel(5 * randomTime, maxAngle));
+        float maxAngle = 360 * randomTime + maxRotaiton[itemNumber];
+        StartCoroutine(SpinTheWheel(3 * randomTime, maxAngle));
     }
-
     #endregion//باید کدهاش بررسی شود
     public void BtnWheelWithGem()
     {
         if (PlayerPrefs.GetFloat("gem", 0) >= 5)
         {
             PlayerPrefs.SetFloat("gem", PlayerPrefs.GetFloat("gem") - 5);
-
-            WheelStart();
+            WheelStart(false);
         }
         else
         {
             Debug.Log("Gem<5");
         }
     }
-
-    #region ghadimi
-    #region Calculate Time
-    public void calcuteRemainTime(string strRemainTime, Text txtTimeRemain, Button btnWheel, GameObject imgTime)
+    private void ManageGift(int itemNumber)
     {
-        Debug.Log(strRemainTime);
-        string[] arr = strRemainTime.Split(',');
-        int year = Int32.Parse(arr[0]);
-        int month = Int32.Parse(arr[1]);
-        int day = Int32.Parse(arr[2]);
-        int hours = Int32.Parse(arr[3]);
-        int minute = Int32.Parse(arr[4]);
-        int sec = Int32.Parse(arr[5]);
-        StartCoroutine(GetDateTime.IEGetDateTime((status) =>
+        videoAds.shopPanel.controller.panelMessage.SetActive(true);
+        if (itemNumber == 0)
         {
-            Debug.Log("status : " + status);
-            if (year >= status.Year)
-            {
-                if (month >= status.Month)
-                {
-                    TimeSpan remainTime = new TimeSpan(day, hours, minute, sec);
-                    TimeSpan nowTimeSpan = new TimeSpan(status.Day, status.Hour, status.Minute, status.Second);
-                    TimeSpan result = remainTime - nowTimeSpan;
-                    chornoTimeCounter = (float)((result.Hours * 3600) + (result.Minutes * 60) + result.Seconds);
-                }
-                else
-                {
-                    //bayad faal shavad.
-                    chornoTimeCounter = 0;
-                }
-            }
-            else
-            {
-                //bayad faal shavad.
-                chornoTimeCounter = 0;
-            }
-            if (chornoTimeCounter <= 0)
-            {
-                chornoTimeCounter = 0;
-
-            }
-            Debug.Log("chornotime>>>>" + chornoTimeCounter);
-            StartCoroutine(IEtimeRemain(chornoTimeCounter, txtTimeRemain, btnWheel, imgTime));
-        }));
-    }
-    IEnumerator IEtimeRemain(float deltaTime, Text txtTimeRemain, Button btnWheel, GameObject imgTime)
-    {
-        Debug.Log("IEtimeRemain" + deltaTime);
-        btnWheel.interactable = false;
-        imgTime.SetActive(true);
-        for (; deltaTime > 0; deltaTime -= 1f)
-        {
-            int s = (int)(deltaTime % 60);
-            int m = (int)((deltaTime % 3600) / 60);
-            int h = (int)(deltaTime / 3600);
-            txtTimeRemain.text = "" + h.ToString("D2") + ":" + m.ToString("D2") + ":" + s.ToString("D2");
-            //Debug.Log("txtTimeRemain: " + txtTimeRemain.text);
-            if (m == 0 && s == 1)
-            {
-                imgTime.SetActive(false);
-                txtTimeRemain.text = "00:00:00";
-            }
-            yield return new WaitForSeconds(1f);
+            PlayerPrefs.SetFloat("gem", PlayerPrefs.GetFloat("gem") + 20);
+            videoAds.shopPanel.controller.SetText();
+            videoAds.shopPanel.controller.txtPanelMessage.text = "20 الماس اضافه شد";
         }
-        if (deltaTime == 0)
+        else if (itemNumber == 1)
         {
-            imgTime.SetActive(false);
-            txtTimeRemain.text = "00:00:00";
-            btnWheel.interactable = true;
-            if (PlayerPrefs.GetInt(videoAds.zoneWheelOfFurtune.zoneId) == 0)
-            {
-                videoAds.LoadAd(videoAds.zoneWheelOfFurtune);
-            }
-            CheckTheTimeWheel();
-            if (true)
-            {
-                //PlayerPrefs.SetInt("WheelOfFourune", PlayerPrefs.GetInt("WheelOfFourune", 1) + 1);
-            }
+            Manager.SetActionTime("5x_earning_for_1m", (60 + Manager.GetCurrentTime()));
+            videoAds.shopPanel.controller.txtPanelMessage.text = "به مدت 1 دقیقه در آمد شما 5 برابر شد";
+            videoAds.shopPanel.controller.slotManager.UpdateEarningSpeedText();
         }
-        yield return new WaitForSeconds(0f);
-    }
-    #endregion
-    private void CheckTheTimeWheel()
-    {
-        Debug.Log("start Check");
-        float[] checkTime = { 0, 0, 0 };
-        int[] year = new int[3], month = new int[3], day = new int[3], hours = new int[3], minute = new int[3], sec = new int[3];
-        for (int i = 0; i < 3; i++)
+        else if (itemNumber == 2)
         {
-            string[] arr = PlayerPrefs.GetString(timeWheel[i], "1992,11,30,00,00,00").Split(',');
-            year[i] = Int32.Parse(arr[0]);
-            month[i] = Int32.Parse(arr[1]);
-            day[i] = Int32.Parse(arr[2]);
-            hours[i] = Int32.Parse(arr[3]);
-            minute[i] = Int32.Parse(arr[4]);
-            sec[i] = Int32.Parse(arr[5]);
+            Manager.SetActionTime("2x_speed_for_150s", (150 + Manager.GetCurrentTime()));
+            videoAds.shopPanel.controller.txtPanelMessage.text = "به مدت 150 ثانیه سرعت شما 2 برابر شد";
+            videoAds.shopPanel.controller.slotManager.UpdateEarningSpeedText();
         }
-        StartCoroutine(GetDateTime.IEGetDateTime((status) =>
+        else if (itemNumber == 3)
         {
-            Debug.Log("NOw Time: " + status);
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 4; i++)
             {
-                if (year[i] >= status.Year)
-                {
-                    if (month[i] >= status.Month)
-                    {
-                        TimeSpan remainTime = new TimeSpan(day[i], hours[i], minute[i], sec[i]);
-                        TimeSpan nowTimeSpan = new TimeSpan(status.Day, status.Hour, status.Minute, status.Second);
-                        TimeSpan result = remainTime - nowTimeSpan;
-                        checkTime[i] = (float)((result.Hours * 3600) + (result.Minutes * 60) + result.Seconds);
-                    }
-                    else
-                    {
-                        checkTime[i] = 0;
-                    }
-                }
-                else
-                {
-                    checkTime[i] = 0;
-                }
-                if (checkTime[i] <= 0)
-                {
-                    checkTime[i] = 0;
-                }
+                videoAds.shopPanel.controller.SpawnABoxWheel();
             }
-            Debug.Log("chekTime: " + checkTime[0] + " " + checkTime[1] + " " + checkTime[2]);
-            if (checkTime[0] == 0)
-            {
-                if (checkTime[1] == 0)
-                {
-                    if (checkTime[2] == 0)
-                    {
-                        PlayerPrefs.SetInt("WheelOfFourune", 3);
-                    }
-                    else
-                    {
-                        PlayerPrefs.SetInt("WheelOfFourune", 2);
-                    }
-                }
-                else
-                {
-                    if (checkTime[2] == 0)
-                    {
-                        PlayerPrefs.SetInt("WheelOfFourune", 2);
-                    }
-                    else
-                    {
-                        PlayerPrefs.SetInt("WheelOfFourune", 1);
-                    }
-                }
-            }
-            else
-            {
-                if (checkTime[1] == 0)
-                {
-                    if (checkTime[2] == 0)
-                    {
-                        PlayerPrefs.SetInt("WheelOfFourune", 2);
-                    }
-                    else
-                    {
-                        PlayerPrefs.SetInt("WheelOfFourune", 1);
-                    }
-                }
-                else
-                {
-                    if (checkTime[2] == 0)
-                    {
-                        PlayerPrefs.SetInt("WheelOfFourune", 1);
-                    }
-                    else
-                    {
-                        PlayerPrefs.SetInt("WheelOfFourune", 0);
-                        #region Time
-                        float[] timeRemain = { 0f, 0f, 0f };
-                        timeRemain = TimeRemain(year, month, day, hours, minute, sec);
-                        int index = -1;
-                        for (int i = 0; i < 3; i++)
-                        {
-                            if (timeRemain[i] == MinTime(timeRemain))
-                            {
-                                index = i;
-                            }
-                        }
-                        Debug.Log("MIN TIME: " + index);
-                        StartCoroutine(IEtimeRemain(checkTime[index], txtTimeRemain, btnWheelVideo, objTimeVideo));
-                        #endregion
-                    }
-                }
-            }
-            Debug.Log("End CHECK");
-            ManageButtons();
-        }));
-
-    }
-    private void ChangeStatus(bool status)
-    {
-        if (status)//یعنی می تواند بچرخاند
-        {
-
+            videoAds.shopPanel.controller.txtPanelMessage.text = "4 جعبه طلایی به پارکینگ شما اضافه شد";
         }
-        else
+        else if (itemNumber == 4)
         {
-
+            PlayerPrefs.SetFloat("coin", PlayerPrefs.GetFloat("coin") + (videoAds.shopPanel.controller.slotManager.earnPerSec * 4 * 60 * 60));
+            videoAds.shopPanel.controller.SetText();
+            videoAds.shopPanel.controller.txtPanelMessage.text = "به اندازه 4 ساعت درآمد فعلی  به شما پرداخت شد";
         }
     }
-    private float MinTime(float[] timeRemain)
-    {
-
-        float minTime = Mathf.Min(timeRemain[0], timeRemain[0], timeRemain[0]);
-        Debug.Log("Min Time:" + minTime);
-        return minTime;
-    }
-    private float[] TimeRemain(int[] year, int[] month, int[] day, int[] hours, int[] minute, int[] sec)
-    {
-        float[] timeRemain = { 0f, 0f, 0f };
-        for (int i = 0; i < 3; i++)
-        {
-            Debug.Log(">>" + year[i] + month[i] + day[i] + hours[i] + minute[i] + sec[i]);
-            timeRemain[i] = year[i] * 10000000000f + month[i] * 100000000f + day[i] * 1000000f + hours[i] * 10000f + minute[i] * 100f + sec[i];
-
-        }
-        Debug.Log(">>" + year[0] + month[0] + day[0] + hours[0] + minute[0] + sec[0] + "2 " + year[1] + month[1] + day[1] + hours[1] + minute[1] + sec[2] + "3" + year[2] + month[2] + day[2] + hours[2] + minute[2] + sec[2]);
-        Debug.Log("time Remain: " + timeRemain[0] + " " + timeRemain[0] + " " + timeRemain[0]);
-        return timeRemain;
-    }
-    private void ManageButtons()
-    {
-        if (PlayerPrefs.GetInt("WheelOfFourune", 1) == 0)
-        {
-            //btnWheel.interactable = false;
-            btnWheelVideo.interactable = false;
-            objNumVideoWheel.SetActive(false);
-            objTimeVideo.SetActive(true);
-        }
-        else
-        {
-            objTimeVideo.SetActive(false);
-            txtTimeRemain.text = "00:00:00";
-            btnWheelVideo.interactable = true;
-            //btnWheel.interactable = true;
-            objNumVideoWheel.SetActive(true);
-            txtNumVideoWheel.text = PlayerPrefs.GetInt("WheelOfFourune", 1).ToString();
-        }
-        txtNumVideoWheel.text = PlayerPrefs.GetInt("WheelOfFourune", 1).ToString();
-        spinning = false;
-        anglePerItem = 360 / prize.Count;
-    }
-
-    private void UseWheel()
-    {
-        PlayerPrefs.SetInt("WheelOfFourune", PlayerPrefs.GetInt("WheelOfFourune", 1) - 1);
-        int[] year = new int[3], month = new int[3], day = new int[3], hours = new int[3], minute = new int[3], sec = new int[3];
-        for (int i = 0; i < 3; i++)
-        {
-            string[] arr = PlayerPrefs.GetString(timeWheel[i], "1992,11,30,00,00,00").Split(',');
-            year[i] = Int32.Parse(arr[0]);
-            month[i] = Int32.Parse(arr[1]);
-            day[i] = Int32.Parse(arr[2]);
-            hours[i] = Int32.Parse(arr[3]);
-            minute[i] = Int32.Parse(arr[4]);
-            sec[i] = Int32.Parse(arr[5]);
-        }
-        float[] timeRemain = { 0f, 0f, 0f };
-        timeRemain = TimeRemain(year, month, day, hours, minute, sec);
-        int index = -1;
-        for (int i = 0; i < 3; i++)
-        {
-            if (timeRemain[i] == MinTime(timeRemain))
-            {
-                index = i;
-            }
-        }
-        StartCoroutine(GetDateTime.IEGetDateTime((status) =>
-        {
-            TimeSpan nowTimeSpan = new TimeSpan(status.Day, status.Hour, status.Minute, status.Second);
-            Debug.Log(nowTimeSpan.Days + "//" + nowTimeSpan.Hours + ":" + nowTimeSpan.Minutes + ":" + nowTimeSpan.Seconds);
-            TimeSpan plusTimeSpan = new TimeSpan(0, 3, 0, 0);
-            TimeSpan result = plusTimeSpan + nowTimeSpan;
-            Debug.Log(result.Days + "//" + result.Hours + ":" + result.Minutes + ":" + result.Seconds);
-            PlayerPrefs.SetString(timeWheel[index], DateTime.Now.Year.ToString() + "," + DateTime.Now.Month.ToString() + "," + result.Days.ToString() + "," + result.Hours.ToString() + "," + result.Minutes.ToString() + "," + result.Seconds.ToString());
-        }));
-    }
-    #endregion
 }

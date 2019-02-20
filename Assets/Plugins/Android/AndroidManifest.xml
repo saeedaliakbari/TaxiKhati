@@ -3,8 +3,8 @@
           package="ir.balootgames.taxi"
           xmlns:tools="http://schemas.android.com/tools"
           android:installLocation="auto"
-          android:versionName="0.1"
-          android:versionCode="1">
+          android:versionName="1"
+          android:versionCode="2">
   <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="26" />
   <supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" android:xlargeScreens="true" android:anyDensity="true" />
   <uses-permission android:name="android.permission.INTERNET" />

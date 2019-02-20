@@ -97,8 +97,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteBox: {fileID: 212783461751452974}
-  box1: {fileID: 21300000, guid: 7d867a0d796f2ba48b0c8dd2a54ba00c, type: 3}
-  box2: {fileID: 21300000, guid: 55d29f8d438ab94448c531d9d6b20e5e, type: 3}
+  sprBox:
+  - {fileID: 21300000, guid: 7d867a0d796f2ba48b0c8dd2a54ba00c, type: 3}
+  - {fileID: 21300000, guid: 55d29f8d438ab94448c531d9d6b20e5e, type: 3}
+  - {fileID: 21300000, guid: 8dc310c2145c52341a3920b20643bcdf, type: 3}
   parkPlace: {fileID: 0}
   carIndex: 0
 --- !u!212 &212783461751452974

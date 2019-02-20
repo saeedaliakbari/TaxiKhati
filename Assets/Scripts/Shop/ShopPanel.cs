@@ -38,7 +38,7 @@ public class ShopPanel : MonoBehaviour
 
     public void BuyCarClick(int index)
     {
-        Controller.instance.CheckAndSpawnNewCar(index - 1, true);
+        Controller.instance.CheckAndSpawnNewCar(index - 1, true, 2);
         UpdateCarItems();
     }
 

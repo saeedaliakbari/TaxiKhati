@@ -199,14 +199,33 @@ public class Car : MonoBehaviour
         int index = PlayerPrefs.GetInt("unlocked_airline", 1) - 1;//لول آخرین ماشین باز شده را می دهد
         //CurrencyController.CreditBalance(0, (int)(earnings * Const.AIRLINE_INCREASE_PERCENT[index]));
         //Debug.Log("Coin : " + PlayerPrefs.GetFloat("coin") + " PLUS: " + (int)(earnings * increasePercent));
-        if (Manager.GetCurrentTime() < Manager.GetActionTime("income_x2"))
-        {
-            Debug.Log("income_x2 : " + (Manager.GetActionTime("income_x2") - Manager.GetCurrentTime()));
-            PlayerPrefs.SetFloat("coin", PlayerPrefs.GetFloat("coin", 5000) + (int)(earnings * increasePercent * 2 * PlayerPrefs.GetFloat("incomeLine", 1)));
-        }
-        else {
-            PlayerPrefs.SetFloat("coin", PlayerPrefs.GetFloat("coin", 5000) + (int)(earnings * increasePercent * PlayerPrefs.GetFloat("incomeLine", 1)));
-        }
+        float ratio = ((Manager.GetCurrentTime() < Manager.GetActionTime("speed_x2")) ? 2 : 1) /** Const.AIRLINE_INCREASE_PERCENT[index]*/;//ریت بدست آوردن سکه
+        ratio *= ((Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m")) ? 5 : 1);
+        ratio *= ((Manager.GetCurrentTime() < Manager.GetActionTime("2x_speed_for_150s")) ? 2 : 1);
+        PlayerPrefs.SetFloat("coin", PlayerPrefs.GetFloat("coin", 5000) + (int)(earnings * increasePercent * ratio * PlayerPrefs.GetFloat("incomeLine", 1)));
+        //if (Manager.GetCurrentTime() < Manager.GetActionTime("income_x2"))
+        //{
+        //    if (Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m"))
+        //    {
+               
+        //    }
+        //    else
+        //    {
+        //        PlayerPrefs.SetFloat("coin", PlayerPrefs.GetFloat("coin", 5000) + (int)(earnings * increasePercent * 2 * PlayerPrefs.GetFloat("incomeLine", 1)));
+        //    }
+        //    //Debug.Log("income_x2 : " + (Manager.GetActionTime("income_x2") - Manager.GetCurrentTime()));
+
+        //}
+        //else {
+        //    if (Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m"))
+        //    {
+        //        PlayerPrefs.SetFloat("coin", PlayerPrefs.GetFloat("coin", 5000) + (int)(earnings * increasePercent * 5 * PlayerPrefs.GetFloat("incomeLine", 1)));
+        //    }
+        //    else {
+        //        PlayerPrefs.SetFloat("coin", PlayerPrefs.GetFloat("coin", 5000) + (int)(earnings * increasePercent * PlayerPrefs.GetFloat("incomeLine", 1)));
+        //    }
+        //}
+
         txtCoin.text = PlayerPrefs.GetFloat("coin", 5000).ToString();
         Controller.instance.slotManager.ShowGoalAnimation();//وقتی به نقطه پایان می رسد
     }

@@ -26,7 +26,7 @@ public class CarItem : MonoBehaviour
         {
             video = (index == coinSalable - 1);
         }
-        Debug.Log("Index: " + index + " coinSalable: " + coinSalable + " Video Salable : " + video+" COin"+ coin);
+        //Debug.Log("Index: " + index + " coinSalable: " + coinSalable + " Video Salable : " + video+" COin"+ coin);
         imgLock.gameObject.SetActive(!visible);
         if (video && PlayerPrefs.GetInt("mergeCarForVideo", 1) >= 10)
         {

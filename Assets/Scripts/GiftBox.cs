@@ -5,17 +5,17 @@ using UnityEngine;
 public class GiftBox : MonoBehaviour
 {
     public SpriteRenderer spriteBox;
-    public Sprite box1, box2;
+    public Sprite[] sprBox;//0: normal , 1:special, 2: store;
     [HideInInspector]
     public ParkingPlace parkPlace;
     [HideInInspector]
     public int carIndex;
     private bool opened = false;
 
-    public void SetUpBox(int index, ParkingPlace place)
+    public void SetUpBox(int index, ParkingPlace place,int modelBox)
     {//ساختن باکس جدید درصفحه
         carIndex = index;//شماره ماشین
-        spriteBox.sprite = index < 4 ? box1 : box2;//باکس در لول های پایین تر از 4 و بالاتر از 4 متفاوت است
+        spriteBox.sprite = sprBox[modelBox];//باکس در لول های پایین تر از 4 و بالاتر از 4 متفاوت است
         parkPlace = place;//بهش پارکینگ را هم می دهد
     }
     public void StartAutoOpen()//بعد از 3 ثانیه باکس خودش باز شود

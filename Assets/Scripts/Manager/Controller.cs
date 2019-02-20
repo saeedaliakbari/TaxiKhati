@@ -104,7 +104,7 @@ public class Controller : MonoBehaviour
         //Sound.instance.Play(Sound.Others.Buy);
         int index = PlayerPrefs.GetInt("curr_car_index", 0);
         Debug.Log("current Car : " + index);
-        CheckAndSpawnNewCar(index, false);
+        CheckAndSpawnNewCar(index, false,0);
         if (PlayerPrefs.GetInt("returned_car", 0) == 0)
         {
             PlayerPrefs.SetInt("buyed_car", PlayerPrefs.GetInt("buyed_car", 0) + 1);
@@ -115,7 +115,7 @@ public class Controller : MonoBehaviour
             //guideManager.UpdateAfter(1);
         }
     }
-    public void CheckAndSpawnNewCar(int index, bool hasBox)
+    public void CheckAndSpawnNewCar(int index, bool hasBox, int modelBox)
     {
         int lastSalableTaxiLevel = lastSalableLevel[PlayerPrefs.GetInt("unlocked_car", 1) - 1];
         if (lastSalableTaxiLevel == 1)
@@ -161,7 +161,7 @@ public class Controller : MonoBehaviour
                 //else
                 //{
                 if (hasBox)
-                    SpawnABox(index, parkPlace);
+                    SpawnABox(index, parkPlace,modelBox);
                 else
                     SpawnACar(index, parkPlace);
                 //}
@@ -213,7 +213,7 @@ public class Controller : MonoBehaviour
         }
         else
         {
-            SpawnABox(index, parkPlace);
+            SpawnABox(index, parkPlace,2);
         }
     }
     public Car SpawnACar(int carIndex, ParkingPlace parkPlace, bool scaleUp = false)
@@ -229,13 +229,13 @@ public class Controller : MonoBehaviour
         PlayerPrefs.SetInt("checkLevel", 0);
         return car;//ماشین رو برمیگردونه
     }
-    public GiftBox SpawnABox(int carIndex, ParkingPlace parkPlace)
+    public GiftBox SpawnABox(int carIndex, ParkingPlace parkPlace,int modelBox)
     {
         GiftBox box = Instantiate(boxPrefab, Vector3.zero, Quaternion.identity);//ایجاد کرد یک باکس
         box.transform.SetParent(parkPlace.transform);//پرنت در هایرارکی مکان پارکینگ تعیین می شود
         box.transform.localScale = Vector3.one;
         box.transform.position = parkPlace.transform.position;
-        box.SetUpBox(carIndex, parkPlace);
+        box.SetUpBox(carIndex, parkPlace, modelBox);
         return box;
     }
     public void NewCarTimeing()
@@ -269,7 +269,33 @@ public class Controller : MonoBehaviour
             if (parkPlace != null)
             {
                 Debug.Log("parkPlace != null");
-                SpawnABox(index - 1, parkPlace);
+                SpawnABox(index - 1, parkPlace,0);
+
+            }
+        }
+    }
+    public void SpawnABoxWheel()
+    {
+        ParkingPlace parkPlace = parkingManager.GetEmptyPlace();
+        int taxiLvl = PlayerPrefs.GetInt("unlocked_car", 1);
+        int index = taxiLvl - 4;
+        Debug.Log("taxiLvl: " + PlayerPrefs.GetInt("unlocked_car", 1) + " UNLOCK CAR : " + index);
+        GameObject obj;
+        try
+        {
+            obj = parkPlace.GetComponentInChildren<GameObject>();
+            if (obj != null)
+            {
+                Debug.Log("parkPlace.GetComponentInChildren<GameObject>() != null");
+                SpawnABoxTime();
+            }
+        }
+        catch (System.Exception)
+        {
+            if (parkPlace != null)
+            {
+                Debug.Log("parkPlace != null");
+                SpawnABox(index - 1, parkPlace,1);
 
             }
         }
@@ -448,7 +474,7 @@ public class Controller : MonoBehaviour
             ParkingPlace place = parkingManager.GetPlace(boxObj.parkingIndex);// پارکینگ مورد نظر را برمیگرداند
             if (place != null)//اگر پارکینگ خالی نبود
             {
-                GiftBox box = SpawnABox(boxObj.carLevel - 1, place);//یک پارکینگ با مشخصات داده شده ایجاد می کند
+                GiftBox box = SpawnABox(boxObj.carLevel - 1, place,0);//یک پارکینگ با مشخصات داده شده ایجاد می کند
                 box.StartAutoOpen();
             }
         }
