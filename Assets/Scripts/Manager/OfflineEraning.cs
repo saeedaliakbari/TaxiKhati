@@ -31,6 +31,7 @@ public class OfflineEraning : MonoBehaviour
         PlayerPrefs.SetFloat("coin", PlayerPrefs.GetFloat("coin", 5000) + value);
         txtCoin.text = PlayerPrefs.GetFloat("coin", 5000).ToString();
         Controller.instance.CloseOffEarning();
+        controller.SetText();
     }
     public void ThirdClick()
     {

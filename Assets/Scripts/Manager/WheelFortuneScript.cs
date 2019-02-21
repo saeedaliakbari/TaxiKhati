@@ -218,13 +218,26 @@ public class WheelFortuneScript : MonoBehaviour
         }
         else if (itemNumber == 1)
         {
-            Manager.SetActionTime("5x_earning_for_1m", (60 + Manager.GetCurrentTime()));
+            if (Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m"))
+            {
+                Manager.SetActionTime("5x_earning_for_1m", (Manager.GetActionTime("5x_earning_for_1m") + 60 + Manager.GetCurrentTime()));
+            }
+            else {
+                Manager.SetActionTime("5x_earning_for_1m", (60 + Manager.GetCurrentTime()));
+            }
             videoAds.shopPanel.controller.txtPanelMessage.text = "به مدت 1 دقیقه در آمد شما 5 برابر شد";
             videoAds.shopPanel.controller.slotManager.UpdateEarningSpeedText();
         }
         else if (itemNumber == 2)
         {
-            Manager.SetActionTime("2x_speed_for_150s", (150 + Manager.GetCurrentTime()));
+            if (Manager.GetCurrentTime() < Manager.GetActionTime("2x_speed_for_150s"))
+            {
+                Manager.SetActionTime("2x_speed_for_150s", (150 + Manager.GetActionTime("2x_speed_for_150s") + Manager.GetCurrentTime()));
+            }
+            else {
+                Manager.SetActionTime("2x_speed_for_150s", (150 + Manager.GetCurrentTime()));
+            }
+
             videoAds.shopPanel.controller.txtPanelMessage.text = "به مدت 150 ثانیه سرعت شما 2 برابر شد";
             videoAds.shopPanel.controller.slotManager.UpdateEarningSpeedText();
         }

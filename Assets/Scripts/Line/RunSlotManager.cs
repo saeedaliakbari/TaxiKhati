@@ -67,7 +67,7 @@ public class RunSlotManager : MonoBehaviour
         RunSlot slot = (RunSlot)Instantiate(slotPrefab, Vector3.zero, Quaternion.identity);//یک لاین ایجاد می کند
         //Debug.Log("scale: " + slot.transform.localScale);
         slot.transform.SetParent(transform);//پدر را در هایرارکی همین آبجکت قرار می دهد
-        slot.transform.localScale = Vector3.one;//اسکیل لاین را یک قرار می دهد
+        slot.transform.localScale = Vector3.one * 0.2f;//اسکیل لاین را یک قرار می دهد
         //Debug.Log("scale: " + slot.transform.localScale);
         listSlot.Add(slot);//داخل لیستی که لاین ها هستن این لاین را اضافه می کندبه آخر لیست
     }
@@ -75,9 +75,9 @@ public class RunSlotManager : MonoBehaviour
     {
         for (int i = 0; i < listSlot.Count; i++)
         {//به تعداد لاین هایی که در لیست لاین ها هست
-            listSlot[i].transform.localPosition = new Vector3(0, (i - ((listSlot.Count - 1) / 2f)) * 0.4f);//موقعیت ایکس تغییری نمی کند. و موقعیت ایگری به نسبت شماره داخل لیست 
+            listSlot[i].transform.localPosition = new Vector3(0, (i - ((listSlot.Count - 1) / 2f)) * 0.09f);//موقعیت ایکس تغییری نمی کند. و موقعیت ایگری به نسبت شماره داخل لیست 
         }
-        txtNum.transform.localPosition = new Vector3(0, (listSlot.Count - ((listSlot.Count - 1) / 2f)) * 0.4f);
+        txtNum.transform.localPosition = new Vector3(0, (listSlot.Count - ((listSlot.Count - 1) / 2f)) * 0.09f);
     }
     public void UpdateState()
     {
