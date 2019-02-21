@@ -142,7 +142,7 @@ public class WheelFortuneScript : MonoBehaviour
         btnWheelGem.interactable = false;
         anglePerItem = 360 / maxRotaiton.Length;
         txtNumVideoWheel.text = PlayerPrefs.GetInt("VideoWheel", 3).ToString() + "/3";
-        randomTime = UnityEngine.Random.Range(3, 8);
+        randomTime = UnityEngine.Random.Range(3, 6);
         int iPercent = UnityEngine.Random.Range(0, 100);
         Debug.Log("darsad>>" + iPercent);
         if (video)
@@ -192,7 +192,7 @@ public class WheelFortuneScript : MonoBehaviour
         }
         Debug.Log("itemnum>>" + itemNumber);
         float maxAngle = 360 * randomTime + maxRotaiton[itemNumber];
-        StartCoroutine(SpinTheWheel(3 * randomTime, maxAngle));
+        StartCoroutine(SpinTheWheel(randomTime, maxAngle));
     }
     #endregion//باید کدهاش بررسی شود
     public void BtnWheelWithGem()

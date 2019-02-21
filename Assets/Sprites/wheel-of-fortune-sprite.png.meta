@@ -5,6 +5,18 @@ TextureImporter:
     21300000: wheel-of-fortune-sprite_0
     21300002: wheel-of-fortune-sprite_1
     21300004: wheel-of-fortune-sprite_2
+    21300006: wheel-of-fortune-sprite_3
+    21300008: wheel-of-fortune-sprite_4
+    21300010: wheel-of-fortune-sprite_5
+    21300012: wheel-of-fortune-sprite_6
+    21300014: wheel-of-fortune-sprite_9
+    21300016: wheel-of-fortune-sprite_10
+    21300018: wheel-of-fortune-sprite_11
+    21300020: wheel-of-fortune-sprite_12
+    21300022: wheel-of-fortune-sprite_13
+    21300024: wheel-of-fortune-sprite_14
+    21300026: wheel-of-fortune-sprite_15
+    21300028: wheel-of-fortune-sprite_16
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -95,10 +107,10 @@ TextureImporter:
       name: wheel-of-fortune-sprite_0
       rect:
         serializedVersion: 2
-        x: 149
-        y: 252
-        width: 724
-        height: 724
+        x: 12
+        y: 832
+        width: 168
+        height: 182
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -109,10 +121,10 @@ TextureImporter:
       name: wheel-of-fortune-sprite_1
       rect:
         serializedVersion: 2
-        x: 288
-        y: 75
-        width: 52
-        height: 115
+        x: 294
+        y: 292
+        width: 726
+        height: 725
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -123,10 +135,178 @@ TextureImporter:
       name: wheel-of-fortune-sprite_2
       rect:
         serializedVersion: 2
-        x: 420
-        y: 72
-        width: 564
+        x: 12
+        y: 743
+        width: 208
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: wheel-of-fortune-sprite_3
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 455
+        width: 209
+        height: 265
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: wheel-of-fortune-sprite_4
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 311
+        width: 113
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: wheel-of-fortune-sprite_5
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 292
+        width: 140
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: wheel-of-fortune-sprite_6
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 121
+        width: 157
+        height: 156
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: wheel-of-fortune-sprite_9
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 147
+        width: 160
+        height: 122
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: wheel-of-fortune-sprite_10
+      rect:
+        serializedVersion: 2
+        x: 457
+        y: 147
+        width: 561
         height: 130
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: wheel-of-fortune-sprite_11
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 127
+        width: 68
+        height: 146
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: wheel-of-fortune-sprite_12
+      rect:
+        serializedVersion: 2
+        x: 472
+        y: 8
+        width: 460
+        height: 131
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: wheel-of-fortune-sprite_13
+      rect:
+        serializedVersion: 2
+        x: 951
+        y: 17
+        width: 52
+        height: 115
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: wheel-of-fortune-sprite_14
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 17
+        width: 157
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: wheel-of-fortune-sprite_15
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 22
+        width: 89
+        height: 89
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: wheel-of-fortune-sprite_16
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 41
+        width: 95
+        height: 80
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

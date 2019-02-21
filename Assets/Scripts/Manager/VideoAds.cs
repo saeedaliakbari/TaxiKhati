@@ -73,7 +73,9 @@ public class VideoAds : MonoBehaviour
     private void GiftDoubleOfflineEarn()
     {
         offlineEarning.doubleCoin = true;
-        offlineEarning.btnDouble.SetActive(false);
+        offlineEarning.AnimValueChange();
+        offlineEarning.btnDouble.interactable = false;
+        offlineEarning.btnThird.interactable = false;
     }
     #endregion
     #region Btn Income X2
@@ -204,7 +206,7 @@ public class VideoAds : MonoBehaviour
                     if (result.completed && result.rewarded)
                     {
                         PlayerPrefs.SetInt("mergeCarForVideo", 1);
-                        GiftShopCar(index-1);
+                        GiftShopCar(index - 1);
                     }
                     else
                     {
