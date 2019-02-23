@@ -6,7 +6,7 @@ public class ShopItemEarn : MonoBehaviour
 {
     public ShopItem[] itemsEarn;
     public RunSlotManager runSlotManager;
-    public Controller controller;
+    //public Controller controller;
     public float[] upIncome;
     public void OpenPanel()
     {
@@ -44,11 +44,11 @@ public class ShopItemEarn : MonoBehaviour
         }
         else
         {
-            controller.txtError.text = "به مقدار کافی پول ندارید";
-            controller.txtError.gameObject.SetActive(true);
+            Controller.instance.txtError.text = "به مقدار کافی پول ندارید";
+            Controller.instance.txtError.gameObject.SetActive(true);
             Timer.Schedule(this, 3f, () =>
             {
-                controller.txtError.gameObject.SetActive(false);
+                Controller.instance.txtError.gameObject.SetActive(false);
             });
         }
     }

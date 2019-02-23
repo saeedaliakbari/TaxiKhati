@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class ExchangeToken : MonoBehaviour
 {
-    public Controller controller;
+    //public Controller controller;
     public InputField inputTokenValue;
     public TrimNumberText txtCoinValue;
     private float rate, tokenValue;
@@ -18,7 +18,7 @@ public class ExchangeToken : MonoBehaviour
         {
             coin = Mathf.Floor(float.Parse(inputTokenValue.text) * rate);
             txtCoinValue.text = coin.ToString();
-            if (coin > PlayerPrefs.GetFloat("coin", 0))
+            if (coin > PlayerPrefs.GetFloat("coin", 5000))
             {
                 btnExchange.interactable = false;
             }
@@ -38,8 +38,8 @@ public class ExchangeToken : MonoBehaviour
     {
         tokenValue = Mathf.Floor(float.Parse(inputTokenValue.text) * rate);
         PlayerPrefs.SetFloat("token", PlayerPrefs.GetFloat("token", 0) + tokenValue);
-        PlayerPrefs.SetFloat("coin", PlayerPrefs.GetFloat("coin", 0) - (tokenValue * rate));
-        controller.SetText();
+        PlayerPrefs.SetFloat("coin", PlayerPrefs.GetFloat("coin", 5000) - (tokenValue * rate));
+        Controller.instance.SetText();
     }
     public void BtnPlus(int i)
     {

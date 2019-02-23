@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ShopItemPanel : MonoBehaviour
 {
-    public Controller controller;
+    //public Controller controller;
     public RunSlotManager runSlotManager;
     public GameObject panelMessage;
     public Button itemShopCar;
@@ -39,11 +39,11 @@ public class ShopItemPanel : MonoBehaviour
         }
         else
         {
-            controller.txtError.text = "به مقدار کافی توکن ندارید";
-            controller.txtError.gameObject.SetActive(true);
+            Controller.instance.txtError.text = "به مقدار کافی توکن ندارید";
+            Controller.instance.txtError.gameObject.SetActive(true);
             Timer.Schedule(this, 3f, () =>
             {
-                controller.txtError.gameObject.SetActive(false);
+                Controller.instance.txtError.gameObject.SetActive(false);
             });
         }
     }
@@ -62,11 +62,11 @@ public class ShopItemPanel : MonoBehaviour
         }
         else
         {
-            controller.txtError.text = "به مقدار کافی توکن ندارید";
-            controller.txtError.gameObject.SetActive(true);
+            Controller.instance.txtError.text = "به مقدار کافی توکن ندارید";
+            Controller.instance.txtError.gameObject.SetActive(true);
             Timer.Schedule(this, 3f, () =>
             {
-                controller.txtError.gameObject.SetActive(false);
+                Controller.instance.txtError.gameObject.SetActive(false);
             });
         }
     }
@@ -86,24 +86,23 @@ public class ShopItemPanel : MonoBehaviour
             }
             //Debug.Log("Plus Coin : " + runSlotManager.earnPerSec * houers * 60 * 60 + ">>" + controller.txtCoin.text);
             PlayerPrefs.SetFloat("coin", PlayerPrefs.GetFloat("coin", 5000) + (runSlotManager.earnPerSec * houers * 60 * 60));
-            controller.txtCoin.text = controller.txtCoinTop.text = PlayerPrefs.GetFloat("coin", 5000).ToString();
             PlayerPrefs.SetFloat("gem", PlayerPrefs.GetFloat("gem") - Gem);
-            controller.txtGem.text = PlayerPrefs.GetFloat("gem").ToString();
-            controller.txtError.text = Manager.ChangeNumber(runSlotManager.earnPerSec * houers * 60 * 60) + "سکه اضافه شد";
-            controller.txtError.gameObject.SetActive(true);
+            Controller.instance.SetText();
+            Controller.instance.txtError.text = Manager.ChangeNumber(runSlotManager.earnPerSec * houers * 60 * 60) + "سکه اضافه شد";
+            Controller.instance.txtError.gameObject.SetActive(true);
             Timer.Schedule(this, 1.5f, () =>
             {
-                controller.txtError.gameObject.SetActive(false);
+                Controller.instance.txtError.gameObject.SetActive(false);
             });
         }
         else
         {
             PlayerPrefs.SetFloat("gem", PlayerPrefs.GetFloat("gem") + Gem);
-            controller.txtError.text = "به مقدار کافی جم ندارید";
-            controller.txtError.gameObject.SetActive(true);
+            Controller.instance.txtError.text = "به مقدار کافی جم ندارید";
+            Controller.instance.txtError.gameObject.SetActive(true);
             Timer.Schedule(this, 3f, () =>
             {
-                controller.txtError.gameObject.SetActive(false);
+                Controller.instance.txtError.gameObject.SetActive(false);
             });
         }
     }

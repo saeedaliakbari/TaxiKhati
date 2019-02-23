@@ -47,14 +47,14 @@ public class Controller : MonoBehaviour
         //Debug.Log(
         instance = this;
         PlayerPrefs.SetInt("mainAchiv16", PlayerPrefs.GetInt("mainAchiv16", 0) + 1);
-        PlayerPrefs.SetFloat("gem", 225);
+        PlayerPrefs.SetFloat("gem", 50000000);
         SetText();
 
     }
     public void SetText()
     {
         txtToken.text = PlayerPrefs.GetFloat("token", 0).ToString();
-        txtCoin.text = txtCoinTop.text = PlayerPrefs.GetFloat("coin", 0).ToString();
+        txtCoin.text = txtCoinTop.text = PlayerPrefs.GetFloat("coin", 5000).ToString();
         txtGem.text = PlayerPrefs.GetFloat("gem").ToString();
     }
     // Use this for initialization
@@ -104,7 +104,7 @@ public class Controller : MonoBehaviour
         //Sound.instance.Play(Sound.Others.Buy);
         int index = PlayerPrefs.GetInt("curr_car_index", 0);
         Debug.Log("current Car : " + index);
-        CheckAndSpawnNewCar(index, false,0);
+        CheckAndSpawnNewCar(index, false, 0);
         if (PlayerPrefs.GetInt("returned_car", 0) == 0)
         {
             PlayerPrefs.SetInt("buyed_car", PlayerPrefs.GetInt("buyed_car", 0) + 1);
@@ -149,7 +149,7 @@ public class Controller : MonoBehaviour
                 {
                     PlayerPrefs.SetFloat("coin", PlayerPrefs.GetFloat("coin", 5000) - price);
                 }
-                txtCoin.text = txtCoinTop.text = PlayerPrefs.GetFloat("coin", 5000).ToString();
+                SetText();
                 //if (index == 3)//این برای این است که بعضی مواقع ماشینی که خریده جدید پنل بالا بردن لول براش بیاد که که لولش بره بالا با ویدئو
                 //{
                 //    Debug.Log("index: " + index);
@@ -161,7 +161,7 @@ public class Controller : MonoBehaviour
                 //else
                 //{
                 if (hasBox)
-                    SpawnABox(index, parkPlace,modelBox);
+                    SpawnABox(index, parkPlace, modelBox);
                 else
                     SpawnACar(index, parkPlace);
                 //}
@@ -213,7 +213,7 @@ public class Controller : MonoBehaviour
         }
         else
         {
-            SpawnABox(index, parkPlace,2);
+            SpawnABox(index, parkPlace, 2);
         }
     }
     public Car SpawnACar(int carIndex, ParkingPlace parkPlace, bool scaleUp = false)
@@ -224,12 +224,11 @@ public class Controller : MonoBehaviour
         car.transform.localScale = Vector3.one * 0.1f;
         car.transform.position = parkPlace.transform.position;//موقعیت به موقعبت مکان فعلی تغییر میکند
         car.parkingPlace = parkPlace;//پارکنینگ را بهش میده
-        car.controller = this;
         if (scaleUp) car.GetComponent<Animator>().Play("MergeDone");//انیمیشن تمام شدن مرج رو ماشین جدیدی که ساخته شده انجام میشه
         PlayerPrefs.SetInt("checkLevel", 0);
         return car;//ماشین رو برمیگردونه
     }
-    public GiftBox SpawnABox(int carIndex, ParkingPlace parkPlace,int modelBox)
+    public GiftBox SpawnABox(int carIndex, ParkingPlace parkPlace, int modelBox)
     {
         GiftBox box = Instantiate(boxPrefab, Vector3.zero, Quaternion.identity);//ایجاد کرد یک باکس
         box.transform.SetParent(parkPlace.transform);//پرنت در هایرارکی مکان پارکینگ تعیین می شود
@@ -269,7 +268,7 @@ public class Controller : MonoBehaviour
             if (parkPlace != null)
             {
                 Debug.Log("parkPlace != null");
-                SpawnABox(index - 1, parkPlace,0);
+                SpawnABox(index - 1, parkPlace, 0);
 
             }
         }
@@ -295,7 +294,7 @@ public class Controller : MonoBehaviour
             if (parkPlace != null)
             {
                 Debug.Log("parkPlace != null");
-                SpawnABox(index - 1, parkPlace,1);
+                SpawnABox(index - 1, parkPlace, 1);
 
             }
         }
@@ -474,7 +473,7 @@ public class Controller : MonoBehaviour
             ParkingPlace place = parkingManager.GetPlace(boxObj.parkingIndex);// پارکینگ مورد نظر را برمیگرداند
             if (place != null)//اگر پارکینگ خالی نبود
             {
-                GiftBox box = SpawnABox(boxObj.carLevel - 1, place,0);//یک پارکینگ با مشخصات داده شده ایجاد می کند
+                GiftBox box = SpawnABox(boxObj.carLevel - 1, place, 0);//یک پارکینگ با مشخصات داده شده ایجاد می کند
                 box.StartAutoOpen();
             }
         }

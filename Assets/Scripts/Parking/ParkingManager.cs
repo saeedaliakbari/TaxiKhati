@@ -11,7 +11,7 @@ public class ParkingManager : MonoBehaviour
     public List<GameObject> placesPosition = new List<GameObject>();//لیست پارکینگ ها
     public ParkingPlace placePrefab;
     public ParkingPlaceVIP placeVIP;
-    public Controller controller;
+    //public Controller controller;
     private bool VipPlace = false;
     public CarSpeedTycoonBoosts carSpeedTycoonBoosts;
     public EarningOfflineTycoonBoosts earningOfflineTycoonBoosts;
@@ -141,7 +141,7 @@ public class ParkingManager : MonoBehaviour
         ParkingPlaceVIP place = (ParkingPlaceVIP)Instantiate(placeVIP, Vector3.zero, Quaternion.identity);
         place.transform.SetParent(transform);
         place.transform.localScale = Vector3.one * 0.6f;
-        place.controller = controller;
+        //place.controller = controller;
         placesPosition.Add(place.gameObject);
         VipPlace = true;
     }

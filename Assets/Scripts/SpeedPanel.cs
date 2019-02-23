@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class SpeedPanel : MonoBehaviour
 {
-    public Controller controller;
+    //public Controller controller;
     public Text txtTimer;
     public Image imgProgress;
     private int COST = 3, BUY_TIME = 150;
@@ -41,7 +41,7 @@ public class SpeedPanel : MonoBehaviour
         if (PlayerPrefs.GetFloat("gem", 0) >= COST)
         {
             PlayerPrefs.SetFloat("gem", PlayerPrefs.GetFloat("gem", 0) - COST);
-            controller.SetText();
+            Controller.instance.SetText();
             float timeValue = Mathf.Max(0, (float)(Manager.GetActionTime("speed_x2") - Manager.GetCurrentTime()));
             double nowtime = Math.Round(Manager.GetCurrentTime());
             double plusTime = Math.Round(150 + timeValue + Manager.GetCurrentTime());
@@ -49,11 +49,11 @@ public class SpeedPanel : MonoBehaviour
         }
         else
         {
-            controller.txtError.text = "به مقدار کافی جم ندارید";
-            controller.txtError.gameObject.SetActive(true);
+            Controller.instance.txtError.text = "به مقدار کافی جم ندارید";
+            Controller.instance.txtError.gameObject.SetActive(true);
             Timer.Schedule(this, 3f, () =>
             {
-                controller.txtError.gameObject.SetActive(false);
+                Controller.instance.txtError.gameObject.SetActive(false);
             });
         }
     }

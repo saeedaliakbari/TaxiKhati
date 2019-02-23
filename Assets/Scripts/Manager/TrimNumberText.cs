@@ -13,35 +13,35 @@ public class TrimNumberText : Text
         {
             if (number >= 1000000000000000000000000f)
             {
-                GetComponent<Text>().text = (number / 1000000000000000000000000f).ToString("0.0") + "AD";
+                GetComponent<Text>().text = (number / 1000000000000000000000000f).ToString("0.0") + " AD";
             }
             else if (number >= 1000000000000000000000f)
             {
-                GetComponent<Text>().text = (number / 1000000000000000000000f).ToString("0.0") + "AC";
+                GetComponent<Text>().text = (number / 1000000000000000000000f).ToString("0.0") + " AC";
             }
             else if (number >= 1000000000000000000f)
             {
-                GetComponent<Text>().text = (number / 1000000000000000000f).ToString("0.0") + "AB";
+                GetComponent<Text>().text = (number / 1000000000000000000f).ToString("0.0") + " AB";
             }
             else if (number >= 1000000000000000)
             {
-                GetComponent<Text>().text = (number / 1000000000000000).ToString("0.0") + "AA";
+                GetComponent<Text>().text = (number / 1000000000000000).ToString("0.0") + " AA";
             }
             else if (number >= 1000000000000)
             {
-                GetComponent<Text>().text = (number / 1000000000000).ToString("0.0") + "T";
+                GetComponent<Text>().text = (number / 1000000000000).ToString("0.0") + " T";
             }
             else if (number >= 1000000000)
             {
-                GetComponent<Text>().text = (number / 1000000000).ToString("0.0") + "B";
+                GetComponent<Text>().text = (number / 1000000000).ToString("0.0") + " B";
             }
             else if (number >= 1000000)
             {
-                GetComponent<Text>().text = (number / 1000000).ToString("0.0") + "M";
+                GetComponent<Text>().text = (number / 1000000).ToString("0.0") + " M";
             }
             else if (number >= 1000)
             {
-                GetComponent<Text>().text = (number / 1000).ToString("0.0") + "K";
+                GetComponent<Text>().text = (number / 1000).ToString("0.0") + " K";
             }
         }
     }

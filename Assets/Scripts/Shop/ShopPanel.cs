@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class ShopPanel : MonoBehaviour
 {
     public CarItem[] carItems;
-    public Controller controller;
+    //public Controller controller;
     public Button btnTaxi, btnOther;
     public Image imgSelectTaxi, imgUnselectTaxi;
     public Image imgSelectOther, imgUnselectOther;
@@ -21,7 +21,7 @@ public class ShopPanel : MonoBehaviour
     {
         int unloacked = PlayerPrefs.GetInt("unlocked_car", 1);
         //Debug.Log("unloacked" + unloacked + "lastSalableLevel>" + controller.lastSalableLevel[unloacked - 1]);
-        carItems[0].UpdateCarItem(true, controller.lastSalableLevel[unloacked - 1], 0);
+        carItems[0].UpdateCarItem(true, Controller.instance.lastSalableLevel[unloacked - 1], 0);
         for (int i = 1; i < carItems.Length; i++)
         {
             if (unloacked == 2)
@@ -32,7 +32,7 @@ public class ShopPanel : MonoBehaviour
             {
                 def = 2;
             }
-            carItems[i].UpdateCarItem(i < controller.lastSalableLevel[unloacked - 1], controller.lastSalableLevel[unloacked - 1], def);
+            carItems[i].UpdateCarItem(i < Controller.instance.lastSalableLevel[unloacked - 1], Controller.instance.lastSalableLevel[unloacked - 1], def);
         }
     }
 

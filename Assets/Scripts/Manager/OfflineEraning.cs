@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class OfflineEraning : MonoBehaviour
 {
-    public Controller controller;
+    //public Controller controller;
     public TrimNumberText valueTxt;
     [HideInInspector]
     public TrimNumberText txtCoin;
@@ -31,7 +31,7 @@ public class OfflineEraning : MonoBehaviour
         PlayerPrefs.SetFloat("coin", PlayerPrefs.GetFloat("coin", 5000) + value);
         txtCoin.text = PlayerPrefs.GetFloat("coin", 5000).ToString();
         Controller.instance.CloseOffEarning();
-        controller.SetText();
+        Controller.instance.SetText();
     }
     public void ThirdClick()
     {
@@ -41,7 +41,7 @@ public class OfflineEraning : MonoBehaviour
             btnThird.interactable = false;
             PlayerPrefs.SetFloat("gem", PlayerPrefs.GetFloat("gem") - 5);
             thirdCoin = true;
-            controller.SetText();
+            Controller.instance.SetText();
             AnimValueChange();
         }
     }

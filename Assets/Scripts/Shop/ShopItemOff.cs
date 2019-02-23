@@ -5,7 +5,7 @@ using UnityEngine;
 public class ShopItemOff : MonoBehaviour {
     public ShopItem[] itemsOff;
     public RunSlotManager runSlotManager;
-    public Controller controller;
+    //public Controller controller;
     public float[] offShopCar;
     public void OpenPanel()
     {
@@ -42,11 +42,11 @@ public class ShopItemOff : MonoBehaviour {
         }
         else
         {
-            controller.txtError.text = "به مقدار کافی پول ندارید";
-            controller.txtError.gameObject.SetActive(true);
+            Controller.instance.txtError.text = "به مقدار کافی پول ندارید";
+            Controller.instance.txtError.gameObject.SetActive(true);
             Timer.Schedule(this, 3f, () =>
             {
-                controller.txtError.gameObject.SetActive(false);
+                Controller.instance.txtError.gameObject.SetActive(false);
             });
         }
     }

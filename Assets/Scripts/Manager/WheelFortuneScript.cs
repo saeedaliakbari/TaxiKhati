@@ -200,6 +200,7 @@ public class WheelFortuneScript : MonoBehaviour
         if (PlayerPrefs.GetFloat("gem", 0) >= 5)
         {
             PlayerPrefs.SetFloat("gem", PlayerPrefs.GetFloat("gem") - 5);
+            Controller.instance.SetText();
             WheelStart(false);
         }
         else
@@ -209,12 +210,12 @@ public class WheelFortuneScript : MonoBehaviour
     }
     private void ManageGift(int itemNumber)
     {
-        videoAds.shopPanel.controller.panelMessage.SetActive(true);
+        Controller.instance.panelMessage.SetActive(true);
         if (itemNumber == 0)
         {
             PlayerPrefs.SetFloat("gem", PlayerPrefs.GetFloat("gem") + 20);
-            videoAds.shopPanel.controller.SetText();
-            videoAds.shopPanel.controller.txtPanelMessage.text = "20 الماس اضافه شد";
+            Controller.instance.SetText();
+            Controller.instance.txtPanelMessage.text = "20 الماس اضافه شد";
         }
         else if (itemNumber == 1)
         {
@@ -225,8 +226,8 @@ public class WheelFortuneScript : MonoBehaviour
             else {
                 Manager.SetActionTime("5x_earning_for_1m", (60 + Manager.GetCurrentTime()));
             }
-            videoAds.shopPanel.controller.txtPanelMessage.text = "به مدت 1 دقیقه در آمد شما 5 برابر شد";
-            videoAds.shopPanel.controller.slotManager.UpdateEarningSpeedText();
+            Controller.instance.txtPanelMessage.text = "به مدت 1 دقیقه در آمد شما 5 برابر شد";
+            Controller.instance.slotManager.UpdateEarningSpeedText();
         }
         else if (itemNumber == 2)
         {
@@ -238,22 +239,22 @@ public class WheelFortuneScript : MonoBehaviour
                 Manager.SetActionTime("2x_speed_for_150s", (150 + Manager.GetCurrentTime()));
             }
 
-            videoAds.shopPanel.controller.txtPanelMessage.text = "به مدت 150 ثانیه سرعت شما 2 برابر شد";
-            videoAds.shopPanel.controller.slotManager.UpdateEarningSpeedText();
+            Controller.instance.txtPanelMessage.text = "به مدت 150 ثانیه سرعت شما 2 برابر شد";
+            Controller.instance.slotManager.UpdateEarningSpeedText();
         }
         else if (itemNumber == 3)
         {
             for (int i = 0; i < 4; i++)
             {
-                videoAds.shopPanel.controller.SpawnABoxWheel();
+                Controller.instance.SpawnABoxWheel();
             }
-            videoAds.shopPanel.controller.txtPanelMessage.text = "4 جعبه طلایی به پارکینگ شما اضافه شد";
+            Controller.instance.txtPanelMessage.text = "4 جعبه طلایی به پارکینگ شما اضافه شد";
         }
         else if (itemNumber == 4)
         {
-            PlayerPrefs.SetFloat("coin", PlayerPrefs.GetFloat("coin") + (videoAds.shopPanel.controller.slotManager.earnPerSec * 4 * 60 * 60));
-            videoAds.shopPanel.controller.SetText();
-            videoAds.shopPanel.controller.txtPanelMessage.text = "به اندازه 4 ساعت درآمد فعلی  به شما پرداخت شد";
+            PlayerPrefs.SetFloat("coin", PlayerPrefs.GetFloat("coin",5000) + (Controller.instance.slotManager.earnPerSec * 4 * 60 * 60));
+            Controller.instance.SetText();
+            Controller.instance.txtPanelMessage.text = "به اندازه 4 ساعت درآمد فعلی  به شما پرداخت شد";
         }
     }
 }

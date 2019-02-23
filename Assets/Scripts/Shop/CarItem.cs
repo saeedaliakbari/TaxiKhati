@@ -8,17 +8,17 @@ public class CarItem : MonoBehaviour
     public Image car, earnSlider, speedSlider, imgLock, imgOff;
     public Text txtCoin, txtGem, txtName, txtOff;
     public Button btnBuyCoin, btnBuyGem, btnVideo;
-    public Controller controller;
+    //public Controller controller;
 
     public void UpdateCarItem(bool visible, int lastSalableLevel, int defrenceLastSalableLevel)
     {//وضعیت ماشین را بروز رسانی می کند در فروشگاه
         int index = transform.GetSiblingIndex();//یعنی از نظر فرزندی برای پدرخود چندم است در هایرارکی
         float balance;
         offDetection(visible);
-        txtName.text = visible ? controller.carName[index] : "???";
-        car.sprite = visible ? controller.activeCar[index] : controller.inActiveCar[index];//با توجه به فعال یا غیرفعال بودن اسپرایت فعال یا غیرفعال می شود
-        earnSlider.fillAmount = controller.earning[index]/* / controller.earning[49]*/;
-        speedSlider.fillAmount = controller.speed[index] / controller.speed[49];
+        txtName.text = visible ? Controller.instance.carName[index] : "???";
+        car.sprite = visible ? Controller.instance.activeCar[index] : Controller.instance.inActiveCar[index];//با توجه به فعال یا غیرفعال بودن اسپرایت فعال یا غیرفعال می شود
+        earnSlider.fillAmount = Controller.instance.earning[index]/* / controller.earning[49]*/;
+        speedSlider.fillAmount = Controller.instance.speed[index] / Controller.instance.speed[49];
         int coinSalable = lastSalableLevel - defrenceLastSalableLevel;
         bool coin = index < coinSalable;
         bool video = false;
@@ -41,7 +41,7 @@ public class CarItem : MonoBehaviour
             btnBuyGem.gameObject.SetActive(!coin && visible);
             if (coin)
             {
-                float coinPrice = PlayerPrefs.GetFloat("car_price_" + index, Mathf.Round(controller.basePrice[index]));
+                float coinPrice = PlayerPrefs.GetFloat("car_price_" + index, Mathf.Round(Controller.instance.basePrice[index]));
                 coinPrice = coinPrice * PlayerPrefs.GetFloat("offCar", 1);
                 txtCoin.text = coinPrice.ToString();
                 balance = PlayerPrefs.GetFloat("coin", 5000);
@@ -49,9 +49,9 @@ public class CarItem : MonoBehaviour
             }
             else
             {
-                txtGem.text = controller.baseGemPrice[index].ToString();
+                txtGem.text = Controller.instance.baseGemPrice[index].ToString();
                 balance = PlayerPrefs.GetFloat("gem", 0);
-                btnBuyGem.interactable = visible && balance >= controller.baseGemPrice[index];
+                btnBuyGem.interactable = visible && balance >= Controller.instance.baseGemPrice[index];
             }
         }
     }

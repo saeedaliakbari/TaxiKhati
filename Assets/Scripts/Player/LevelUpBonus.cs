@@ -8,14 +8,15 @@ public class LevelUpBonus : MonoBehaviour
     public GameObject parkItem, lineItem, coinItem, gemItem;
     public Text txtLevel, txtPark, txtLine, txtCoin, txtGem;
     public PlayerLevel playerLevel;
+    //public Controller controller;
     int newLevel;
     public void ShowLevelUpBonus(int newLevel)
     {
         this.newLevel = newLevel;
-        txtCoin.text = playerLevel.levelsInfo[newLevel - 2].coin.ToString();
-        txtGem.text = playerLevel.levelsInfo[newLevel - 2].gem.ToString();
-        txtLine.text = playerLevel.levelsInfo[newLevel - 2].linePlus.ToString();
-        txtPark.text = playerLevel.levelsInfo[newLevel - 2].parkingPlus.ToString();
+        txtCoin.text = "+" + playerLevel.levelsInfo[newLevel - 2].coin.ToString();
+        txtGem.text = "+" + playerLevel.levelsInfo[newLevel - 2].gem.ToString();
+        txtLine.text = "+" + playerLevel.levelsInfo[newLevel - 2].linePlus.ToString();
+        txtPark.text = "+" + playerLevel.levelsInfo[newLevel - 2].parkingPlus.ToString();
         txtLevel.text = newLevel.ToString();
 
         lineItem.SetActive(playerLevel.levelsInfo[newLevel - 2].linePlus > 0);
@@ -43,9 +44,9 @@ public class LevelUpBonus : MonoBehaviour
                     else
                     {
                         //پارکینگ و سکه وجم
-                        parkItem.transform.localPosition = new Vector3(-180, 0);
+                        parkItem.transform.localPosition = new Vector3(-230, 0);
                         coinItem.transform.localPosition = new Vector3(0, 0);
-                        gemItem.transform.localPosition = new Vector3(180, 0);
+                        gemItem.transform.localPosition = new Vector3(230, 0);
                     }
                 }
                 else
@@ -53,15 +54,15 @@ public class LevelUpBonus : MonoBehaviour
                     if (playerLevel.levelsInfo[newLevel - 2].linePlus > 0)
                     {
                         //پارکینگ و سکه و لاین
-                        parkItem.transform.localPosition = new Vector3(-180, 0);
+                        parkItem.transform.localPosition = new Vector3(-230, 0);
                         coinItem.transform.localPosition = new Vector3(0, 0);
-                        lineItem.transform.localPosition = new Vector3(180, 0);
+                        lineItem.transform.localPosition = new Vector3(230, 0);
                     }
                     else
                     {
                         //پارکینگ و سکه
-                        parkItem.transform.localPosition = new Vector3(-90, 0);
-                        coinItem.transform.localPosition = new Vector3(90, 0);
+                        parkItem.transform.localPosition = new Vector3(-120, 0);
+                        coinItem.transform.localPosition = new Vector3(120, 0);
                     }
                 }
             }
@@ -74,15 +75,15 @@ public class LevelUpBonus : MonoBehaviour
                     if (playerLevel.levelsInfo[newLevel - 2].linePlus > 0)
                     {
                         //پارکینگ و جم و لاین
-                        parkItem.transform.localPosition = new Vector3(-180, 0);
+                        parkItem.transform.localPosition = new Vector3(-230, 0);
                         gemItem.transform.localPosition = new Vector3(0, 0);
-                        lineItem.transform.localPosition = new Vector3(180, 0);
+                        lineItem.transform.localPosition = new Vector3(230, 0);
                     }
                     else
                     {
                         //پارکینگ و جم
-                        parkItem.transform.localPosition = new Vector3(-90, 0);
-                        gemItem.transform.localPosition = new Vector3(90, 0);
+                        parkItem.transform.localPosition = new Vector3(-120, 0);
+                        gemItem.transform.localPosition = new Vector3(120, 0);
                     }
                 }
                 else
@@ -90,8 +91,8 @@ public class LevelUpBonus : MonoBehaviour
                     if (playerLevel.levelsInfo[newLevel - 2].linePlus > 0)
                     {
                         //پارکینگ و لاین
-                        parkItem.transform.localPosition = new Vector3(-90, 0);
-                        lineItem.transform.localPosition = new Vector3(90, 0);
+                        parkItem.transform.localPosition = new Vector3(-120, 0);
+                        lineItem.transform.localPosition = new Vector3(120, 0);
                     }
                     else
                     {
@@ -115,15 +116,15 @@ public class LevelUpBonus : MonoBehaviour
                     if (playerLevel.levelsInfo[newLevel - 2].linePlus > 0)
                     {
                         //سکه وجم و لابن
-                        coinItem.transform.localPosition = new Vector3(-180, 0);
+                        coinItem.transform.localPosition = new Vector3(-230, 0);
                         gemItem.transform.localPosition = new Vector3(0, 0);
-                        lineItem.transform.localPosition = new Vector3(180, 0);
+                        lineItem.transform.localPosition = new Vector3(230, 0);
                     }
                     else
                     {
                         //سکه وجم
-                        coinItem.transform.localPosition = new Vector3(-90, 0);
-                        gemItem.transform.localPosition = new Vector3(90, 0);
+                        coinItem.transform.localPosition = new Vector3(-120, 0);
+                        gemItem.transform.localPosition = new Vector3(120, 0);
                     }
                 }
                 else
@@ -131,8 +132,8 @@ public class LevelUpBonus : MonoBehaviour
                     if (playerLevel.levelsInfo[newLevel - 2].linePlus > 0)
                     {
                         //سکه و لاین
-                        coinItem.transform.localPosition = new Vector3(-90, 0);
-                        lineItem.transform.localPosition = new Vector3(90, 0);
+                        coinItem.transform.localPosition = new Vector3(-120, 0);
+                        lineItem.transform.localPosition = new Vector3(120, 0);
                     }
                     else
                     {
@@ -150,13 +151,13 @@ public class LevelUpBonus : MonoBehaviour
                     if (playerLevel.levelsInfo[newLevel - 2].linePlus > 0)
                     {
                         //جم و لاین
-                        gemItem.transform.localPosition = new Vector3(90, 0);
-                        lineItem.transform.localPosition = new Vector3(270, 0);
+                        gemItem.transform.localPosition = new Vector3(-120, 0);
+                        lineItem.transform.localPosition = new Vector3(120, 0);
                     }
                     else
                     {
                         //جم
-                        gemItem.transform.localPosition = new Vector3(90, 0);
+                        gemItem.transform.localPosition = new Vector3(0, 0);
                     }
                 }
                 else
@@ -164,7 +165,7 @@ public class LevelUpBonus : MonoBehaviour
                     if (playerLevel.levelsInfo[newLevel - 2].linePlus > 0)
                     {
                         //لاین
-                        lineItem.transform.localPosition = new Vector3(270, 0);
+                        lineItem.transform.localPosition = new Vector3(0, 0);
                     }
                     else
                     {
@@ -181,6 +182,7 @@ public class LevelUpBonus : MonoBehaviour
     {
         PlayerPrefs.SetFloat("coin", PlayerPrefs.GetFloat("coin", 5000) + playerLevel.levelsInfo[newLevel - 2].coin);
         PlayerPrefs.SetFloat("gem", PlayerPrefs.GetFloat("gem") + playerLevel.levelsInfo[newLevel - 2].gem);
+        Controller.instance.SetText();
         int linePlus = playerLevel.levelsInfo[newLevel - 2].linePlus;
         if (linePlus > 0)
         {

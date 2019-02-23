@@ -6,7 +6,7 @@ public class GetDateTime : MonoBehaviour
 {
     //StartCoroutine(getDateTime.IEGetDateTime((status) =>{status.ToString("yyyy/MM/dd HH:mm");}));
     private static DateTime nowTime;
-    private static string urlTime = "http://185.55.226.163/moshtary/Time.php";
+    private static string urlTime = "https://balootvas.ir/balootvas/Time.php";
 
     public static IEnumerator IEGetDateTime(Action<DateTime> callback)
     {

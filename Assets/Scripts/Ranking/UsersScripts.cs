@@ -11,7 +11,7 @@ public class UsersScripts : MonoBehaviour
     public UserRank myRank;
     private int rankUser = 0;
     #region link
-    private string strGetRankUser = "http://185.55.226.163/moshtary/TaxiKhati/rankUser.php";
+    private string strGetRankUser = "https://balootvas.ir/balootvas/TaxiKhati/rankUser.php";
     #endregion
     void Start()
     {
