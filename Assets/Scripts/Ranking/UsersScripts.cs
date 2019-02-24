@@ -6,9 +6,10 @@ using UnityEngine.UI;
 
 public class UsersScripts : MonoBehaviour
 {
-    public GameObject panelWait, userRank, panelParentRanking;
+    public GameObject panelWait, userRank, userRankMe, panelParentRanking;
     private List<GameObject> listRanking = new List<GameObject>();
     public UserRank myRank;
+    public Sprite[] sprMedal;
     private int rankUser = 0;
     #region link
     private string strGetRankUser = "https://balootvas.ir/balootvas/TaxiKhati/rankUser.php";
@@ -53,18 +54,56 @@ public class UsersScripts : MonoBehaviour
                 JsonData jsonBooks = JsonMapper.ToObject(ChangeToJson(www.text));
                 rankUser = int.Parse(jsonBooks[0]["rank"].ToString());
                 Debug.Log(rankUser.ToString());
-                myRank.txtRank.text = rankUser.ToString();
-                if (rankUser <= 100)//اگر رتبه کشوری کمتر از 50 بود
+                myRank.txtCoin.text = jsonBooks[0]["coin"].ToString();
+                myRank.txtName.text = PlayerPrefs.GetString("username", "تاکسی ران");
+                if (rankUser < 4)
                 {
-                    myRank.gameObject.SetActive(false);
+                    myRank.txtRank.gameObject.SetActive(false);
+                    myRank.imgMedal.gameObject.SetActive(true);
+                    myRank.imgMedal.sprite = sprMedal[rankUser - 1];
                 }
                 else
                 {
-                    myRank.gameObject.SetActive(true);
+                    myRank.txtRank.gameObject.SetActive(true);
+                    myRank.imgMedal.gameObject.SetActive(false);
+                    myRank.txtRank.text = rankUser.ToString();
                 }
-                for (int i = 1; i < jsonBooks.Count; i++)
+                for (int i = 1; i < 4; i++)
                 {
-                    GameObject objUser = Instantiate(userRank);
+                    GameObject objUser;
+                    if (i == rankUser)
+                    {
+                        Debug.Log("YOUUUUU" + rankUser);
+                        objUser = Instantiate(userRankMe);
+                    }
+                    else
+                    {
+                        objUser = Instantiate(userRank);
+                    }
+                    objUser.transform.SetParent(panelParentRanking.transform);
+                    objUser.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f);
+                    listRanking.Add(objUser);
+                    UserRank scrUser = objUser.GetComponent<UserRank>();
+                    scrUser.txtRank.gameObject.SetActive(false);
+                    scrUser.imgMedal.gameObject.SetActive(true);
+                    scrUser.imgMedal.sprite = sprMedal[i - 1];
+                    scrUser.txtName.text = jsonBooks[i][1].ToString();
+                    scrUser.txtCoin.text = jsonBooks[i][2].ToString();
+
+                }
+                int count = jsonBooks.Count;
+                for (int i = 4; i < count; i++)
+                {
+                    GameObject objUser;
+                    if (i == rankUser)
+                    {
+                        Debug.Log("YOUUUUU" + rankUser);
+                        objUser = Instantiate(userRankMe);
+                    }
+                    else
+                    {
+                        objUser = Instantiate(userRank);
+                    }
                     objUser.transform.SetParent(panelParentRanking.transform);
                     objUser.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f);
                     listRanking.Add(objUser);
@@ -72,10 +111,6 @@ public class UsersScripts : MonoBehaviour
                     scrUser.txtRank.text = i.ToString();
                     scrUser.txtName.text = jsonBooks[i][1].ToString();
                     scrUser.txtCoin.text = jsonBooks[i][2].ToString();
-                    if (i == rankUser)
-                    {
-                        Debug.Log("YOUUUUU" + rankUser);
-                    }
                 }
                 Manager.SetActionTime("updateRank", Manager.GetCurrentTime() + 120f);
                 Timer.Schedule(this, 120f, () =>

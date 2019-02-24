@@ -7,4 +7,5 @@ public class UserRank : MonoBehaviour
     public Text txtRank;
     public Text txtName;
     public Text txtCoin;
+    public Image imgMedal;
 }
