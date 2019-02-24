@@ -15,7 +15,7 @@ public class VideoAds : MonoBehaviour
     [HideInInspector]
     public int indexCar = 0;
 
-    private string sdkToken = "cqodfbenrniaenqbsrffdegllillbpfknbdfllijasmfmbkrhhcosjpormakoqrhjodghe";
+    private string sdkToken = "ntmnrcicifbdkgjlgqcnnqqcmkedhbbjdgmldpmnmhehcsjctdrfkoobmidbjkimkggbig";
 
     public GameObject panelWait, panelError;
 

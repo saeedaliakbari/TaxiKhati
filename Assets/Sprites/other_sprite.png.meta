@@ -32,6 +32,11 @@ TextureImporter:
     21300054: other_sprite_27
     21300056: other_sprite_28
     21300058: other_sprite_29
+    21300060: other_sprite_30
+    21300062: other_sprite_31
+    21300064: other_sprite_32
+    21300066: other_sprite_33
+    21300068: other_sprite_34
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -430,6 +435,20 @@ TextureImporter:
       name: other_sprite_22
       rect:
         serializedVersion: 2
+        x: 1843
+        y: 976
+        width: 181
+        height: 195
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: other_sprite_23
+      rect:
+        serializedVersion: 2
         x: 588
         y: 1016
         width: 314
@@ -441,7 +460,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: other_sprite_23
+      name: other_sprite_24
       rect:
         serializedVersion: 2
         x: 1251
@@ -455,7 +474,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: other_sprite_24
+      name: other_sprite_25
       rect:
         serializedVersion: 2
         x: 1485
@@ -469,7 +488,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: other_sprite_25
+      name: other_sprite_26
       rect:
         serializedVersion: 2
         x: 17
@@ -483,7 +502,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: other_sprite_26
+      name: other_sprite_27
       rect:
         serializedVersion: 2
         x: 832
@@ -497,7 +516,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: other_sprite_27
+      name: other_sprite_28
       rect:
         serializedVersion: 2
         x: 1220
@@ -511,12 +530,12 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: other_sprite_28
+      name: other_sprite_29
       rect:
         serializedVersion: 2
-        x: 1476
-        y: 515
-        width: 350
+        x: 1448
+        y: 518
+        width: 351
         height: 350
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -525,13 +544,69 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: other_sprite_29
+      name: other_sprite_30
+      rect:
+        serializedVersion: 2
+        x: 1843
+        y: 735
+        width: 198
+        height: 221
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: other_sprite_31
       rect:
         serializedVersion: 2
         x: 24
         y: 421
         width: 878
         height: 207
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: other_sprite_32
+      rect:
+        serializedVersion: 2
+        x: 923
+        y: 379
+        width: 247
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: other_sprite_33
+      rect:
+        serializedVersion: 2
+        x: 1810
+        y: 496
+        width: 228
+        height: 166
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: other_sprite_34
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 32
+        width: 903
+        height: 371
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

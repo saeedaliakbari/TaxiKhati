@@ -110,7 +110,7 @@ public class Car : MonoBehaviour
             }
             else
             {//اگر نزدیکترین مکانی تشخیص نداد یا اینکه ان مکان با مکان فعلی یکسان بود
-                if (!Controller.instance.slotManager.IsFull() /*جایگاه های استارت پر نباشد*/&& Vector3.Distance(transform.position, Controller.instance.slotManager.transform.position) < 0.5f/*فاصله اش تا جایگاه استارت کمتر از 0.5 باشد*/)
+                if (!Controller.instance.slotManager.IsFull() /*جایگاه های استارت پر نباشد*/&& (Mathf.Abs(transform.position.x - Controller.instance.slotManager.transform.position.x) < 0.5f && Mathf.Abs(transform.position.y - Controller.instance.slotManager.transform.position.y) < 2f) /*Vector3.Distance(transform.position, Controller.instance.slotManager.transform.position) < 0.8f*//*فاصله اش تا جایگاه استارت کمتر از 0.5 باشد*/)
                 {//اگر گذاشته شود در نقطه استارت
                     StartDrive();//شروع پرواز
                     //Sound.instance.Play(Sound.Others.Start);

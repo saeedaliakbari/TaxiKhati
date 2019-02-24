@@ -17,8 +17,9 @@ public class ParkingManager : MonoBehaviour
     public EarningOfflineTycoonBoosts earningOfflineTycoonBoosts;
     public ExchangeDeclineTycoonBoosts exchangeDeclineTycoonBoosts;
     public Button btnCarSpeed, btnOfflineEarning, btnExchangeDecline;
-    public Image imgSlideGreenCarSpeed, imgSlideGreenOfflineEarning, imgSlideGreenExchangeDecline;
-    public Text txtCarSpeed, txtSpeedRate, txtOfflineEarning, txtOfflineEarnRate, txtExchangeDecline, txtExchangeDeclineRate;
+    public Image imgPeykanOfflineEarn, imgCarOfflienEarn, imgPeykanSpeed, imgCarSpeed, imgPeykanExchangeDecline, imgCarExchangeDecline;
+    public Text txtCarSpeed, txtSpeedNew, txtSpeedOld, txtLevelSpeed, txtOfflineEarning, txtOfflineEarnNew, txtOfflineEarnOld, txtLevelOfflineEarn, txtExchangeDecline, txtExchangeDeclineNew, txtExchangeDeclineOld, txtLevelExchangeDecline;
+    public GameObject objCarOfflineEarn, objCarSpeed, objCarExchangeDecline;
     public void SpawnPlaces()
     {//با توجه به تعداد مکان ها ، پارکینگ ها را ایجاد می کند
         int numPlaces = PlayerPrefs.GetInt("num_of_places", 4);
@@ -62,17 +63,24 @@ public class ParkingManager : MonoBehaviour
     }
     private void CheckCarSpeedTycoon(int[] carsLevel)
     {
-        txtCarSpeed.text = "Level Car Speed " + (PlayerPrefs.GetInt("carSpeedTycoonLevel", 0) + 1);
-        txtSpeedRate.text = "+ " + Mathf.RoundToInt((carSpeedTycoonBoosts.incSpeed[PlayerPrefs.GetInt("carSpeedTycoonLevel", 0)] - 1) * 100).ToString() + "%";
-        imgSlideGreenCarSpeed.fillAmount = (carSpeedTycoonBoosts.incSpeed[PlayerPrefs.GetInt("carSpeedTycoonLevel", 0)] - 1) / 0.39f;
-        if (PlayerPrefs.GetInt("carSpeedTycoonLevel", 0) > 12)
+        int levelSpeed = PlayerPrefs.GetInt("carSpeedTycoonLevel", 0);
+        txtCarSpeed.text = "سطح " + (levelSpeed + 1);
+        imgCarSpeed.sprite = Controller.instance.activeCar[carSpeedTycoonBoosts.level[levelSpeed] - 1];
+        txtLevelSpeed.text = (carsLevel[carSpeedTycoonBoosts.level[levelSpeed]] >= 3 ? "3" : carsLevel[carSpeedTycoonBoosts.level[levelSpeed]].ToString()) + "/3";
+        txtSpeedOld.text = levelSpeed >= 1 ? ((Mathf.RoundToInt((carSpeedTycoonBoosts.incSpeed[levelSpeed - 1] - 1f) * 1000)) / 10f).ToString() + "%" : "0%";
+        txtSpeedNew.text = "+" + ((Mathf.RoundToInt((carSpeedTycoonBoosts.incSpeed[levelSpeed] - 1f) * 1000)) / 10f).ToString() + "%";
+        //imgSlideGreenOfflineEarning.fillAmount = (earningOfflineTycoonBoosts.incEarn[levelOfflineEarning] - 1f) / 0.325f;
+        if (levelSpeed > 12)
         {
+            txtSpeedNew.gameObject.SetActive(false);
+            imgPeykanSpeed.gameObject.SetActive(false);
+            btnCarSpeed.gameObject.SetActive(false);
             //Debug.Log("FULL ");
         }
         else {
-            if (carsLevel[carSpeedTycoonBoosts.level[PlayerPrefs.GetInt("carSpeedTycoonLevel", 0)]] >= 3)
+            if (carsLevel[carSpeedTycoonBoosts.level[levelSpeed]] >= 3)
             {
-                //Debug.Log("Get Gift" + carSpeedTycoonBoosts.level[PlayerPrefs.GetInt("carSpeedTycoonLevel", 0)]);
+                //Debug.Log("Get Gift" + earningOfflineTycoonBoosts.level[PlayerPrefs.GetInt("offlineEarnTycoonLevel", 0)]);
                 btnCarSpeed.interactable = true;
             }
         }
@@ -87,15 +95,22 @@ public class ParkingManager : MonoBehaviour
     }
     private void CheckOfflineEarningTycoon(int[] carsLevel)
     {
-        txtOfflineEarning.text = "Level Offline Earning " + (PlayerPrefs.GetInt("offlineEarnTycoonLevel", 0) + 1);
-        txtOfflineEarnRate.text = "+ " + ((Mathf.RoundToInt((earningOfflineTycoonBoosts.incEarn[PlayerPrefs.GetInt("offlineEarnTycoonLevel", 0)] - 1f) * 1000)) / 10f).ToString() + "%";
-        imgSlideGreenOfflineEarning.fillAmount = (earningOfflineTycoonBoosts.incEarn[PlayerPrefs.GetInt("offlineEarnTycoonLevel", 0)] - 1f) / 0.325f;
-        if (PlayerPrefs.GetInt("offlineEarnTycoonLevel", 0) > 12)
+        int levelOfflineEarning = PlayerPrefs.GetInt("offlineEarnTycoonLevel", 0);
+        txtOfflineEarning.text = "سطح " + (levelOfflineEarning + 1);
+        imgCarOfflienEarn.sprite = Controller.instance.activeCar[earningOfflineTycoonBoosts.level[levelOfflineEarning] - 1];
+        txtLevelOfflineEarn.text = (carsLevel[earningOfflineTycoonBoosts.level[levelOfflineEarning]] >= 3 ? "3" : carsLevel[earningOfflineTycoonBoosts.level[levelOfflineEarning]].ToString()) + "/3";
+        txtOfflineEarnOld.text = levelOfflineEarning >= 1 ? ((Mathf.RoundToInt((earningOfflineTycoonBoosts.incEarn[levelOfflineEarning - 1] - 1f) * 1000)) / 10f).ToString() + "%" : "0%";
+        txtOfflineEarnNew.text = "+" + ((Mathf.RoundToInt((earningOfflineTycoonBoosts.incEarn[levelOfflineEarning] - 1f) * 1000)) / 10f).ToString() + "%";
+        //imgSlideGreenOfflineEarning.fillAmount = (earningOfflineTycoonBoosts.incEarn[levelOfflineEarning] - 1f) / 0.325f;
+        if (levelOfflineEarning > 12)
         {
+            txtOfflineEarnNew.gameObject.SetActive(false);
+            imgPeykanOfflineEarn.gameObject.SetActive(false);
+            btnOfflineEarning.gameObject.SetActive(false);
             //Debug.Log("FULL ");
         }
         else {
-            if (carsLevel[earningOfflineTycoonBoosts.level[PlayerPrefs.GetInt("offlineEarnTycoonLevel", 0)]] >= 3)
+            if (carsLevel[earningOfflineTycoonBoosts.level[levelOfflineEarning]] >= 3)
             {
                 //Debug.Log("Get Gift" + earningOfflineTycoonBoosts.level[PlayerPrefs.GetInt("offlineEarnTycoonLevel", 0)]);
                 btnOfflineEarning.interactable = true;
@@ -112,15 +127,22 @@ public class ParkingManager : MonoBehaviour
     }
     private void CheckExchangeRateDecline(int[] carsLevel)
     {
-        txtExchangeDecline.text = "Level Exchange Rate " + (PlayerPrefs.GetInt("exchangeDeclineTycoonLevel", 0) + 1);
-        txtExchangeDeclineRate.text = "+ " + Mathf.RoundToInt((exchangeDeclineTycoonBoosts.rateDecline[PlayerPrefs.GetInt("exchangeDeclineTycoonLevel", 0)]) * 100).ToString() + "%";
-        imgSlideGreenExchangeDecline.fillAmount = (exchangeDeclineTycoonBoosts.rateDecline[PlayerPrefs.GetInt("exchangeDeclineTycoonLevel", 0)]) / 0.65f;
-        if (PlayerPrefs.GetInt("exchangeDeclineTycoonLevel", 0) > 12)
+        int levelExchangeDecline = PlayerPrefs.GetInt("exchangeDeclineTycoonLevel", 0);
+        txtExchangeDecline.text = "سطح " + (levelExchangeDecline + 1);
+        imgCarExchangeDecline.sprite = Controller.instance.activeCar[exchangeDeclineTycoonBoosts.level[levelExchangeDecline] - 1];
+        txtLevelExchangeDecline.text = (carsLevel[exchangeDeclineTycoonBoosts.level[levelExchangeDecline]] >= 3 ? "3" : carsLevel[exchangeDeclineTycoonBoosts.level[levelExchangeDecline]].ToString()) + "/3";
+        txtExchangeDeclineOld.text = levelExchangeDecline >= 1 ? (Mathf.RoundToInt((exchangeDeclineTycoonBoosts.rateDecline[levelExchangeDecline - 1]) * 100)).ToString() + "%" : "0%";
+        txtExchangeDeclineNew.text = "+" + (Mathf.RoundToInt(exchangeDeclineTycoonBoosts.rateDecline[levelExchangeDecline] * 100f)).ToString() + "%";
+        //imgSlideGreenOfflineEarning.fillAmount = (earningOfflineTycoonBoosts.incEarn[levelOfflineEarning] - 1f) / 0.325f;
+        if (levelExchangeDecline > 12)
         {
+            txtExchangeDeclineNew.gameObject.SetActive(false);
+            imgPeykanExchangeDecline.gameObject.SetActive(false);
+            btnExchangeDecline.gameObject.SetActive(false);
             //Debug.Log("FULL ");
         }
         else {
-            if (carsLevel[exchangeDeclineTycoonBoosts.level[PlayerPrefs.GetInt("exchangeDeclineTycoonLevel", 0)]] >= 3)
+            if (carsLevel[exchangeDeclineTycoonBoosts.level[levelExchangeDecline]] >= 3)
             {
                 //Debug.Log("Get Gift" + earningOfflineTycoonBoosts.level[PlayerPrefs.GetInt("offlineEarnTycoonLevel", 0)]);
                 btnExchangeDecline.interactable = true;
