@@ -32,12 +32,12 @@ public class ShopItemOff : MonoBehaviour {
     }
     public void BtnOff(float price)
     {
-        if (PlayerPrefs.GetFloat("token") >= price)
+        if (ObscuredPrefs.GetDouble("token") >= price)
         {
            ObscuredPrefs.SetDouble("token",ObscuredPrefs.GetDouble("token") - price);
             PlayerPrefs.SetInt("offShopCarLevel", PlayerPrefs.GetInt("offShopCarLevel", 0) + 1);
             int level = PlayerPrefs.GetInt("upIncomeLevel", 0);
-            PlayerPrefs.SetFloat("offCar", offShopCar[level - 1]);
+            PlayerPrefs.SetFloat("offCar", offShopCar[level]);
             runSlotManager.UpdateEarningSpeedText();
             OpenPanel();
         }

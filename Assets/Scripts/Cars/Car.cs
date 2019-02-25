@@ -181,8 +181,8 @@ public class Car : MonoBehaviour
     }
     private MoveCar SpawnACar()
     {
-        MoveCar mCar = (MoveCar)Instantiate(moveCarPrefab, Vector3.zero, Quaternion.identity);
-        mCar.transform.localScale = Vector3.one * 0.55f;//اسکیل ماشین در حال حرکت ایجاد شده
+        MoveCar mCar = (MoveCar)Instantiate(moveCarPrefab, Vector3.zero,Quaternion.EulerAngles(0f,0f,0f)/*, Quaternion.identity*/);
+        mCar.transform.localScale = Vector3.one * 0.5f;//اسکیل ماشین در حال حرکت ایجاد شده
         mCar.car = this;//اختصاص دادن این ماشین به پارامتر ماشین در اسکریپت ماشین در حال حرکت ایجاد شده.
         return mCar;
     }

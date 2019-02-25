@@ -21,6 +21,7 @@ public class SpeedPanel : MonoBehaviour
         float timeValue = Mathf.Max(0, (float)(Math.Round(Manager.GetActionTime("speed_x2") - Manager.GetCurrentTime())));
         TimeSpan t = TimeSpan.FromSeconds(timeValue);
         TimeSpan max = new TimeSpan(0, 30, 0);
+        //Debug.Log("t : " + t + " max: " + max);
         if (t > max)
         {
             Manager.SetActionTime("speed_x2", (Manager.GetActionTime("speed_x2") - (t - max).TotalSeconds));
@@ -41,12 +42,19 @@ public class SpeedPanel : MonoBehaviour
         //Sound.instance.Play(Sound.Others.Buy);
         if (ObscuredPrefs.GetDouble("gem", 0) >= COST)
         {
+            float timeValue = Mathf.Max(0, (float)(Manager.GetActionTime("speed_x2") - Manager.GetCurrentTime()));
+            float plus = 150;
+            if (timeValue + 150 > 1800)
+            {
+                plus = 1800 - timeValue;
+            }
+            Debug.Log("plus: " + plus + " time: " + timeValue);
+            double nowtime = Math.Round(Manager.GetCurrentTime());
+            double plusTime = Math.Round(plus + timeValue + Manager.GetCurrentTime());
+            Debug.Log("New Time : " + plusTime);
+            Manager.SetActionTime("speed_x2", plusTime);
             ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem", 0) - COST);
             controller.SetText();
-            float timeValue = Mathf.Max(0, (float)(Manager.GetActionTime("speed_x2") - Manager.GetCurrentTime()));
-            double nowtime = Math.Round(Manager.GetCurrentTime());
-            double plusTime = Math.Round(150 + timeValue + Manager.GetCurrentTime());
-            Manager.SetActionTime("speed_x2", plusTime);
         }
         else
         {

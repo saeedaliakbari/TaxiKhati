@@ -34,7 +34,7 @@ public class ShopItemEarn : MonoBehaviour
     }
     public void BtnUpEarnLine(float price)
     {
-        if (PlayerPrefs.GetFloat("token") >= price)
+        if (ObscuredPrefs.GetDouble("token") >= price)
         {
            ObscuredPrefs.SetDouble("token",ObscuredPrefs.GetDouble("token") - price);
             PlayerPrefs.SetInt("upIncomeLevel", PlayerPrefs.GetInt("upIncomeLevel", 0) + 1);

@@ -322,7 +322,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1922830188}
-        m_MethodName: GetGiftOfflineEran
+        m_MethodName: GetGiftExchangeRateDecline
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6521,10 +6521,10 @@ MonoBehaviour:
   - {x: 2.66, y: 0.15, z: 0}
   - {x: 2.66, y: -2, z: 0}
   - {x: 2.46, y: -3.6, z: 0}
-  - {x: 1.76, y: -4.63, z: 0}
-  - {x: 0.7, y: -5.09, z: 0}
-  - {x: -0.76, y: -5.09, z: 0}
-  - {x: -1.82, y: -4.63, z: 0}
+  - {x: 1.89, y: -4.57, z: 0}
+  - {x: 0.7, y: -5.06, z: 0}
+  - {x: -0.76, y: -5.06, z: 0}
+  - {x: -1.91, y: -4.57, z: 0}
   - {x: -2.5, y: -3.63, z: 0}
   - {x: -2.7, y: -2, z: 0}
   nodeCount: 18
@@ -18548,7 +18548,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1922830188}
-        m_MethodName: GetGiftOfflineEran
+        m_MethodName: GetGiftCarSpeed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -40192,7 +40192,7 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1260395144}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -40202,7 +40202,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.916, y: 0.16}
+  m_AnchoredPosition: {x: -0.92022, y: 0.0698}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1260395146
@@ -45394,7 +45394,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 101.2, y: 3}
+  m_AnchoredPosition: {x: 101.2, y: 1.2}
   m_SizeDelta: {x: 81, y: 83}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1429222391
@@ -50433,7 +50433,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 41.3, y: 6.8999996}
+  m_AnchoredPosition: {x: 41.3, y: 0}
   m_SizeDelta: {x: -53.36, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1582324293
@@ -58360,7 +58360,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 30, y: 8}
+  m_AnchoredPosition: {x: 30, y: 2}
   m_SizeDelta: {x: -53.36, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1839798650
@@ -58988,7 +58988,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -12.3, y: -45.9}
+  m_AnchoredPosition: {x: -10.4, y: -45.9}
   m_SizeDelta: {x: 204.19, y: 64.689}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1853977230
@@ -65752,7 +65752,7 @@ MonoBehaviour:
   - {fileID: 1700708349}
   - {fileID: 1224088890}
   runSlotManager: {fileID: 1260395146}
-  controller: {fileID: 0}
+  controller: {fileID: 1085018823}
   upIncome:
   - 1.05
   - 1.1
@@ -65787,7 +65787,7 @@ MonoBehaviour:
   - {fileID: 918567552}
   - {fileID: 258761868}
   runSlotManager: {fileID: 1260395146}
-  controller: {fileID: 0}
+  controller: {fileID: 1085018823}
   offShopCar:
   - 0.05
   - 0.15
