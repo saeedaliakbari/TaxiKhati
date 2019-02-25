@@ -1,10 +1,11 @@
-﻿using System.Collections;
+﻿using CodeStage.AntiCheat.ObscuredTypes;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 public class OfflineEraning : MonoBehaviour
 {
-    //public Controller controller;
+    public Controller controller;
     public TrimNumberText valueTxt;
     [HideInInspector]
     public TrimNumberText txtCoin;
@@ -21,27 +22,27 @@ public class OfflineEraning : MonoBehaviour
         {
             time = 345600;
         }
-        value = Controller.instance.slotManager.EarningPerSec * time * offlineEarningRate / 100f;
+        value = controller.slotManager.EarningPerSec * time * offlineEarningRate / 100f;
         value = value * PlayerPrefs.GetFloat("offlineEarnTycoonBoosts", 1) * PlayerPrefs.GetFloat("offliceEarnVip", 1);
         valueTxt.text = value.ToString();
     }
 
     public void ClaimClick()
     {
-        PlayerPrefs.SetFloat("coin", PlayerPrefs.GetFloat("coin", 5000) + value);
-        txtCoin.text = PlayerPrefs.GetFloat("coin", 5000).ToString();
-        Controller.instance.CloseOffEarning();
-        Controller.instance.SetText();
+        ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) + value);
+        txtCoin.text = ObscuredPrefs.GetDouble("coin", 5000).ToString();
+        controller.CloseOffEarning();
+        controller.SetText();
     }
     public void ThirdClick()
     {
-        if (PlayerPrefs.GetFloat("gem") >= 5)
+        if (ObscuredPrefs.GetDouble("gem") >= 5)
         {
             btnDouble.interactable = false;
             btnThird.interactable = false;
-            PlayerPrefs.SetFloat("gem", PlayerPrefs.GetFloat("gem") - 5);
+            ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem") - 5);
             thirdCoin = true;
-            Controller.instance.SetText();
+            controller.SetText();
             AnimValueChange();
         }
     }

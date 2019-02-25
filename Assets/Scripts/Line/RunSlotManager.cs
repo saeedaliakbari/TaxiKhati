@@ -9,7 +9,7 @@ public class RunSlotManager : MonoBehaviour
     private int numRun = 0;//تعداد ماشین های در حال حرکت
     private float earningPerSec;
     public float earnPerSec;
-    public TrimNumberText earningPerSecTxt;
+    public TrimNumberText earningPerSecTxt, txtEarningWithSec;
     public SpriteRenderer goal;
     public Sprite[] goalSprites;
     public SpeedButton speedBtn;
@@ -47,7 +47,8 @@ public class RunSlotManager : MonoBehaviour
         ratio *= ((Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m")) ? 5 : 1);
         ratio *= ((Manager.GetCurrentTime() < Manager.GetActionTime("2x_speed_for_150s")) ? 2 : 1);
         earnPerSec = Mathf.RoundToInt(earningPerSec * ratio * PlayerPrefs.GetFloat("incomeLine", 1) * PlayerPrefs.GetFloat("speedVip", 1));
-        earningPerSecTxt.text = "ﻪﯿﻧﺎﺛ / " + earnPerSec;
+        earningPerSecTxt.text = earnPerSec.ToString();
+        txtEarningWithSec.text = "ﻪﯿﻧﺎﺛ / " + earningPerSecTxt.text;
     }
 
     public void InitSlots()

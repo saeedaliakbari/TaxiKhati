@@ -8,6 +8,7 @@ public class PlayerLevel : MonoBehaviour
     public Image imgProgress;
     public Levels[] levelsInfo;
     public GameObject btnRank, btnQuest, btnWheel, btnTimeBoost, btnBoosters;
+    public Controller controller;
     // Use this for initialization
     void Start()
     {
@@ -17,7 +18,7 @@ public class PlayerLevel : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("Xp", 0) > levelsInfo[PlayerPrefs.GetInt("Level", 1) - 1].maxXp)
         {
-            Controller.instance.ShowLevelBonus(PlayerPrefs.GetInt("Level", 1) + 1);
+            controller.ShowLevelBonus(PlayerPrefs.GetInt("Level", 1) + 1);
             PlayerPrefs.SetInt("Xp", PlayerPrefs.GetInt("Xp", 0) - levelsInfo[PlayerPrefs.GetInt("Level", 1) - 1].maxXp);
             PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level", 1) + 1);
             PlayerPrefs.SetInt("mainAchiv11", PlayerPrefs.GetInt("Level", 1));

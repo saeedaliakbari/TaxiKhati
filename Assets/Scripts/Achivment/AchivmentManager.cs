@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class AchivmentManager : MonoBehaviour
 {
+    public Controller controller;
     public string achivmentPrefs;
     public Achivment[] achivments;
     public GameObject prefabAchivment, panelParentAchivment;
@@ -21,8 +22,7 @@ public class AchivmentManager : MonoBehaviour
     }
     public void OpenPanel()
     {
-        CheckAllAchv();
-        for (int i = 0; i < listAchivments.Count; i++)//آواتارهای قبلی را از پنل حذف می کند
+        for (int i = 0; i < listAchivments.Count; i++)
         {
             Destroy(listAchivments[i]);
             Destroy(listAchivmentScripts[i]);
@@ -38,7 +38,7 @@ public class AchivmentManager : MonoBehaviour
             listAchivments.Add(achvObj);
             AchivmentPrefab achivmentPrefab = achvObj.GetComponent<AchivmentPrefab>();
             listAchivmentScripts.Add(achivmentPrefab);
-            achivmentPrefab.txtGem = txtGem;
+            achivmentPrefab.controller = controller;
             achivmentPrefab.Setup(achivments[i], achivmentPrefs, listAchvGet, listAchvDone, listAchv);
         }
         for (int i = 0; i < listAchvDone.Count; i++)
@@ -60,15 +60,6 @@ public class AchivmentManager : MonoBehaviour
         {
             listAchivments[i].transform.localPosition = new Vector3(listAchivments[i].transform.localPosition.x, listAchivments[i].transform.localPosition.y, 1);
         }
-    }
-    private void CheckAllAchv()
-    {
-        #region Achv 1
-        if (PlayerPrefs.GetInt("DiziMaxLvlNumber", 1) >= 2)
-        {
-            PlayerPrefs.SetInt("achivmentMain1", 11);
-        }
-        #endregion
     }
 }
 [System.Serializable]

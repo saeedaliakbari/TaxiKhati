@@ -81,14 +81,14 @@ public class BazaarIABEventListener : MonoBehaviour
                 //بقیه اطلاعات مربوط به اشتراک وارد شود
                 PlayerPrefs.SetInt("num_of_places_vip", 2);//added 2 parking
                 PlayerPrefs.SetInt("num_of_slot_vip", 2);//added 2 line
-                Controller.instance.parkingManager.SpawnPlaces();
-                Controller.instance.slotManager.InitSlots();
+                iapCafeBazar.controller.parkingManager.SpawnPlaces();
+                iapCafeBazar.controller.slotManager.InitSlots();
                 PlayerPrefs.SetFloat("offliceEarnVip", 1.2f);//added 20% offline earning
                 PlayerPrefs.SetInt("removeAds", 1);//remove ads in shop
                 PlayerPrefs.SetInt("gemPerDay", 1);//10 gem per day
                 PlayerPrefs.SetFloat("speedVip", 1.5f);//added 50% speed
-                Controller.instance.slotManager.UpdateEarningSpeedText();
-                Controller.instance.GiftDaily();
+                iapCafeBazar.controller.slotManager.UpdateEarningSpeedText();
+                iapCafeBazar.controller.GiftDaily();
             }
             else if (purchases[i].ProductId == iapCafeBazar.skus[7])
             {
@@ -161,46 +161,46 @@ public class BazaarIABEventListener : MonoBehaviour
                 if (purchase.ProductId == iapCafeBazar.skus[6])
                 {
                     PlayerPrefs.SetInt("num_of_places_vip", 2);
-                    Controller.instance.panelMessage.SetActive(true);
-                    Controller.instance.txtPanelMessage.text = "پارکینگ به خطوط شما اضافه شد";
-                    Controller.instance.parkingManager.SpawnNewPlace();
-                    Controller.instance.parkingManager.SpawnNewPlace();
-                    Controller.instance.parkingManager.UpdatePlacePosition();
+                    iapCafeBazar.controller.panelMessage.SetActive(true);
+                    iapCafeBazar.controller.txtPanelMessage.text = "پارکینگ به خطوط شما اضافه شد";
+                    iapCafeBazar.controller.parkingManager.SpawnNewPlace();
+                    iapCafeBazar.controller.parkingManager.SpawnNewPlace();
+                    iapCafeBazar.controller.parkingManager.UpdatePlacePosition();
                     PlayerPrefs.SetInt("num_of_slot_vip", 2);//added 2 line
-                    Controller.instance.slotManager.SpawnASlot();
-                    Controller.instance.slotManager.SpawnASlot();
-                    Controller.instance.slotManager.UpdatePosition();
+                    iapCafeBazar.controller.slotManager.SpawnASlot();
+                    iapCafeBazar.controller.slotManager.SpawnASlot();
+                    iapCafeBazar.controller.slotManager.UpdatePosition();
                     PlayerPrefs.SetFloat("offliceEarnVip", 1.2f);//added 20% offline earning
                     PlayerPrefs.SetInt("removeAds", 1);//remove ads in shop
                     PlayerPrefs.SetInt("gemPerDay", 1);//10 gem per day
                     PlayerPrefs.SetFloat("speedVip", 1.5f);//added 50% speed
-                    Controller.instance.slotManager.UpdateEarningSpeedText();
-                    Controller.instance.GiftDaily();
+                    iapCafeBazar.controller.slotManager.UpdateEarningSpeedText();
+                    iapCafeBazar.controller.GiftDaily();
                 }
                 else if (purchase.ProductId == iapCafeBazar.skus[7])
                 {
                     PlayerPrefs.SetInt("removeAds", 1);//remove ads in shop
-                    Controller.instance.panelMessage.SetActive(true);
-                    Controller.instance.txtPanelMessage.text = "تبلیغات بنری بازی حذف شد";
-                    Controller.instance.videoAds.panelNoAds.SetActive(false);
+                    iapCafeBazar.controller.panelMessage.SetActive(true);
+                    iapCafeBazar.controller.txtPanelMessage.text = "تبلیغات بنری بازی حذف شد";
+                    iapCafeBazar.controller.videoAds.panelNoAds.SetActive(false);
                 }
                 else {
-                    Controller.instance.panelMessage.SetActive(true);
-                    Controller.instance.txtPanelMessage.text = "لطفا منتظر بمانید";
+                    iapCafeBazar.controller.panelMessage.SetActive(true);
+                    iapCafeBazar.controller.txtPanelMessage.text = "لطفا منتظر بمانید";
                     BazaarIAB.queryInventory(new string[] { purchase.ProductId });
                 }
             }
             else if (purchase.PurchaseState == BazaarPurchase.BazaarPurchaseState.Canceled)
             {
                 Debug.Log("purchase is Canceled");
-                Controller.instance.panelMessage.SetActive(true);
-                Controller.instance.txtPanelMessage.text = "عملیات توسط شما لغو شد";
+                iapCafeBazar.controller.panelMessage.SetActive(true);
+                iapCafeBazar.controller.txtPanelMessage.text = "عملیات توسط شما لغو شد";
             }
             else
             {
                 Debug.Log("purchase is 2 Refunded");
-                Controller.instance.panelMessage.SetActive(true);
-                Controller.instance.txtPanelMessage.text = "خطا در عملیات پرداخت";
+                iapCafeBazar.controller.panelMessage.SetActive(true);
+                iapCafeBazar.controller.txtPanelMessage.text = "خطا در عملیات پرداخت";
             }
         }
     }
@@ -208,8 +208,8 @@ public class BazaarIABEventListener : MonoBehaviour
     void purchaseFailedEvent(string error)
     {
         Debug.Log("purchaseFailedEvent: " + error);
-        Controller.instance.txtPanelMessage.text = "خطا در پرداخت ";
-        Controller.instance.panelMessage.SetActive(true);
+        iapCafeBazar.controller.txtPanelMessage.text = "خطا در پرداخت ";
+        iapCafeBazar.controller.panelMessage.SetActive(true);
     }
     #endregion
     #region Consume Purchase
@@ -222,10 +222,10 @@ public class BazaarIABEventListener : MonoBehaviour
             {
                 if (purchase.ProductId == iapCafeBazar.skus[i])
                 {
-                    PlayerPrefs.SetFloat("gem", PlayerPrefs.GetFloat("gem") + iapCafeBazar.gem[i]);
-                    Controller.instance.txtPanelMessage.text = "تبریک\n" + iapCafeBazar.gem[i] + " جم اضافه شد";
-                    Controller.instance.panelMessage.SetActive(true);
-                    Controller.instance.SetText();
+                    ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem") + iapCafeBazar.gem[i]);
+                    iapCafeBazar.controller.txtPanelMessage.text = "تبریک\n" + iapCafeBazar.gem[i] + " جم اضافه شد";
+                    iapCafeBazar.controller.panelMessage.SetActive(true);
+                    iapCafeBazar.controller.SetText();
                 }
             }
         }

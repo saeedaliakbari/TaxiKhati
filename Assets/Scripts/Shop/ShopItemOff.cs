@@ -1,11 +1,12 @@
-﻿using System.Collections;
+﻿using CodeStage.AntiCheat.ObscuredTypes;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ShopItemOff : MonoBehaviour {
     public ShopItem[] itemsOff;
     public RunSlotManager runSlotManager;
-    //public Controller controller;
+    public Controller controller;
     public float[] offShopCar;
     public void OpenPanel()
     {
@@ -33,7 +34,7 @@ public class ShopItemOff : MonoBehaviour {
     {
         if (PlayerPrefs.GetFloat("token") >= price)
         {
-            PlayerPrefs.SetFloat("token", PlayerPrefs.GetFloat("token") - price);
+           ObscuredPrefs.SetDouble("token",ObscuredPrefs.GetDouble("token") - price);
             PlayerPrefs.SetInt("offShopCarLevel", PlayerPrefs.GetInt("offShopCarLevel", 0) + 1);
             int level = PlayerPrefs.GetInt("upIncomeLevel", 0);
             PlayerPrefs.SetFloat("offCar", offShopCar[level - 1]);
@@ -42,11 +43,11 @@ public class ShopItemOff : MonoBehaviour {
         }
         else
         {
-            Controller.instance.txtError.text = "به مقدار کافی پول ندارید";
-            Controller.instance.txtError.gameObject.SetActive(true);
+            controller.txtError.text = "به مقدار کافی پول ندارید";
+            controller.txtError.gameObject.SetActive(true);
             Timer.Schedule(this, 3f, () =>
             {
-                Controller.instance.txtError.gameObject.SetActive(false);
+                controller.txtError.gameObject.SetActive(false);
             });
         }
     }

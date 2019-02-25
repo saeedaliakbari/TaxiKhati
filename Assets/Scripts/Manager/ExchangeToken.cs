@@ -1,10 +1,11 @@
-﻿using System.Collections;
+﻿using CodeStage.AntiCheat.ObscuredTypes;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 public class ExchangeToken : MonoBehaviour
 {
-    //public Controller controller;
+    public Controller controller;
     public InputField inputTokenValue;
     public TrimNumberText txtCoinValue;
     private float rate, tokenValue;
@@ -18,7 +19,7 @@ public class ExchangeToken : MonoBehaviour
         {
             coin = Mathf.Floor(float.Parse(inputTokenValue.text) * rate);
             txtCoinValue.text = coin.ToString();
-            if (coin > PlayerPrefs.GetFloat("coin", 5000))
+            if (coin > ObscuredPrefs.GetDouble("coin", 5000))
             {
                 btnExchange.interactable = false;
             }
@@ -37,9 +38,9 @@ public class ExchangeToken : MonoBehaviour
     public void BtnExchangeToken()
     {
         tokenValue = Mathf.Floor(float.Parse(inputTokenValue.text) * rate);
-        PlayerPrefs.SetFloat("token", PlayerPrefs.GetFloat("token", 0) + tokenValue);
-        PlayerPrefs.SetFloat("coin", PlayerPrefs.GetFloat("coin", 5000) - (tokenValue * rate));
-        Controller.instance.SetText();
+       ObscuredPrefs.SetDouble("token",ObscuredPrefs.GetDouble("token", 0) + tokenValue);
+        ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) - (tokenValue * rate));
+        controller.SetText();
     }
     public void BtnPlus(int i)
     {

@@ -9,7 +9,7 @@ public class IAPCafeBazar : MonoBehaviour
     public ObscuredString RSA;
     public ObscuredString[] skus;
     public int[] gem;
-    //public Controller controller;
+    public Controller controller;
     // Use this for initialization
     void Start()
     {

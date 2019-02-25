@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Batch;
+using CodeStage.AntiCheat.ObscuredTypes;
 
 public class Controller : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class Controller : MonoBehaviour
     public Car[] carPrefabs;//ماشین ها
     public RangeLevel[] taxiDefferenceLvl;
     public GiftBox boxPrefab;
-    public Text /*txtLevelBuyCar,*/ txtGem, txtError, txtPanelMessage;
+    public Text /*txtLevelBuyCar,*/ txtError, txtPanelMessage;
     public Image imgBuyCar;
     public ParkingManager parkingManager;
     public RunSlotManager slotManager;
@@ -24,7 +25,7 @@ public class Controller : MonoBehaviour
     public GameObject deleteBin, panelMessage, panelShopGem;
     public GameObject coinEffectPrefab;
     public OfflineEraning offEarning;
-    public TrimNumberText txtCoin, txtCoinTop;
+    public TrimNumberText txtGem, txtCoin, txtCoinTop;
     public TrimNumberText txtToken, buyPrice;
     //public RubyShop rubyShop;
     public static Controller instance;
@@ -47,15 +48,15 @@ public class Controller : MonoBehaviour
         //Debug.Log(
         instance = this;
         PlayerPrefs.SetInt("mainAchiv16", PlayerPrefs.GetInt("mainAchiv16", 0) + 1);
-        PlayerPrefs.SetFloat("gem", 50000000);
+        ObscuredPrefs.SetDouble("gem", 50000000);
         SetText();
 
     }
     public void SetText()
     {
-        txtToken.text = PlayerPrefs.GetFloat("token", 0).ToString();
-        txtCoin.text = txtCoinTop.text = PlayerPrefs.GetFloat("coin", 5000).ToString();
-        txtGem.text = PlayerPrefs.GetFloat("gem").ToString();
+        txtToken.text = ObscuredPrefs.GetDouble("token", 0).ToString();
+        txtCoin.text = txtCoinTop.text = ObscuredPrefs.GetDouble("coin", 5000).ToString();
+        txtGem.text = ObscuredPrefs.GetDouble("gem").ToString();
     }
     // Use this for initialization
     void Start()
@@ -94,7 +95,7 @@ public class Controller : MonoBehaviour
     public void UpdatePrice()
     {//قیمت ماشین ها را می گذارد
         int index = PlayerPrefs.GetInt("curr_car_index", 0);//az 0 shoro mishavad
-        buyPrice.text = PlayerPrefs.GetFloat("car_price_" + index, Mathf.Round(basePrice[index])).ToString();
+        buyPrice.text = ObscuredPrefs.GetDouble("car_price_" + index, Mathf.Round(basePrice[index])).ToString();
         //txtLevelBuyCar.text = "خرید ماشین سطح " + (index + 1);
         Debug.Log("index Car : " + index + " sprite Name :" + activeCar[index].name);
         imgBuyCar.sprite = activeCar[index];
@@ -132,9 +133,9 @@ public class Controller : MonoBehaviour
         }
         bool useGem = index >= (lastSalableTaxiLevel - def);//اگر عدد آیتمی که میخواد ساخته بشه بیشتر از یک مقداری بود نیاز به روبی دارد
 
-        float price = useGem ? baseGemPrice[index] : PlayerPrefs.GetFloat("car_price_" + index, Mathf.Round(basePrice[index]));
+        double price = useGem ? baseGemPrice[index] : ObscuredPrefs.GetDouble("car_price_" + index, Mathf.Round(basePrice[index]));
         Debug.Log("Price Car: " + price);
-        if ((useGem ? PlayerPrefs.GetFloat("gem", 0) : PlayerPrefs.GetFloat("coin", 5000)) >= price)//روی سکه و روبی که اینجا نوشته شده است دقت شود که چه مقداری باید باشد
+        if ((useGem ? ObscuredPrefs.GetDouble("gem", 0) : ObscuredPrefs.GetDouble("coin", 5000)) >= price)//روی سکه و روبی که اینجا نوشته شده است دقت شود که چه مقداری باید باشد
         {
             PlayerPrefs.SetInt("mainAchiv8", PlayerPrefs.GetInt("mainAchiv8", 0) + 1);
             PlayerPrefs.SetInt("mainAchiv14", PlayerPrefs.GetInt("mainAchiv14", 0) + 1);
@@ -143,11 +144,11 @@ public class Controller : MonoBehaviour
             {
                 if (useGem)
                 {
-                    PlayerPrefs.SetFloat("gem", PlayerPrefs.GetFloat("gem", 0) - price);
+                    ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem", 0) - price);
                 }
                 else
                 {
-                    PlayerPrefs.SetFloat("coin", PlayerPrefs.GetFloat("coin", 5000) - price);
+                    ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) - price);
                 }
                 SetText();
                 //if (index == 3)//این برای این است که بعضی مواقع ماشینی که خریده جدید پنل بالا بردن لول براش بیاد که که لولش بره بالا با ویدئو
@@ -166,9 +167,9 @@ public class Controller : MonoBehaviour
                     SpawnACar(index, parkPlace);
                 //}
 
-                float newPrice = Mathf.Round(price * ((100 + increaseRate[index]) / 100f));//قیمت جدید را بدست می آورد
+                double newPrice = System.Math.Round(price * ((100 + increaseRate[index]) / 100));//قیمت جدید را بدست می آورد
                 if (!useGem)
-                    PlayerPrefs.SetFloat("car_price_" + index, newPrice);
+                    ObscuredPrefs.SetDouble("car_price_" + index, newPrice);
                 UpdatePrice();
             }
             else
@@ -195,7 +196,7 @@ public class Controller : MonoBehaviour
             {
                 txtError.gameObject.SetActive(false);
             });
-            //Debug.LogError("Not enough " + (useGem ? "gem" : "coins") + "! YourCoin: " + PlayerPrefs.GetFloat("coin", 5000));
+            //Debug.LogError("Not enough " + (useGem ? "gem" : "coins") + "! YourCoin: " + ObscuredPrefs.GetDouble("coin", 5000));
             //Toast.instance.ShowMessage("Not enough " + (useRuby ? "rubies" : "coins") + "!");
         }
     }
@@ -220,6 +221,7 @@ public class Controller : MonoBehaviour
     {
         Car car = Instantiate(carPrefabs[carIndex], Vector3.zero, Quaternion.identity);//یک ماشین جدید ساخته می شود با لول داده شده ساخته می شود
         car.txtCoin = txtCoin;
+        car.controller = this;
         car.transform.SetParent(parkPlace.transform);//پرنت در هایرارکی را پارکینگ فعلی مشخص میکند
         car.transform.localScale = Vector3.one * 0.1f;
         car.transform.position = parkPlace.transform.position;//موقعیت به موقعبت مکان فعلی تغییر میکند
@@ -230,6 +232,7 @@ public class Controller : MonoBehaviour
     }
     public GiftBox SpawnABox(int carIndex, ParkingPlace parkPlace, int modelBox)
     {
+        PlayerPrefs.SetInt("mainAchiv15", PlayerPrefs.GetInt("mainAchiv15", 0) + 1);
         GiftBox box = Instantiate(boxPrefab, Vector3.zero, Quaternion.identity);//ایجاد کرد یک باکس
         box.transform.SetParent(parkPlace.transform);//پرنت در هایرارکی مکان پارکینگ تعیین می شود
         box.transform.localScale = Vector3.one;
@@ -275,6 +278,7 @@ public class Controller : MonoBehaviour
     }
     public void SpawnABoxWheel()
     {
+        PlayerPrefs.SetInt("mainAchiv10", PlayerPrefs.GetInt("mainAchiv10", 0) + 1);
         ParkingPlace parkPlace = parkingManager.GetEmptyPlace();
         int taxiLvl = PlayerPrefs.GetInt("unlocked_car", 1);
         int index = taxiLvl - 4;

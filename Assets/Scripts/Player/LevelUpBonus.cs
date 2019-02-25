@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using CodeStage.AntiCheat.ObscuredTypes;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,7 +9,7 @@ public class LevelUpBonus : MonoBehaviour
     public GameObject parkItem, lineItem, coinItem, gemItem;
     public Text txtLevel, txtPark, txtLine, txtCoin, txtGem;
     public PlayerLevel playerLevel;
-    //public Controller controller;
+    public Controller controller;
     int newLevel;
     public void ShowLevelUpBonus(int newLevel)
     {
@@ -180,17 +181,17 @@ public class LevelUpBonus : MonoBehaviour
     }
     public void ClaimClick()
     {
-        PlayerPrefs.SetFloat("coin", PlayerPrefs.GetFloat("coin", 5000) + playerLevel.levelsInfo[newLevel - 2].coin);
-        PlayerPrefs.SetFloat("gem", PlayerPrefs.GetFloat("gem") + playerLevel.levelsInfo[newLevel - 2].gem);
-        Controller.instance.SetText();
+        ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) + playerLevel.levelsInfo[newLevel - 2].coin);
+        ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem") + playerLevel.levelsInfo[newLevel - 2].gem);
+        controller.SetText();
         int linePlus = playerLevel.levelsInfo[newLevel - 2].linePlus;
         if (linePlus > 0)
         {
             while (linePlus > 0)
             {
                 linePlus--;
-                Controller.instance.slotManager.SpawnASlot();
-                Controller.instance.slotManager.UpdatePosition();
+                controller.slotManager.SpawnASlot();
+                controller.slotManager.UpdatePosition();
                 PlayerPrefs.SetInt("num_of_slot", PlayerPrefs.GetInt("num_of_slot", 2) + 1);
             }
         }
@@ -200,8 +201,8 @@ public class LevelUpBonus : MonoBehaviour
             while (parkingPlus > 0)
             {
                 parkingPlus--;
-                Controller.instance.parkingManager.SpawnNewPlace();
-                Controller.instance.parkingManager.UpdatePlacePosition();
+                controller.parkingManager.SpawnNewPlace();
+                controller.parkingManager.UpdatePlacePosition();
                 PlayerPrefs.SetInt("num_of_places", PlayerPrefs.GetInt("num_of_places", 4) + 1);
             }
         }

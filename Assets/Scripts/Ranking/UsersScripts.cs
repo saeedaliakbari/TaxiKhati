@@ -53,6 +53,14 @@ public class UsersScripts : MonoBehaviour
             {
                 JsonData jsonBooks = JsonMapper.ToObject(ChangeToJson(www.text));
                 rankUser = int.Parse(jsonBooks[0]["rank"].ToString());
+                if (rankUser < 1000)
+                {
+                    PlayerPrefs.SetInt("mainAchiv5", 1);
+                }
+                else if (rankUser < 5000)
+                {
+                    PlayerPrefs.SetInt("mainAchiv4", 1);
+                }
                 Debug.Log(rankUser.ToString());
                 myRank.txtCoin.text = jsonBooks[0]["coin"].ToString();
                 myRank.txtName.text = PlayerPrefs.GetString("username", "تاکسی ران");

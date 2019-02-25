@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using CodeStage.AntiCheat.ObscuredTypes;
+
 public class WheelFortuneScript : MonoBehaviour
 {
     public VideoAds videoAds;
@@ -138,6 +140,7 @@ public class WheelFortuneScript : MonoBehaviour
     }
     public void WheelStart(bool video)
     {
+        PlayerPrefs.SetInt("mainAchiv9", PlayerPrefs.GetInt("mainAchiv9", 0) + 1);
         btnWheelVideo.interactable = false;
         btnWheelGem.interactable = false;
         anglePerItem = 360 / maxRotaiton.Length;
@@ -197,10 +200,10 @@ public class WheelFortuneScript : MonoBehaviour
     #endregion//باید کدهاش بررسی شود
     public void BtnWheelWithGem()
     {
-        if (PlayerPrefs.GetFloat("gem", 0) >= 5)
+        if (ObscuredPrefs.GetDouble("gem", 0) >= 5)
         {
-            PlayerPrefs.SetFloat("gem", PlayerPrefs.GetFloat("gem") - 5);
-            Controller.instance.SetText();
+            ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem") - 5);
+            videoAds.controller.SetText();
             WheelStart(false);
         }
         else
@@ -210,12 +213,12 @@ public class WheelFortuneScript : MonoBehaviour
     }
     private void ManageGift(int itemNumber)
     {
-        Controller.instance.panelMessage.SetActive(true);
+        videoAds.controller.panelMessage.SetActive(true);
         if (itemNumber == 0)
         {
-            PlayerPrefs.SetFloat("gem", PlayerPrefs.GetFloat("gem") + 20);
-            Controller.instance.SetText();
-            Controller.instance.txtPanelMessage.text = "20 الماس اضافه شد";
+            ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem") + 20);
+            videoAds.controller.SetText();
+            videoAds.controller.txtPanelMessage.text = "20 الماس اضافه شد";
         }
         else if (itemNumber == 1)
         {
@@ -226,8 +229,8 @@ public class WheelFortuneScript : MonoBehaviour
             else {
                 Manager.SetActionTime("5x_earning_for_1m", (60 + Manager.GetCurrentTime()));
             }
-            Controller.instance.txtPanelMessage.text = "به مدت 1 دقیقه در آمد شما 5 برابر شد";
-            Controller.instance.slotManager.UpdateEarningSpeedText();
+            videoAds.controller.txtPanelMessage.text = "به مدت 1 دقیقه در آمد شما 5 برابر شد";
+            videoAds.controller.slotManager.UpdateEarningSpeedText();
         }
         else if (itemNumber == 2)
         {
@@ -239,22 +242,22 @@ public class WheelFortuneScript : MonoBehaviour
                 Manager.SetActionTime("2x_speed_for_150s", (150 + Manager.GetCurrentTime()));
             }
 
-            Controller.instance.txtPanelMessage.text = "به مدت 150 ثانیه سرعت شما 2 برابر شد";
-            Controller.instance.slotManager.UpdateEarningSpeedText();
+            videoAds.controller.txtPanelMessage.text = "به مدت 150 ثانیه سرعت شما 2 برابر شد";
+            videoAds.controller.slotManager.UpdateEarningSpeedText();
         }
         else if (itemNumber == 3)
         {
             for (int i = 0; i < 4; i++)
             {
-                Controller.instance.SpawnABoxWheel();
+                videoAds.controller.SpawnABoxWheel();
             }
-            Controller.instance.txtPanelMessage.text = "4 جعبه طلایی به پارکینگ شما اضافه شد";
+            videoAds.controller.txtPanelMessage.text = "4 جعبه طلایی به پارکینگ شما اضافه شد";
         }
         else if (itemNumber == 4)
         {
-            PlayerPrefs.SetFloat("coin", PlayerPrefs.GetFloat("coin",5000) + (Controller.instance.slotManager.earnPerSec * 4 * 60 * 60));
-            Controller.instance.SetText();
-            Controller.instance.txtPanelMessage.text = "به اندازه 4 ساعت درآمد فعلی  به شما پرداخت شد";
+            ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) + (videoAds.controller.slotManager.earnPerSec * 4 * 60 * 60));
+            videoAds.controller.SetText();
+            videoAds.controller.txtPanelMessage.text = "به اندازه 4 ساعت درآمد فعلی  به شما پرداخت شد";
         }
     }
 }

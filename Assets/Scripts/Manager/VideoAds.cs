@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using TapsellSDK;
 public class VideoAds : MonoBehaviour
 {
+    public Controller controller;
     public OfflineEraning offlineEarning;
     public ShopPanel shopPanel;
     public RandomGift randomGift;
@@ -25,7 +26,7 @@ public class VideoAds : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        //PlayerPrefs.SetFloat("coin", 93021943);
+        //ObscuredPrefs.SetDouble("coin", 93021943);
         Tapsell.initialize(sdkToken);
         LoadAd(zoneOfflineEarning);
     }
@@ -175,7 +176,7 @@ public class VideoAds : MonoBehaviour
         Debug.Log("tedad : " + random + " index: " + randomIndex + " unlocaed_car: " + PlayerPrefs.GetInt("unlocked_car", 1));
         for (int i = 0; i < random; i++)
         {
-            Controller.instance.SpawnACarWithVideo(randomIndex);
+            controller.SpawnACarWithVideo(randomIndex);
         }
         randomGift.panelRandomGift.SetActive(false);
     }
@@ -224,7 +225,7 @@ public class VideoAds : MonoBehaviour
     }
     private void GiftShopCar(int index)
     {
-        Controller.instance.SpawnACarWithVideo(index);
+        controller.SpawnACarWithVideo(index);
         shopPanel.BuyCarClick(index);
     }
     #endregion
@@ -276,7 +277,7 @@ public class VideoAds : MonoBehaviour
         {
             indexCar += 1;
         }
-        Controller.instance.SpawnACarWithVideo(indexCar);
+        controller.SpawnACarWithVideo(indexCar);
         panelTaxiUpVideo.SetActive(false);
 
     }
