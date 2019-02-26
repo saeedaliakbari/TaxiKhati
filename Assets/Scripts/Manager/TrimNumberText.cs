@@ -170,6 +170,11 @@ public class TrimNumberText : Text
             {
                 GetComponent<Text>().text = (number / 1000d).ToString("0.##") + " K";
             }
+            //else
+            //{
+            //    GetComponent<Text>().text = (number / 1000d).ToString("0.##") + " ";
+            //}
+
         }
     }
 

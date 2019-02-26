@@ -16,7 +16,7 @@ public class ExchangeToken : MonoBehaviour
     public void SetTxtTokenValue()
     {
         rate = (1 - PlayerPrefs.GetFloat("exchangeDeclineTycoon", 0)) * 10000;
-        txtRate.text = "(" +rate.ToString();
+        txtRate.text = "(" + rate.ToString();
         try
         {
             coin = System.Math.Floor(double.Parse(inputTokenValue.text) * rate);
@@ -52,6 +52,7 @@ public class ExchangeToken : MonoBehaviour
             //if (coin <= ObscuredPrefs.GetDouble("coin", 5000))
             //{
             double token = double.Parse(inputTokenValue.text);
+            Debug.Log("token: " + (token + 1));
             if (token + i > 1)
             {
                 inputTokenValue.text = (token + i).ToString();
