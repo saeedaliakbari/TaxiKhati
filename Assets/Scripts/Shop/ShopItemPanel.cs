@@ -7,11 +7,12 @@ using UnityEngine.UI;
 public class ShopItemPanel : MonoBehaviour
 {
     public Controller controller;
-    private float earnPerSec;
+    private double earnPerSec;
     public TrimNumberText txtPack1, txtPack2, txtPack3;
     public void OpenPanel()
     {
         earnPerSec = controller.slotManager.earnPerSec;
+        Debug.Log("earnPerSec: " + earnPerSec);
         txtPack1.text = (earnPerSec * 4 * 60 * 60).ToString();
         txtPack2.text = (earnPerSec * 24 * 60 * 60).ToString();
         txtPack3.text = (earnPerSec * 24 * 4 * 60 * 60).ToString();
@@ -43,7 +44,6 @@ public class ShopItemPanel : MonoBehaviour
         }
         else
         {
-            ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem") + Gem);
             controller.txtError.text = "به مقدار کافی جم ندارید";
             controller.txtError.gameObject.SetActive(true);
             Timer.Schedule(this, 3f, () =>

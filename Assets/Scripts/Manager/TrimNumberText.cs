@@ -52,123 +52,123 @@ public class TrimNumberText : Text
         {
             if (number >= 10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000d)//87
             {
-                GetComponent<Text>().text = (number / 10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000d).ToString("0.#") + " az";
+                GetComponent<Text>().text = (number / 10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000d).ToString("0.##") + " az";
             }
             else if (number >= 10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000d)//84
             {
-                GetComponent<Text>().text = (number / 10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000d).ToString("0.#") + " ay";
+                GetComponent<Text>().text = (number / 10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000d).ToString("0.##") + " ay";
             }
             else if (number >= 10000000000000000000000000000000000000000000000000000000000000000000000000000000000000d)//81
             {
-                GetComponent<Text>().text = (number / 10000000000000000000000000000000000000000000000000000000000000000000000000000000000000d).ToString("0.#") + " ax";
+                GetComponent<Text>().text = (number / 10000000000000000000000000000000000000000000000000000000000000000000000000000000000000d).ToString("0.##") + " ax";
             }
             else if (number >= 10000000000000000000000000000000000000000000000000000000000000000000000000000000000d)//78
             {
-                GetComponent<Text>().text = (number / 10000000000000000000000000000000000000000000000000000000000000000000000000000000000d).ToString("0.#") + " aw";
+                GetComponent<Text>().text = (number / 10000000000000000000000000000000000000000000000000000000000000000000000000000000000d).ToString("0.##") + " aw";
             }
             else if (number >= 1000000000000000000000000000000000000000000000000000000000000000000000000000000d)//75
             {
-                GetComponent<Text>().text = (number / 1000000000000000000000000000000000000000000000000000000000000000000000000000000d).ToString("0.#") + " av";
+                GetComponent<Text>().text = (number / 1000000000000000000000000000000000000000000000000000000000000000000000000000000d).ToString("0.##") + " av";
             }
             else if (number >= 1000000000000000000000000000000000000000000000000000000000000000000000000000d)//72
             {
-                GetComponent<Text>().text = (number / 1000000000000000000000000000000000000000000000000000000000000000000000000000d).ToString("0.#") + " au";
+                GetComponent<Text>().text = (number / 1000000000000000000000000000000000000000000000000000000000000000000000000000d).ToString("0.##") + " au";
             }
             else if (number >= 1000000000000000000000000000000000000000000000000000000000000000000000000d)//69
             {
-                GetComponent<Text>().text = (number / 1000000000000000000000000000000000000000000000000000000000000000000000000d).ToString("0.#") + " at";
+                GetComponent<Text>().text = (number / 1000000000000000000000000000000000000000000000000000000000000000000000000d).ToString("0.##") + " at";
             }
             else if (number >= 1000000000000000000000000000000000000000000000000000000000000000000000d)//66
             {
-                GetComponent<Text>().text = (number / 1000000000000000000000000000000000000000000000000000000000000000000000d).ToString("0.#") + " as";
+                GetComponent<Text>().text = (number / 1000000000000000000000000000000000000000000000000000000000000000000000d).ToString("0.##") + " as";
             }
             else if (number >= 1000000000000000000000000000000000000000000000000000000000000000000d)//63
             {
-                GetComponent<Text>().text = (number / 1000000000000000000000000000000000000000000000000000000000000000000d).ToString("0.#") + " ar";
+                GetComponent<Text>().text = (number / 1000000000000000000000000000000000000000000000000000000000000000000d).ToString("0.##") + " ar";
             }
             else if (number >= 1000000000000000000000000000000000000000000000000000000000000000d)//60
             {
-                GetComponent<Text>().text = (number / 1000000000000000000000000000000000000000000000000000000000000000d).ToString("0.#") + " aq";
+                GetComponent<Text>().text = (number / 1000000000000000000000000000000000000000000000000000000000000000d).ToString("0.##") + " aq";
             }
             else if (number >= 1000000000000000000000000000000000000000000000000000000000000d)//57
             {
-                GetComponent<Text>().text = (number / 1000000000000000000000000000000000000000000000000000000000000d).ToString("0.#") + " ap";
+                GetComponent<Text>().text = (number / 1000000000000000000000000000000000000000000000000000000000000d).ToString("0.##") + " ap";
             }
             else if (number >= 1000000000000000000000000000000000000000000000000000000000d)//54
             {
-                GetComponent<Text>().text = (number / 1000000000000000000000000000000000000000000000000000000000d).ToString("0.#") + " ao";
+                GetComponent<Text>().text = (number / 1000000000000000000000000000000000000000000000000000000000d).ToString("0.##") + " ao";
             }
             else if (number >= 1000000000000000000000000000000000000000000000000000000d)//51
             {
-                GetComponent<Text>().text = (number / 1000000000000000000000000000000000000000000000000000000d).ToString("0.#") + " an";
+                GetComponent<Text>().text = (number / 1000000000000000000000000000000000000000000000000000000d).ToString("0.##") + " an";
             }
             else if (number >= 1000000000000000000000000000000000000000000000000000d)//48
             {
-                GetComponent<Text>().text = (number / 1000000000000000000000000000000000000000000000000000d).ToString("0.#") + " am";
+                GetComponent<Text>().text = (number / 1000000000000000000000000000000000000000000000000000d).ToString("0.##") + " am";
             }
             else if (number >= 1000000000000000000000000000000000000000000000000d)//48
             {
-                GetComponent<Text>().text = (number / 1000000000000000000000000000000000000000000000000d).ToString("0.#") + " al";
+                GetComponent<Text>().text = (number / 1000000000000000000000000000000000000000000000000d).ToString("0.##") + " al";
             }
             else if (number >= 1000000000000000000000000000000000000000000000d)//45
             {
-                GetComponent<Text>().text = (number / 1000000000000000000000000000000000000000000000d).ToString("0.#") + " ak";
+                GetComponent<Text>().text = (number / 1000000000000000000000000000000000000000000000d).ToString("0.##") + " ak";
             }
             else if (number >= 1000000000000000000000000000000000000000000d)//42
             {
-                GetComponent<Text>().text = (number / 1000000000000000000000000000000000000000000d).ToString("0.#") + " aj";
+                GetComponent<Text>().text = (number / 1000000000000000000000000000000000000000000d).ToString("0.##") + " aj";
             }
             else if (number >= 1000000000000000000000000000000000000000d)//39
             {
-                GetComponent<Text>().text = (number / 1000000000000000000000000000000000000000d).ToString("0.#") + " ai";
+                GetComponent<Text>().text = (number / 1000000000000000000000000000000000000000d).ToString("0.##") + " ai";
             }
             else if (number >= 1000000000000000000000000000000000000d)//36
             {
-                GetComponent<Text>().text = (number / 1000000000000000000000000000000000000d).ToString("0.#") + " ah";
+                GetComponent<Text>().text = (number / 1000000000000000000000000000000000000d).ToString("0.##") + " ah";
             }
             else if (number >= 1000000000000000000000000000000000d)//33
             {
-                GetComponent<Text>().text = (number / 1000000000000000000000000000000000d).ToString("0.#") + " ag";
+                GetComponent<Text>().text = (number / 1000000000000000000000000000000000d).ToString("0.##") + " ag";
             }
             else if (number >= 1000000000000000000000000000000d)//30
             {
-                GetComponent<Text>().text = (number / 1000000000000000000000000000000d).ToString("0.#") + " af";
+                GetComponent<Text>().text = (number / 1000000000000000000000000000000d).ToString("0.##") + " af";
             }
             else if (number >= 1000000000000000000000000000d)//27
             {
-                GetComponent<Text>().text = (number / 1000000000000000000000000000d).ToString("0.#") + " ae";
+                GetComponent<Text>().text = (number / 1000000000000000000000000000d).ToString("0.##") + " ae";
             }
             else if (number >= 1000000000000000000000000d)//24
             {
-                GetComponent<Text>().text = (number / 1000000000000000000000000d).ToString("0.#") + " ad";
+                GetComponent<Text>().text = (number / 1000000000000000000000000d).ToString("0.##") + " ad";
             }
             else if (number >= 1000000000000000000000d)//21
             {
-                GetComponent<Text>().text = (number / 1000000000000000000000d).ToString("0.#") + " ac";
+                GetComponent<Text>().text = (number / 1000000000000000000000d).ToString("0.##") + " ac";
             }
             else if (number >= 1000000000000000000d)//18
             {
-                GetComponent<Text>().text = (number / 1000000000000000000d).ToString("0.#") + " ab";
+                GetComponent<Text>().text = (number / 1000000000000000000d).ToString("0.##") + " ab";
             }
             else if (number >= 1000000000000000d)//15
             {
-                GetComponent<Text>().text = (number / 1000000000000000d).ToString("0.#") + " aa";
+                GetComponent<Text>().text = (number / 1000000000000000d).ToString("0.##") + " aa";
             }
             else if (number >= 1000000000000d)//12
             {
-                GetComponent<Text>().text = (number / 1000000000000d).ToString("0.#") + " T";
+                GetComponent<Text>().text = (number / 1000000000000d).ToString("0.##") + " T";
             }
             else if (number >= 1000000000d)
             {
-                GetComponent<Text>().text = (number / 1000000000d).ToString("0.#") + " B";
+                GetComponent<Text>().text = (number / 1000000000d).ToString("0.##") + " B";
             }
             else if (number >= 1000000d)
             {
-                GetComponent<Text>().text = (number / 1000000d).ToString("0") + " M";
+                GetComponent<Text>().text = (number / 1000000d).ToString("0.##") + " M";
             }
             else if (number >= 1000d)
             {
-                GetComponent<Text>().text = (number / 1000d).ToString("0.#") + " K";
+                GetComponent<Text>().text = (number / 1000d).ToString("0.##") + " K";
             }
         }
     }

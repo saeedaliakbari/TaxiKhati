@@ -8,16 +8,18 @@ public class ExchangeToken : MonoBehaviour
     public Controller controller;
     public InputField inputTokenValue;
     public TrimNumberText txtCoinValue;
-    private float rate, tokenValue;
-    private float coin;
+    public Text txtRate;
+    private float rate;
+    private double coin, tokenValue;
     // Use this for initialization
     public Button btnExchange;
     public void SetTxtTokenValue()
     {
         rate = (1 - PlayerPrefs.GetFloat("exchangeDeclineTycoon", 0)) * 10000;
+        txtRate.text = "(" +rate.ToString();
         try
         {
-            coin = Mathf.Floor(float.Parse(inputTokenValue.text) * rate);
+            coin = System.Math.Floor(double.Parse(inputTokenValue.text) * rate);
             txtCoinValue.text = coin.ToString();
             if (coin > ObscuredPrefs.GetDouble("coin", 5000))
             {
@@ -37,8 +39,8 @@ public class ExchangeToken : MonoBehaviour
     }
     public void BtnExchangeToken()
     {
-        tokenValue = Mathf.Floor(float.Parse(inputTokenValue.text) * rate);
-       ObscuredPrefs.SetDouble("token",ObscuredPrefs.GetDouble("token", 0) + tokenValue);
+        tokenValue = double.Parse(inputTokenValue.text);
+        ObscuredPrefs.SetDouble("token", ObscuredPrefs.GetDouble("token", 0) + tokenValue);
         ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) - (tokenValue * rate));
         controller.SetText();
     }
@@ -46,11 +48,38 @@ public class ExchangeToken : MonoBehaviour
     {
         try
         {
-            inputTokenValue.text = (float.Parse(inputTokenValue.text) + i).ToString();
+            //double coin = System.Math.Floor((double.Parse(inputTokenValue.text) + i) * rate);
+            //if (coin <= ObscuredPrefs.GetDouble("coin", 5000))
+            //{
+            double token = double.Parse(inputTokenValue.text);
+            if (token + i > 1)
+            {
+                inputTokenValue.text = (token + i).ToString();
+            }
+            else
+            {
+                inputTokenValue.text = "1";
+            }
+
+            //}
         }
         catch (System.Exception)
         {
             inputTokenValue.text = "1";
         }
+    }
+    public void MaxValue()
+    {
+        double token = System.Math.Floor(ObscuredPrefs.GetDouble("coin", 5000) / rate);
+        Debug.Log("Token : " + token);
+        inputTokenValue.text = token.ToString();
+        Debug.Log("Token : " + inputTokenValue.text);
+        txtCoinValue.text = (token * rate).ToString();
+        Debug.Log(token * rate);
+
+    }
+    public void MinValue()
+    {
+        inputTokenValue.text = "1";
     }
 }

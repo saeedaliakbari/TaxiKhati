@@ -7,8 +7,8 @@ public class RunSlotManager : MonoBehaviour
     public RunSlot slotPrefab;
     private List<RunSlot> listSlot = new List<RunSlot>();
     private int numRun = 0;//تعداد ماشین های در حال حرکت
-    private float earningPerSec;
-    public float earnPerSec;
+    private double earningPerSec;
+    public double earnPerSec;
     public TrimNumberText earningPerSecTxt, txtEarningWithSec;
     public SpriteRenderer goal;
     public Sprite[] goalSprites;
@@ -17,7 +17,7 @@ public class RunSlotManager : MonoBehaviour
     public TextMesh txtNum;
     private bool hasSpeedX2 = false;
 
-    public float EarningPerSec
+    public double EarningPerSec
     {
         get
         {
@@ -46,7 +46,7 @@ public class RunSlotManager : MonoBehaviour
         float ratio = ((Manager.GetCurrentTime() < Manager.GetActionTime("speed_x2")) ? 2 : 1) /** Const.AIRLINE_INCREASE_PERCENT[index]*/;//ریت بدست آوردن سکه
         ratio *= ((Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m")) ? 5 : 1);
         ratio *= ((Manager.GetCurrentTime() < Manager.GetActionTime("2x_speed_for_150s")) ? 2 : 1);
-        earnPerSec = Mathf.RoundToInt(earningPerSec * ratio * PlayerPrefs.GetFloat("incomeLine", 1) * PlayerPrefs.GetFloat("speedVip", 1));
+        earnPerSec = System.Math.Round(earningPerSec * ratio * PlayerPrefs.GetFloat("incomeLine", 1) * PlayerPrefs.GetFloat("speedVip", 1));
         earningPerSecTxt.text = earnPerSec.ToString();
         txtEarningWithSec.text = "ﻪﯿﻧﺎﺛ / " + earningPerSecTxt.text;
     }
@@ -56,12 +56,33 @@ public class RunSlotManager : MonoBehaviour
         EarningPerSec = 0;
         int num = PlayerPrefs.GetInt("num_of_slot", 2);//تعداد لاین های شروع 
         num += PlayerPrefs.GetInt("num_of_slot_vip", 0);
+        PlayerPrefs.SetInt("num_total_slot", num);
         for (int i = 0; i < num; i++)
         {//به تعداد لاین هایی که هست ، لاین ایجاد می کند
             SpawnASlot();
         }
         UpdatePosition();//موقعیت تمامی لاین ها را درست می کند
+        UpdateState();
         UpdateStartGoal();
+    }
+    public void InitSlotsVIP()
+    {
+        int num = PlayerPrefs.GetInt("num_of_slot", 2);//تعداد لاین های شروع 
+        num += PlayerPrefs.GetInt("num_of_slot_vip", 0);
+        Debug.Log("SLOT :num: " + PlayerPrefs.GetInt("num_of_slot", 2) + " numVIP: " + PlayerPrefs.GetInt("num_of_slot_vip", 0) + " TOTAL: " + PlayerPrefs.GetInt("num_total_slot"));
+        if (num > PlayerPrefs.GetInt("num_total_slot"))
+        {
+            int newSlot = num - PlayerPrefs.GetInt("num_of_slot", 2);
+            for (int i = 0; i < newSlot; i++)
+            {//به تعداد لاین هایی که هست ، لاین ایجاد می کند
+                PlayerPrefs.SetInt("num_total_slot", PlayerPrefs.GetInt("num_total_slot") + 1);
+                SpawnASlot();
+            }
+            UpdatePosition();//موقعیت تمامی لاین ها را درست می کند
+            UpdateState();
+            UpdateStartGoal();
+        }
+
     }
     public void SpawnASlot()
     {
@@ -103,7 +124,7 @@ public class RunSlotManager : MonoBehaviour
     {
         return numRun == listSlot.Count;
     }
-    public void RunACar(float earning)//تابع هنگام حرکت کردن یک ماشین فراخوانی می شود جهت آپدیت شدن بدست آوردن سکه و هچنین ایستگاه های شروع
+    public void RunACar(double earning)//تابع هنگام حرکت کردن یک ماشین فراخوانی می شود جهت آپدیت شدن بدست آوردن سکه و هچنین ایستگاه های شروع
     {
         if (!IsFull())
         {
@@ -113,11 +134,11 @@ public class RunSlotManager : MonoBehaviour
             UpdateState();
         }
     }
-    public void StopACar(float earning)//تابع هنگام ایستادن یک ماشین فراخوانی می شود جهت آپدیت شدن مقدار بدست آوردن سکه و همچنین ایستگاه های شروع
+    public void StopACar(double earning)//تابع هنگام ایستادن یک ماشین فراخوانی می شود جهت آپدیت شدن مقدار بدست آوردن سکه و همچنین ایستگاه های شروع
     {
         if (numRun >= 1)
         {
-            EarningPerSec = Mathf.Max(0, EarningPerSec - earning);
+            EarningPerSec = System.Math.Max(0, EarningPerSec - earning);
             numRun--;
             UpdateState();
         }

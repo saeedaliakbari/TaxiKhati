@@ -10,7 +10,7 @@ public class OfflineEraning : MonoBehaviour
     [HideInInspector]
     public TrimNumberText txtCoin;
     public Button btnDouble, btnThird;
-    private float value;
+    private double value;
     [HideInInspector]
     public bool doubleCoin = false;
     private bool thirdCoin = false;

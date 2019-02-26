@@ -25,11 +25,30 @@ public class ParkingManager : MonoBehaviour
     {//با توجه به تعداد مکان ها ، پارکینگ ها را ایجاد می کند
         int numPlaces = PlayerPrefs.GetInt("num_of_places", 4);
         int numPlacesVIP = PlayerPrefs.GetInt("num_of_places_vip", 0);
+
+        PlayerPrefs.SetInt("num_total_places", numPlaces + numPlacesVIP);
         for (int i = 0; i < numPlaces + numPlacesVIP; i++)
         {
             SpawnNewPlace();
         }
         UpdatePlacePosition();
+    }
+    public void SpawnPlacesVIP()
+    {
+        int num = PlayerPrefs.GetInt("num_of_places", 4);//تعداد لاین های شروع 
+        num += PlayerPrefs.GetInt("num_of_places_vip", 0);
+        Debug.Log("Place>>>num: " + PlayerPrefs.GetInt("num_of_places", 4) + " numVIP: " + PlayerPrefs.GetInt("num_of_places_vip", 0) + " TOTAL: " + PlayerPrefs.GetInt("num_total_places"));
+        if (num > PlayerPrefs.GetInt("num_total_places"))
+        {
+            Debug.Log("num > num_total_places");
+            int newPlace = num - PlayerPrefs.GetInt("num_total_places");
+            for (int i = 0; i < newPlace; i++)
+            {
+                PlayerPrefs.SetInt("num_total_places", PlayerPrefs.GetInt("num_total_places") + 1);
+                SpawnNewPlace();
+            }
+            UpdatePlacePosition();
+        }
     }
     void FixedUpdate()//برای چک کردن تعداد ماشین های هر لول در پارکینگ ها
     {
@@ -94,7 +113,7 @@ public class ParkingManager : MonoBehaviour
             //Debug.Log("FULL ");
         }
         else {
-            if (carsLevel[carSpeedTycoonBoosts.level[levelSpeed]-1] >= 3)
+            if (carsLevel[carSpeedTycoonBoosts.level[levelSpeed] - 1] >= 3)
             {
                 //Debug.Log("Get Gift" + earningOfflineTycoonBoosts.level[PlayerPrefs.GetInt("offlineEarnTycoonLevel", 0)]);
                 btnCarSpeed.interactable = true;
@@ -115,8 +134,8 @@ public class ParkingManager : MonoBehaviour
         txtOfflineEarning.text = "سطح " + (levelOfflineEarning + 1);
         //Debug.Log("CheckOfflineEarningTycoon LEVEL CAR :" + earningOfflineTycoonBoosts.level[levelOfflineEarning]);
         imgCarOfflienEarn.sprite = controller.activeCar[earningOfflineTycoonBoosts.level[levelOfflineEarning] - 1];
-        txtLevelOfflineEarn.text = (carsLevel[earningOfflineTycoonBoosts.level[levelOfflineEarning]-1] >= 3 ? "3" :
-            carsLevel[earningOfflineTycoonBoosts.level[levelOfflineEarning]-1].ToString()) + "/3";
+        txtLevelOfflineEarn.text = (carsLevel[earningOfflineTycoonBoosts.level[levelOfflineEarning] - 1] >= 3 ? "3" :
+            carsLevel[earningOfflineTycoonBoosts.level[levelOfflineEarning] - 1].ToString()) + "/3";
         txtOfflineEarnOld.text = levelOfflineEarning >= 1 ? ((Mathf.RoundToInt((earningOfflineTycoonBoosts.incEarn[levelOfflineEarning - 1] - 1f) * 1000)) / 10f).ToString() + "%" : "0%";
         txtOfflineEarnNew.text = "+" + ((Mathf.RoundToInt((earningOfflineTycoonBoosts.incEarn[levelOfflineEarning] - 1f) * 1000)) / 10f).ToString() + "%";
         //imgSlideGreenOfflineEarning.fillAmount = (earningOfflineTycoonBoosts.incEarn[levelOfflineEarning] - 1f) / 0.325f;
@@ -128,7 +147,7 @@ public class ParkingManager : MonoBehaviour
             //Debug.Log("FULL ");
         }
         else {
-            if (carsLevel[earningOfflineTycoonBoosts.level[levelOfflineEarning]-1] >= 3)
+            if (carsLevel[earningOfflineTycoonBoosts.level[levelOfflineEarning] - 1] >= 3)
             {
                 //Debug.Log("Get Gift" + earningOfflineTycoonBoosts.level[PlayerPrefs.GetInt("offlineEarnTycoonLevel", 0)]);
                 btnOfflineEarning.interactable = true;
@@ -162,7 +181,7 @@ public class ParkingManager : MonoBehaviour
             //Debug.Log("FULL ");
         }
         else {
-            if (carsLevel[exchangeDeclineTycoonBoosts.level[levelExchangeDecline]-1] >= 3)
+            if (carsLevel[exchangeDeclineTycoonBoosts.level[levelExchangeDecline] - 1] >= 3)
             {
                 //Debug.Log("Get Gift" + earningOfflineTycoonBoosts.level[PlayerPrefs.GetInt("offlineEarnTycoonLevel", 0)]);
                 btnExchangeDecline.interactable = true;

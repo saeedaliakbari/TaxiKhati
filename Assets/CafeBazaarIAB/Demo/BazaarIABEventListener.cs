@@ -15,6 +15,20 @@ public class BazaarIABEventListener : MonoBehaviour
 
     void OnEnable()
     {
+        //Debug.Log("ViP Start()");
+
+        //PlayerPrefs.SetInt("num_of_places_vip", 2);//added 2 parking
+        //PlayerPrefs.SetInt("num_of_slot_vip", 2);//added 2 line
+        //iapCafeBazar.controller.parkingManager.SpawnPlacesVIP();
+        //iapCafeBazar.controller.slotManager.InitSlotsVIP();
+        //PlayerPrefs.SetFloat("offliceEarnVip", 1.2f);//added 20% offline earning
+        //PlayerPrefs.SetInt("removeAds", 1);//remove ads in shop
+        //PlayerPrefs.SetInt("gemPerDay", 1);//10 gem per day
+        //PlayerPrefs.SetFloat("speedVip", 1.5f);//added 50% speed
+        //iapCafeBazar.controller.slotManager.UpdateEarningSpeedText();
+        //iapCafeBazar.controller.GiftDaily();
+
+
         // Listen to all events for illustration purposes
         IABEventManager.billingSupportedEvent += billingSupportedEvent;
         IABEventManager.billingNotSupportedEvent += billingNotSupportedEvent;
@@ -81,8 +95,8 @@ public class BazaarIABEventListener : MonoBehaviour
                 //بقیه اطلاعات مربوط به اشتراک وارد شود
                 PlayerPrefs.SetInt("num_of_places_vip", 2);//added 2 parking
                 PlayerPrefs.SetInt("num_of_slot_vip", 2);//added 2 line
-                iapCafeBazar.controller.parkingManager.SpawnPlaces();
-                iapCafeBazar.controller.slotManager.InitSlots();
+                iapCafeBazar.controller.parkingManager.SpawnPlacesVIP();
+                iapCafeBazar.controller.slotManager.InitSlotsVIP();
                 PlayerPrefs.SetFloat("offliceEarnVip", 1.2f);//added 20% offline earning
                 PlayerPrefs.SetInt("removeAds", 1);//remove ads in shop
                 PlayerPrefs.SetInt("gemPerDay", 1);//10 gem per day

@@ -7,7 +7,7 @@ public class Car : MonoBehaviour
 {
     public int level;
     public int xp;
-    public float earnings;
+    public double earnings;
     public float speed;
     public float increasePercent;
     [HideInInspector]
@@ -146,7 +146,7 @@ public class Car : MonoBehaviour
         PlayerPrefs.SetInt("checkLevel", 0);
         Destroy(gameObject);//این ماشین را از بین می برد
     }
-    public float GetEarningPerSecond()//مقدار بدست آوردن سکه در هر ثانیه
+    public double GetEarningPerSecond()//مقدار بدست آوردن سکه در هر ثانیه
     {//یعنی این ماشین چقدر سکه در هرثانیه بدست می اورد با توجه به لولش
         return ((earnings * speed) / timeLab);
     }
@@ -203,7 +203,8 @@ public class Car : MonoBehaviour
         float ratio = ((Manager.GetCurrentTime() < Manager.GetActionTime("speed_x2")) ? 2 : 1) /** Const.AIRLINE_INCREASE_PERCENT[index]*/;//ریت بدست آوردن سکه
         ratio *= ((Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m")) ? 5 : 1);
         ratio *= ((Manager.GetCurrentTime() < Manager.GetActionTime("2x_speed_for_150s")) ? 2 : 1);
-        ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) + (int)(earnings * increasePercent * ratio * PlayerPrefs.GetFloat("incomeLine", 1)));
+        //Debug.Log("Coin++ =>>>" + );
+        ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) + (double)(earnings * increasePercent * ratio * PlayerPrefs.GetFloat("incomeLine", 1)));
         //if (Manager.GetCurrentTime() < Manager.GetActionTime("income_x2"))
         //{
         //    if (Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m"))

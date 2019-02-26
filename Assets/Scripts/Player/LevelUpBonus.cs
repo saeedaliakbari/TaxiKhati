@@ -6,10 +6,11 @@ using UnityEngine.UI;
 
 public class LevelUpBonus : MonoBehaviour
 {
-    public GameObject parkItem, lineItem, coinItem, gemItem;
-    public Text txtLevel, txtPark, txtLine, txtCoin, txtGem;
+    public GameObject parkItem, lineItem, coinItem, gemItem, objLevelLeft, objLevelRight;
+    public Text txtLevel, txtPark, txtLine, txtCoin, txtGem, txtLevelLeft, txtLevelCenter, txtLevelRight;
     public PlayerLevel playerLevel;
     public Controller controller;
+    public Image imgSlider;
     int newLevel;
     public void ShowLevelUpBonus(int newLevel)
     {
@@ -23,7 +24,7 @@ public class LevelUpBonus : MonoBehaviour
         lineItem.SetActive(playerLevel.levelsInfo[newLevel - 2].linePlus > 0);
         coinItem.SetActive(playerLevel.levelsInfo[newLevel - 2].coin > 0);
         gemItem.SetActive(playerLevel.levelsInfo[newLevel - 2].gem > 0);
-
+        SetSliderLevel();
         #region Set Position Item
         #region prakItem>0
         if (playerLevel.levelsInfo[newLevel - 2].parkingPlus > 0)
@@ -206,6 +207,139 @@ public class LevelUpBonus : MonoBehaviour
                 PlayerPrefs.SetInt("num_of_places", PlayerPrefs.GetInt("num_of_places", 4) + 1);
             }
         }
+    }
+
+    private void SetSliderLevel()
+    {
+        Debug.Log("New Level: " + newLevel);
+        objLevelLeft.SetActive(true);
+        if (newLevel <= 3)
+        {
+            objLevelLeft.SetActive(false);
+            txtLevelCenter.text = "سطح 3";
+            txtLevelRight.text = "سطح 5";
+            imgSlider.fillAmount = (newLevel / 3f) * 0.5f;
+        }
+        else if (newLevel <= 5)
+        {
+            objLevelLeft.SetActive(false);
+            txtLevelCenter.text = "سطح 3";
+            txtLevelRight.text = "سطح 5";
+            imgSlider.fillAmount = (((newLevel - 3) / 2f) * 0.5f) + 0.5f;
+        }
+        else if (newLevel <= 8)
+        {
+            txtLevelLeft.text = "سطح 5";
+            txtLevelCenter.text = "سطح 8";
+            txtLevelRight.text = "سطح 11";
+            imgSlider.fillAmount = ((newLevel - 5) / 3f) * 0.5f;
+        }
+        else if (newLevel <= 11)
+        {
+            txtLevelLeft.text = "سطح 5";
+            txtLevelCenter.text = "سطح 8";
+            txtLevelRight.text = "سطح 11";
+            imgSlider.fillAmount = (((newLevel - 8) / 3f) * 0.5f) + 0.5f;
+        }
+        else if (newLevel <= 14)
+        {
+            txtLevelLeft.text = "سطح 11";
+            txtLevelCenter.text = "سطح 14";
+            txtLevelRight.text = "سطح 17";
+            imgSlider.fillAmount = ((newLevel - 11) / 3f) * 0.5f;
+        }
+        else if (newLevel <= 17)
+        {
+            txtLevelLeft.text = "سطح 11";
+            txtLevelCenter.text = "سطح 14";
+            txtLevelRight.text = "سطح 17";
+            imgSlider.fillAmount = (((newLevel - 14) / 3f) * 0.5f) + 0.5f;
+        }
+        else if (newLevel <= 20)
+        {
+            txtLevelLeft.text = "سطح 17";
+            txtLevelCenter.text = "سطح 20";
+            txtLevelRight.text = "سطح 23";
+            imgSlider.fillAmount = ((newLevel - 17) / 3f) * 0.5f;
+        }
+        else if (newLevel <= 23)
+        {
+            txtLevelLeft.text = "سطح 17";
+            txtLevelCenter.text = "سطح 20";
+            txtLevelRight.text = "سطح 23";
+            imgSlider.fillAmount = (((newLevel - 20) / 3f) * 0.5f) + 0.5f;
+        }
+        else if (newLevel <= 26)
+        {
+            txtLevelLeft.text = "سطح 23";
+            txtLevelCenter.text = "سطح 26";
+            txtLevelRight.text = "سطح 29";
+            imgSlider.fillAmount = ((newLevel - 23) / 3f) * 0.5f;
+        }
+        else if (newLevel <= 29)
+        {
+            txtLevelLeft.text = "سطح 23";
+            txtLevelCenter.text = "سطح 26";
+            txtLevelRight.text = "سطح 29";
+            imgSlider.fillAmount = (((newLevel - 26) / 3f) * 0.5f) + 0.5f;
+        }
+        else if (newLevel <= 32)
+        {
+            txtLevelLeft.text = "سطح 29";
+            txtLevelCenter.text = "سطح 32";
+            txtLevelRight.text = "سطح 35";
+            imgSlider.fillAmount = ((newLevel - 29) / 3f) * 0.5f;
+        }
+        else if (newLevel <= 35)
+        {
+            txtLevelLeft.text = "سطح 29";
+            txtLevelCenter.text = "سطح 32";
+            txtLevelRight.text = "سطح 35";
+            imgSlider.fillAmount = (((newLevel - 32) / 3f) * 0.5f) + 0.5f;
+        }
+        else if (newLevel <= 38)
+        {
+            txtLevelLeft.text = "سطح 35";
+            txtLevelCenter.text = "سطح 38";
+            txtLevelRight.text = "سطح 41";
+            imgSlider.fillAmount = ((newLevel - 35) / 3f) * 0.5f;
+        }
+        else if (newLevel <= 41)
+        {
+            txtLevelLeft.text = "سطح 35";
+            txtLevelCenter.text = "سطح 38";
+            txtLevelRight.text = "سطح 41";
+            imgSlider.fillAmount = (((newLevel - 38) / 3f) * 0.5f) + 0.5f;
+        }
+        else if (newLevel <= 44)
+        {
+            txtLevelLeft.text = "سطح 41";
+            txtLevelCenter.text = "سطح 44";
+            txtLevelRight.text = "سطح 47";
+            imgSlider.fillAmount = ((newLevel - 41) / 3f) * 0.5f;
+        }
+        else if (newLevel <= 47)
+        {
+            txtLevelLeft.text = "سطح 41";
+            txtLevelCenter.text = "سطح 44";
+            txtLevelRight.text = "سطح 47";
+            imgSlider.fillAmount = (((newLevel - 44) / 3f) * 0.5f) + 0.5f;
+        }
+        else if (newLevel <= 50)
+        {
+            txtLevelLeft.text = "سطح 47";
+            txtLevelCenter.text = "سطح 50";
+            txtLevelRight.text = "سطح 53";
+            imgSlider.fillAmount = ((newLevel - 47) / 3f) * 0.5f;
+        }
+        else if (newLevel <= 53)
+        {
+            txtLevelLeft.text = "سطح 47";
+            txtLevelCenter.text = "سطح 50";
+            txtLevelRight.text = "سطح 53";
+            imgSlider.fillAmount = (((newLevel - 50) / 3f) * 0.5f) + 0.5f;
+        }
+        
     }
 }
 

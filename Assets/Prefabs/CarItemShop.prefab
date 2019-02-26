@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 114087640097305982}
   - component: {fileID: 114768519504625538}
   m_Layer: 5
-  m_Name: TxtBtnBuy
+  m_Name: TxtBtnBuyVideo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -290,7 +290,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1806487201857220
 GameObject:
   m_ObjectHideFlags: 0
@@ -394,7 +394,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1962393193892724
 GameObject:
   m_ObjectHideFlags: 1
@@ -438,7 +438,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0.397
+  m_FillAmount: 0.20824894
   m_FillClockwise: 1
   m_FillOrigin: 1
 --- !u!114 &114053502057527106
@@ -536,8 +536,8 @@ MonoBehaviour:
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: "\u0646\u0645\u0627\u064A\u0634 \u0648\u064A\u062F\u0626\u0648"
 --- !u!114 &114114644755471610
@@ -851,7 +851,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 97d10c1756f7221488e5ca107bb94944, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3cb7f493bc21101468b3d3d5f27f3640, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1057,7 +1057,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u0645\u0627\u0634\u064A\u0646 \u0634\u0645\u0627\u0631\u0647 \u062F\u0648 "
+  m_Text: "\u062F\u0644\u064A\u06A9\u0627"
 --- !u!114 &114768519504625538
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1274,16 +1274,16 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: b8668e1593144e64aa47cbc9aaee25ba, type: 3}
     m_FontSize: 57
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 0
-    m_MaxSize: 71
+    m_BestFit: 1
+    m_MinSize: 40
+    m_MaxSize: 57
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 172k
+  m_Text: 167.31 K
 --- !u!114 &114929892440845480
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1349,7 +1349,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0.191
+  m_FillAmount: 0.1023
   m_FillClockwise: 1
   m_FillOrigin: 1
 --- !u!114 &114986777462050204
@@ -1743,7 +1743,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 71.6, y: 3.2}
+  m_AnchoredPosition: {x: 57, y: 3.2}
   m_SizeDelta: {x: 69, y: 68.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224323957052013926
@@ -1881,10 +1881,10 @@ RectTransform:
   m_Father: {fileID: 224753248193654462}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 35.300003, y: -1.2999992}
-  m_SizeDelta: {x: -70.5, y: 21.9}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 40.1, y: -1.29}
+  m_SizeDelta: {x: 180.3, y: 125.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224827433637449638
 RectTransform:
@@ -1917,10 +1917,10 @@ RectTransform:
   m_Father: {fileID: 224250957206301482}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 57.4, y: 7}
-  m_SizeDelta: {x: -64.9, y: 44}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 46, y: 0}
+  m_SizeDelta: {x: 202.1, y: 110.39}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224962252497871390
 RectTransform:

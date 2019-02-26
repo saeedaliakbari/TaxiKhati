@@ -213,6 +213,7 @@ public class WheelFortuneScript : MonoBehaviour
     }
     private void ManageGift(int itemNumber)
     {
+        //itemNumber = 3;
         videoAds.controller.panelMessage.SetActive(true);
         if (itemNumber == 0)
         {

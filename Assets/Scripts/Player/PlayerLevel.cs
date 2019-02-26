@@ -13,6 +13,7 @@ public class PlayerLevel : MonoBehaviour
     void Start()
     {
         SetEleman();
+        CheckLevel(PlayerPrefs.GetInt("Level", 1));
     }
     public void UpdateProgress()
     {

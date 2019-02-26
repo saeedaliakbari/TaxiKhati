@@ -17,9 +17,9 @@ public class IconCoin : MonoBehaviour {
     }
     public void UpdateIconPosition()
     {
-        float length = txtBalance.text.Length * txtBalance.fontSize * 0.5f + 10;
+        float length = txtBalance.text.Length * txtBalance.fontSize * 0.5f + 5;
         //Debug.Log(length);
-        icon.transform.localPosition = new Vector3(isLeft ? -length / 2f : length / 2f, 0);
+        icon.transform.localPosition = new Vector3(isLeft ? -length / 2.5f : length / 2f, 0);
     }
 	
 }

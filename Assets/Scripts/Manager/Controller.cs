@@ -25,7 +25,8 @@ public class Controller : MonoBehaviour
     public GameObject deleteBin, panelMessage, panelShopGem;
     public GameObject coinEffectPrefab;
     public OfflineEraning offEarning;
-    public TrimNumberText txtGem, txtCoin, txtCoinTop;
+    public Text txtGem;
+    public TrimNumberText txtCoin, txtCoinTop;
     public TrimNumberText txtToken, buyPrice;
     //public RubyShop rubyShop;
     public static Controller instance;
@@ -48,7 +49,9 @@ public class Controller : MonoBehaviour
         //Debug.Log(
         instance = this;
         PlayerPrefs.SetInt("mainAchiv16", PlayerPrefs.GetInt("mainAchiv16", 0) + 1);
-        ObscuredPrefs.SetDouble("gem", 50000000);
+        ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem", 100));
+        ObscuredPrefs.SetDouble("coin", 333333333333333333);
+        ObscuredPrefs.SetDouble("token", ObscuredPrefs.GetDouble("token", 0));
         SetText();
 
     }
@@ -95,16 +98,16 @@ public class Controller : MonoBehaviour
     public void UpdatePrice()
     {//قیمت ماشین ها را می گذارد
         int index = PlayerPrefs.GetInt("curr_car_index", 0);//az 0 shoro mishavad
-        buyPrice.text = ObscuredPrefs.GetDouble("car_price_" + index, Mathf.Round(basePrice[index])).ToString();
+        buyPrice.text = ObscuredPrefs.GetDouble("car_price_" + index, System.Math.Round(basePrice[index])).ToString();
         //txtLevelBuyCar.text = "خرید ماشین سطح " + (index + 1);
-        Debug.Log("index Car : " + index + " sprite Name :" + activeCar[index].name);
+        //Debug.Log("index Car : " + index + " sprite Name :" + activeCar[index].name);
         imgBuyCar.sprite = activeCar[index];
     }
     public void OnBuyClick()
     {
         //Sound.instance.Play(Sound.Others.Buy);
         int index = PlayerPrefs.GetInt("curr_car_index", 0);
-        Debug.Log("current Car : " + index);
+        //Debug.Log("current Car : " + index);
         CheckAndSpawnNewCar(index, false, 0);
         if (PlayerPrefs.GetInt("returned_car", 0) == 0)
         {
@@ -133,8 +136,8 @@ public class Controller : MonoBehaviour
         }
         bool useGem = index >= (lastSalableTaxiLevel - def);//اگر عدد آیتمی که میخواد ساخته بشه بیشتر از یک مقداری بود نیاز به روبی دارد
 
-        double price = useGem ? baseGemPrice[index] : ObscuredPrefs.GetDouble("car_price_" + index, Mathf.Round(basePrice[index]));
-        Debug.Log("Price Car: " + price);
+        double price = useGem ? baseGemPrice[index] : ObscuredPrefs.GetDouble("car_price_" + index, System.Math.Round(basePrice[index]));
+        //Debug.Log("Price Car: " + price);
         if ((useGem ? ObscuredPrefs.GetDouble("gem", 0) : ObscuredPrefs.GetDouble("coin", 5000)) >= price)//روی سکه و روبی که اینجا نوشته شده است دقت شود که چه مقداری باید باشد
         {
             PlayerPrefs.SetInt("mainAchiv8", PlayerPrefs.GetInt("mainAchiv8", 0) + 1);
@@ -166,10 +169,12 @@ public class Controller : MonoBehaviour
                 else
                     SpawnACar(index, parkPlace);
                 //}
-
-                double newPrice = System.Math.Round(price * ((100 + increaseRate[index]) / 100));//قیمت جدید را بدست می آورد
+                //Debug.Log(price + "*((100+"+increaseRate[index] + ")/"+100 + ")====>>>"+ (price * ((100f + increaseRate[index]) / 100))+">>>>"+(System.Math.Round(price * ((100 + increaseRate[index]) / 100))));
+                double newPrice = System.Math.Round(price * ((100f + increaseRate[index]) / 100));//قیمت جدید را بدست می آورد
+                //Debug.Log("newPrice : " + newPrice);
                 if (!useGem)
                     ObscuredPrefs.SetDouble("car_price_" + index, newPrice);
+
                 UpdatePrice();
             }
             else
@@ -516,7 +521,7 @@ public class Controller : MonoBehaviour
                 if (PlayerPrefs.GetInt("todayDate", 19921030) < today)
                 {
                     PlayerPrefs.SetInt("todayDate", today);
-                    PlayerPrefs.SetInt("gem", PlayerPrefs.GetInt("gem") + 10);
+                    ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem") + 10);
                     panelMessage.SetActive(true);
                     txtPanelMessage.text = "10 الماس به شما اضافه شد";
                     SetText();
