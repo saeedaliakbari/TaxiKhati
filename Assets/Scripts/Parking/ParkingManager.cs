@@ -254,8 +254,8 @@ public class ParkingManager : MonoBehaviour
                     int column = parkPosManage[i].RowColumns[r];
                     for (int c = 0; c < column; c++)
                     {
-                        Vector3 pos = new Vector3(c - (column - 1f) / 2, -(r - (rows - 1f) / 2));
-                        placesPosition[count].transform.localPosition = pos * 1.3f;
+                        Vector3 pos = new Vector3((c - (column - 1f) / 2)*1.3f, (-(r - (rows - 1f) / 2))*1.1f);
+                        placesPosition[count].transform.localPosition = pos /** 1.2f*/;
                         count++;
                     }
                 }

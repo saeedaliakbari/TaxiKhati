@@ -13,9 +13,9 @@ public class ShopItemPanel : MonoBehaviour
     {
         earnPerSec = controller.slotManager.earnPerSec;
         Debug.Log("earnPerSec: " + earnPerSec);
-        txtPack1.text = (earnPerSec * 4 * 60 * 60).ToString();
-        txtPack2.text = (earnPerSec * 24 * 60 * 60).ToString();
-        txtPack3.text = (earnPerSec * 24 * 4 * 60 * 60).ToString();
+        txtPack1.text = (earnPerSec * 4 * 60 * 60).ToString("0.##");
+        txtPack2.text = (earnPerSec * 24 * 60 * 60).ToString("0.##");
+        txtPack3.text = (earnPerSec * 24 * 4 * 60 * 60).ToString("0.##");
     }
     public void BtnTimeBoosts(int Gem)
     {

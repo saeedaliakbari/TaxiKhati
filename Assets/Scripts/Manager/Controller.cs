@@ -57,8 +57,8 @@ public class Controller : MonoBehaviour
     }
     public void SetText()
     {
-        txtToken.text = ObscuredPrefs.GetDouble("token", 0).ToString();
-        txtCoin.text = txtCoinTop.text = ObscuredPrefs.GetDouble("coin", 5000).ToString();
+        txtToken.text = ObscuredPrefs.GetDouble("token", 0).ToString("0.##");
+        txtCoin.text = txtCoinTop.text = ObscuredPrefs.GetDouble("coin", 5000).ToString("0.##");
         txtGem.text = ObscuredPrefs.GetDouble("gem").ToString();
     }
     // Use this for initialization
@@ -98,7 +98,7 @@ public class Controller : MonoBehaviour
     public void UpdatePrice()
     {//قیمت ماشین ها را می گذارد
         int index = PlayerPrefs.GetInt("curr_car_index", 0);//az 0 shoro mishavad
-        buyPrice.text = ObscuredPrefs.GetDouble("car_price_" + index, System.Math.Round(basePrice[index])).ToString();
+        buyPrice.text = ObscuredPrefs.GetDouble("car_price_" + index, System.Math.Round(basePrice[index])).ToString("0.##");
         //txtLevelBuyCar.text = "خرید ماشین سطح " + (index + 1);
         //Debug.Log("index Car : " + index + " sprite Name :" + activeCar[index].name);
         imgBuyCar.sprite = activeCar[index];
@@ -228,7 +228,7 @@ public class Controller : MonoBehaviour
         car.txtCoin = txtCoin;
         car.controller = this;
         car.transform.SetParent(parkPlace.transform);//پرنت در هایرارکی را پارکینگ فعلی مشخص میکند
-        car.transform.localScale = Vector3.one * 0.1f;
+        car.transform.localScale = Vector3.one * 1f;
         car.transform.position = parkPlace.transform.position;//موقعیت به موقعبت مکان فعلی تغییر میکند
         car.parkingPlace = parkPlace;//پارکنینگ را بهش میده
         if (scaleUp) car.GetComponent<Animator>().Play("MergeDone");//انیمیشن تمام شدن مرج رو ماشین جدیدی که ساخته شده انجام میشه
@@ -252,7 +252,6 @@ public class Controller : MonoBehaviour
          {
              Debug.Log("NewCarTimeing");
              SpawnABoxTime();
-             NewCarTimeing();
          });
     }
     public void SpawnABoxTime()
@@ -268,7 +267,7 @@ public class Controller : MonoBehaviour
             if (obj != null)
             {
                 Debug.Log("parkPlace.GetComponentInChildren<GameObject>() != null");
-                SpawnABoxTime();
+                StartCoroutine(IESpawnABoxTime());
             }
         }
         catch (System.Exception)
@@ -277,9 +276,18 @@ public class Controller : MonoBehaviour
             {
                 Debug.Log("parkPlace != null");
                 SpawnABox(index - 1, parkPlace, 0);
-
+                NewCarTimeing();
+            }
+            else
+            {
+                StartCoroutine(IESpawnABoxTime());
             }
         }
+    }
+    IEnumerator IESpawnABoxTime()
+    {
+        yield return new WaitForSeconds(2f);
+        SpawnABoxTime();
     }
     public void SpawnABoxWheel()
     {
@@ -295,7 +303,7 @@ public class Controller : MonoBehaviour
             if (obj != null)
             {
                 Debug.Log("parkPlace.GetComponentInChildren<GameObject>() != null");
-                SpawnABoxTime();
+                StartCoroutine(IESpawnABoxWheel());
             }
         }
         catch (System.Exception)
@@ -306,7 +314,52 @@ public class Controller : MonoBehaviour
                 SpawnABox(index - 1, parkPlace, 1);
 
             }
+            else
+            {
+                StartCoroutine(IESpawnABoxWheel());
+            }
         }
+    }
+    IEnumerator IESpawnABoxWheel()
+    {
+        yield return new WaitForSeconds(2f);
+        SpawnABoxWheel();
+    }
+    public void SpawnABoxSpecialOffer()
+    {
+        PlayerPrefs.SetInt("mainAchiv10", PlayerPrefs.GetInt("mainAchiv10", 0) + 1);
+        ParkingPlace parkPlace = parkingManager.GetEmptyPlace();
+        int taxiLvl = PlayerPrefs.GetInt("unlocked_car", 1);
+        int index = taxiLvl - 5;
+        Debug.Log("taxiLvl: " + PlayerPrefs.GetInt("unlocked_car", 1) + " UNLOCK CAR : " + index);
+        GameObject obj;
+        try
+        {
+            obj = parkPlace.GetComponentInChildren<GameObject>();
+            if (obj != null)
+            {
+                Debug.Log("parkPlace.GetComponentInChildren<GameObject>() != null");
+                StartCoroutine(IESpawnABoxSpecialOffer());
+            }
+        }
+        catch (System.Exception)
+        {
+            Debug.Log("catch");
+            if (parkPlace != null)
+            {
+                Debug.Log("parkPlace != null");
+                SpawnABox(index - 1, parkPlace, 1);
+            }
+            else
+            {
+                StartCoroutine(IESpawnABoxSpecialOffer());
+            }
+        }
+    }
+    IEnumerator IESpawnABoxSpecialOffer()
+    {
+        yield return new WaitForSeconds(2f);
+        SpawnABoxSpecialOffer();
     }
     //public void ShowCareerDialog()
     //{

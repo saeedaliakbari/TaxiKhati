@@ -45,9 +45,10 @@ public class RunSlotManager : MonoBehaviour
         //Debug.Log("index unlocked_airline: " + index + ">>>earningPerSec: " + earningPerSec);
         float ratio = ((Manager.GetCurrentTime() < Manager.GetActionTime("speed_x2")) ? 2 : 1) /** Const.AIRLINE_INCREASE_PERCENT[index]*/;//ریت بدست آوردن سکه
         ratio *= ((Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m")) ? 5 : 1);
+        ratio *= ((Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m_special")) ? 5 : 1);
         ratio *= ((Manager.GetCurrentTime() < Manager.GetActionTime("2x_speed_for_150s")) ? 2 : 1);
         earnPerSec = System.Math.Round(earningPerSec * ratio * PlayerPrefs.GetFloat("incomeLine", 1) * PlayerPrefs.GetFloat("speedVip", 1));
-        earningPerSecTxt.text = earnPerSec.ToString();
+        earningPerSecTxt.text = earnPerSec.ToString("0.##");
         txtEarningWithSec.text = "ﻪﯿﻧﺎﺛ / " + earningPerSecTxt.text;
     }
 

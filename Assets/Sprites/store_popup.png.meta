@@ -37,6 +37,8 @@ TextureImporter:
     21300064: store_popup_32
     21300066: store_popup_33
     21300068: store_popup_34
+    21300070: store_popup_35
+    21300072: store_popup_36
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -281,10 +283,10 @@ TextureImporter:
       name: store_popup_11
       rect:
         serializedVersion: 2
-        x: 136
-        y: 570
-        width: 78
-        height: 85
+        x: 115
+        y: 552
+        width: 119
+        height: 123
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -603,12 +605,40 @@ TextureImporter:
       name: store_popup_34
       rect:
         serializedVersion: 2
-        x: 378
-        y: 14
+        x: 393
+        y: 681
         width: 35
         height: 35
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: store_popup_35
+      rect:
+        serializedVersion: 2
+        x: 361
+        y: 10
+        width: 67
+        height: 52
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: store_popup_36
+      rect:
+        serializedVersion: 2
+        x: 376
+        y: 518
+        width: 37
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

@@ -20,7 +20,7 @@ public class ExchangeToken : MonoBehaviour
         try
         {
             coin = System.Math.Floor(double.Parse(inputTokenValue.text) * rate);
-            txtCoinValue.text = coin.ToString();
+            txtCoinValue.text = coin.ToString("0.##");
             if (coin > ObscuredPrefs.GetDouble("coin", 5000))
             {
                 btnExchange.interactable = false;
@@ -75,7 +75,7 @@ public class ExchangeToken : MonoBehaviour
         Debug.Log("Token : " + token);
         inputTokenValue.text = token.ToString();
         Debug.Log("Token : " + inputTokenValue.text);
-        txtCoinValue.text = (token * rate).ToString();
+        txtCoinValue.text = (token * rate).ToString("0.##");
         Debug.Log(token * rate);
 
     }

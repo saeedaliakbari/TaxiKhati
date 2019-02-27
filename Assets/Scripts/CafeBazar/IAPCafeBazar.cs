@@ -13,7 +13,7 @@ public class IAPCafeBazar : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        //BazaarIAB.init(RSA);//در صورت موفقیت رخداد
+        BazaarIAB.init(RSA);//در صورت موفقیت رخداد
                             //billingSupportedEvent
                             //فراخوانی می شود و در صورت عدم موفقیت رخداد
                             //billingNotSupportedEvent
@@ -28,7 +28,7 @@ public class IAPCafeBazar : MonoBehaviour
 
         Debug.Log("btn Purchase: " + sku);
         ObscuredPrefs.SetString("developerPayload", Random.Range(10000, 99999).ToString() + Random.Range(10000, 99999).ToString());
-        //BazaarIAB.purchaseProduct(sku, ObscuredPrefs.GetString("developerPayload"));
+        BazaarIAB.purchaseProduct(sku, ObscuredPrefs.GetString("developerPayload"));
         //purchaseSucceededEvent
         //است که زمانی که خرید موفقیت آمیز بود فراخوانی می شود
         //یا زمانی که تلاش می‌کنید محصولی که قبلا خریده‌اید ولی مصرف نکرده‌اید را دوباره بخرید.اگر هم خرید ناموفق باشد رخداد 
@@ -42,6 +42,6 @@ public class IAPCafeBazar : MonoBehaviour
     public void BtnPurchaseEshterak(string sku)
     {
         ObscuredPrefs.SetString("developerPayload", ObscuredPrefs.GetString("id", "saeedaliakbari") + Random.Range(10000, 99999).ToString());
-        //BazaarIAB.purchaseProduct(sku, ObscuredPrefs.GetString("developerPayload"));
+        BazaarIAB.purchaseProduct(sku, ObscuredPrefs.GetString("developerPayload"));
     }
 }

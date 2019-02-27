@@ -45,6 +45,13 @@ TextureImporter:
     21300080: other_sprite_40
     21300082: other_sprite_41
     21300084: other_sprite_42
+    21300086: other_sprite_43
+    21300088: other_sprite_44
+    21300090: other_sprite_45
+    21300092: other_sprite_46
+    21300094: other_sprite_47
+    21300096: other_sprite_48
+    21300098: other_sprite_49
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -443,8 +450,8 @@ TextureImporter:
       name: other_sprite_22
       rect:
         serializedVersion: 2
-        x: 1843
-        y: 976
+        x: 1858
+        y: 1402
         width: 181
         height: 195
       alignment: 0
@@ -727,6 +734,104 @@ TextureImporter:
         y: 56
         width: 149
         height: 117
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: other_sprite_43
+      rect:
+        serializedVersion: 2
+        x: 619
+        y: 1778
+        width: 401
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: other_sprite_44
+      rect:
+        serializedVersion: 2
+        x: 915
+        y: 982
+        width: 147
+        height: 147
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: other_sprite_45
+      rect:
+        serializedVersion: 2
+        x: 1802
+        y: 969
+        width: 227
+        height: 244
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: other_sprite_46
+      rect:
+        serializedVersion: 2
+        x: 1904
+        y: 1921
+        width: 119
+        height: 125
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: other_sprite_47
+      rect:
+        serializedVersion: 2
+        x: 1896
+        y: 1802
+        width: 133
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: other_sprite_48
+      rect:
+        serializedVersion: 2
+        x: 1895
+        y: 1703
+        width: 141
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: other_sprite_49
+      rect:
+        serializedVersion: 2
+        x: 1896
+        y: 1609
+        width: 141
+        height: 82
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

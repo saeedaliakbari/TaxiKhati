@@ -11,6 +11,7 @@ public class VideoAds : MonoBehaviour
     public ShopPanel shopPanel;
     public RandomGift randomGift;
     public WheelFortuneScript wheelFortuneScript;
+    public SpecialOffer specialOffer;
     public GameObject panelTaxiUpVideo, panelNoAds;
     public Image imgNowCar, imgUpCar;
     [HideInInspector]
@@ -79,61 +80,15 @@ public class VideoAds : MonoBehaviour
         offlineEarning.btnThird.interactable = false;
     }
     #endregion
-    #region Btn Income X2
-    public void BtnInComeX2()
-    {
-
-        StartCoroutine(IEBtnInComeX2p());
-    }
-    IEnumerator IEBtnInComeX2p()
-    {
-        if (PlayerPrefs.GetInt(zoneGiftPanel.zoneId) == 0)
-        {
-            LoadAd(zoneGiftPanel);
-            //panelWait.SetActive(true);
-            Debug.Log("Wait");
-            yield return new WaitForSeconds(8f);
-            Debug.Log("Wait Done");
-            //panelWait.SetActive(false);
-        }
-        if (PlayerPrefs.GetInt(zoneGiftPanel.zoneId) == 1)
-        {
-            PlayerPrefs.SetInt(zoneGiftPanel.zoneId, 0);
-            ShowAd(zoneGiftPanel);
-            Tapsell.setRewardListener(
-                (TapsellAdFinishedResult result) =>
-                {
-                    if (result.completed && result.rewarded)
-                    {
-                        GiftIncomeX2();
-                    }
-                    else
-                    {
-                        LoadAd(zoneGiftPanel);
-                    }
-                }
-            );
-        }
-        else
-        {
-            Debug.Log("Error");
-        }
-    }
-    private void GiftIncomeX2()
-    {
-        Debug.Log("Time : " + Manager.GetCurrentTime() + " " + (Manager.GetCurrentTime() + 120));
-        Manager.SetActionTime("income_x2", 120 + Manager.GetCurrentTime());
-        Debug.Log("Time: " + Manager.GetCurrentTime());
-        randomGift.panelRandomGift.SetActive(false);
-    }
-    #endregion
-    #region Btn Gift Car
-    public void BtnGiftCar()
+    #region Btn SpecialOffer
+    public void BtnSpecialOffer()
     {
         //GiftGiftCar();
-        StartCoroutine(IEBtnGiftCar());
+        specialOffer.btnGem.interactable = false;
+        specialOffer.btnVideo.interactable = false;
+        StartCoroutine(IEBtnSpecialOffer());
     }
-    IEnumerator IEBtnGiftCar()
+    IEnumerator IEBtnSpecialOffer()
     {
         if (PlayerPrefs.GetInt(zoneGiftPanel.zoneId) == 0)
         {
@@ -153,7 +108,7 @@ public class VideoAds : MonoBehaviour
                 {
                     if (result.completed && result.rewarded)
                     {
-                        GiftGiftCar();
+                        specialOffer.ManageGift();
                     }
                     else
                     {
@@ -165,20 +120,11 @@ public class VideoAds : MonoBehaviour
         else
         {
             Debug.Log("Error");
+            specialOffer.btnGem.interactable = true;
+            specialOffer.btnVideo.interactable = true;
             //panelError.SetActive(true);
             //txtPanelError.text = "خطا در لود ویدئو";
         }
-    }
-    private void GiftGiftCar()
-    {
-        int random = UnityEngine.Random.Range(1, 5);
-        int randomIndex = UnityEngine.Random.Range(0, PlayerPrefs.GetInt("unlocked_car", 1));
-        Debug.Log("tedad : " + random + " index: " + randomIndex + " unlocaed_car: " + PlayerPrefs.GetInt("unlocked_car", 1));
-        for (int i = 0; i < random; i++)
-        {
-            controller.SpawnACarWithVideo(randomIndex);
-        }
-        randomGift.panelRandomGift.SetActive(false);
     }
     #endregion
     #region Btn Shop Car

@@ -83,7 +83,7 @@ Transform:
   m_GameObject: {fileID: 1874443335573270}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.71, y: -1.83, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.95, y: 0.95, z: 1}
   m_Children:
   - {fileID: 4195064877619332}
   - {fileID: 4557052038722738}
@@ -158,7 +158,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 33
   xp: 607
-  earnings: 1.85643e+11
+  earnings: 185643000000
   speed: 17.6073
   increasePercent: 1
   txtCoin: {fileID: 0}

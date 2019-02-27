@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GiftBox : MonoBehaviour
 {
+    public Animator animtor;
     public SpriteRenderer spriteBox;
     public Sprite[] sprBox;//0: normal , 1:special, 2: store;
     [HideInInspector]
@@ -12,7 +13,7 @@ public class GiftBox : MonoBehaviour
     public int carIndex;
     private bool opened = false;
 
-    public void SetUpBox(int index, ParkingPlace place,int modelBox)
+    public void SetUpBox(int index, ParkingPlace place, int modelBox)
     {//ساختن باکس جدید درصفحه
         carIndex = index;//شماره ماشین
         spriteBox.sprite = sprBox[modelBox];//باکس در لول های پایین تر از 4 و بالاتر از 4 متفاوت است
@@ -28,8 +29,9 @@ public class GiftBox : MonoBehaviour
 
     public void OpenBox()//باز شدن باکس 
     {
+        Debug.Log("Start Anim BOX");
         opened = true;
-        GetComponent<Animator>().SetTrigger("open");
+        animtor.Play("OpenBox");
     }
 
     private void OnMouseUp()//با موس روش کلیک کنی وبرداری
@@ -39,10 +41,10 @@ public class GiftBox : MonoBehaviour
         {
             OpenBox();//انیمیشن باز شدن اجرا شود
             Timer.Schedule(this, 0.5f, (Timer.Task)(() =>
-            {
-                Controller.instance.SpawnACar((int)carIndex, (ParkingPlace)parkPlace);
-                Destroy(gameObject);
-            }));//بعد از نیم ثانیه که انیمیشن تموم شد ماشین داخل پارکینگ مورد نظر ایجاد شود
+             {
+                 Controller.instance.SpawnACar((int)carIndex, (ParkingPlace)parkPlace);
+                 Destroy(gameObject);
+             }));//بعد از نیم ثانیه که انیمیشن تموم شد ماشین داخل پارکینگ مورد نظر ایجاد شود
         }
     }
 }
