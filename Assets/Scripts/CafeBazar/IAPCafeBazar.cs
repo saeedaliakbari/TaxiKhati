@@ -13,16 +13,28 @@ public class IAPCafeBazar : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        BazaarIAB.init(RSA);//در صورت موفقیت رخداد
-                            //billingSupportedEvent
-                            //فراخوانی می شود و در صورت عدم موفقیت رخداد
-                            //billingNotSupportedEvent
-                            //فراخوانی خواهد شد.
-                            //BazaarIAB.unbindService();//زمانی که کارتان با پرداخت درون برنامه ای تمام شد این تابع را فراخوانی کنید
-                            //BazaarIAB.areSubscriptionsSupported();//برای بررسی این که خرید اشتراک های ماهانه و سالانه پشتیبانی می شود یا خیر از این تابع استفاده کنید
+        StartCoroutine(IEInit());
+
+        //billingSupportedEvent
+        //فراخوانی می شود و در صورت عدم موفقیت رخداد
+        //billingNotSupportedEvent
+        //فراخوانی خواهد شد.
+        //BazaarIAB.unbindService();//زمانی که کارتان با پرداخت درون برنامه ای تمام شد این تابع را فراخوانی کنید
+        //BazaarIAB.areSubscriptionsSupported();//برای بررسی این که خرید اشتراک های ماهانه و سالانه پشتیبانی می شود یا خیر از این تابع استفاده کنید
 
     }
-
+    IEnumerator IEInit()
+    {
+        WWW www = new WWW("https://balootvas.ir/");
+        yield return www;
+        if (www.error == null)
+        {
+            if (www.isDone)
+            {
+                BazaarIAB.init(RSA);//در صورت موفقیت رخداد
+            }
+        }
+    }
     public void BtnPurchase(string sku)
     {
 

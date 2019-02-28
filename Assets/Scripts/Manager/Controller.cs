@@ -12,6 +12,7 @@ public class Controller : MonoBehaviour
     public RangeLevel[] taxiDefferenceLvl;
     public GiftBox boxPrefab;
     public Text /*txtLevelBuyCar,*/ txtError, txtPanelMessage;
+    public InputField inputFieldName;
     public Image imgBuyCar;
     public ParkingManager parkingManager;
     public RunSlotManager slotManager;
@@ -22,7 +23,7 @@ public class Controller : MonoBehaviour
     //public ExchangeSpeedDialog exchangeDialog;
     public MergeCar mergeCar;
     public LevelUpBonus levelBonus;
-    public GameObject deleteBin, panelMessage, panelShopGem;
+    public GameObject deleteBin, panelMessage, panelShopGem, btnVip;
     public GameObject coinEffectPrefab;
     public OfflineEraning offEarning;
     public Text txtGem;
@@ -50,7 +51,7 @@ public class Controller : MonoBehaviour
         instance = this;
         PlayerPrefs.SetInt("mainAchiv16", PlayerPrefs.GetInt("mainAchiv16", 0) + 1);
         ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem", 100));
-        ObscuredPrefs.SetDouble("coin", 333333333333333333);
+        ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 100));
         ObscuredPrefs.SetDouble("token", ObscuredPrefs.GetDouble("token", 0));
         SetText();
 
@@ -422,6 +423,21 @@ public class Controller : MonoBehaviour
         //Sound.instance.PlayButton();
         offEarning.gameObject.SetActive(false);
     }
+    public void CloseSetting()
+    {
+        if (inputFieldName.text.Length != 0)
+        {
+            PlayerPrefs.SetString("username", inputFieldName.text);
+        }
+    }
+    public void OpenSetting()
+    {
+        if (PlayerPrefs.GetString("username", "") == "")
+        {
+            PlayerPrefs.SetString("username", "تاکسی ران " + Random.Range(100000000, 999999999));
+        }
+        inputFieldName.text = PlayerPrefs.GetString("username", "");
+    }
     public void SaveGame()
     {
         SaveObject saveObj = new SaveObject();
@@ -466,7 +482,7 @@ public class Controller : MonoBehaviour
             saveObj.listBoxes.Add(boxObj);
         }
         string json = JsonUtility.ToJson(saveObj);
-        PlayerPrefs.SetString("saved_list_cars", json);//ذخیره سازی اطلاعات داخل پلیرپرفس
+        ObscuredPrefs.SetString("saved_list_cars", json);//ذخیره سازی اطلاعات داخل پلیرپرفس
     }
     public void OnApplicationPause(bool pause)
     {
@@ -497,7 +513,7 @@ public class Controller : MonoBehaviour
     public void LoadGame()
     {//اطلاعات بازی را لود می کند
         //Debug.Log("Load Game");
-        string json = PlayerPrefs.GetString("saved_list_cars", "{\"listCars\":[],\"listBoxes\":[]}");//لیست ماشین ها و باکس ها داخل پارکینگ ها ذخیره شده را لود می کند
+        string json = ObscuredPrefs.GetString("saved_list_cars", "{\"listCars\":[],\"listBoxes\":[]}");//لیست ماشین ها و باکس ها داخل پارکینگ ها ذخیره شده را لود می کند
         SaveObject saveObj = JsonUtility.FromJson<SaveObject>(json);//رشته جیسون را بصورت کلاس ذخیره سازی تبدیل می کند
         if (saveObj.listCars.Count == 0)
         {

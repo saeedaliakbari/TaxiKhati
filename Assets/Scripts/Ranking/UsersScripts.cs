@@ -1,4 +1,5 @@
-﻿using LitJson;
+﻿using CodeStage.AntiCheat.ObscuredTypes;
+using LitJson;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,7 @@ public class UsersScripts : MonoBehaviour
     private int rankUser = 0;
     #region link
     private string strGetRankUser = "https://balootvas.ir/balootvas/TaxiKhati/rankUser.php";
+    private string strInsertUser = "https://balootvas.ir/balootvas/TaxiKhati/insertUser.php";
     #endregion
     void Start()
     {
@@ -33,7 +35,18 @@ public class UsersScripts : MonoBehaviour
     #region Get Rank User
     public void GetRanking()
     {//رتبه شخص را میگیرد
-        StartCoroutine(IEGetRanking());
+        panelWait.SetActive(true);
+        //if (PlayerPrefs.GetInt("userid", 0) == 0)
+        //{
+        //    if (PlayerPrefs.GetString("username", "") == "")
+        //    {
+        //        PlayerPrefs.SetString("username", "تاکسی ران" + Random.Range(100000000, 999999999));
+        //    }
+        //    StartCoroutine(IEInsertUser(true));
+        //}
+        //else {
+            StartCoroutine(IEGetRanking());
+        //}
     }
     IEnumerator IEGetRanking()
     {
@@ -121,10 +134,11 @@ public class UsersScripts : MonoBehaviour
                     scrUser.txtCoin.text = jsonBooks[i][2].ToString();
                 }
                 Manager.SetActionTime("updateRank", Manager.GetCurrentTime() + 120f);
+                panelWait.SetActive(false);
                 Timer.Schedule(this, 120f, () =>
                 {
                     Debug.Log("Schedule(thiss");
-                    GetRanking();
+                    StartCoroutine(IEGetRanking());
                 });
             }
         }
@@ -145,5 +159,54 @@ public class UsersScripts : MonoBehaviour
         output = output.Replace("\\", "");
         output = "[" + output + "]";
         return output;
+    }
+
+    public void SetName()
+    {
+
+        if (PlayerPrefs.GetInt("userid", 0) == 0)
+        {
+            StartCoroutine(IEInsertUser(false));
+        }
+        else
+        {
+            StartCoroutine(IEUpdateUser());
+        }
+    }
+    IEnumerator IEInsertUser(bool GetRank)
+    {
+        //panelWait.SetActive(true);
+        WWWForm wwwForm = new WWWForm();
+        wwwForm.AddField("username", PlayerPrefs.GetString("username", "").ToString());
+        wwwForm.AddField("coin", ObscuredPrefs.GetDouble("coinTotal", 100).ToString());
+        WWW www = new WWW(strInsertUser, wwwForm);
+        yield return www;
+        if (www.error == null)
+        {
+            if (www.isDone)
+            {
+                Debug.Log("IEInsertUser>" + PlayerPrefs.GetString("username", "") + "|" + ObscuredPrefs.GetDouble("coinTotal", 100) + ">>>" + www.text);
+                JsonData jsonBooks = JsonMapper.ToObject(ChangeToJson(www.text));
+                PlayerPrefs.SetInt("userid", int.Parse(jsonBooks[0][0].ToString()));
+                if (GetRank)
+                {
+                    StartCoroutine(IEGetRanking());
+                }
+            }
+        }
+    }
+
+    IEnumerator IEUpdateUser()
+    {
+        //panelWait.SetActive(true);
+        for (int i = 0; i < listRanking.Count; i++)
+        {
+            Destroy(listRanking[i]);
+        }
+        listRanking.RemoveRange(0, listRanking.Count);
+        WWWForm wwwForm = new WWWForm();
+        wwwForm.AddField("id", PlayerPrefs.GetInt("userid", 0));
+        WWW www = new WWW(strGetRankUser, wwwForm);
+        yield return www;
     }
 }

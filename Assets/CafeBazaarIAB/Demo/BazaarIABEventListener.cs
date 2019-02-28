@@ -103,6 +103,7 @@ public class BazaarIABEventListener : MonoBehaviour
                 PlayerPrefs.SetFloat("speedVip", 1.5f);//added 50% speed
                 iapCafeBazar.controller.slotManager.UpdateEarningSpeedText();
                 iapCafeBazar.controller.GiftDaily();
+                iapCafeBazar.controller.btnVip.SetActive(false);
             }
             else if (purchases[i].ProductId == iapCafeBazar.skus[7])
             {
@@ -190,6 +191,7 @@ public class BazaarIABEventListener : MonoBehaviour
                     PlayerPrefs.SetFloat("speedVip", 1.5f);//added 50% speed
                     iapCafeBazar.controller.slotManager.UpdateEarningSpeedText();
                     iapCafeBazar.controller.GiftDaily();
+                    iapCafeBazar.controller.btnVip.SetActive(false);
                 }
                 else if (purchase.ProductId == iapCafeBazar.skus[7])
                 {

@@ -47,7 +47,10 @@ public class TrimNumberText : Text
     {
         double number;
         bool success = double.TryParse(GetComponent<Text>().text.Trim(), out number);
-
+        if (number < 1000)
+        {
+            number = (int)number;
+        }
         if (success)
         {
             if (number >= 10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000d)//87
