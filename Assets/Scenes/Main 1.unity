@@ -33878,6 +33878,7 @@ MonoBehaviour:
     type: 2}
   txtError: {fileID: 147670968}
   txtPanelMessage: {fileID: 1646377066}
+  inputFieldName: {fileID: 0}
   imgBuyCar: {fileID: 1821126013}
   parkingManager: {fileID: 1922830188}
   slotManager: {fileID: 1260395146}
@@ -33889,6 +33890,7 @@ MonoBehaviour:
   deleteBin: {fileID: 1588907980}
   panelMessage: {fileID: 1814044181}
   panelShopGem: {fileID: 1831901871}
+  btnVip: {fileID: 0}
   coinEffectPrefab: {fileID: 0}
   offEarning: {fileID: 769815151}
   txtGem: {fileID: 368876601}
@@ -47506,15 +47508,15 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 0
-  randomSeed: -794613450
+  randomSeed: -1532856286
   InitialModule:
     serializedVersion: 3
     enabled: 1
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.7
-      minScalar: 0.5
+      scalar: 0.6
+      minScalar: 0.4
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -47542,8 +47544,8 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1.2
-      minScalar: 0.2
+      scalar: 1.5
+      minScalar: 0.5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -48460,8 +48462,8 @@ ParticleSystem:
     mode: 0
     frameOverTime:
       serializedVersion: 2
-      minMaxState: 1
-      scalar: 0.9999
+      minMaxState: 0
+      scalar: 0
       minScalar: 0.9999
       maxCurve:
         serializedVersion: 2
@@ -63484,7 +63486,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 0
-  randomSeed: -1927733444
+  randomSeed: -1334633400
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -75099,7 +75101,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 0
-  randomSeed: 1492402126
+  randomSeed: -1065015941
   InitialModule:
     serializedVersion: 3
     enabled: 1
