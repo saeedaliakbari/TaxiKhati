@@ -10,7 +10,7 @@ public class ShopItemOff : MonoBehaviour {
     public float[] offShopCar;
     public void OpenPanel()
     {
-        int levelOff = PlayerPrefs.GetInt("offShopCarLevel", 0);
+        int levelOff = ObscuredPrefs.GetInt("offShopCarLevel", 0);
         for (int i = 0; i < levelOff; i++)
         {
             itemsOff[i].btnBuy.gameObject.SetActive(false);
@@ -35,9 +35,9 @@ public class ShopItemOff : MonoBehaviour {
         if (ObscuredPrefs.GetDouble("token") >= price)
         {
            ObscuredPrefs.SetDouble("token",ObscuredPrefs.GetDouble("token") - price);
-            PlayerPrefs.SetInt("offShopCarLevel", PlayerPrefs.GetInt("offShopCarLevel", 0) + 1);
-            int level = PlayerPrefs.GetInt("upIncomeLevel", 0);
-            PlayerPrefs.SetFloat("offCar", offShopCar[level]);
+            ObscuredPrefs.SetInt("offShopCarLevel", ObscuredPrefs.GetInt("offShopCarLevel", 0) + 1);
+            int level = ObscuredPrefs.GetInt("upIncomeLevel", 0);
+            ObscuredPrefs.SetFloat("offCar", offShopCar[level]);
             runSlotManager.UpdateEarningSpeedText();
             OpenPanel();
         }

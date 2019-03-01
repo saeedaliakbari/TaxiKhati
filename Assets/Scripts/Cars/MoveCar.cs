@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using CodeStage.AntiCheat.ObscuredTypes;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,7 +21,7 @@ public class MoveCar : MonoBehaviour
     {
         getStart = true;
         float ratio = Manager.GetCurrentTime() < Manager.GetActionTime("speed_x2") ? 2 : 1;
-        ratio = ratio * PlayerPrefs.GetFloat("carsSpeedTycoon", 1);//carsSpeedBoostsTycoon
+        ratio = ratio * ObscuredPrefs.GetFloat("carsSpeedTycoon", 1);//carsSpeedBoostsTycoon
         Hashtable hash = iTween.Hash("path", iTweenPath.GetPath("Road"), "orienttopath", true, "speed", car.speed * ratio, "easetype", iTween.EaseType.linear,
             "oncomplete", "CompleteMoving");
         start = Time.realtimeSinceStartup;
@@ -45,9 +46,9 @@ public class MoveCar : MonoBehaviour
         returning = false;
         Destroy(gameObject);
         car.OnCompleteReturn();//رنگ ماشیند داخل پارکینگ را کامل می کند و پارامتر حرکت را غیرفعال می کند
-        if (PlayerPrefs.GetInt("returned_car", 0) == 0)
+        if (ObscuredPrefs.GetInt("returned_car", 0) == 0)
         {
-            PlayerPrefs.SetInt("returned_car", 1);//راهنمایی تموم شده است با بازگشت ماشین در حال حرکت
+            ObscuredPrefs.SetInt("returned_car", 1);//راهنمایی تموم شده است با بازگشت ماشین در حال حرکت
             //Controller.instance.guideManager.HideGuides();//پنل راهنما را غیرفعال می کند
         }
     }

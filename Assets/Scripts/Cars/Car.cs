@@ -53,13 +53,13 @@ public class Car : MonoBehaviour
                         transform.position = nearPlace.transform.position;
                         if (level == car2.level && level < controller.carPrefabs.Length)//اگر لول دوتا ماشین یکی بود و لول از تعداد ماشین ها کمتر با هم مرج شوند
                         {//Merge
-                            if (PlayerPrefs.GetInt("returned_car", 0) == 0)//اگر راهنما تمام نشده بود
+                            if (ObscuredPrefs.GetInt("returned_car", 0) == 0)//اگر راهنما تمام نشده بود
                             {
-                                PlayerPrefs.SetInt("merged_car", 1);//0 false , 1 true
+                                ObscuredPrefs.SetInt("merged_car", 1);//0 false , 1 true
                                 //Homecontroller.guideManager.HideGuides();
                                 //Homecontroller.guideManager.UpdateAfter(1);
                             }
-                            PlayerPrefs.SetInt("mergeCarForVideo", PlayerPrefs.GetInt("mergeCarForVideo", 1) + 1);
+                            ObscuredPrefs.SetInt("mergeCarForVideo", ObscuredPrefs.GetInt("mergeCarForVideo", 1) + 1);
                             GetComponent<Animator>().Play("Merge");//انیمیشن مرج اجرا شود
                             GetComponent<SpriteRenderer>().enabled = false;
                             Destroy(car2.gameObject);//ماشین دومی را از بین می بریم که یک ماشین باقی بماند
@@ -67,24 +67,24 @@ public class Car : MonoBehaviour
                             Timer.Schedule(this, 0.5f, (Timer.Task)(() =>
                             {
                                 controller.SpawnACar((int)level, (ParkingPlace)nearPlace, (bool)true);//ماشین جدید ساخته می شه به جای ماشین که تاچ شه
-                                PlayerPrefs.SetInt("checkLevel", 0);
+                                ObscuredPrefs.SetInt("checkLevel", 0);
                                 Destroy(gameObject);//ماشین فعلی از بین میره
                             }));
-                            int unlockedLevel = PlayerPrefs.GetInt("unlocked_car", 1);
+                            int unlockedLevel = ObscuredPrefs.GetInt("unlocked_car", 1);
                             //Debug.Log("unlockedLevel" + unlockedLevel + "level" + level);
                             if (level + 1 > unlockedLevel)
                             {//اگر لول بیشتر از لول ماشین ماکس باشد
-                                PlayerPrefs.SetInt("unlocked_car", level + 1);
-                                PlayerPrefs.SetInt("curr_car_index", controller.lastSalableCoreLevel[PlayerPrefs.GetInt("unlocked_car", 1) - 1] - 1);
+                                ObscuredPrefs.SetInt("unlocked_car", level + 1);
+                                ObscuredPrefs.SetInt("curr_car_index", controller.lastSalableCoreLevel[ObscuredPrefs.GetInt("unlocked_car", 1) - 1] - 1);
                                 controller.ShowMergeNewCar(level - 1);//در صورتی که ماشین جدید باز شود پنل مرج باز می شود که مرج انجام می شود
                             }
                             else {//در صورتی که ماشین لول جدید باز نشود با مرج و ماشین های قبلی تولید شود وقت صدای مرج پخش می شود
                                 //Sound.instance.Play(Sound.Others.Merge);
                             }
                             //باید مقدار افزوده شدن ایکس پی اضافه شود
-                            //Debug.Log("XP: " + PlayerPrefs.GetInt("Xp", 0));
-                            PlayerPrefs.SetInt("Xp", PlayerPrefs.GetInt("Xp", 0) + xp);
-                            //Debug.Log("XP: " + PlayerPrefs.GetInt("Xp", 0));
+                            //Debug.Log("XP: " + ObscuredPrefs.GetInt("Xp", 0));
+                            ObscuredPrefs.SetInt("Xp", ObscuredPrefs.GetInt("Xp", 0) + xp);
+                            //Debug.Log("XP: " + ObscuredPrefs.GetInt("Xp", 0));
                             controller.playerLevel.UpdateProgress(/*(int)Mathf.Pow(1.5f, level)*/);//مقدار ایکس و لول ست شود
 
                         }
@@ -136,14 +136,14 @@ public class Car : MonoBehaviour
             }
         }
         GetComponent<SpriteRenderer>().sortingOrder = 2;
-        PlayerPrefs.SetInt("checkLevel", 0);
+        ObscuredPrefs.SetInt("checkLevel", 0);
     }
     private void DismantleCar()
     {
         //Sound.instance.Play(Sound.Others.Goal);
         //CurrencyController.CreditBalance(0, Mathf.RoundToInt(Superpow.Utils.GetPrice(level - 1) * 0.5f));
         controller.ShowCoinEffect(controller.deleteBin.transform.position);//در موقعیت سطل آشغال یک افکت سکه ایجاد می کند
-        PlayerPrefs.SetInt("checkLevel", 0);
+        ObscuredPrefs.SetInt("checkLevel", 0);
         Destroy(gameObject);//این ماشین را از بین می برد
     }
     public double GetEarningPerSecond()//مقدار بدست آوردن سکه در هر ثانیه
@@ -157,9 +157,9 @@ public class Car : MonoBehaviour
     }
     public void StartDrive()//شروع حرکت
     {
-        if (PlayerPrefs.GetInt("returned_car", 0) == 0)
+        if (ObscuredPrefs.GetInt("returned_car", 0) == 0)
         {//اگر راهنما تمام نشده بود
-            PlayerPrefs.SetInt("runned_car", 1);//0 false , 1 true
+            ObscuredPrefs.SetInt("runned_car", 1);//0 false , 1 true
             //Superpow.Utils.SetRunnedPlane();
             //controller.guideManager.HideGuides();
             //controller.guideManager.UpdateAfter(3);
@@ -197,14 +197,15 @@ public class Car : MonoBehaviour
     {
         //Debug.Log("Get Coin");
         //Sound.instance.Play(Sound.Others.Goal);
-        int index = PlayerPrefs.GetInt("unlocked_airline", 1) - 1;//لول آخرین ماشین باز شده را می دهد
+        int index = ObscuredPrefs.GetInt("unlocked_airline", 1) - 1;//لول آخرین ماشین باز شده را می دهد
         //CurrencyController.CreditBalance(0, (int)(earnings * Const.AIRLINE_INCREASE_PERCENT[index]));
         //Debug.Log("Coin : " + ObscuredPrefs.GetDouble("coin") + " PLUS: " + (int)(earnings * increasePercent));
         float ratio = ((Manager.GetCurrentTime() < Manager.GetActionTime("speed_x2")) ? 2 : 1) /** Const.AIRLINE_INCREASE_PERCENT[index]*/;//ریت بدست آوردن سکه
         ratio *= ((Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m")) ? 5 : 1);
         ratio *= ((Manager.GetCurrentTime() < Manager.GetActionTime("2x_speed_for_150s")) ? 2 : 1);
         //Debug.Log("Coin++ =>>>" + );
-        ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) + (double)(earnings * increasePercent * ratio * PlayerPrefs.GetFloat("incomeLine", 1)));
+        ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) + (double)(earnings * increasePercent * ratio * ObscuredPrefs.GetFloat("incomeLine", 1)));
+        ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 5000) + (double)(earnings * increasePercent * ratio * ObscuredPrefs.GetFloat("incomeLine", 1)));
         //if (Manager.GetCurrentTime() < Manager.GetActionTime("income_x2"))
         //{
         //    if (Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m"))
@@ -213,7 +214,7 @@ public class Car : MonoBehaviour
         //    }
         //    else
         //    {
-        //        ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) + (int)(earnings * increasePercent * 2 * PlayerPrefs.GetFloat("incomeLine", 1)));
+        //        ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) + (int)(earnings * increasePercent * 2 * ObscuredPrefs.GetFloat("incomeLine", 1)));
         //    }
         //    //Debug.Log("income_x2 : " + (Manager.GetActionTime("income_x2") - Manager.GetCurrentTime()));
 
@@ -221,10 +222,10 @@ public class Car : MonoBehaviour
         //else {
         //    if (Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m"))
         //    {
-        //        ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) + (int)(earnings * increasePercent * 5 * PlayerPrefs.GetFloat("incomeLine", 1)));
+        //        ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) + (int)(earnings * increasePercent * 5 * ObscuredPrefs.GetFloat("incomeLine", 1)));
         //    }
         //    else {
-        //        ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) + (int)(earnings * increasePercent * PlayerPrefs.GetFloat("incomeLine", 1)));
+        //        ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) + (int)(earnings * increasePercent * ObscuredPrefs.GetFloat("incomeLine", 1)));
         //    }
         //}
 

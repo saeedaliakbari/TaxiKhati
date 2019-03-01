@@ -12,7 +12,7 @@ public class ShopItemEarn : MonoBehaviour
     public void OpenPanel()
     {
         //-1976.035
-        int levelEarn = PlayerPrefs.GetInt("upIncomeLevel", 0);
+        int levelEarn = ObscuredPrefs.GetInt("upIncomeLevel", 0);
         for (int i = 0; i < levelEarn; i++)
         {
             itemsEarn[i].btnBuy.gameObject.SetActive(false);
@@ -37,9 +37,9 @@ public class ShopItemEarn : MonoBehaviour
         if (ObscuredPrefs.GetDouble("token") >= price)
         {
            ObscuredPrefs.SetDouble("token",ObscuredPrefs.GetDouble("token") - price);
-            PlayerPrefs.SetInt("upIncomeLevel", PlayerPrefs.GetInt("upIncomeLevel", 0) + 1);
-            int level = PlayerPrefs.GetInt("upIncomeLevel", 0);
-            PlayerPrefs.SetFloat("incomeLine", upIncome[level - 1]);
+            ObscuredPrefs.SetInt("upIncomeLevel", ObscuredPrefs.GetInt("upIncomeLevel", 0) + 1);
+            int level = ObscuredPrefs.GetInt("upIncomeLevel", 0);
+            ObscuredPrefs.SetFloat("incomeLine", upIncome[level - 1]);
             runSlotManager.UpdateEarningSpeedText();
             OpenPanel();
         }

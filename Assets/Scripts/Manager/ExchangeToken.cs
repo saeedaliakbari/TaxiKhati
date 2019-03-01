@@ -15,7 +15,7 @@ public class ExchangeToken : MonoBehaviour
     public Button btnExchange;
     public void SetTxtTokenValue()
     {
-        rate = (1 - PlayerPrefs.GetFloat("exchangeDeclineTycoon", 0)) * 10000;
+        rate = (1 - ObscuredPrefs.GetFloat("exchangeDeclineTycoon", 0)) * 10000;
         txtRate.text = "(" + rate.ToString();
         try
         {

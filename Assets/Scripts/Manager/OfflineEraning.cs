@@ -23,13 +23,14 @@ public class OfflineEraning : MonoBehaviour
             time = 345600;
         }
         value = controller.slotManager.EarningPerSec * time * offlineEarningRate / 100f;
-        value = value * PlayerPrefs.GetFloat("offlineEarnTycoonBoosts", 1) * PlayerPrefs.GetFloat("offliceEarnVip", 1);
+        value = value * ObscuredPrefs.GetFloat("offlineEarnTycoonBoosts", 1) * ObscuredPrefs.GetFloat("offliceEarnVip", 1);
         valueTxt.text = value.ToString("0.##");
     }
 
     public void ClaimClick()
     {
         ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) + value);
+        ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 0) + value);
         txtCoin.text = ObscuredPrefs.GetDouble("coin", 5000).ToString("0.##");
         controller.CloseOffEarning();
         controller.SetText();

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using CodeStage.AntiCheat.ObscuredTypes;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,8 +10,8 @@ public class BalanceCoin : MonoBehaviour
     public void UpdateCoinBalance()
     {
         //استفاده نشده
-        //float coin = float.Parse(PlayerPrefs.GetString("Coin"));
-        string coin = PlayerPrefs.GetString("Coin", "5000");
+        //float coin = float.Parse(ObscuredPrefs.GetString("Coin"));
+        string coin = ObscuredPrefs.GetString("Coin", "5000");
         if (coin.Length > 27)
         {
             txtCoin.text = (float.Parse(coin) / 1000000000000000000000000f).ToString("0") + "AD";

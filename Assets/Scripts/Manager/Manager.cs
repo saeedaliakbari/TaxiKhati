@@ -12,17 +12,17 @@ public class Manager
 
     public static double GetActionTime(String action)
     {//زمان مربوط به اکشن مورد نظر را بصورت جمع ثانیه ها برمیگرداند
-        //Debug.Log(action + "_time: " + PlayerPrefs.GetFloat(action + "_time"));
+        //Debug.Log(action + "_time: " + ObscuredPrefs.GetFloat(action + "_time"));
         return CodeStage.AntiCheat.ObscuredTypes.ObscuredPrefs.GetDouble(action + "_time");
-        //return double.Parse(PlayerPrefs.GetFloat(action + "_time").ToString());
+        //return double.Parse(ObscuredPrefs.GetFloat(action + "_time").ToString());
     }
 
     public static void SetActionTime(String action, double time)
     {
-        //Debug.Log(action + "_time: " + PlayerPrefs.GetFloat(action + "_time"));
+        //Debug.Log(action + "_time: " + ObscuredPrefs.GetFloat(action + "_time"));
         CodeStage.AntiCheat.ObscuredTypes.ObscuredPrefs.SetDouble(action + "_time", (float)time);
-        //PlayerPrefs.SetFloat(action + "_time", (float)time);
-        //Debug.Log(action + "_time: " + PlayerPrefs.GetFloat(action + "_time"));
+        //ObscuredPrefs.SetFloat(action + "_time", (float)time);
+        //Debug.Log(action + "_time: " + ObscuredPrefs.GetFloat(action + "_time"));
     }
    
     public static string ChangeNumber(double number)

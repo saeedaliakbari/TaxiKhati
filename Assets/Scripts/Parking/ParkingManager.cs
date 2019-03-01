@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using CodeStage.AntiCheat.ObscuredTypes;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,10 +24,10 @@ public class ParkingManager : MonoBehaviour
     public GameObject objCarOfflineEarn, objCarSpeed, objCarExchangeDecline;
     public void SpawnPlaces()
     {//با توجه به تعداد مکان ها ، پارکینگ ها را ایجاد می کند
-        int numPlaces = PlayerPrefs.GetInt("num_of_places", 4);
-        int numPlacesVIP = PlayerPrefs.GetInt("num_of_places_vip", 0);
+        int numPlaces = ObscuredPrefs.GetInt("num_of_places", 4);
+        int numPlacesVIP = ObscuredPrefs.GetInt("num_of_places_vip", 0);
 
-        PlayerPrefs.SetInt("num_total_places", numPlaces + numPlacesVIP);
+        ObscuredPrefs.SetInt("num_total_places", numPlaces + numPlacesVIP);
         for (int i = 0; i < numPlaces + numPlacesVIP; i++)
         {
             SpawnNewPlace();
@@ -35,16 +36,16 @@ public class ParkingManager : MonoBehaviour
     }
     public void SpawnPlacesVIP()
     {
-        int num = PlayerPrefs.GetInt("num_of_places", 4);//تعداد لاین های شروع 
-        num += PlayerPrefs.GetInt("num_of_places_vip", 0);
-        Debug.Log("Place>>>num: " + PlayerPrefs.GetInt("num_of_places", 4) + " numVIP: " + PlayerPrefs.GetInt("num_of_places_vip", 0) + " TOTAL: " + PlayerPrefs.GetInt("num_total_places"));
-        if (num > PlayerPrefs.GetInt("num_total_places"))
+        int num = ObscuredPrefs.GetInt("num_of_places", 4);//تعداد لاین های شروع 
+        num += ObscuredPrefs.GetInt("num_of_places_vip", 0);
+        Debug.Log("Place>>>num: " + ObscuredPrefs.GetInt("num_of_places", 4) + " numVIP: " + ObscuredPrefs.GetInt("num_of_places_vip", 0) + " TOTAL: " + ObscuredPrefs.GetInt("num_total_places"));
+        if (num > ObscuredPrefs.GetInt("num_total_places"))
         {
             Debug.Log("num > num_total_places");
-            int newPlace = num - PlayerPrefs.GetInt("num_total_places");
+            int newPlace = num - ObscuredPrefs.GetInt("num_total_places");
             for (int i = 0; i < newPlace; i++)
             {
-                PlayerPrefs.SetInt("num_total_places", PlayerPrefs.GetInt("num_total_places") + 1);
+                ObscuredPrefs.SetInt("num_total_places", ObscuredPrefs.GetInt("num_total_places") + 1);
                 SpawnNewPlace();
             }
             UpdatePlacePosition();
@@ -52,7 +53,7 @@ public class ParkingManager : MonoBehaviour
     }
     void FixedUpdate()//برای چک کردن تعداد ماشین های هر لول در پارکینگ ها
     {
-        if (PlayerPrefs.GetInt("checkLevel", 0) == 0)
+        if (ObscuredPrefs.GetInt("checkLevel", 0) == 0)
         {
             PrintLevelsCarsInPark();
         }
@@ -60,7 +61,7 @@ public class ParkingManager : MonoBehaviour
     private void PrintLevelsCarsInPark()
     {
         int[] carsLevel = new int[50];
-        PlayerPrefs.SetInt("checkLevel", 1);
+        ObscuredPrefs.SetInt("checkLevel", 1);
         Timer.Schedule(this, 0.5f, (Timer.Task)(() =>
         {
             for (int i = 0; i < places.Count; i++)
@@ -70,11 +71,11 @@ public class ParkingManager : MonoBehaviour
                     carsLevel[places[i].GetCar().level - 1] += 1;
                 }
             }
-            PlayerPrefs.SetInt("mainAchiv1", carsLevel[4]);
-            PlayerPrefs.SetInt("mainAchiv2", carsLevel[6]);
-            PlayerPrefs.SetInt("mainAchiv3", carsLevel[10]);
-            PlayerPrefs.SetInt("mainAchiv6", carsLevel[14]);
-            PlayerPrefs.SetInt("mainAchiv7", carsLevel[24]);
+            ObscuredPrefs.SetInt("mainAchiv1", carsLevel[4]);
+            ObscuredPrefs.SetInt("mainAchiv2", carsLevel[6]);
+            ObscuredPrefs.SetInt("mainAchiv3", carsLevel[10]);
+            ObscuredPrefs.SetInt("mainAchiv6", carsLevel[14]);
+            ObscuredPrefs.SetInt("mainAchiv7", carsLevel[24]);
             CheckCarSpeedTycoon(carsLevel);
             CheckOfflineEarningTycoon(carsLevel);
             CheckExchangeRateDecline(carsLevel);
@@ -97,7 +98,7 @@ public class ParkingManager : MonoBehaviour
     }
     private void CheckCarSpeedTycoon(int[] carsLevel)
     {
-        int levelSpeed = PlayerPrefs.GetInt("carSpeedTycoonLevel", 0);
+        int levelSpeed = ObscuredPrefs.GetInt("carSpeedTycoonLevel", 0);
         txtCarSpeed.text = "سطح " + (levelSpeed + 1);
         imgCarSpeed.sprite = controller.activeCar[carSpeedTycoonBoosts.level[levelSpeed] - 1];
         txtLevelSpeed.text = (carsLevel[carSpeedTycoonBoosts.level[levelSpeed] - 1] >= 3 ? "3" :
@@ -115,7 +116,7 @@ public class ParkingManager : MonoBehaviour
         else {
             if (carsLevel[carSpeedTycoonBoosts.level[levelSpeed] - 1] >= 3)
             {
-                //Debug.Log("Get Gift" + earningOfflineTycoonBoosts.level[PlayerPrefs.GetInt("offlineEarnTycoonLevel", 0)]);
+                //Debug.Log("Get Gift" + earningOfflineTycoonBoosts.level[ObscuredPrefs.GetInt("offlineEarnTycoonLevel", 0)]);
                 btnCarSpeed.interactable = true;
             }
         }
@@ -123,14 +124,14 @@ public class ParkingManager : MonoBehaviour
     public void GetGiftCarSpeed()
     {
         btnCarSpeed.interactable = false;
-        PlayerPrefs.SetFloat("carsSpeedTycoon", carSpeedTycoonBoosts.incSpeed[PlayerPrefs.GetInt("carSpeedTycoonLevel", 0)]);
-        PlayerPrefs.SetInt("carSpeedTycoonLevel", PlayerPrefs.GetInt("carSpeedTycoonLevel", 0) + 1);
-        //txtCarSpeed.text = "Level Car Speed " + (PlayerPrefs.GetInt("carSpeedTycoonLevel", 0) + 1);
+        ObscuredPrefs.SetFloat("carsSpeedTycoon", carSpeedTycoonBoosts.incSpeed[ObscuredPrefs.GetInt("carSpeedTycoonLevel", 0)]);
+        ObscuredPrefs.SetInt("carSpeedTycoonLevel", ObscuredPrefs.GetInt("carSpeedTycoonLevel", 0) + 1);
+        //txtCarSpeed.text = "Level Car Speed " + (ObscuredPrefs.GetInt("carSpeedTycoonLevel", 0) + 1);
         PrintLevelsCarsInPark();
     }
     private void CheckOfflineEarningTycoon(int[] carsLevel)
     {
-        int levelOfflineEarning = PlayerPrefs.GetInt("offlineEarnTycoonLevel", 0);
+        int levelOfflineEarning = ObscuredPrefs.GetInt("offlineEarnTycoonLevel", 0);
         txtOfflineEarning.text = "سطح " + (levelOfflineEarning + 1);
         //Debug.Log("CheckOfflineEarningTycoon LEVEL CAR :" + earningOfflineTycoonBoosts.level[levelOfflineEarning]);
         imgCarOfflienEarn.sprite = controller.activeCar[earningOfflineTycoonBoosts.level[levelOfflineEarning] - 1];
@@ -149,7 +150,7 @@ public class ParkingManager : MonoBehaviour
         else {
             if (carsLevel[earningOfflineTycoonBoosts.level[levelOfflineEarning] - 1] >= 3)
             {
-                //Debug.Log("Get Gift" + earningOfflineTycoonBoosts.level[PlayerPrefs.GetInt("offlineEarnTycoonLevel", 0)]);
+                //Debug.Log("Get Gift" + earningOfflineTycoonBoosts.level[ObscuredPrefs.GetInt("offlineEarnTycoonLevel", 0)]);
                 btnOfflineEarning.interactable = true;
             }
         }
@@ -157,14 +158,14 @@ public class ParkingManager : MonoBehaviour
     public void GetGiftOfflineEran()
     {
         btnOfflineEarning.interactable = false;
-        PlayerPrefs.SetFloat("offlineEarnTycoonBoosts", earningOfflineTycoonBoosts.incEarn[PlayerPrefs.GetInt("offlineEarnTycoonLevel", 0)]);
-        PlayerPrefs.SetInt("offlineEarnTycoonLevel", PlayerPrefs.GetInt("offlineEarnTycoonLevel", 0) + 1);
-        //txtOfflineEarning.text = "Level Offline Earn " + (PlayerPrefs.GetInt("offlineEarnTycoonLevel", 0) + 1);
+        ObscuredPrefs.SetFloat("offlineEarnTycoonBoosts", earningOfflineTycoonBoosts.incEarn[ObscuredPrefs.GetInt("offlineEarnTycoonLevel", 0)]);
+        ObscuredPrefs.SetInt("offlineEarnTycoonLevel", ObscuredPrefs.GetInt("offlineEarnTycoonLevel", 0) + 1);
+        //txtOfflineEarning.text = "Level Offline Earn " + (ObscuredPrefs.GetInt("offlineEarnTycoonLevel", 0) + 1);
         PrintLevelsCarsInPark();
     }
     private void CheckExchangeRateDecline(int[] carsLevel)
     {
-        int levelExchangeDecline = PlayerPrefs.GetInt("exchangeDeclineTycoonLevel", 0);
+        int levelExchangeDecline = ObscuredPrefs.GetInt("exchangeDeclineTycoonLevel", 0);
         txtExchangeDecline.text = "سطح " + (levelExchangeDecline + 1);
         //Debug.Log("CheckExchangeRateDecline LEVEL CAR :" + exchangeDeclineTycoonBoosts.level[levelExchangeDecline]);
         imgCarExchangeDecline.sprite = controller.activeCar[exchangeDeclineTycoonBoosts.level[levelExchangeDecline] - 1];
@@ -183,7 +184,7 @@ public class ParkingManager : MonoBehaviour
         else {
             if (carsLevel[exchangeDeclineTycoonBoosts.level[levelExchangeDecline] - 1] >= 3)
             {
-                //Debug.Log("Get Gift" + earningOfflineTycoonBoosts.level[PlayerPrefs.GetInt("offlineEarnTycoonLevel", 0)]);
+                //Debug.Log("Get Gift" + earningOfflineTycoonBoosts.level[ObscuredPrefs.GetInt("offlineEarnTycoonLevel", 0)]);
                 btnExchangeDecline.interactable = true;
             }
         }
@@ -191,9 +192,9 @@ public class ParkingManager : MonoBehaviour
     public void GetGiftExchangeRateDecline()
     {
         btnExchangeDecline.interactable = false;
-        PlayerPrefs.SetFloat("exchangeDeclineTycoon", exchangeDeclineTycoonBoosts.rateDecline[PlayerPrefs.GetInt("ExchangeDeclineTycoonLevel", 0)]);
-        PlayerPrefs.SetInt("exchangeDeclineTycoonLevel", PlayerPrefs.GetInt("exchangeDeclineTycoonLevel", 0) + 1);
-        //txtExchangeDecline.text = "Level Offline Earn " + (PlayerPrefs.GetInt("exchangeDeclineTycoonLevel", 0) + 1);
+        ObscuredPrefs.SetFloat("exchangeDeclineTycoon", exchangeDeclineTycoonBoosts.rateDecline[ObscuredPrefs.GetInt("ExchangeDeclineTycoonLevel", 0)]);
+        ObscuredPrefs.SetInt("exchangeDeclineTycoonLevel", ObscuredPrefs.GetInt("exchangeDeclineTycoonLevel", 0) + 1);
+        //txtExchangeDecline.text = "Level Offline Earn " + (ObscuredPrefs.GetInt("exchangeDeclineTycoonLevel", 0) + 1);
         PrintLevelsCarsInPark();
     }
     public void SpawnNewPlaceVIP()
@@ -225,7 +226,7 @@ public class ParkingManager : MonoBehaviour
         place.transform.localScale = Vector3.one * 0.6f;
         places.Add(place);//به لیست پارکینگ ها اضافه ش میکنیم
         placesPosition.Add(place.gameObject);
-        int numPlacesVIP = PlayerPrefs.GetInt("num_of_places_vip", 0);
+        int numPlacesVIP = ObscuredPrefs.GetInt("num_of_places_vip", 0);
         if (numPlacesVIP == 0 && places.Count > 4 && VipPlace == false)
         {
             //Debug.Log("Spawn New PlaceVIP>>" + numPlacesVIP);

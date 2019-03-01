@@ -33,6 +33,7 @@ public class ShopItemPanel : MonoBehaviour
             }
             //Debug.Log("Plus Coin : " + runSlotManager.earnPerSec * houers * 60 * 60 + ">>" + controller.txtCoin.text);
             ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) + (earnPerSec * houers * 60 * 60));
+            ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 0) + (earnPerSec * houers * 60 * 60));
             ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem") - Gem);
             controller.SetText();
             controller.txtError.text = Manager.ChangeNumber(earnPerSec * houers * 60 * 60) + "سکه اضافه شد";

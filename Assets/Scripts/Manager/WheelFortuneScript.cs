@@ -26,11 +26,11 @@ public class WheelFortuneScript : MonoBehaviour
     }
     private void CheckVideoTime()//این تابع در ابتدا مقادیر را داخل تکست باکس ها ست می کند و سپس با توجه به زمان فعلی و اینکه تعداد شانس ها کمتر از 3 باشد زمان شانس بعدی را می سنجد تا اضافه شود
     {
-        //Debug.Log("CheckVideoTime >" + PlayerPrefs.GetInt("VideoWheel", 3));
-        txtNumVideoWheel.text = PlayerPrefs.GetInt("VideoWheel", 3).ToString() + "/3";
-        string[] arr = PlayerPrefs.GetString("TimeVideoWheel", "1992,11,30,00,00,00").Split(',');
+        //Debug.Log("CheckVideoTime >" + ObscuredPrefs.GetInt("VideoWheel", 3));
+        txtNumVideoWheel.text = ObscuredPrefs.GetInt("VideoWheel", 3).ToString() + "/3";
+        string[] arr = ObscuredPrefs.GetString("TimeVideoWheel", "1992,11,30,00,00,00").Split(',');
         DateTime wheelTime = new DateTime(Int32.Parse(arr[0]), Int32.Parse(arr[1]), Int32.Parse(arr[2]), Int32.Parse(arr[3]), Int32.Parse(arr[4]), Int32.Parse(arr[5]));
-        if (PlayerPrefs.GetInt("VideoWheel", 3) < 3)
+        if (ObscuredPrefs.GetInt("VideoWheel", 3) < 3)
         {
             Debug.Log("VideoWheel< 3 ");
             StartCoroutine(GetDateTime.IEGetDateTime((status) =>
@@ -42,24 +42,24 @@ public class WheelFortuneScript : MonoBehaviour
                 if (wheelTime <= status)
                 {
                     Debug.Log("wheelTime <= status");
-                    while ((-reamainSec) - 28800 >= 0 && PlayerPrefs.GetInt("VideoWheel", 3) < 3)
+                    while ((-reamainSec) - 28800 >= 0 && ObscuredPrefs.GetInt("VideoWheel", 3) < 3)
                     {
                         Debug.Log("Up +1");
-                        PlayerPrefs.SetInt("VideoWheel", PlayerPrefs.GetInt("VideoWheel", 3) + 1);
-                        txtNumVideoWheel.text = PlayerPrefs.GetInt("VideoWheel", 3).ToString() + "/3";
+                        ObscuredPrefs.SetInt("VideoWheel", ObscuredPrefs.GetInt("VideoWheel", 3) + 1);
+                        txtNumVideoWheel.text = ObscuredPrefs.GetInt("VideoWheel", 3).ToString() + "/3";
                         reamainSec += 28800f;
                         TimeSpan nowTimeSpan = new TimeSpan(status.Day, status.Hour, status.Minute, status.Second);
                         TimeSpan plusTimeSpan = new TimeSpan(0, 8, 0, 0);
                         TimeSpan result = plusTimeSpan + nowTimeSpan;
-                        PlayerPrefs.SetString("TimeVideoWheel", DateTime.Now.Year.ToString() + "," + DateTime.Now.Month.ToString() + "," + result.Days.ToString() + "," + result.Hours.ToString() + "," + result.Minutes.ToString() + "," + result.Seconds.ToString());
+                        ObscuredPrefs.SetString("TimeVideoWheel", DateTime.Now.Year.ToString() + "," + DateTime.Now.Month.ToString() + "," + result.Days.ToString() + "," + result.Hours.ToString() + "," + result.Minutes.ToString() + "," + result.Seconds.ToString());
                     }
-                    if (PlayerPrefs.GetInt("VideoWheel", 3) < 3)
+                    if (ObscuredPrefs.GetInt("VideoWheel", 3) < 3)
                     {
                         Debug.Log("wheelTime <= status AND VideoWheel< 3");
                         TimeSpan nowTimeSpan = new TimeSpan(status.Day, status.Hour, status.Minute, status.Second);
                         TimeSpan plusTimeSpan = new TimeSpan(0, 8, 0, 0);
                         TimeSpan result = plusTimeSpan + nowTimeSpan;
-                        PlayerPrefs.SetString("TimeVideoWheel", DateTime.Now.Year.ToString() + "," + DateTime.Now.Month.ToString() + "," + result.Days.ToString() + "," + result.Hours.ToString() + "," + result.Minutes.ToString() + "," + result.Seconds.ToString());
+                        ObscuredPrefs.SetString("TimeVideoWheel", DateTime.Now.Year.ToString() + "," + DateTime.Now.Month.ToString() + "," + result.Days.ToString() + "," + result.Hours.ToString() + "," + result.Minutes.ToString() + "," + result.Seconds.ToString());
                         StartCoroutine(IETimerVideoWheel(28800));//زمان 8 ساعت را می شمارد
                     }
                 }
@@ -77,15 +77,15 @@ public class WheelFortuneScript : MonoBehaviour
     public void GiftWheelWithVideo()//وقتی که یک بار از ویدئو استفاده کرد برای چرخاندن گردونه شانس باید این تابع فراخوانی شود
     {
         Debug.Log("GiftWheelWithVideo");
-        PlayerPrefs.SetInt("VideoWheel", PlayerPrefs.GetInt("VideoWheel", 3) - 1);
-        Debug.Log("GiftWheelWithVideo" + PlayerPrefs.GetInt("VideoWheel", 3));
-        if (PlayerPrefs.GetString("TimeVideoWheel", "NotSet") == "NotSet")
+        ObscuredPrefs.SetInt("VideoWheel", ObscuredPrefs.GetInt("VideoWheel", 3) - 1);
+        Debug.Log("GiftWheelWithVideo" + ObscuredPrefs.GetInt("VideoWheel", 3));
+        if (ObscuredPrefs.GetString("TimeVideoWheel", "NotSet") == "NotSet")
         {
             TimeSpan nowTimeSpan = new TimeSpan(DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
             TimeSpan plusTimeSpan = new TimeSpan(0, 8, 0, 0);
             TimeSpan result = plusTimeSpan + nowTimeSpan;
-            PlayerPrefs.SetString("TimeVideoWheel", DateTime.Now.Year.ToString() + "," + DateTime.Now.Month.ToString() + "," + result.Days.ToString() + "," + result.Hours.ToString() + "," + result.Minutes.ToString() + "," + result.Seconds.ToString());
-            Debug.Log("NOT SET >>" + PlayerPrefs.GetString("TimeVideoWheel"));
+            ObscuredPrefs.SetString("TimeVideoWheel", DateTime.Now.Year.ToString() + "," + DateTime.Now.Month.ToString() + "," + result.Days.ToString() + "," + result.Hours.ToString() + "," + result.Minutes.ToString() + "," + result.Seconds.ToString());
+            Debug.Log("NOT SET >>" + ObscuredPrefs.GetString("TimeVideoWheel"));
         }
         CheckVideoTime();
         WheelStart(true);
@@ -110,9 +110,9 @@ public class WheelFortuneScript : MonoBehaviour
         {
             txtTimeRemain.text = "0:00:00";
             objTimeVideo.SetActive(false);
-            if (PlayerPrefs.GetInt("VideoWheel", 3) < 3)
+            if (ObscuredPrefs.GetInt("VideoWheel", 3) < 3)
             {
-                PlayerPrefs.SetInt("VideoWheel", PlayerPrefs.GetInt("VideoWheel", 1) + 1);
+                ObscuredPrefs.SetInt("VideoWheel", ObscuredPrefs.GetInt("VideoWheel", 1) + 1);
             }
             CheckVideoTime();
         }
@@ -140,11 +140,11 @@ public class WheelFortuneScript : MonoBehaviour
     }
     public void WheelStart(bool video)
     {
-        PlayerPrefs.SetInt("mainAchiv9", PlayerPrefs.GetInt("mainAchiv9", 0) + 1);
+        ObscuredPrefs.SetInt("mainAchiv9", ObscuredPrefs.GetInt("mainAchiv9", 0) + 1);
         btnWheelVideo.interactable = false;
         btnWheelGem.interactable = false;
         anglePerItem = 360 / maxRotaiton.Length;
-        txtNumVideoWheel.text = PlayerPrefs.GetInt("VideoWheel", 3).ToString() + "/3";
+        txtNumVideoWheel.text = ObscuredPrefs.GetInt("VideoWheel", 3).ToString() + "/3";
         randomTime = UnityEngine.Random.Range(3, 6);
         int iPercent = UnityEngine.Random.Range(0, 100);
         Debug.Log("darsad>>" + iPercent);
@@ -257,6 +257,7 @@ public class WheelFortuneScript : MonoBehaviour
         else if (itemNumber == 4)
         {
             ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) + (videoAds.controller.slotManager.earnPerSec * 4 * 60 * 60));
+            ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 0) + (videoAds.controller.slotManager.earnPerSec * 4 * 60 * 60));
             videoAds.controller.SetText();
             videoAds.controller.txtPanelMessage.text = "به اندازه 4 ساعت درآمد فعلی  به شما پرداخت شد";
         }

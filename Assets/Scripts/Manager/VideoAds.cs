@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TapsellSDK;
+using CodeStage.AntiCheat.ObscuredTypes;
+
 public class VideoAds : MonoBehaviour
 {
     public Controller controller;
@@ -38,7 +40,7 @@ public class VideoAds : MonoBehaviour
     }
     IEnumerator IEDoubleOfflineEarn()
     {
-        if (PlayerPrefs.GetInt(zoneOfflineEarning.zoneId) == 0)
+        if (ObscuredPrefs.GetInt(zoneOfflineEarning.zoneId) == 0)
         {
             LoadAd(zoneOfflineEarning);
             //panelWait.SetActive(true);
@@ -47,9 +49,9 @@ public class VideoAds : MonoBehaviour
             Debug.Log("Wait Done");
             //panelWait.SetActive(false);
         }
-        if (PlayerPrefs.GetInt(zoneOfflineEarning.zoneId) == 1)
+        if (ObscuredPrefs.GetInt(zoneOfflineEarning.zoneId) == 1)
         {
-            PlayerPrefs.SetInt(zoneOfflineEarning.zoneId, 0);
+            ObscuredPrefs.SetInt(zoneOfflineEarning.zoneId, 0);
             ShowAd(zoneOfflineEarning);
             Tapsell.setRewardListener(
                 (TapsellAdFinishedResult result) =>
@@ -90,7 +92,7 @@ public class VideoAds : MonoBehaviour
     }
     IEnumerator IEBtnSpecialOffer()
     {
-        if (PlayerPrefs.GetInt(zoneGiftPanel.zoneId) == 0)
+        if (ObscuredPrefs.GetInt(zoneGiftPanel.zoneId) == 0)
         {
             LoadAd(zoneGiftPanel);
             //panelWait.SetActive(true);
@@ -99,9 +101,9 @@ public class VideoAds : MonoBehaviour
             Debug.Log("Wait Done");
             //panelWait.SetActive(false);
         }
-        if (PlayerPrefs.GetInt(zoneGiftPanel.zoneId) == 1)
+        if (ObscuredPrefs.GetInt(zoneGiftPanel.zoneId) == 1)
         {
-            PlayerPrefs.SetInt(zoneGiftPanel.zoneId, 0);
+            ObscuredPrefs.SetInt(zoneGiftPanel.zoneId, 0);
             ShowAd(zoneGiftPanel);
             Tapsell.setRewardListener(
                 (TapsellAdFinishedResult result) =>
@@ -134,7 +136,7 @@ public class VideoAds : MonoBehaviour
     }
     IEnumerator IEBtnShopCar(int index)
     {
-        if (PlayerPrefs.GetInt(zoneShopCar.zoneId) == 0)
+        if (ObscuredPrefs.GetInt(zoneShopCar.zoneId) == 0)
         {
             LoadAd(zoneShopCar);
             //panelWait.SetActive(true);
@@ -143,16 +145,16 @@ public class VideoAds : MonoBehaviour
             Debug.Log("Wait Done");
             //panelWait.SetActive(false);
         }
-        if (PlayerPrefs.GetInt(zoneShopCar.zoneId) == 1)
+        if (ObscuredPrefs.GetInt(zoneShopCar.zoneId) == 1)
         {
-            PlayerPrefs.SetInt(zoneShopCar.zoneId, 0);
+            ObscuredPrefs.SetInt(zoneShopCar.zoneId, 0);
             ShowAd(zoneShopCar);
             Tapsell.setRewardListener(
                 (TapsellAdFinishedResult result) =>
                 {
                     if (result.completed && result.rewarded)
                     {
-                        PlayerPrefs.SetInt("mergeCarForVideo", 1);
+                        ObscuredPrefs.SetInt("mergeCarForVideo", 1);
                         GiftShopCar(index - 1);
                     }
                     else
@@ -182,7 +184,7 @@ public class VideoAds : MonoBehaviour
     }
     IEnumerator IEBtnCarUp()
     {
-        if (PlayerPrefs.GetInt(zoneCarUp.zoneId) == 0)
+        if (ObscuredPrefs.GetInt(zoneCarUp.zoneId) == 0)
         {
             LoadAd(zoneCarUp);
             //panelWait.SetActive(true);
@@ -191,9 +193,9 @@ public class VideoAds : MonoBehaviour
             Debug.Log("Wait Done");
             //panelWait.SetActive(false);
         }
-        if (PlayerPrefs.GetInt(zoneCarUp.zoneId) == 1)
+        if (ObscuredPrefs.GetInt(zoneCarUp.zoneId) == 1)
         {
-            PlayerPrefs.SetInt(zoneCarUp.zoneId, 0);
+            ObscuredPrefs.SetInt(zoneCarUp.zoneId, 0);
             ShowAd(zoneCarUp);
             Tapsell.setRewardListener(
                 (TapsellAdFinishedResult result) =>
@@ -231,7 +233,7 @@ public class VideoAds : MonoBehaviour
     #region Video Wheel Of Fourtune
     public void BtnVideoWheel()
     {
-        if (PlayerPrefs.GetInt("VideoWheel", 3) > 0)
+        if (ObscuredPrefs.GetInt("VideoWheel", 3) > 0)
         {
             StartCoroutine(IEBtnVideoWheel());
             //wheelFortuneScript.GiftWheelWithVideo();
@@ -244,7 +246,7 @@ public class VideoAds : MonoBehaviour
     }
     IEnumerator IEBtnVideoWheel()
     {
-        if (PlayerPrefs.GetInt(zoneWheelOfFurtune.zoneId) == 0)
+        if (ObscuredPrefs.GetInt(zoneWheelOfFurtune.zoneId) == 0)
         {
             LoadAd(zoneWheelOfFurtune);
             //panelWait.SetActive(true);
@@ -253,9 +255,9 @@ public class VideoAds : MonoBehaviour
             Debug.Log("Wait Done");
             //panelWait.SetActive(false);
         }
-        if (PlayerPrefs.GetInt(zoneWheelOfFurtune.zoneId) == 1)
+        if (ObscuredPrefs.GetInt(zoneWheelOfFurtune.zoneId) == 1)
         {
-            PlayerPrefs.SetInt(zoneWheelOfFurtune.zoneId, 0);
+            ObscuredPrefs.SetInt(zoneWheelOfFurtune.zoneId, 0);
             ShowAd(zoneWheelOfFurtune);
             Tapsell.setRewardListener(
                 (TapsellAdFinishedResult result) =>
@@ -286,7 +288,7 @@ public class VideoAds : MonoBehaviour
     }
     IEnumerator IEBtnSpeeedX2()
     {
-        if (PlayerPrefs.GetInt(zoneSpeedX2.zoneId) == 0)
+        if (ObscuredPrefs.GetInt(zoneSpeedX2.zoneId) == 0)
         {
             LoadAd(zoneSpeedX2);
             //panelWait.SetActive(true);
@@ -295,9 +297,9 @@ public class VideoAds : MonoBehaviour
             Debug.Log("Wait Done");
             //panelWait.SetActive(false);
         }
-        if (PlayerPrefs.GetInt(zoneSpeedX2.zoneId) == 1)
+        if (ObscuredPrefs.GetInt(zoneSpeedX2.zoneId) == 1)
         {
-            PlayerPrefs.SetInt(zoneSpeedX2.zoneId, 0);
+            ObscuredPrefs.SetInt(zoneSpeedX2.zoneId, 0);
             ShowAd(zoneSpeedX2);
             Tapsell.setRewardListener(
                 (TapsellAdFinishedResult result) =>
@@ -333,7 +335,7 @@ public class VideoAds : MonoBehaviour
     }
     IEnumerator IEBtnCloseShopCar()
     {
-        if (PlayerPrefs.GetInt(zoneShopClose.zoneId) == 0)
+        if (ObscuredPrefs.GetInt(zoneShopClose.zoneId) == 0)
         {
             LoadAd(zoneShopClose);
             //panelWait.SetActive(true);
@@ -342,9 +344,9 @@ public class VideoAds : MonoBehaviour
             Debug.Log("Wait Done");
             //panelWait.SetActive(false);
         }
-        if (PlayerPrefs.GetInt(zoneShopClose.zoneId) == 1)
+        if (ObscuredPrefs.GetInt(zoneShopClose.zoneId) == 1)
         {
-            PlayerPrefs.SetInt(zoneShopClose.zoneId, 0);
+            ObscuredPrefs.SetInt(zoneShopClose.zoneId, 0);
             ShowAd(zoneShopClose);
             Tapsell.setRewardListener(
                 (TapsellAdFinishedResult result) =>
@@ -361,19 +363,19 @@ public class VideoAds : MonoBehaviour
     }
     private void GiftBtnCloseShopCar()
     {
-        Debug.Log("Gift" + PlayerPrefs.GetInt("countCloseShop", 1));
-        PlayerPrefs.SetInt("countCloseShop", 1);
-        PlayerPrefs.SetInt("countShowAd", PlayerPrefs.GetInt("countShowAd", 1) + 1);
-        Debug.Log("Gift End" + PlayerPrefs.GetInt("countCloseShop", 1));
-        if (PlayerPrefs.GetInt("countShowAd", 1) > 5)
+        Debug.Log("Gift" + ObscuredPrefs.GetInt("countCloseShop", 1));
+        ObscuredPrefs.SetInt("countCloseShop", 1);
+        ObscuredPrefs.SetInt("countShowAd", ObscuredPrefs.GetInt("countShowAd", 1) + 1);
+        Debug.Log("Gift End" + ObscuredPrefs.GetInt("countCloseShop", 1));
+        if (ObscuredPrefs.GetInt("countShowAd", 1) > 5)
         {
             panelNoAds.SetActive(true);
-            PlayerPrefs.SetInt("countShowAd", 1);
+            ObscuredPrefs.SetInt("countShowAd", 1);
         }
     }
     public void LooadAdCloseShop()//داخل باز کردن فروشگاه ماشین انجام می شود
     {
-        if (PlayerPrefs.GetInt(zoneShopClose.zoneId) == 0 && PlayerPrefs.GetInt("removeAds", 0) == 0)
+        if (ObscuredPrefs.GetInt(zoneShopClose.zoneId) == 0 && ObscuredPrefs.GetInt("removeAds", 0) == 0)
         {
             LoadAd(zoneShopClose);
         }
@@ -387,44 +389,44 @@ public class VideoAds : MonoBehaviour
             {
                 // onAdAvailable
                 Debug.Log("Action: onAdAvailable");
-                PlayerPrefs.SetInt(zone.zoneId, 1);
+                ObscuredPrefs.SetInt(zone.zoneId, 1);
                 zone.ad = result;
                 Debug.Log("End Load ad : " + zone.ad == null ? "NULL" : "id :" + zone.ad.adId);
-                Debug.Log(zone.zoneName + ": " + PlayerPrefs.GetInt(zone.zoneId));
+                Debug.Log(zone.zoneName + ": " + ObscuredPrefs.GetInt(zone.zoneId));
             },
 
             (string zoneId) =>
             {
                 // onNoAdAvailable
-                PlayerPrefs.SetInt(zone.zoneId, 0);
+                ObscuredPrefs.SetInt(zone.zoneId, 0);
                 Debug.Log("No Ad Available");
                 Debug.Log("End Load ad : " + zone.ad == null ? "NULL" : "id:" + zone.ad.adId);
-                Debug.Log(zone.zoneName + ": " + PlayerPrefs.GetInt(zone.zoneId));
+                Debug.Log(zone.zoneName + ": " + ObscuredPrefs.GetInt(zone.zoneId));
             },
 
             (TapsellError error) =>
             {
                 // onError
-                PlayerPrefs.SetInt(zone.zoneId, 0);
+                ObscuredPrefs.SetInt(zone.zoneId, 0);
                 Debug.Log(error.error);
                 Debug.Log("End Load ad : " + zone.ad == null ? "NULL" : "id:" + zone.ad.adId);
-                Debug.Log(zone.zoneName + ": " + PlayerPrefs.GetInt(zone.zoneId));
+                Debug.Log(zone.zoneName + ": " + ObscuredPrefs.GetInt(zone.zoneId));
             },
 
             (string zoneId) =>
             {
                 // onNoNetwork
-                PlayerPrefs.SetInt(zone.zoneId, 0);
+                ObscuredPrefs.SetInt(zone.zoneId, 0);
                 Debug.Log("No Network: " + zoneId);
                 Debug.Log("End Load ad : " + zone.ad == null ? "NULL" : "id:" + zone.ad.adId);
-                Debug.Log(zone.zoneName + ": " + PlayerPrefs.GetInt(zone.zoneId));
+                Debug.Log(zone.zoneName + ": " + ObscuredPrefs.GetInt(zone.zoneId));
             },
 
             (TapsellAd result) =>
             {
                 //onExpiring
                 Debug.Log("Expiring");
-                PlayerPrefs.SetInt(zone.zoneId, 0);
+                ObscuredPrefs.SetInt(zone.zoneId, 0);
                 zone.ad = null;
                 Debug.Log("End Load ad : " + zone.ad == null ? "NULL" : "id:" + zone.ad.adId);
                 LoadAd(zone);

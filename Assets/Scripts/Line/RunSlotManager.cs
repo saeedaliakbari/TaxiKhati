@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using CodeStage.AntiCheat.ObscuredTypes;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -41,13 +42,13 @@ public class RunSlotManager : MonoBehaviour
     }
     public void UpdateEarningSpeedText()
     {
-        int index = PlayerPrefs.GetInt("unlocked_airline", 1) - 1;//عدد آخرین هواپیمای باز شده
+        int index = ObscuredPrefs.GetInt("unlocked_airline", 1) - 1;//عدد آخرین هواپیمای باز شده
         //Debug.Log("index unlocked_airline: " + index + ">>>earningPerSec: " + earningPerSec);
         float ratio = ((Manager.GetCurrentTime() < Manager.GetActionTime("speed_x2")) ? 2 : 1) /** Const.AIRLINE_INCREASE_PERCENT[index]*/;//ریت بدست آوردن سکه
         ratio *= ((Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m")) ? 5 : 1);
         ratio *= ((Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m_special")) ? 5 : 1);
         ratio *= ((Manager.GetCurrentTime() < Manager.GetActionTime("2x_speed_for_150s")) ? 2 : 1);
-        earnPerSec = System.Math.Round(earningPerSec * ratio * PlayerPrefs.GetFloat("incomeLine", 1) * PlayerPrefs.GetFloat("speedVip", 1));
+        earnPerSec = System.Math.Round(earningPerSec * ratio * ObscuredPrefs.GetFloat("incomeLine", 1) * ObscuredPrefs.GetFloat("speedVip", 1));
         earningPerSecTxt.text = earnPerSec.ToString("0.##");
         txtEarningWithSec.text = "ﻪﯿﻧﺎﺛ / " + earningPerSecTxt.text;
     }
@@ -55,9 +56,9 @@ public class RunSlotManager : MonoBehaviour
     public void InitSlots()
     {
         EarningPerSec = 0;
-        int num = PlayerPrefs.GetInt("num_of_slot", 2);//تعداد لاین های شروع 
-        num += PlayerPrefs.GetInt("num_of_slot_vip", 0);
-        PlayerPrefs.SetInt("num_total_slot", num);
+        int num = ObscuredPrefs.GetInt("num_of_slot", 2);//تعداد لاین های شروع 
+        num += ObscuredPrefs.GetInt("num_of_slot_vip", 0);
+        ObscuredPrefs.SetInt("num_total_slot", num);
         for (int i = 0; i < num; i++)
         {//به تعداد لاین هایی که هست ، لاین ایجاد می کند
             SpawnASlot();
@@ -68,15 +69,15 @@ public class RunSlotManager : MonoBehaviour
     }
     public void InitSlotsVIP()
     {
-        int num = PlayerPrefs.GetInt("num_of_slot", 2);//تعداد لاین های شروع 
-        num += PlayerPrefs.GetInt("num_of_slot_vip", 0);
-        Debug.Log("SLOT :num: " + PlayerPrefs.GetInt("num_of_slot", 2) + " numVIP: " + PlayerPrefs.GetInt("num_of_slot_vip", 0) + " TOTAL: " + PlayerPrefs.GetInt("num_total_slot"));
-        if (num > PlayerPrefs.GetInt("num_total_slot"))
+        int num = ObscuredPrefs.GetInt("num_of_slot", 2);//تعداد لاین های شروع 
+        num += ObscuredPrefs.GetInt("num_of_slot_vip", 0);
+        Debug.Log("SLOT :num: " + ObscuredPrefs.GetInt("num_of_slot", 2) + " numVIP: " + ObscuredPrefs.GetInt("num_of_slot_vip", 0) + " TOTAL: " + ObscuredPrefs.GetInt("num_total_slot"));
+        if (num > ObscuredPrefs.GetInt("num_total_slot"))
         {
-            int newSlot = num - PlayerPrefs.GetInt("num_of_slot", 2);
+            int newSlot = num - ObscuredPrefs.GetInt("num_of_slot", 2);
             for (int i = 0; i < newSlot; i++)
             {//به تعداد لاین هایی که هست ، لاین ایجاد می کند
-                PlayerPrefs.SetInt("num_total_slot", PlayerPrefs.GetInt("num_total_slot") + 1);
+                ObscuredPrefs.SetInt("num_total_slot", ObscuredPrefs.GetInt("num_total_slot") + 1);
                 SpawnASlot();
             }
             UpdatePosition();//موقعیت تمامی لاین ها را درست می کند
@@ -111,13 +112,13 @@ public class RunSlotManager : MonoBehaviour
             if (i < numRun)
                 countStartRun += 1;
         }
-        txtNum.text = countStartRun + "/" + (PlayerPrefs.GetInt("num_of_slot", 2) + PlayerPrefs.GetInt("num_of_slot_vip", 0));
-        //Debug.Log(countStartRun + "/" + (PlayerPrefs.GetInt("num_of_slot", 2) + PlayerPrefs.GetInt("num_of_slot_vip", 0)));
+        txtNum.text = countStartRun + "/" + (ObscuredPrefs.GetInt("num_of_slot", 2) + ObscuredPrefs.GetInt("num_of_slot_vip", 0));
+        //Debug.Log(countStartRun + "/" + (ObscuredPrefs.GetInt("num_of_slot", 2) + ObscuredPrefs.GetInt("num_of_slot_vip", 0)));
     }
     public void UpdateStartGoal()
     {
         UpdateState();
-        int index = PlayerPrefs.GetInt("unlocked_airline", 1) - 1;
+        int index = ObscuredPrefs.GetInt("unlocked_airline", 1) - 1;
         goal.sprite = goalSprites[index];//اسپرایت خط پایان را با توجه به مدل لاین شروع تغییر می دهد
         UpdateEarningSpeedText();
     }

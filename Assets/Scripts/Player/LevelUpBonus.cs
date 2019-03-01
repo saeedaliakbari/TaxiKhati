@@ -22,7 +22,7 @@ public class LevelUpBonus : MonoBehaviour
         txtLevel.text = newLevel.ToString();
 
         lineItem.SetActive(playerLevel.levelsInfo[newLevel - 2].linePlus > 0);
-        coinItem.SetActive(playerLevel.levelsInfo[newLevel - 2].coin > 0);
+        coinItem.SetActive(double.Parse(playerLevel.levelsInfo[newLevel - 2].coin) > 0);
         gemItem.SetActive(playerLevel.levelsInfo[newLevel - 2].gem > 0);
         SetSliderLevel();
         #region Set Position Item
@@ -31,7 +31,7 @@ public class LevelUpBonus : MonoBehaviour
         {
             parkItem.SetActive(true);
             #region coin>0
-            if (playerLevel.levelsInfo[newLevel - 2].coin > 0)
+            if (double.Parse(playerLevel.levelsInfo[newLevel - 2].coin) > 0)
             {
                 if (playerLevel.levelsInfo[newLevel - 2].gem > 0)
                 {
@@ -111,7 +111,7 @@ public class LevelUpBonus : MonoBehaviour
         {
             parkItem.SetActive(false);
             #region coin>0
-            if (playerLevel.levelsInfo[newLevel - 2].coin > 0)
+            if (double.Parse(playerLevel.levelsInfo[newLevel - 2].coin) > 0)
             {
                 if (playerLevel.levelsInfo[newLevel - 2].gem > 0)
                 {
@@ -182,7 +182,8 @@ public class LevelUpBonus : MonoBehaviour
     }
     public void ClaimClick()
     {
-        ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) + playerLevel.levelsInfo[newLevel - 2].coin);
+        ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) + double.Parse(playerLevel.levelsInfo[newLevel - 2].coin));
+        ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 0) + double.Parse(playerLevel.levelsInfo[newLevel - 2].coin));
         ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem") + playerLevel.levelsInfo[newLevel - 2].gem);
         controller.SetText();
         int linePlus = playerLevel.levelsInfo[newLevel - 2].linePlus;
@@ -193,7 +194,7 @@ public class LevelUpBonus : MonoBehaviour
                 linePlus--;
                 controller.slotManager.SpawnASlot();
                 controller.slotManager.UpdatePosition();
-                PlayerPrefs.SetInt("num_of_slot", PlayerPrefs.GetInt("num_of_slot", 2) + 1);
+                ObscuredPrefs.SetInt("num_of_slot", ObscuredPrefs.GetInt("num_of_slot", 2) + 1);
             }
         }
         int parkingPlus = playerLevel.levelsInfo[newLevel - 2].parkingPlus;
@@ -204,7 +205,7 @@ public class LevelUpBonus : MonoBehaviour
                 parkingPlus--;
                 controller.parkingManager.SpawnNewPlace();
                 controller.parkingManager.UpdatePlacePosition();
-                PlayerPrefs.SetInt("num_of_places", PlayerPrefs.GetInt("num_of_places", 4) + 1);
+                ObscuredPrefs.SetInt("num_of_places", ObscuredPrefs.GetInt("num_of_places", 4) + 1);
             }
         }
     }
@@ -339,7 +340,7 @@ public class LevelUpBonus : MonoBehaviour
             txtLevelRight.text = "سطح 53";
             imgSlider.fillAmount = (((newLevel - 50) / 3f) * 0.5f) + 0.5f;
         }
-        
+
     }
 }
 

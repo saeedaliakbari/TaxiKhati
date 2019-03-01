@@ -22,10 +22,10 @@ public class AchivmentPrefab : MonoBehaviour
         this.stringPrefs = stringPrefs;
         txtTitle.text = achv.title;
         txtGem.text = achv.rewardGem.ToString();
-        Debug.Log(id+ ">gem: "+gem +"txtGem>"+txtGem.text+ " > " + PlayerPrefs.GetInt(stringPrefs + id, 0) + "/" + max + ">>" + PlayerPrefs.GetInt(stringPrefs + id, 0) / max);
-        imgSlider.fillAmount = (float)PlayerPrefs.GetInt(stringPrefs + id, 0) / max;
-        txtSlider.text = (PlayerPrefs.GetInt(stringPrefs + id, 0) >= max ? max : PlayerPrefs.GetInt(stringPrefs + id, 0)) + "/" + max;
-        if (PlayerPrefs.GetInt(stringPrefs + "Get" + id, 0) == 1)//geted
+        Debug.Log(id+ ">gem: "+gem +"txtGem>"+txtGem.text+ " > " + ObscuredPrefs.GetInt(stringPrefs + id, 0) + "/" + max + ">>" + ObscuredPrefs.GetInt(stringPrefs + id, 0) / max);
+        imgSlider.fillAmount = (float)ObscuredPrefs.GetInt(stringPrefs + id, 0) / max;
+        txtSlider.text = (ObscuredPrefs.GetInt(stringPrefs + id, 0) >= max ? max : ObscuredPrefs.GetInt(stringPrefs + id, 0)) + "/" + max;
+        if (ObscuredPrefs.GetInt(stringPrefs + "Get" + id, 0) == 1)//geted
         {
             imgBack.color = inActvie;
             btnGet.gameObject.SetActive(false);
@@ -34,7 +34,7 @@ public class AchivmentPrefab : MonoBehaviour
             objSlider.SetActive(false);
             listAchvGet.Add(gameObject);
         }
-        else if (PlayerPrefs.GetInt(stringPrefs + id, 0) >= max)//unlock
+        else if (ObscuredPrefs.GetInt(stringPrefs + id, 0) >= max)//unlock
         {
             btnGet.interactable = true;
             listAchvDone.Add(gameObject);
@@ -52,7 +52,7 @@ public class AchivmentPrefab : MonoBehaviour
         Debug.Log("GEM> " + ObscuredPrefs.GetDouble("gem", 0));
         ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem", 0) + gem);
         Debug.Log("GEM> " + ObscuredPrefs.GetDouble("gem", 0));
-        PlayerPrefs.SetInt(stringPrefs + "Get" + id, 1);
+        ObscuredPrefs.SetInt(stringPrefs + "Get" + id, 1);
         //txtGem.text = ObscuredPrefs.GetDouble("gem", 0).ToString();
         controller.SetText();
         btnGet.gameObject.SetActive(false);

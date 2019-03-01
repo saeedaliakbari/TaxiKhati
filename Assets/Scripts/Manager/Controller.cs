@@ -49,9 +49,10 @@ public class Controller : MonoBehaviour
     {
         //Debug.Log(
         instance = this;
-        PlayerPrefs.SetInt("mainAchiv16", PlayerPrefs.GetInt("mainAchiv16", 0) + 1);
+        ObscuredPrefs.SetInt("mainAchiv16", ObscuredPrefs.GetInt("mainAchiv16", 0) + 1);
         ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem", 100));
         ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 100));
+        ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 0));
         ObscuredPrefs.SetDouble("token", ObscuredPrefs.GetDouble("token", 0));
         SetText();
 
@@ -91,14 +92,14 @@ public class Controller : MonoBehaviour
         slotManager.InitSlots();//لاین های شروع را ایجاد می کند
         //CurrencyController.onBalanceChanged();
         UpdatePrice();
-        if (PlayerPrefs.GetInt("returned_car", 0) == 0)//اگر راهنما به پایان نرسیده بود هنوز
+        if (ObscuredPrefs.GetInt("returned_car", 0) == 0)//اگر راهنما به پایان نرسیده بود هنوز
         {
             //guideManager.UpdateAfter(0.5f);
         }
     }
     public void UpdatePrice()
     {//قیمت ماشین ها را می گذارد
-        int index = PlayerPrefs.GetInt("curr_car_index", 0);//az 0 shoro mishavad
+        int index = ObscuredPrefs.GetInt("curr_car_index", 0);//az 0 shoro mishavad
         buyPrice.text = ObscuredPrefs.GetDouble("car_price_" + index, System.Math.Round(basePrice[index])).ToString("0.##");
         //txtLevelBuyCar.text = "خرید ماشین سطح " + (index + 1);
         //Debug.Log("index Car : " + index + " sprite Name :" + activeCar[index].name);
@@ -107,13 +108,13 @@ public class Controller : MonoBehaviour
     public void OnBuyClick()
     {
         //Sound.instance.Play(Sound.Others.Buy);
-        int index = PlayerPrefs.GetInt("curr_car_index", 0);
+        int index = ObscuredPrefs.GetInt("curr_car_index", 0);
         //Debug.Log("current Car : " + index);
         CheckAndSpawnNewCar(index, false, 0);
-        if (PlayerPrefs.GetInt("returned_car", 0) == 0)
+        if (ObscuredPrefs.GetInt("returned_car", 0) == 0)
         {
-            PlayerPrefs.SetInt("buyed_car", PlayerPrefs.GetInt("buyed_car", 0) + 1);
-            if (PlayerPrefs.GetInt("buyed_car", 0) == 2)
+            ObscuredPrefs.SetInt("buyed_car", ObscuredPrefs.GetInt("buyed_car", 0) + 1);
+            if (ObscuredPrefs.GetInt("buyed_car", 0) == 2)
             {
                 //guideManager.HideGuides();
             }
@@ -122,7 +123,7 @@ public class Controller : MonoBehaviour
     }
     public void CheckAndSpawnNewCar(int index, bool hasBox, int modelBox)
     {
-        int lastSalableTaxiLevel = lastSalableLevel[PlayerPrefs.GetInt("unlocked_car", 1) - 1];
+        int lastSalableTaxiLevel = lastSalableLevel[ObscuredPrefs.GetInt("unlocked_car", 1) - 1];
         if (lastSalableTaxiLevel == 1)
         {
             def = 0;
@@ -141,8 +142,8 @@ public class Controller : MonoBehaviour
         //Debug.Log("Price Car: " + price);
         if ((useGem ? ObscuredPrefs.GetDouble("gem", 0) : ObscuredPrefs.GetDouble("coin", 5000)) >= price)//روی سکه و روبی که اینجا نوشته شده است دقت شود که چه مقداری باید باشد
         {
-            PlayerPrefs.SetInt("mainAchiv8", PlayerPrefs.GetInt("mainAchiv8", 0) + 1);
-            PlayerPrefs.SetInt("mainAchiv14", PlayerPrefs.GetInt("mainAchiv14", 0) + 1);
+            ObscuredPrefs.SetInt("mainAchiv8", ObscuredPrefs.GetInt("mainAchiv8", 0) + 1);
+            ObscuredPrefs.SetInt("mainAchiv14", ObscuredPrefs.GetInt("mainAchiv14", 0) + 1);
             ParkingPlace parkPlace = parkingManager.GetEmptyPlace();
             if (parkPlace != null)
             {
@@ -233,12 +234,12 @@ public class Controller : MonoBehaviour
         car.transform.position = parkPlace.transform.position;//موقعیت به موقعبت مکان فعلی تغییر میکند
         car.parkingPlace = parkPlace;//پارکنینگ را بهش میده
         if (scaleUp) car.GetComponent<Animator>().Play("MergeDone");//انیمیشن تمام شدن مرج رو ماشین جدیدی که ساخته شده انجام میشه
-        PlayerPrefs.SetInt("checkLevel", 0);
+        ObscuredPrefs.SetInt("checkLevel", 0);
         return car;//ماشین رو برمیگردونه
     }
     public GiftBox SpawnABox(int carIndex, ParkingPlace parkPlace, int modelBox)
     {
-        PlayerPrefs.SetInt("mainAchiv15", PlayerPrefs.GetInt("mainAchiv15", 0) + 1);
+        ObscuredPrefs.SetInt("mainAchiv15", ObscuredPrefs.GetInt("mainAchiv15", 0) + 1);
         GiftBox box = Instantiate(boxPrefab, Vector3.zero, Quaternion.identity);//ایجاد کرد یک باکس
         box.transform.SetParent(parkPlace.transform);//پرنت در هایرارکی مکان پارکینگ تعیین می شود
         box.transform.localScale = Vector3.one;
@@ -258,9 +259,9 @@ public class Controller : MonoBehaviour
     public void SpawnABoxTime()
     {
         ParkingPlace parkPlace = parkingManager.GetEmptyPlace();
-        int taxiLvl = PlayerPrefs.GetInt("unlocked_car", 1);
+        int taxiLvl = ObscuredPrefs.GetInt("unlocked_car", 1);
         int index = taxiLvl - Random.Range(taxiDefferenceLvl[taxiLvl - 1].min, taxiDefferenceLvl[taxiLvl - 1].max);
-        Debug.Log("taxiLvl: " + PlayerPrefs.GetInt("unlocked_car", 1) + " UNLOCK CAR : " + index);
+        Debug.Log("taxiLvl: " + ObscuredPrefs.GetInt("unlocked_car", 1) + " UNLOCK CAR : " + index);
         GameObject obj;
         try
         {
@@ -292,11 +293,11 @@ public class Controller : MonoBehaviour
     }
     public void SpawnABoxWheel()
     {
-        PlayerPrefs.SetInt("mainAchiv10", PlayerPrefs.GetInt("mainAchiv10", 0) + 1);
+        ObscuredPrefs.SetInt("mainAchiv10", ObscuredPrefs.GetInt("mainAchiv10", 0) + 1);
         ParkingPlace parkPlace = parkingManager.GetEmptyPlace();
-        int taxiLvl = PlayerPrefs.GetInt("unlocked_car", 1);
+        int taxiLvl = ObscuredPrefs.GetInt("unlocked_car", 1);
         int index = taxiLvl - 4;
-        Debug.Log("taxiLvl: " + PlayerPrefs.GetInt("unlocked_car", 1) + " UNLOCK CAR : " + index);
+        Debug.Log("taxiLvl: " + ObscuredPrefs.GetInt("unlocked_car", 1) + " UNLOCK CAR : " + index);
         GameObject obj;
         try
         {
@@ -328,11 +329,11 @@ public class Controller : MonoBehaviour
     }
     public void SpawnABoxSpecialOffer()
     {
-        PlayerPrefs.SetInt("mainAchiv10", PlayerPrefs.GetInt("mainAchiv10", 0) + 1);
+        ObscuredPrefs.SetInt("mainAchiv10", ObscuredPrefs.GetInt("mainAchiv10", 0) + 1);
         ParkingPlace parkPlace = parkingManager.GetEmptyPlace();
-        int taxiLvl = PlayerPrefs.GetInt("unlocked_car", 1);
+        int taxiLvl = ObscuredPrefs.GetInt("unlocked_car", 1);
         int index = taxiLvl - 5;
-        Debug.Log("taxiLvl: " + PlayerPrefs.GetInt("unlocked_car", 1) + " UNLOCK CAR : " + index);
+        Debug.Log("taxiLvl: " + ObscuredPrefs.GetInt("unlocked_car", 1) + " UNLOCK CAR : " + index);
         GameObject obj;
         try
         {
@@ -427,16 +428,16 @@ public class Controller : MonoBehaviour
     {
         if (inputFieldName.text.Length != 0)
         {
-            PlayerPrefs.SetString("username", inputFieldName.text);
+            ObscuredPrefs.SetString("username", inputFieldName.text);
         }
     }
     public void OpenSetting()
     {
-        if (PlayerPrefs.GetString("username", "") == "")
+        if (ObscuredPrefs.GetString("username", "") == "")
         {
-            PlayerPrefs.SetString("username", "تاکسی ران " + Random.Range(100000000, 999999999));
+            ObscuredPrefs.SetString("username", "تاکسی ران " + Random.Range(100000000, 999999999));
         }
-        inputFieldName.text = PlayerPrefs.GetString("username", "");
+        inputFieldName.text = ObscuredPrefs.GetString("username", "");
     }
     public void SaveGame()
     {
@@ -486,7 +487,7 @@ public class Controller : MonoBehaviour
     }
     public void OnApplicationPause(bool pause)
     {
-        PlayerPrefs.Save();
+        ObscuredPrefs.Save();
         if (pause == false)
         {
             //Timer.Schedule(this, 0.5f, () =>
@@ -582,14 +583,14 @@ public class Controller : MonoBehaviour
     }
     public void GiftDaily()
     {
-        if (PlayerPrefs.GetInt("gemPerDay", 0) == 1)
+        if (ObscuredPrefs.GetInt("gemPerDay", 0) == 1)
         {
             StartCoroutine(GetDateTime.IEGetDateTime((status) =>
             {
                 int today = int.Parse(status.ToString("yyyyMMdd"));
-                if (PlayerPrefs.GetInt("todayDate", 19921030) < today)
+                if (ObscuredPrefs.GetInt("todayDate", 19921030) < today)
                 {
-                    PlayerPrefs.SetInt("todayDate", today);
+                    ObscuredPrefs.SetInt("todayDate", today);
                     ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem") + 10);
                     panelMessage.SetActive(true);
                     txtPanelMessage.text = "10 الماس به شما اضافه شد";
@@ -600,11 +601,11 @@ public class Controller : MonoBehaviour
     }
     public void ClosePanelShopCar()
     {
-        if (PlayerPrefs.GetInt("removeAds", 0) == 0)//اگر تبلیغات براش فعال بود   
+        if (ObscuredPrefs.GetInt("removeAds", 0) == 0)//اگر تبلیغات براش فعال بود   
         {
-            if (PlayerPrefs.GetInt("countCloseShop", 1) < 3)//اگر کمتر از 3 بار پنل باز شده بود
+            if (ObscuredPrefs.GetInt("countCloseShop", 1) < 3)//اگر کمتر از 3 بار پنل باز شده بود
             {
-                PlayerPrefs.SetInt("countCloseShop", PlayerPrefs.GetInt("countCloseShop", 1) + 1);
+                ObscuredPrefs.SetInt("countCloseShop", ObscuredPrefs.GetInt("countCloseShop", 1) + 1);
             }
             else
             {

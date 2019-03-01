@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using CodeStage.AntiCheat.ObscuredTypes;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,28 +14,32 @@ public class PlayerLevel : MonoBehaviour
     void Start()
     {
         SetEleman();
-        CheckLevel(PlayerPrefs.GetInt("Level", 1));
+        CheckLevel(ObscuredPrefs.GetInt("Level", 1));
+        for (int i = 0; i < levelsInfo.Length; i++)
+        {
+            Debug.Log("[" + i + "]" + levelsInfo[i].coin.ToString());
+        }
     }
     public void UpdateProgress()
     {
-        if (PlayerPrefs.GetInt("Xp", 0) > levelsInfo[PlayerPrefs.GetInt("Level", 1) - 1].maxXp)
+        if (ObscuredPrefs.GetInt("Xp", 0) > levelsInfo[ObscuredPrefs.GetInt("Level", 1) - 1].maxXp)
         {
-            controller.ShowLevelBonus(PlayerPrefs.GetInt("Level", 1) + 1);
-            PlayerPrefs.SetInt("Xp", PlayerPrefs.GetInt("Xp", 0) - levelsInfo[PlayerPrefs.GetInt("Level", 1) - 1].maxXp);
-            PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level", 1) + 1);
-            PlayerPrefs.SetInt("mainAchiv11", PlayerPrefs.GetInt("Level", 1));
-            PlayerPrefs.SetInt("mainAchiv12", PlayerPrefs.GetInt("Level", 1));
-            PlayerPrefs.SetInt("mainAchiv13", PlayerPrefs.GetInt("Level", 1));
-            CheckLevel(PlayerPrefs.GetInt("Level", 1));
+            controller.ShowLevelBonus(ObscuredPrefs.GetInt("Level", 1) + 1);
+            ObscuredPrefs.SetInt("Xp", ObscuredPrefs.GetInt("Xp", 0) - levelsInfo[ObscuredPrefs.GetInt("Level", 1) - 1].maxXp);
+            ObscuredPrefs.SetInt("Level", ObscuredPrefs.GetInt("Level", 1) + 1);
+            ObscuredPrefs.SetInt("mainAchiv11", ObscuredPrefs.GetInt("Level", 1));
+            ObscuredPrefs.SetInt("mainAchiv12", ObscuredPrefs.GetInt("Level", 1));
+            ObscuredPrefs.SetInt("mainAchiv13", ObscuredPrefs.GetInt("Level", 1));
+            CheckLevel(ObscuredPrefs.GetInt("Level", 1));
         }
         SetEleman();
     }
     private void SetEleman()
     {
 
-        txtLevel.text = PlayerPrefs.GetInt("Level", 1).ToString();
-        float slider = float.Parse(PlayerPrefs.GetInt("Xp", 0).ToString()) / float.Parse(levelsInfo[PlayerPrefs.GetInt("Level", 1) - 1].maxXp.ToString());
-        //Debug.Log("XP: " + PlayerPrefs.GetInt("Xp", 0) + "MaxXP:" + levelsInfo[PlayerPrefs.GetInt("Level", 1) - 1].maxXp + ">>" + slider);
+        txtLevel.text = ObscuredPrefs.GetInt("Level", 1).ToString();
+        float slider = float.Parse(ObscuredPrefs.GetInt("Xp", 0).ToString()) / float.Parse(levelsInfo[ObscuredPrefs.GetInt("Level", 1) - 1].maxXp.ToString());
+        //Debug.Log("XP: " + ObscuredPrefs.GetInt("Xp", 0) + "MaxXP:" + levelsInfo[ObscuredPrefs.GetInt("Level", 1) - 1].maxXp + ">>" + slider);
         imgProgress.fillAmount = slider;
     }
     private void CheckLevel(int level)
@@ -69,5 +74,5 @@ public class Levels
     public int parkingPlus;
     public int linePlus;
     public int gem;
-    public float coin;
+    public string coin;
 }

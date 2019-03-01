@@ -15,17 +15,21 @@ public class UsersScripts : MonoBehaviour
     #region link
     private string strGetRankUser = "https://balootvas.ir/balootvas/TaxiKhati/rankUser.php";
     private string strInsertUser = "https://balootvas.ir/balootvas/TaxiKhati/insertUser.php";
+    private string strUpdateUser = "https://balootvas.ir/balootvas/TaxiKhati/updateUser.php";
     #endregion
-    void Start()
+    public void StartRanking()
     {
-        if (listRanking.Count == 0 || Manager.GetCurrentTime() < Manager.GetActionTime("updateRank"))
+        if (listRanking.Count == 0 || Manager.GetCurrentTime() > Manager.GetActionTime("updateRank"))
         {
-            Debug.Log("Start");
+            Debug.Log(Manager.GetCurrentTime() + "< " + Manager.GetActionTime("updateRank"));
+            Debug.Log("count " + listRanking.Count);
             GetRanking();
         }
         else
         {
-            Timer.Schedule(this, 120f, () =>
+            double delay = Manager.GetActionTime("updateRank") - Manager.GetCurrentTime();
+            Debug.Log("Delay : " + delay);
+            Timer.Schedule(this, (float)delay, () =>
             {
                 Debug.Log("Schedule(thiss");
                 GetRanking();
@@ -36,17 +40,17 @@ public class UsersScripts : MonoBehaviour
     public void GetRanking()
     {//رتبه شخص را میگیرد
         panelWait.SetActive(true);
-        //if (PlayerPrefs.GetInt("userid", 0) == 0)
-        //{
-        //    if (PlayerPrefs.GetString("username", "") == "")
-        //    {
-        //        PlayerPrefs.SetString("username", "تاکسی ران" + Random.Range(100000000, 999999999));
-        //    }
-        //    StartCoroutine(IEInsertUser(true));
-        //}
-        //else {
-            StartCoroutine(IEGetRanking());
-        //}
+        if (ObscuredPrefs.GetInt("userid", 0) == 0)
+        {
+            if (ObscuredPrefs.GetString("username", "") == "")
+            {
+                ObscuredPrefs.SetString("username", "تاکسی ران " + Random.Range(100000000, 999999999));
+            }
+            StartCoroutine(IEInsertUser(true));
+        }
+        else {
+            StartCoroutine(IEUpdateUser(true));
+        }
     }
     IEnumerator IEGetRanking()
     {
@@ -57,7 +61,7 @@ public class UsersScripts : MonoBehaviour
         }
         listRanking.RemoveRange(0, listRanking.Count);
         WWWForm wwwForm = new WWWForm();
-        wwwForm.AddField("id", PlayerPrefs.GetInt("userid", 1));
+        wwwForm.AddField("id", ObscuredPrefs.GetInt("userid", 0));
         WWW www = new WWW(strGetRankUser, wwwForm);
         yield return www;
         if (www.error == null)
@@ -68,15 +72,16 @@ public class UsersScripts : MonoBehaviour
                 rankUser = int.Parse(jsonBooks[0]["rank"].ToString());
                 if (rankUser < 1000)
                 {
-                    PlayerPrefs.SetInt("mainAchiv5", 1);
+                    ObscuredPrefs.SetInt("mainAchiv5", 1);
                 }
                 else if (rankUser < 5000)
                 {
-                    PlayerPrefs.SetInt("mainAchiv4", 1);
+                    ObscuredPrefs.SetInt("mainAchiv4", 1);
                 }
                 Debug.Log(rankUser.ToString());
+                myRank.txtRank.text = rankUser.ToString();
                 myRank.txtCoin.text = jsonBooks[0]["coin"].ToString();
-                myRank.txtName.text = PlayerPrefs.GetString("username", "تاکسی ران");
+                myRank.txtName.text = ObscuredPrefs.GetString("username", "تاکسی ران");
                 if (rankUser < 4)
                 {
                     myRank.txtRank.gameObject.SetActive(false);
@@ -163,21 +168,21 @@ public class UsersScripts : MonoBehaviour
 
     public void SetName()
     {
-
-        if (PlayerPrefs.GetInt("userid", 0) == 0)
+        if (ObscuredPrefs.GetInt("userid", 0) == 0)
         {
             StartCoroutine(IEInsertUser(false));
         }
         else
         {
-            StartCoroutine(IEUpdateUser());
+            StartCoroutine(IEUpdateUser(false));
         }
     }
     IEnumerator IEInsertUser(bool GetRank)
     {
         //panelWait.SetActive(true);
+        Debug.Log("IEInsertUser");
         WWWForm wwwForm = new WWWForm();
-        wwwForm.AddField("username", PlayerPrefs.GetString("username", "").ToString());
+        wwwForm.AddField("username", ObscuredPrefs.GetString("username", "").ToString());
         wwwForm.AddField("coin", ObscuredPrefs.GetDouble("coinTotal", 100).ToString());
         WWW www = new WWW(strInsertUser, wwwForm);
         yield return www;
@@ -185,9 +190,8 @@ public class UsersScripts : MonoBehaviour
         {
             if (www.isDone)
             {
-                Debug.Log("IEInsertUser>" + PlayerPrefs.GetString("username", "") + "|" + ObscuredPrefs.GetDouble("coinTotal", 100) + ">>>" + www.text);
                 JsonData jsonBooks = JsonMapper.ToObject(ChangeToJson(www.text));
-                PlayerPrefs.SetInt("userid", int.Parse(jsonBooks[0][0].ToString()));
+                ObscuredPrefs.SetInt("userid", int.Parse(jsonBooks[0][0].ToString()));
                 if (GetRank)
                 {
                     StartCoroutine(IEGetRanking());
@@ -195,18 +199,28 @@ public class UsersScripts : MonoBehaviour
             }
         }
     }
-
-    IEnumerator IEUpdateUser()
+    IEnumerator IEUpdateUser(bool GetRank)
     {
-        //panelWait.SetActive(true);
-        for (int i = 0; i < listRanking.Count; i++)
-        {
-            Destroy(listRanking[i]);
-        }
-        listRanking.RemoveRange(0, listRanking.Count);
         WWWForm wwwForm = new WWWForm();
-        wwwForm.AddField("id", PlayerPrefs.GetInt("userid", 0));
-        WWW www = new WWW(strGetRankUser, wwwForm);
+        wwwForm.AddField("id", ObscuredPrefs.GetInt("userid", 0).ToString());
+        wwwForm.AddField("username", ObscuredPrefs.GetString("username", "").ToString());
+        wwwForm.AddField("coin", ObscuredPrefs.GetDouble("coinTotal", 100).ToString());
+        WWW www = new WWW(strUpdateUser, wwwForm);
         yield return www;
+        if (www.error == null)
+        {
+            if (www.isDone)
+            {
+                Debug.Log("Update www : " + www.text);
+                JsonData jsonBooks = JsonMapper.ToObject(ChangeToJson(www.text));
+                ObscuredPrefs.SetInt("userid", int.Parse(jsonBooks[0][0].ToString()));
+                ObscuredPrefs.SetString("username", jsonBooks[0][1].ToString());
+                ObscuredPrefs.SetDouble("coinTotal", double.Parse(jsonBooks[0][2].ToString()));
+                if (GetRank)
+                {
+                    StartCoroutine(IEGetRanking());
+                }
+            }
+        }
     }
 }

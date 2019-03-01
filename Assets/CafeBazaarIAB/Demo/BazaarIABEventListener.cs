@@ -17,14 +17,14 @@ public class BazaarIABEventListener : MonoBehaviour
     {
         //Debug.Log("ViP Start()");
 
-        //PlayerPrefs.SetInt("num_of_places_vip", 2);//added 2 parking
-        //PlayerPrefs.SetInt("num_of_slot_vip", 2);//added 2 line
+        //ObscuredPrefs.SetInt("num_of_places_vip", 2);//added 2 parking
+        //ObscuredPrefs.SetInt("num_of_slot_vip", 2);//added 2 line
         //iapCafeBazar.controller.parkingManager.SpawnPlacesVIP();
         //iapCafeBazar.controller.slotManager.InitSlotsVIP();
-        //PlayerPrefs.SetFloat("offliceEarnVip", 1.2f);//added 20% offline earning
-        //PlayerPrefs.SetInt("removeAds", 1);//remove ads in shop
-        //PlayerPrefs.SetInt("gemPerDay", 1);//10 gem per day
-        //PlayerPrefs.SetFloat("speedVip", 1.5f);//added 50% speed
+        //ObscuredPrefs.SetFloat("offliceEarnVip", 1.2f);//added 20% offline earning
+        //ObscuredPrefs.SetInt("removeAds", 1);//remove ads in shop
+        //ObscuredPrefs.SetInt("gemPerDay", 1);//10 gem per day
+        //ObscuredPrefs.SetFloat("speedVip", 1.5f);//added 50% speed
         //iapCafeBazar.controller.slotManager.UpdateEarningSpeedText();
         //iapCafeBazar.controller.GiftDaily();
 
@@ -81,33 +81,33 @@ public class BazaarIABEventListener : MonoBehaviour
     #region Inventory
     void queryInventorySucceededEvent(List<BazaarPurchase> purchases, List<BazaarSkuInfo> skus)
     {
-        PlayerPrefs.SetInt("num_of_places_vip", 0);
-        PlayerPrefs.SetInt("num_of_slot_vip", 0);
-        PlayerPrefs.SetFloat("offliceEarnVip", 1);
-        PlayerPrefs.SetInt("removeAds", 0);
-        PlayerPrefs.SetInt("gemPerDay", 0);
-        PlayerPrefs.SetFloat("speedVip", 1);
+        ObscuredPrefs.SetInt("num_of_places_vip", 0);
+        ObscuredPrefs.SetInt("num_of_slot_vip", 0);
+        ObscuredPrefs.SetFloat("offliceEarnVip", 1);
+        ObscuredPrefs.SetInt("removeAds", 0);
+        ObscuredPrefs.SetInt("gemPerDay", 0);
+        ObscuredPrefs.SetFloat("speedVip", 1);
         //Debug.Log(string.Format("queryInventorySucceededEvent. total purchases: {0}, total skus: {1}", purchases.Count, skus.Count));
         for (int i = 0; i < purchases.Count; ++i)
         {
             if (purchases[i].ProductId == iapCafeBazar.skus[6])
             {
                 //بقیه اطلاعات مربوط به اشتراک وارد شود
-                PlayerPrefs.SetInt("num_of_places_vip", 2);//added 2 parking
-                PlayerPrefs.SetInt("num_of_slot_vip", 2);//added 2 line
+                ObscuredPrefs.SetInt("num_of_places_vip", 2);//added 2 parking
+                ObscuredPrefs.SetInt("num_of_slot_vip", 2);//added 2 line
                 iapCafeBazar.controller.parkingManager.SpawnPlacesVIP();
                 iapCafeBazar.controller.slotManager.InitSlotsVIP();
-                PlayerPrefs.SetFloat("offliceEarnVip", 1.2f);//added 20% offline earning
-                PlayerPrefs.SetInt("removeAds", 1);//remove ads in shop
-                PlayerPrefs.SetInt("gemPerDay", 1);//10 gem per day
-                PlayerPrefs.SetFloat("speedVip", 1.5f);//added 50% speed
+                ObscuredPrefs.SetFloat("offliceEarnVip", 1.2f);//added 20% offline earning
+                ObscuredPrefs.SetInt("removeAds", 1);//remove ads in shop
+                ObscuredPrefs.SetInt("gemPerDay", 1);//10 gem per day
+                ObscuredPrefs.SetFloat("speedVip", 1.5f);//added 50% speed
                 iapCafeBazar.controller.slotManager.UpdateEarningSpeedText();
                 iapCafeBazar.controller.GiftDaily();
                 iapCafeBazar.controller.btnVip.SetActive(false);
             }
             else if (purchases[i].ProductId == iapCafeBazar.skus[7])
             {
-                PlayerPrefs.SetInt("removeAds", 1);//remove ads in shop
+                ObscuredPrefs.SetInt("removeAds", 1);//remove ads in shop
             }
             else
             {
@@ -175,27 +175,27 @@ public class BazaarIABEventListener : MonoBehaviour
             {
                 if (purchase.ProductId == iapCafeBazar.skus[6])
                 {
-                    PlayerPrefs.SetInt("num_of_places_vip", 2);
+                    ObscuredPrefs.SetInt("num_of_places_vip", 2);
                     iapCafeBazar.controller.panelMessage.SetActive(true);
                     iapCafeBazar.controller.txtPanelMessage.text = "پارکینگ به خطوط شما اضافه شد";
                     iapCafeBazar.controller.parkingManager.SpawnNewPlace();
                     iapCafeBazar.controller.parkingManager.SpawnNewPlace();
                     iapCafeBazar.controller.parkingManager.UpdatePlacePosition();
-                    PlayerPrefs.SetInt("num_of_slot_vip", 2);//added 2 line
+                    ObscuredPrefs.SetInt("num_of_slot_vip", 2);//added 2 line
                     iapCafeBazar.controller.slotManager.SpawnASlot();
                     iapCafeBazar.controller.slotManager.SpawnASlot();
                     iapCafeBazar.controller.slotManager.UpdatePosition();
-                    PlayerPrefs.SetFloat("offliceEarnVip", 1.2f);//added 20% offline earning
-                    PlayerPrefs.SetInt("removeAds", 1);//remove ads in shop
-                    PlayerPrefs.SetInt("gemPerDay", 1);//10 gem per day
-                    PlayerPrefs.SetFloat("speedVip", 1.5f);//added 50% speed
+                    ObscuredPrefs.SetFloat("offliceEarnVip", 1.2f);//added 20% offline earning
+                    ObscuredPrefs.SetInt("removeAds", 1);//remove ads in shop
+                    ObscuredPrefs.SetInt("gemPerDay", 1);//10 gem per day
+                    ObscuredPrefs.SetFloat("speedVip", 1.5f);//added 50% speed
                     iapCafeBazar.controller.slotManager.UpdateEarningSpeedText();
                     iapCafeBazar.controller.GiftDaily();
                     iapCafeBazar.controller.btnVip.SetActive(false);
                 }
                 else if (purchase.ProductId == iapCafeBazar.skus[7])
                 {
-                    PlayerPrefs.SetInt("removeAds", 1);//remove ads in shop
+                    ObscuredPrefs.SetInt("removeAds", 1);//remove ads in shop
                     iapCafeBazar.controller.panelMessage.SetActive(true);
                     iapCafeBazar.controller.txtPanelMessage.text = "تبلیغات بنری بازی حذف شد";
                     iapCafeBazar.controller.videoAds.panelNoAds.SetActive(false);

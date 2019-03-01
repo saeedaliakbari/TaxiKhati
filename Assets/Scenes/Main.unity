@@ -14963,6 +14963,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1040050481}
+        m_MethodName: StartRanking
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &501495837
@@ -33009,7 +33020,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   panelWait: {fileID: 845138326}
   userRank: {fileID: 1361924205721608, guid: ff36d1d8bd8d56a4d948b928546123f9, type: 2}
-  userRankMe: {fileID: 0}
+  userRankMe: {fileID: 1130876143173460, guid: 061550c3ef9cd964abfb430e288059e4, type: 2}
   panelParentRanking: {fileID: 1649912989}
   myRank: {fileID: 894153761}
   sprMedal:
@@ -41012,223 +41023,223 @@ MonoBehaviour:
     parkingPlus: 0
     linePlus: 0
     gem: 5
-    coin: 1.902e+9
+    coin: 1902000000
   - level: 18
     maxXp: 14000
     parkingPlus: 0
     linePlus: 0
     gem: 0
-    coin: 6.657e+9
+    coin: 6657000000
   - level: 19
     maxXp: 16400
     parkingPlus: 0
     linePlus: 0
     gem: 0
-    coin: 2.3299e+10
+    coin: 23299000000
   - level: 20
     maxXp: 19000
     parkingPlus: 0
     linePlus: 0
     gem: 5
-    coin: 8.1546e+10
+    coin: 81546000000
   - level: 21
     maxXp: 22000
     parkingPlus: 0
     linePlus: 0
     gem: 0
-    coin: 2.85412e+11
+    coin: 285412000000
   - level: 22
     maxXp: 25000
     parkingPlus: 0
     linePlus: 0
     gem: 0
-    coin: 9.98412e+11
+    coin: 998412000000
   - level: 23
     maxXp: 28000
     parkingPlus: 0
     linePlus: 0
     gem: 8
-    coin: 3.494e+12
+    coin: 3494000000000
   - level: 24
     maxXp: 31000
     parkingPlus: 0
     linePlus: 0
     gem: 0
-    coin: 1.2229e+13
+    coin: 12229000000000
   - level: 25
     maxXp: 34000
     parkingPlus: 0
     linePlus: 0
     gem: 0
-    coin: 4.2801e+13
+    coin: 42801000000000
   - level: 26
     maxXp: 37000
     parkingPlus: 0
     linePlus: 0
     gem: 8
-    coin: 1.49805e+14
+    coin: 149805000000000
   - level: 27
     maxXp: 40000
     parkingPlus: 0
     linePlus: 0
     gem: 0
-    coin: 5.24318e+14
+    coin: 524318000000000
   - level: 28
     maxXp: 43000
     parkingPlus: 0
     linePlus: 0
     gem: 0
-    coin: 1.835e+15
+    coin: 1835000000000000
   - level: 29
     maxXp: 46000
     parkingPlus: 0
     linePlus: 0
     gem: 8
-    coin: 6.422e+15
+    coin: 6422000000000000
   - level: 30
     maxXp: 49000
     parkingPlus: 0
     linePlus: 0
     gem: 0
-    coin: 2.2478e+16
+    coin: 22478000000000000
   - level: 31
     maxXp: 52000
     parkingPlus: 0
     linePlus: 0
     gem: 0
-    coin: 7.8675e+16
+    coin: 78675000000000000
   - level: 32
     maxXp: 55000
     parkingPlus: 0
     linePlus: 0
     gem: 10
-    coin: 2.75362e+17
+    coin: 275362000000000000
   - level: 33
     maxXp: 58000
     parkingPlus: 0
     linePlus: 0
     gem: 0
-    coin: 9.63768e+17
+    coin: 963768000000000000
   - level: 34
     maxXp: 61000
     parkingPlus: 0
     linePlus: 0
     gem: 0
-    coin: 3.373e+18
+    coin: 3373000000000000000
   - level: 35
     maxXp: 64000
     parkingPlus: 0
     linePlus: 0
     gem: 10
-    coin: 1.1805e+19
+    coin: 11805000000000000000
   - level: 36
     maxXp: 67000
     parkingPlus: 0
     linePlus: 0
     gem: 0
-    coin: 4.1319e+19
+    coin: 41319000000000000000
   - level: 37
     maxXp: 70000
     parkingPlus: 0
     linePlus: 0
     gem: 0
-    coin: 1.44616e+20
+    coin: 144616000000000000000
   - level: 38
     maxXp: 73000
     parkingPlus: 0
     linePlus: 0
     gem: 10
-    coin: 5.06157e+20
+    coin: 506157000000000000000
   - level: 39
     maxXp: 76000
     parkingPlus: 0
     linePlus: 0
     gem: 0
-    coin: 1.771e+21
+    coin: 1771000000000000000000
   - level: 40
     maxXp: 79000
     parkingPlus: 0
     linePlus: 0
     gem: 0
-    coin: 6.198e+21
+    coin: 6198000000000000000000
   - level: 41
     maxXp: 82000
     parkingPlus: 0
     linePlus: 0
     gem: 13
-    coin: 2.1694e+22
+    coin: 21694000000000000000000
   - level: 42
     maxXp: 85000
     parkingPlus: 0
     linePlus: 0
     gem: 0
-    coin: 7.5929e+22
+    coin: 75929000000000000000000
   - level: 43
     maxXp: 88000
     parkingPlus: 0
     linePlus: 0
     gem: 0
-    coin: 2.65751e+23
+    coin: 265751000000000000000000
   - level: 44
     maxXp: 91000
     parkingPlus: 0
     linePlus: 0
     gem: 13
-    coin: 9.3013e+23
+    coin: 930130000000000000000000
   - level: 45
     maxXp: 94000
     parkingPlus: 0
     linePlus: 0
     gem: 0
-    coin: 3.255e+24
+    coin: 3255000000000000000000000
   - level: 46
     maxXp: 97000
     parkingPlus: 0
     linePlus: 0
     gem: 0
-    coin: 1.1392e+25
+    coin: 11392000000000000000000000
   - level: 47
     maxXp: 100000
     parkingPlus: 0
     linePlus: 0
     gem: 13
-    coin: 3.9873e+25
+    coin: 39873000000000000000000000
   - level: 48
     maxXp: 103000
     parkingPlus: 0
     linePlus: 0
     gem: 0
-    coin: 1.39558e+26
+    coin: 139558000000000000000000000
   - level: 49
     maxXp: 106000
     parkingPlus: 0
     linePlus: 0
     gem: 0
-    coin: 4.88453e+26
+    coin: 488453000000000000000000000
   - level: 50
     maxXp: 109000
     parkingPlus: 0
     linePlus: 0
     gem: 18
-    coin: 1.709e+27
+    coin: 1709000000000000000000000000
   - level: 51
     maxXp: 112000
     parkingPlus: 0
     linePlus: 0
     gem: 0
-    coin: 2.41e+28
+    coin: 
   - level: 52
     maxXp: 115000
     parkingPlus: 0
     linePlus: 0
     gem: 0
-    coin: 8.354e+28
+    coin: 
   - level: 53
     maxXp: 118000
     parkingPlus: 0
     linePlus: 0
     gem: 0
-    coin: 2.30146e+29
+    coin: 
   btnRank: {fileID: 501495833}
   btnQuest: {fileID: 734584882}
   btnWheel: {fileID: 868060178}
@@ -46288,7 +46299,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -240}
+  m_AnchoredPosition: {x: 0, y: -340}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1417692491
@@ -52877,7 +52888,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -222.99998, y: -43}
+  m_AnchoredPosition: {x: -288.1, y: -43}
   m_SizeDelta: {x: 61.75, y: 59.449997}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1619758839
@@ -53622,8 +53633,8 @@ MonoBehaviour:
     m_Alignment: 2
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: ( 10000
 --- !u!222 &1641742347
@@ -61984,8 +61995,8 @@ MonoBehaviour:
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: =  1        )
 --- !u!222 &1881999506
@@ -62847,7 +62858,7 @@ Prefab:
     - target: {fileID: 224565338081077278, guid: 262b238c2615a334caaae9abf30a0e0a,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -114.049805
+      value: -114.05
       objectReference: {fileID: 0}
     - target: {fileID: 224565338081077278, guid: 262b238c2615a334caaae9abf30a0e0a,
         type: 2}
@@ -63137,7 +63148,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 333333
+  m_Text: 0
 --- !u!222 &1922164088
 CanvasRenderer:
   m_ObjectHideFlags: 0

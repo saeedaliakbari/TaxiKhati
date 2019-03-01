@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using CodeStage.AntiCheat.ObscuredTypes;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,7 +21,7 @@ public class ShopPanel : MonoBehaviour
     }
     public void UpdateCarItems()
     {
-        int unloacked = PlayerPrefs.GetInt("unlocked_car", 1);
+        int unloacked = ObscuredPrefs.GetInt("unlocked_car", 1);
         //Debug.Log("unloacked" + unloacked + "lastSalableLevel>" + controller.lastSalableLevel[unloacked - 1]);
         carItems[0].UpdateCarItem(true, controller.lastSalableLevel[unloacked - 1], 0);
         for (int i = 1; i < carItems.Length; i++)
