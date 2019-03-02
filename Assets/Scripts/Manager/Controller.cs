@@ -17,6 +17,7 @@ public class Controller : MonoBehaviour
     public ParkingManager parkingManager;
     public RunSlotManager slotManager;
     public PlayerLevel playerLevel;
+    public AchivmentManager achivmentManager;
     public VideoAds videoAds;
     public BatchPlugin batchPlugin;
     //public ShopDialog shop;
@@ -24,7 +25,7 @@ public class Controller : MonoBehaviour
     public MergeCar mergeCar;
     public LevelUpBonus levelBonus;
     public GameObject deleteBin, panelMessage, panelShopGem, btnVip;
-    public GameObject coinEffectPrefab;
+    public GameObject coinEffectPrefab, panelSplash;
     public OfflineEraning offEarning;
     public Text txtGem;
     public TrimNumberText txtCoin, txtCoinTop;
@@ -50,7 +51,8 @@ public class Controller : MonoBehaviour
         //Debug.Log(
         instance = this;
         ObscuredPrefs.SetInt("mainAchiv16", ObscuredPrefs.GetInt("mainAchiv16", 0) + 1);
-        ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem", 100));
+        achivmentManager.OpenPanel();
+        ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem", 100000));
         ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 100));
         ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 0));
         ObscuredPrefs.SetDouble("token", ObscuredPrefs.GetDouble("token", 0));
@@ -66,6 +68,7 @@ public class Controller : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        ObscuredPrefs.SetInt("countCloseShop", 1);
         ConfigBatch();
         iTween.dimensionMode = iTween.DimensionMode.mode2D;//دوبعدی کردن حرکت ماشین
         if (Manager.GetCurrentTime() < Manager.GetActionTime("speed_x2"))//اگر سرعت دو برابرنیست موزیک اصلی پخش شود
@@ -76,6 +79,11 @@ public class Controller : MonoBehaviour
         LoadGame();
         NewCarTimeing();
         GiftDaily();//اگر عضو بود بهش الماس روزانه میدهد
+        Timer.Schedule(this, 5f, () =>
+        {
+            panelSplash.SetActive(false);
+        }
+        );
     }
     private void ConfigBatch()
     {
@@ -144,6 +152,7 @@ public class Controller : MonoBehaviour
         {
             ObscuredPrefs.SetInt("mainAchiv8", ObscuredPrefs.GetInt("mainAchiv8", 0) + 1);
             ObscuredPrefs.SetInt("mainAchiv14", ObscuredPrefs.GetInt("mainAchiv14", 0) + 1);
+            achivmentManager.OpenPanel();
             ParkingPlace parkPlace = parkingManager.GetEmptyPlace();
             if (parkPlace != null)
             {
@@ -240,11 +249,13 @@ public class Controller : MonoBehaviour
     public GiftBox SpawnABox(int carIndex, ParkingPlace parkPlace, int modelBox)
     {
         ObscuredPrefs.SetInt("mainAchiv15", ObscuredPrefs.GetInt("mainAchiv15", 0) + 1);
+        achivmentManager.OpenPanel();
         GiftBox box = Instantiate(boxPrefab, Vector3.zero, Quaternion.identity);//ایجاد کرد یک باکس
         box.transform.SetParent(parkPlace.transform);//پرنت در هایرارکی مکان پارکینگ تعیین می شود
         box.transform.localScale = Vector3.one;
         box.transform.position = parkPlace.transform.position;
         box.SetUpBox(carIndex, parkPlace, modelBox);
+        box.StartAutoOpen();
         return box;
     }
     public void NewCarTimeing()
@@ -261,6 +272,7 @@ public class Controller : MonoBehaviour
         ParkingPlace parkPlace = parkingManager.GetEmptyPlace();
         int taxiLvl = ObscuredPrefs.GetInt("unlocked_car", 1);
         int index = taxiLvl - Random.Range(taxiDefferenceLvl[taxiLvl - 1].min, taxiDefferenceLvl[taxiLvl - 1].max);
+        index = index > 0 ? index : 1;
         Debug.Log("taxiLvl: " + ObscuredPrefs.GetInt("unlocked_car", 1) + " UNLOCK CAR : " + index);
         GameObject obj;
         try
@@ -294,9 +306,11 @@ public class Controller : MonoBehaviour
     public void SpawnABoxWheel()
     {
         ObscuredPrefs.SetInt("mainAchiv10", ObscuredPrefs.GetInt("mainAchiv10", 0) + 1);
+        achivmentManager.OpenPanel();
         ParkingPlace parkPlace = parkingManager.GetEmptyPlace();
         int taxiLvl = ObscuredPrefs.GetInt("unlocked_car", 1);
         int index = taxiLvl - 4;
+        index = index > 0 ? index : 1;
         Debug.Log("taxiLvl: " + ObscuredPrefs.GetInt("unlocked_car", 1) + " UNLOCK CAR : " + index);
         GameObject obj;
         try
@@ -330,9 +344,11 @@ public class Controller : MonoBehaviour
     public void SpawnABoxSpecialOffer()
     {
         ObscuredPrefs.SetInt("mainAchiv10", ObscuredPrefs.GetInt("mainAchiv10", 0) + 1);
+        achivmentManager.OpenPanel();
         ParkingPlace parkPlace = parkingManager.GetEmptyPlace();
         int taxiLvl = ObscuredPrefs.GetInt("unlocked_car", 1);
         int index = taxiLvl - 5;
+        index = index > 0 ? index : 1;
         Debug.Log("taxiLvl: " + ObscuredPrefs.GetInt("unlocked_car", 1) + " UNLOCK CAR : " + index);
         GameObject obj;
         try
@@ -537,7 +553,7 @@ public class Controller : MonoBehaviour
                 if (carObj.driving)//اگر ماشین در حال حرکت بود
                 {
                     car.StartDriveInSecond(time);//بعد از تایم مشخص حرکت را شروع کند
-                    time += 0.5f;//به تایم یک مقداری اضافه می کنیم که همه همزمان شروع به حرکت نکنند و بینشون فاصله باشد
+                    //time += 0.5f;//به تایم یک مقداری اضافه می کنیم که همه همزمان شروع به حرکت نکنند و بینشون فاصله باشد
                 }
             }
         }
@@ -601,9 +617,10 @@ public class Controller : MonoBehaviour
     }
     public void ClosePanelShopCar()
     {
+        int random = Random.Range(3, 6);
         if (ObscuredPrefs.GetInt("removeAds", 0) == 0)//اگر تبلیغات براش فعال بود   
         {
-            if (ObscuredPrefs.GetInt("countCloseShop", 1) < 3)//اگر کمتر از 3 بار پنل باز شده بود
+            if (ObscuredPrefs.GetInt("countCloseShop", 1) < random)//اگر کمتر از 3 بار پنل باز شده بود
             {
                 ObscuredPrefs.SetInt("countCloseShop", ObscuredPrefs.GetInt("countCloseShop", 1) + 1);
             }

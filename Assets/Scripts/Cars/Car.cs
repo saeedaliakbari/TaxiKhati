@@ -19,6 +19,8 @@ public class Car : MonoBehaviour
     [HideInInspector]
     public Controller controller;
     public MoveCar moveCarPrefab;
+    public AudioSource audioSource;
+    public AudioClip khatePayan, trash,carPlacement,combindCar;
     private MoveCar moveCar;
     private const float timeLab = 19.39939f;
     private void OnMouseDrag()//کشیدن  ماشین
@@ -79,7 +81,8 @@ public class Car : MonoBehaviour
                                 controller.ShowMergeNewCar(level - 1);//در صورتی که ماشین جدید باز شود پنل مرج باز می شود که مرج انجام می شود
                             }
                             else {//در صورتی که ماشین لول جدید باز نشود با مرج و ماشین های قبلی تولید شود وقت صدای مرج پخش می شود
-                                //Sound.instance.Play(Sound.Others.Merge);
+                                audioSource.clip = combindCar;
+                                audioSource.Play();
                             }
                             //باید مقدار افزوده شدن ایکس پی اضافه شود
                             //Debug.Log("XP: " + ObscuredPrefs.GetInt("Xp", 0));
@@ -90,6 +93,8 @@ public class Car : MonoBehaviour
                         }
                         else
                         {//دوتاماشین با هم جابه جا می شوند
+                            audioSource.clip = carPlacement;
+                            audioSource.Play();
                             ParkingPlace lastPlace = parkingPlace;//ماشین اول در جایگاه ماشین دوم قرار میگیرد
                             parkingPlace = nearPlace;
                             transform.SetParent(nearPlace.transform);
@@ -98,12 +103,15 @@ public class Car : MonoBehaviour
                     }
                     else//اگر ماشین داخل پارکینگ نزدیک نباشه یا در حال حرکت باشد
                     {
+
                         transform.position = parkingPlace.transform.position;//ماشین جابه جا نمی شود و به مکان اولیه برمیگردد
                         //Sound.instance.Play(Sound.Others.Unswap);
                     }
                 }
                 else//جابجایی به مکان جدید
                 {
+                    audioSource.clip = carPlacement;
+                    audioSource.Play();
                     transform.position = nearPlace.transform.position;//موقعیت ماشین را به موقعیت نزدیکترین مکان که خالی هم هست تغییر می دهد
                     parkingPlace = nearPlace;//پارکینگش را عوض می کند
                     transform.SetParent(nearPlace.transform);//داخل هایرارکی فرزند آبجکت پارکینگ جدید شد
@@ -140,7 +148,8 @@ public class Car : MonoBehaviour
     }
     private void DismantleCar()
     {
-        //Sound.instance.Play(Sound.Others.Goal);
+        audioSource.clip = trash;
+        audioSource.Play();
         //CurrencyController.CreditBalance(0, Mathf.RoundToInt(Superpow.Utils.GetPrice(level - 1) * 0.5f));
         controller.ShowCoinEffect(controller.deleteBin.transform.position);//در موقعیت سطل آشغال یک افکت سکه ایجاد می کند
         ObscuredPrefs.SetInt("checkLevel", 0);
@@ -181,7 +190,7 @@ public class Car : MonoBehaviour
     }
     private MoveCar SpawnACar()
     {
-        MoveCar mCar = (MoveCar)Instantiate(moveCarPrefab, Vector3.zero,Quaternion.EulerAngles(0f,0f,0f)/*, Quaternion.identity*/);
+        MoveCar mCar = (MoveCar)Instantiate(moveCarPrefab, Vector3.zero, Quaternion.EulerAngles(0f, 0f, 0f)/*, Quaternion.identity*/);
         mCar.transform.localScale = Vector3.one * 0.5f;//اسکیل ماشین در حال حرکت ایجاد شده
         mCar.car = this;//اختصاص دادن این ماشین به پارامتر ماشین در اسکریپت ماشین در حال حرکت ایجاد شده.
         return mCar;
@@ -195,40 +204,14 @@ public class Car : MonoBehaviour
     }
     public void FinishRound()
     {
-        //Debug.Log("Get Coin");
-        //Sound.instance.Play(Sound.Others.Goal);
+        audioSource.clip = khatePayan;
+        audioSource.Play();
         int index = ObscuredPrefs.GetInt("unlocked_airline", 1) - 1;//لول آخرین ماشین باز شده را می دهد
-        //CurrencyController.CreditBalance(0, (int)(earnings * Const.AIRLINE_INCREASE_PERCENT[index]));
-        //Debug.Log("Coin : " + ObscuredPrefs.GetDouble("coin") + " PLUS: " + (int)(earnings * increasePercent));
         float ratio = ((Manager.GetCurrentTime() < Manager.GetActionTime("speed_x2")) ? 2 : 1) /** Const.AIRLINE_INCREASE_PERCENT[index]*/;//ریت بدست آوردن سکه
         ratio *= ((Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m")) ? 5 : 1);
         ratio *= ((Manager.GetCurrentTime() < Manager.GetActionTime("2x_speed_for_150s")) ? 2 : 1);
-        //Debug.Log("Coin++ =>>>" + );
         ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) + (double)(earnings * increasePercent * ratio * ObscuredPrefs.GetFloat("incomeLine", 1)));
         ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 5000) + (double)(earnings * increasePercent * ratio * ObscuredPrefs.GetFloat("incomeLine", 1)));
-        //if (Manager.GetCurrentTime() < Manager.GetActionTime("income_x2"))
-        //{
-        //    if (Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m"))
-        //    {
-
-        //    }
-        //    else
-        //    {
-        //        ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) + (int)(earnings * increasePercent * 2 * ObscuredPrefs.GetFloat("incomeLine", 1)));
-        //    }
-        //    //Debug.Log("income_x2 : " + (Manager.GetActionTime("income_x2") - Manager.GetCurrentTime()));
-
-        //}
-        //else {
-        //    if (Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m"))
-        //    {
-        //        ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) + (int)(earnings * increasePercent * 5 * ObscuredPrefs.GetFloat("incomeLine", 1)));
-        //    }
-        //    else {
-        //        ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) + (int)(earnings * increasePercent * ObscuredPrefs.GetFloat("incomeLine", 1)));
-        //    }
-        //}
-
         controller.SetText();
         controller.slotManager.ShowGoalAnimation();//وقتی به نقطه پایان می رسد
     }

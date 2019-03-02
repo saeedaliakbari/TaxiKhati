@@ -11,13 +11,15 @@ public class CarItem : MonoBehaviour
     public Button btnBuyCoin, btnBuyGem, btnVideo;
     public Controller controller;
 
-    public void UpdateCarItem(bool visible, int lastSalableLevel, int defrenceLastSalableLevel)
+    public void UpdateCarItem(int i, int lastSalableLevel, int defrenceLastSalableLevel)
     {//وضعیت ماشین را بروز رسانی می کند در فروشگاه
+        bool visible = i < lastSalableLevel;
         int index = transform.GetSiblingIndex();//یعنی از نظر فرزندی برای پدرخود چندم است در هایرارکی
         double balance;
         offDetection(visible);
-        txtName.text = visible ? controller.carName[index] : "???";
-        car.sprite = visible ? controller.activeCar[index] : controller.inActiveCar[index];//با توجه به فعال یا غیرفعال بودن اسپرایت فعال یا غیرفعال می شود
+        bool open=i< ObscuredPrefs.GetInt("unlocked_car", 1);
+        txtName.text = open ? controller.carName[index] : "???";
+        car.sprite = open ? controller.activeCar[index] : controller.inActiveCar[index];//با توجه به فعال یا غیرفعال بودن اسپرایت فعال یا غیرفعال می شود
         earnSlider.fillAmount = controller.earning[index]/* / controller.earning[49]*/;
         speedSlider.fillAmount = controller.speed[index] / controller.speed[49];
         int coinSalable = lastSalableLevel - defrenceLastSalableLevel;
