@@ -7,7 +7,7 @@ public class AchivmentManager : MonoBehaviour
     public Controller controller;
     public string achivmentPrefs;
     public Achivment[] achivments;
-    public GameObject prefabAchivment, panelParentAchivment;
+    public GameObject prefabAchivment, panelParentAchivment, lblNew;
     public Scrollbar srbPanelAchivment;
     public ScrollRect scrPanelAchivment;
     public Text txtGem;
@@ -22,6 +22,7 @@ public class AchivmentManager : MonoBehaviour
     }
     public void OpenPanel()
     {
+        lblNew.SetActive(false);
         for (int i = 0; i < listAchivments.Count; i++)
         {
             Destroy(listAchivments[i]);
