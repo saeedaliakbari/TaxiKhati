@@ -948,7 +948,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 114214604301207684}
+  m_TargetGraphic: {fileID: 114511201979443942}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -1689,8 +1689,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 2.9}
-  m_SizeDelta: {x: 38.63, y: 46.49}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 43.68, y: 52.56}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224308615078924712
 RectTransform:
@@ -1828,7 +1828,7 @@ RectTransform:
   m_GameObject: {fileID: 1403940563376342}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.99961895, y: 0.99961895, z: 0.99961895}
   m_Children:
   - {fileID: 224827433637449638}
   - {fileID: 224962252497871390}
@@ -1846,7 +1846,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 471, y: 200}
+  m_SizeDelta: {x: 525, y: 228.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224753248193654462
 RectTransform:

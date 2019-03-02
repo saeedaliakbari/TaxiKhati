@@ -10,7 +10,6 @@ public class MergeCar : MonoBehaviour
     //public Sprite[] hideSprites, showSprites;
     public Animator anim;
     public Controller controller;
-    public AudioSource audioMergeCar;
     public void ShowMergeCar(int fromIndex)//داخل پنل مرج انجام می شود
     {//اسپرایت های مربوط به انیمیشن مرج را تغییر می دهد با توجه به لولی که از ان داره میاد
         //Sound.instance.Play(Sound.Others.MergeNew);
@@ -20,9 +19,5 @@ public class MergeCar : MonoBehaviour
         hide.sprite = controller.inActiveCar[fromIndex + 1];
         center.sprite = controller.activeCar[fromIndex + 1];
         anim.Play("MergePlane");//انیمیشن مرج اجرا می شود
-        Timer.Schedule(this, (5 / 6f), () =>
-        {
-            audioMergeCar.Play();
-        });
     }
 }

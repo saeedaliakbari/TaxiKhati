@@ -15,6 +15,10 @@ public class PlayerLevel : MonoBehaviour
     {
         SetEleman();
         CheckLevel(ObscuredPrefs.GetInt("Level", 1));
+        for (int i = 0; i < levelsInfo.Length; i++)
+        {
+            Debug.Log("[" + i + "]" + levelsInfo[i].coin.ToString());
+        }
     }
     public void UpdateProgress()
     {
@@ -26,7 +30,6 @@ public class PlayerLevel : MonoBehaviour
             ObscuredPrefs.SetInt("mainAchiv11", ObscuredPrefs.GetInt("Level", 1));
             ObscuredPrefs.SetInt("mainAchiv12", ObscuredPrefs.GetInt("Level", 1));
             ObscuredPrefs.SetInt("mainAchiv13", ObscuredPrefs.GetInt("Level", 1));
-            controller.achivmentManager.OpenPanel();
             CheckLevel(ObscuredPrefs.GetInt("Level", 1));
         }
         SetEleman();

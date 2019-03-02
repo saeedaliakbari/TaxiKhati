@@ -13,45 +13,17 @@ public class ShopPanel : MonoBehaviour
     public GameObject objTaxi, objOther;
     public Color clrSel, clrUnSel;
     public Outline txtTaxi, txtOther;
-    public ScrollRect scrCar;
-    //public Scrollbar sbrCar;
     private int def = 0;
     void Start()
     {
         BtnSelect(true);
 
     }
-    public void OpenPanel()
-    {
-        int unloacked = ObscuredPrefs.GetInt("unlocked_car", 1);
-        Debug.Log("unload Car : " + unloacked);
-        scrCar.verticalNormalizedPosition = 1;
-        //sbrCar.value = scrCar.verticalNormalizedPosition;
-        //if (unloacked > 22)
-        //{
-        //    Debug.Log("def=2>" + scrCar.verticalNormalizedPosition + ">" + sbrCar.value);
-        //    scrCar.verticalNormalizedPosition = 1 - ((unloacked - 7) * 0.0215f);
-        //    sbrCar.value = scrCar.verticalNormalizedPosition;
-        //    Debug.Log("def=2>" + scrCar.verticalNormalizedPosition + ">" + sbrCar.value);
-        //}
-        //else 
-        if (unloacked > 12)
-        {
-            scrCar.verticalNormalizedPosition = 1 - ((unloacked - 6) * 0.0215f);
-            //sbrCar.value = scrCar.verticalNormalizedPosition;
-        }
-        else if (unloacked > 6)
-        {
-            scrCar.verticalNormalizedPosition = 1 - ((unloacked - 5) * 0.0215f);
-            //sbrCar.value = scrCar.verticalNormalizedPosition;
-        }
-    }
     public void UpdateCarItems()
     {
         int unloacked = ObscuredPrefs.GetInt("unlocked_car", 1);
         //Debug.Log("unloacked" + unloacked + "lastSalableLevel>" + controller.lastSalableLevel[unloacked - 1]);
-        carItems[0].UpdateCarItem(0, controller.lastSalableLevel[unloacked - 1], 0);
-
+        carItems[0].UpdateCarItem(true, controller.lastSalableLevel[unloacked - 1], 0);
         for (int i = 1; i < carItems.Length; i++)
         {
             if (unloacked == 2)
@@ -62,7 +34,7 @@ public class ShopPanel : MonoBehaviour
             {
                 def = 2;
             }
-            carItems[i].UpdateCarItem(i, controller.lastSalableLevel[unloacked - 1], def);
+            carItems[i].UpdateCarItem(i < controller.lastSalableLevel[unloacked - 1], controller.lastSalableLevel[unloacked - 1], def);
         }
     }
 

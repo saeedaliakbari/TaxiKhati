@@ -5,7 +5,6 @@ using UnityEngine;
 public class GiftBox : MonoBehaviour
 {
     public Animator animtor;
-    public AudioSource openGiftCar;
     public SpriteRenderer spriteBox;
     public Sprite[] sprBox;//0: normal , 1:special, 2: store;
     [HideInInspector]
@@ -33,7 +32,6 @@ public class GiftBox : MonoBehaviour
         Debug.Log("Start Anim BOX");
         opened = true;
         animtor.Play("OpenBox");
-        openGiftCar.Play();
     }
 
     private void OnMouseUp()//با موس روش کلیک کنی وبرداری

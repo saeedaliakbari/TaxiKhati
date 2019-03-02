@@ -10,7 +10,6 @@ public class UsersScripts : MonoBehaviour
     public GameObject panelWait, userRank, userRankMe, panelParentRanking;
     private List<GameObject> listRanking = new List<GameObject>();
     public UserRank myRank;
-    public Controller controller;
     public Sprite[] sprMedal;
     private int rankUser = 0;
     #region link
@@ -79,7 +78,6 @@ public class UsersScripts : MonoBehaviour
                 {
                     ObscuredPrefs.SetInt("mainAchiv4", 1);
                 }
-                controller.achivmentManager.OpenPanel();
                 Debug.Log(rankUser.ToString());
                 myRank.txtRank.text = rankUser.ToString();
                 myRank.txtCoin.text = jsonBooks[0]["coin"].ToString();

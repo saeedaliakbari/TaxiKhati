@@ -19,7 +19,6 @@ public class WheelFortuneScript : MonoBehaviour
     public Button btnWheelVideo, btnWheelGem;
     public GameObject objTimeVideo;
     public GameObject goWheel;
-    public AudioSource audioWheel, audioGift;
     private string[] timeWheel = { "timeWheel1", "timeWheel2", "timeWheel3" };
     void Start()
     {
@@ -122,7 +121,6 @@ public class WheelFortuneScript : MonoBehaviour
     #region Wheel
     IEnumerator SpinTheWheel(float time, float maxAngle)
     {
-        audioWheel.Play();
         spinning = true;
         float timer = 0.0f;
         int animationCurveNumber = UnityEngine.Random.Range(0, animationCurves.Count);
@@ -134,7 +132,6 @@ public class WheelFortuneScript : MonoBehaviour
             timer += Time.deltaTime;
             yield return 0;
         }
-        audioWheel.Stop();
         goWheel.transform.eulerAngles = new Vector3(0.0f, 0.0f, maxAngle);
         btnWheelGem.interactable = true;
         btnWheelVideo.interactable = true;
@@ -144,7 +141,6 @@ public class WheelFortuneScript : MonoBehaviour
     public void WheelStart(bool video)
     {
         ObscuredPrefs.SetInt("mainAchiv9", ObscuredPrefs.GetInt("mainAchiv9", 0) + 1);
-        videoAds.controller.achivmentManager.OpenPanel();
         btnWheelVideo.interactable = false;
         btnWheelGem.interactable = false;
         anglePerItem = 360 / maxRotaiton.Length;
@@ -217,7 +213,6 @@ public class WheelFortuneScript : MonoBehaviour
     }
     private void ManageGift(int itemNumber)
     {
-        audioGift.Play();
         //itemNumber = 3;
         videoAds.controller.panelMessage.SetActive(true);
         if (itemNumber == 0)

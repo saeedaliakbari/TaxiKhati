@@ -8,7 +8,6 @@ public class LevelUpBonus : MonoBehaviour
 {
     public GameObject parkItem, lineItem, coinItem, gemItem, objLevelLeft, objLevelRight;
     public Text txtLevel, txtPark, txtLine, txtCoin, txtGem, txtLevelLeft, txtLevelCenter, txtLevelRight;
-    public TrimNumberText txtCoinConvertor;
     public PlayerLevel playerLevel;
     public Controller controller;
     public Image imgSlider;
@@ -16,8 +15,7 @@ public class LevelUpBonus : MonoBehaviour
     public void ShowLevelUpBonus(int newLevel)
     {
         this.newLevel = newLevel;
-        txtCoinConvertor.text = playerLevel.levelsInfo[newLevel - 2].coin.ToString();
-        txtCoin.text = "+" + txtCoinConvertor.text;
+        txtCoin.text = "+" + playerLevel.levelsInfo[newLevel - 2].coin.ToString();
         txtGem.text = "+" + playerLevel.levelsInfo[newLevel - 2].gem.ToString();
         txtLine.text = "+" + playerLevel.levelsInfo[newLevel - 2].linePlus.ToString();
         txtPark.text = "+" + playerLevel.levelsInfo[newLevel - 2].parkingPlus.ToString();

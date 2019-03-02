@@ -39,7 +39,7 @@ public class ParkingManager : MonoBehaviour
         int num = ObscuredPrefs.GetInt("num_of_places", 4);//تعداد لاین های شروع 
         num += ObscuredPrefs.GetInt("num_of_places_vip", 0);
         Debug.Log("Place>>>num: " + ObscuredPrefs.GetInt("num_of_places", 4) + " numVIP: " + ObscuredPrefs.GetInt("num_of_places_vip", 0) + " TOTAL: " + ObscuredPrefs.GetInt("num_total_places"));
-        if (num > ObscuredPrefs.GetInt("num_total_places") && ObscuredPrefs.GetInt("num_total_places") < 16)
+        if (num > ObscuredPrefs.GetInt("num_total_places"))
         {
             Debug.Log("num > num_total_places");
             int newPlace = num - ObscuredPrefs.GetInt("num_total_places");
@@ -71,16 +71,11 @@ public class ParkingManager : MonoBehaviour
                     carsLevel[places[i].GetCar().level - 1] += 1;
                 }
             }
-            //for (int i = 0; i < carsLevel.Length; i++)
-            //{
-            //    Debug.Log(i + ">" + carsLevel[i]);
-            //}
             ObscuredPrefs.SetInt("mainAchiv1", carsLevel[4]);
             ObscuredPrefs.SetInt("mainAchiv2", carsLevel[6]);
             ObscuredPrefs.SetInt("mainAchiv3", carsLevel[10]);
             ObscuredPrefs.SetInt("mainAchiv6", carsLevel[14]);
             ObscuredPrefs.SetInt("mainAchiv7", carsLevel[24]);
-            controller.achivmentManager.OpenPanel();
             CheckCarSpeedTycoon(carsLevel);
             CheckOfflineEarningTycoon(carsLevel);
             CheckExchangeRateDecline(carsLevel);
@@ -260,7 +255,7 @@ public class ParkingManager : MonoBehaviour
                     int column = parkPosManage[i].RowColumns[r];
                     for (int c = 0; c < column; c++)
                     {
-                        Vector3 pos = new Vector3((c - (column - 1f) / 2) * 1.3f, (-(r - (rows - 1f) / 2)) * 1.1f);
+                        Vector3 pos = new Vector3((c - (column - 1f) / 2)*1.3f, (-(r - (rows - 1f) / 2))*1.1f);
                         placesPosition[count].transform.localPosition = pos /** 1.2f*/;
                         count++;
                     }
