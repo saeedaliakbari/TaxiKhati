@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using GameAnalyticsSDK;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -25,7 +24,6 @@ public class WheelFortuneScript : MonoBehaviour
     void Start()
     {
         CheckVideoTime();
-        GameAnalytics.NewDesignEvent("yes");
     }
     private void CheckVideoTime()//این تابع در ابتدا مقادیر را داخل تکست باکس ها ست می کند و سپس با توجه به زمان فعلی و اینکه تعداد شانس ها کمتر از 3 باشد زمان شانس بعدی را می سنجد تا اضافه شود
     {
