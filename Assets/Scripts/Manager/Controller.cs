@@ -267,16 +267,10 @@ public class Controller : MonoBehaviour
         box.transform.localScale = Vector3.one;
         box.transform.position = parkPlace.transform.position;
         box.SetUpBox(carIndex, parkPlace, modelBox);
-        if (ObscuredPrefs.GetInt("helpStep", 0) >21)
+        if (ObscuredPrefs.GetInt("helpStep", 0) > 21)
         {
-            Debug.Log("Start OPEn");
             box.StartAutoOpen();
         }
-        else
-        {
-            Debug.Log("NOOO Start OPEn");
-        }
-
         return box;
     }
     public void NewCarTimeing()
@@ -296,29 +290,26 @@ public class Controller : MonoBehaviour
         int index = taxiLvl - Random.Range(taxiDefferenceLvl[taxiLvl - 1].min, taxiDefferenceLvl[taxiLvl - 1].max);
         index = index > 0 ? index : 1;
         Debug.Log("taxiLvl: " + ObscuredPrefs.GetInt("unlocked_car", 1) + " UNLOCK CAR : " + index);
-        GameObject obj;
         try
         {
-            obj = parkPlace.GetComponentInChildren<GameObject>();
-            if (obj != null)
+            if (parkPlace.IsEmpty())
             {
-                Debug.Log("parkPlace.GetComponentInChildren<GameObject>() != null");
-                StartCoroutine(IESpawnABoxTime());
-            }
-        }
-        catch (System.Exception)
-        {
-            if (parkPlace != null)
-            {
-                Debug.Log("parkPlace != null");
+                Debug.Log("parkPlace Is Empty");
                 SpawnABox(index - 1, parkPlace, 0);
                 NewCarTimeing();
             }
             else
             {
+                Debug.Log("Try new Place For Car time");
                 StartCoroutine(IESpawnABoxTime());
             }
         }
+        catch (System.Exception)
+        {
+            Debug.Log("Catch New Spawn");
+            StartCoroutine(IESpawnABoxTime());
+        }
+
     }
     IEnumerator IESpawnABoxTime()
     {
@@ -334,28 +325,24 @@ public class Controller : MonoBehaviour
         int index = taxiLvl - 4;
         index = index > 0 ? index : 1;
         Debug.Log("taxiLvl: " + ObscuredPrefs.GetInt("unlocked_car", 1) + " UNLOCK CAR : " + index);
-        GameObject obj;
         try
         {
-            obj = parkPlace.GetComponentInChildren<GameObject>();
-            if (obj != null)
+            if (parkPlace.IsEmpty())
             {
-                Debug.Log("parkPlace.GetComponentInChildren<GameObject>() != null");
+                Debug.Log("parkPlace Is Empty");
+                SpawnABox(index - 1, parkPlace, 1);
+                NewCarTimeing();
+            }
+            else
+            {
+                Debug.Log("Try new Place For Car time");
                 StartCoroutine(IESpawnABoxWheel());
             }
         }
         catch (System.Exception)
         {
-            if (parkPlace != null)
-            {
-                Debug.Log("parkPlace != null");
-                SpawnABox(index - 1, parkPlace, 1);
-
-            }
-            else
-            {
-                StartCoroutine(IESpawnABoxWheel());
-            }
+            Debug.Log("Catch New Spawn");
+            StartCoroutine(IESpawnABoxWheel());
         }
     }
     IEnumerator IESpawnABoxWheel()
@@ -372,28 +359,26 @@ public class Controller : MonoBehaviour
         int index = taxiLvl - 5;
         index = index > 0 ? index : 1;
         Debug.Log("taxiLvl: " + ObscuredPrefs.GetInt("unlocked_car", 1) + " UNLOCK CAR : " + index);
-        GameObject obj;
         try
         {
-            obj = parkPlace.GetComponentInChildren<GameObject>();
-            if (obj != null)
+            if (parkPlace.IsEmpty())
             {
-                Debug.Log("parkPlace.GetComponentInChildren<GameObject>() != null");
+                Debug.Log("parkPlace Is Empty");
+                SpawnABox(index - 1, parkPlace, 1);
+                NewCarTimeing();
+            }
+            else
+            {
+                Debug.Log("Try new Place For Car time");
                 StartCoroutine(IESpawnABoxSpecialOffer());
+
             }
         }
         catch (System.Exception)
         {
-            Debug.Log("catch");
-            if (parkPlace != null)
-            {
-                Debug.Log("parkPlace != null");
-                SpawnABox(index - 1, parkPlace, 1);
-            }
-            else
-            {
-                StartCoroutine(IESpawnABoxSpecialOffer());
-            }
+            Debug.Log("Catch New Spawn");
+            StartCoroutine(IESpawnABoxSpecialOffer());
+
         }
     }
     IEnumerator IESpawnABoxSpecialOffer()

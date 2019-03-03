@@ -150,6 +150,9 @@ public class Car : MonoBehaviour
         audioSource.clip = trash;
         audioSource.Play();
         //CurrencyController.CreditBalance(0, Mathf.RoundToInt(Superpow.Utils.GetPrice(level - 1) * 0.5f));
+        Debug.Log("base{rice : " + controller.basePrice[level - 1]);
+        ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) + controller.basePrice[level - 1]);
+        controller.SetText();
         controller.ShowCoinEffect(controller.deleteBin.transform.position);//در موقعیت سطل آشغال یک افکت سکه ایجاد می کند
         ObscuredPrefs.SetInt("checkLevel", 0);
         Destroy(gameObject);//این ماشین را از بین می برد
