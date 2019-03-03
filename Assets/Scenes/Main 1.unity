@@ -32168,6 +32168,7 @@ MonoBehaviour:
   userRankMe: {fileID: 0}
   panelParentRanking: {fileID: 1649912989}
   myRank: {fileID: 894153761}
+  controller: {fileID: 0}
   sprMedal:
   - {fileID: 21300034, guid: 9485d403640158a46b12271688ff1c08, type: 3}
   - {fileID: 21300036, guid: 9485d403640158a46b12271688ff1c08, type: 3}
@@ -32936,6 +32937,7 @@ MonoBehaviour:
   txtLevelLeft: {fileID: 2090466028}
   txtLevelCenter: {fileID: 2137967054}
   txtLevelRight: {fileID: 2030130755}
+  txtCoinConvertor: {fileID: 0}
   playerLevel: {fileID: 1252540963}
   controller: {fileID: 1085018823}
   imgSlider: {fileID: 1960939944}
@@ -33883,8 +33885,10 @@ MonoBehaviour:
   parkingManager: {fileID: 1922830188}
   slotManager: {fileID: 1260395146}
   playerLevel: {fileID: 1252540963}
+  achivmentManager: {fileID: 0}
   videoAds: {fileID: 1085018824}
   batchPlugin: {fileID: 1231707831}
+  guideManager: {fileID: 0}
   mergeCar: {fileID: 1202044279}
   levelBonus: {fileID: 1066917862}
   deleteBin: {fileID: 1588907980}
@@ -33892,6 +33896,7 @@ MonoBehaviour:
   panelShopGem: {fileID: 1831901871}
   btnVip: {fileID: 0}
   coinEffectPrefab: {fileID: 0}
+  panelSplash: {fileID: 0}
   offEarning: {fileID: 769815151}
   txtGem: {fileID: 368876601}
   txtCoin: {fileID: 1896488206}
@@ -34387,6 +34392,8 @@ MonoBehaviour:
   btnWheelGem: {fileID: 1837071923}
   objTimeVideo: {fileID: 1707247628}
   goWheel: {fileID: 1418016035}
+  audioWheel: {fileID: 0}
+  audioGift: {fileID: 0}
 --- !u!114 &1085018827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38325,6 +38332,7 @@ MonoBehaviour:
   txtCarName: {fileID: 604843040}
   anim: {fileID: 1819388845}
   controller: {fileID: 1085018823}
+  audioMergeCar: {fileID: 0}
 --- !u!1 &1202207374
 GameObject:
   m_ObjectHideFlags: 0
@@ -47508,7 +47516,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 0
-  randomSeed: -1532856286
+  randomSeed: 1530037096
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -51141,6 +51149,7 @@ MonoBehaviour:
   prefabAchivment: {fileID: 1564999918401658, guid: 831b44829c8ec6847b4041448772a9f9,
     type: 2}
   panelParentAchivment: {fileID: 917043392}
+  lblNew: {fileID: 0}
   srbPanelAchivment: {fileID: 1701029987}
   scrPanelAchivment: {fileID: 218491481}
   txtGem: {fileID: 0}
@@ -63486,7 +63495,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 0
-  randomSeed: -1334633400
+  randomSeed: 1510952297
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -73011,6 +73020,7 @@ MonoBehaviour:
   clrUnSel: {r: 0.07058824, g: 0.14901961, b: 0.28627452, a: 1}
   txtTaxi: {fileID: 1246437677}
   txtOther: {fileID: 1454963753}
+  scrCar: {fileID: 0}
 --- !u!114 &2074816525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75101,7 +75111,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 0
-  randomSeed: -1065015941
+  randomSeed: 606659739
   InitialModule:
     serializedVersion: 3
     enabled: 1
