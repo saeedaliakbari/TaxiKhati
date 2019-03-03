@@ -226,6 +226,10 @@ public class ParkingManager : MonoBehaviour
     {//ایجاد پارکینگ جدید
         DeleteVipPlace();
         ParkingPlace place = (ParkingPlace)Instantiate(placePrefab, Vector3.zero, Quaternion.identity);
+        if (ObscuredPrefs.GetInt("helpStep", 0) != 13)
+        {
+            controller.guideManager.parkPlace.Add(place);
+        }
         //place.gameObject.name = "Place" + Random.RandomRange(0, 100000);
         place.transform.SetParent(transform);
         place.transform.localScale = Vector3.one * 0.6f;

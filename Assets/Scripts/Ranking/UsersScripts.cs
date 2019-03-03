@@ -45,7 +45,7 @@ public class UsersScripts : MonoBehaviour
         {
             if (ObscuredPrefs.GetString("username", "") == "")
             {
-                ObscuredPrefs.SetString("username", "تاکسی ران " + Random.Range(100000000, 999999999));
+                ObscuredPrefs.SetString("username", "تاکسی ران " + Random.Range(100000, 999999));
             }
             StartCoroutine(IEInsertUser(true));
         }

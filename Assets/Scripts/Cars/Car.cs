@@ -20,7 +20,7 @@ public class Car : MonoBehaviour
     public Controller controller;
     public MoveCar moveCarPrefab;
     public AudioSource audioSource;
-    public AudioClip khatePayan, trash,carPlacement,combindCar;
+    public AudioClip khatePayan, trash, carPlacement, combindCar;
     private MoveCar moveCar;
     private const float timeLab = 19.39939f;
     private void OnMouseDrag()//کشیدن  ماشین
@@ -55,12 +55,9 @@ public class Car : MonoBehaviour
                         transform.position = nearPlace.transform.position;
                         if (level == car2.level && level < controller.carPrefabs.Length)//اگر لول دوتا ماشین یکی بود و لول از تعداد ماشین ها کمتر با هم مرج شوند
                         {//Merge
-                            if (ObscuredPrefs.GetInt("returned_car", 0) == 0)//اگر راهنما تمام نشده بود
-                            {
-                                ObscuredPrefs.SetInt("merged_car", 1);//0 false , 1 true
-                                //Homecontroller.guideManager.HideGuides();
-                                //Homecontroller.guideManager.UpdateAfter(1);
-                            }
+                            controller.guideManager.MergeStep();
+                            //Homecontroller.guideManager.HideGsuides();
+                            //Homecontroller.guideManager.UpdateAfter(1);
                             ObscuredPrefs.SetInt("mergeCarForVideo", ObscuredPrefs.GetInt("mergeCarForVideo", 1) + 1);
                             GetComponent<Animator>().Play("Merge");//انیمیشن مرج اجرا شود
                             GetComponent<SpriteRenderer>().enabled = false;
@@ -139,6 +136,7 @@ public class Car : MonoBehaviour
             Debug.Log("Not Move" + moveCar.returning);
             if (!moveCar.returning)
             {
+                controller.guideManager.ReturnCar();
                 moveCar.Return();//به همون مکان برگردد
                 controller.slotManager.StopACar(GetEarningPerSecond());
             }
@@ -166,13 +164,7 @@ public class Car : MonoBehaviour
     }
     public void StartDrive()//شروع حرکت
     {
-        if (ObscuredPrefs.GetInt("returned_car", 0) == 0)
-        {//اگر راهنما تمام نشده بود
-            ObscuredPrefs.SetInt("runned_car", 1);//0 false , 1 true
-            //Superpow.Utils.SetRunnedPlane();
-            //controller.guideManager.HideGuides();
-            //controller.guideManager.UpdateAfter(3);
-        }
+        controller.guideManager.StartDrive();
         moving = true;
         moveCar = SpawnACar();
         moveCar.transform.position = controller.slotManager.transform.position;//موقعیت ماشین درحال حرکت در مکان استارت قرار میگیرد

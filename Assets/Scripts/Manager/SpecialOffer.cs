@@ -15,7 +15,8 @@ public class SpecialOffer : MonoBehaviour
     {
         Timer.Schedule(this, 30f, () =>
          {
-             NewOffer();
+             if (ObscuredPrefs.GetInt("helpStep", 0) == 13)
+                 NewOffer();
          });
     }
     private void NewOffer()

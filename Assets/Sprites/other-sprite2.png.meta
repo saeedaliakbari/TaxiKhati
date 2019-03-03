@@ -3,6 +3,11 @@ guid: 44db6be2fb7035f4c804847a7eaa2012
 TextureImporter:
   fileIDToRecycleName:
     21300000: other-sprite2_0
+    21300002: other-sprite2_1
+    21300004: other-sprite2_2
+    21300006: other-sprite2_3
+    21300008: other-sprite2_4
+    21300010: other-sprite2_5
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -97,6 +102,76 @@ TextureImporter:
         y: 591
         width: 756
         height: 417
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: other-sprite2_1
+      rect:
+        serializedVersion: 2
+        x: 869
+        y: 945
+        width: 86
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: other-sprite2_2
+      rect:
+        serializedVersion: 2
+        x: 869
+        y: 895
+        width: 92
+        height: 38
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: other-sprite2_3
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 0
+        width: 429
+        height: 558
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: other-sprite2_4
+      rect:
+        serializedVersion: 2
+        x: 469
+        y: 233
+        width: 545
+        height: 326
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: other-sprite2_5
+      rect:
+        serializedVersion: 2
+        x: 651
+        y: 14
+        width: 163
+        height: 196
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

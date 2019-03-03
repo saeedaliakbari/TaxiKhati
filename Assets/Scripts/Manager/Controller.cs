@@ -20,6 +20,7 @@ public class Controller : MonoBehaviour
     public AchivmentManager achivmentManager;
     public VideoAds videoAds;
     public BatchPlugin batchPlugin;
+    public GuideManager guideManager;
     //public ShopDialog shop;
     //public ExchangeSpeedDialog exchangeDialog;
     public MergeCar mergeCar;
@@ -52,9 +53,9 @@ public class Controller : MonoBehaviour
         instance = this;
         ObscuredPrefs.SetInt("mainAchiv16", ObscuredPrefs.GetInt("mainAchiv16", 0) + 1);
         achivmentManager.OpenPanel();
-        ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem", 100000));
-        ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 100));
-        ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 0));
+        ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem", 5));
+        ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 20000));
+        ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 20000));
         ObscuredPrefs.SetDouble("token", ObscuredPrefs.GetDouble("token", 0));
         SetText();
 
@@ -255,7 +256,16 @@ public class Controller : MonoBehaviour
         box.transform.localScale = Vector3.one;
         box.transform.position = parkPlace.transform.position;
         box.SetUpBox(carIndex, parkPlace, modelBox);
-        box.StartAutoOpen();
+        if (ObscuredPrefs.GetInt("helpStep", 0) != 7)
+        {
+            Debug.Log("Start OPEn");
+            box.StartAutoOpen();
+        }
+        else
+        {
+            Debug.Log("NOOO Start OPEn");
+        }
+
         return box;
     }
     public void NewCarTimeing()
@@ -264,7 +274,8 @@ public class Controller : MonoBehaviour
         Timer.Schedule(this, randomDelay, () =>
          {
              Debug.Log("NewCarTimeing");
-             SpawnABoxTime();
+             if (ObscuredPrefs.GetInt("helpStep", 0) == 13)
+                 SpawnABoxTime();
          });
     }
     public void SpawnABoxTime()
@@ -537,10 +548,10 @@ public class Controller : MonoBehaviour
             //Debug.Log("Save Data is Empty");
             SaveObject newSaveObj = new SaveObject();
             CarObject carObj = new CarObject();
-            carObj.driving = false;
-            carObj.level = 1;
-            carObj.parkingIndex = 1;
-            newSaveObj.listCars.Add(carObj);
+            //carObj.driving = false;
+            //carObj.level = 1;
+            //carObj.parkingIndex = 1;
+            //newSaveObj.listCars.Add(carObj);
             saveObj = newSaveObj;
         }
         float time = 0;

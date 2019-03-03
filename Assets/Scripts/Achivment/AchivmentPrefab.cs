@@ -22,7 +22,7 @@ public class AchivmentPrefab : MonoBehaviour
         this.stringPrefs = stringPrefs;
         txtTitle.text = achv.title;
         txtGem.text = achv.rewardGem.ToString();
-        Debug.Log(id + ">gem: " + gem + "txtGem>" + txtGem.text + " > " + ObscuredPrefs.GetInt(stringPrefs + id, 0) + "/" + max + ">>" + ObscuredPrefs.GetInt(stringPrefs + id, 0) / max);
+        //Debug.Log(id + ">gem: " + gem + "txtGem>" + txtGem.text + " > " + ObscuredPrefs.GetInt(stringPrefs + id, 0) + "/" + max + ">>" + ObscuredPrefs.GetInt(stringPrefs + id, 0) / max);
         imgSlider.fillAmount = (float)ObscuredPrefs.GetInt(stringPrefs + id, 0) / max;
         txtSlider.text = (ObscuredPrefs.GetInt(stringPrefs + id, 0) >= max ? max : ObscuredPrefs.GetInt(stringPrefs + id, 0)) + "/" + max;
         if (ObscuredPrefs.GetInt(stringPrefs + "Get" + id, 0) == 1)//geted
