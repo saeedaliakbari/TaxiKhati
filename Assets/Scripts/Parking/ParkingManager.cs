@@ -226,7 +226,7 @@ public class ParkingManager : MonoBehaviour
     {//ایجاد پارکینگ جدید
         DeleteVipPlace();
         ParkingPlace place = (ParkingPlace)Instantiate(placePrefab, Vector3.zero, Quaternion.identity);
-        if (ObscuredPrefs.GetInt("helpStep", 0) != 13)
+        if (ObscuredPrefs.GetInt("helpStep", 0) != 22)
         {
             controller.guideManager.parkPlace.Add(place);
         }

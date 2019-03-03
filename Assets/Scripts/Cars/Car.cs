@@ -73,6 +73,7 @@ public class Car : MonoBehaviour
                             //Debug.Log("unlockedLevel" + unlockedLevel + "level" + level);
                             if (level + 1 > unlockedLevel)
                             {//اگر لول بیشتر از لول ماشین ماکس باشد
+                                controller.guideManager.MergeStep2();
                                 ObscuredPrefs.SetInt("unlocked_car", level + 1);
                                 ObscuredPrefs.SetInt("curr_car_index", controller.lastSalableCoreLevel[ObscuredPrefs.GetInt("unlocked_car", 1) - 1] - 1);
                                 controller.ShowMergeNewCar(level - 1);//در صورتی که ماشین جدید باز شود پنل مرج باز می شود که مرج انجام می شود

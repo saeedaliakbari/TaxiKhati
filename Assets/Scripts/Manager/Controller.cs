@@ -54,8 +54,8 @@ public class Controller : MonoBehaviour
         ObscuredPrefs.SetInt("mainAchiv16", ObscuredPrefs.GetInt("mainAchiv16", 0) + 1);
         achivmentManager.OpenPanel();
         ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem", 5));
-        ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 20000));
-        ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 20000));
+        ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 25000));
+        ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 25000));
         ObscuredPrefs.SetDouble("token", ObscuredPrefs.GetDouble("token", 0));
         SetText();
 
@@ -83,6 +83,16 @@ public class Controller : MonoBehaviour
         Timer.Schedule(this, 5f, () =>
         {
             panelSplash.SetActive(false);
+            if (ObscuredPrefs.GetInt("helpStep", 0) != 22)
+            {
+                ObscuredPrefs.SetInt("helpStep", 0);
+                guideManager.panelLockGuide.SetActive(true);
+            }
+            else
+            {
+                Destroy(guideManager.panelLockGuide);
+                Destroy(guideManager.gameObject);
+            }
         }
         );
     }
@@ -252,11 +262,12 @@ public class Controller : MonoBehaviour
         ObscuredPrefs.SetInt("mainAchiv15", ObscuredPrefs.GetInt("mainAchiv15", 0) + 1);
         achivmentManager.OpenPanel();
         GiftBox box = Instantiate(boxPrefab, Vector3.zero, Quaternion.identity);//ایجاد کرد یک باکس
+        box.controller = this;
         box.transform.SetParent(parkPlace.transform);//پرنت در هایرارکی مکان پارکینگ تعیین می شود
         box.transform.localScale = Vector3.one;
         box.transform.position = parkPlace.transform.position;
         box.SetUpBox(carIndex, parkPlace, modelBox);
-        if (ObscuredPrefs.GetInt("helpStep", 0) != 7)
+        if (ObscuredPrefs.GetInt("helpStep", 0) >21)
         {
             Debug.Log("Start OPEn");
             box.StartAutoOpen();
@@ -274,7 +285,7 @@ public class Controller : MonoBehaviour
         Timer.Schedule(this, randomDelay, () =>
          {
              Debug.Log("NewCarTimeing");
-             if (ObscuredPrefs.GetInt("helpStep", 0) == 13)
+             if (ObscuredPrefs.GetInt("helpStep", 0) == 22)
                  SpawnABoxTime();
          });
     }
