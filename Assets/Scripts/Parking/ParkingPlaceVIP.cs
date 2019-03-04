@@ -9,6 +9,6 @@ public class ParkingPlaceVIP : MonoBehaviour
     private void OnMouseUp()//کشیدن را تمام کرد
     {
         controller.panelMessage.SetActive(true);
-        controller.txtPanelMessage.text = "برای فعالسازی پارکینگ لطفا اشتراک را تهیه فرمایید";
+        controller.txtPanelMessage.text = "براي فعالسازي پارکینگ لطفا اشتراکـ را تهیه فرمایید";
     }
 }

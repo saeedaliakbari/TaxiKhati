@@ -11,6 +11,8 @@ public class GiftBox : MonoBehaviour
     [HideInInspector]
     public ParkingPlace parkPlace;
     [HideInInspector]
+    public Controller controller;
+    [HideInInspector]
     public int carIndex;
     private bool opened = false;
 
@@ -47,6 +49,7 @@ public class GiftBox : MonoBehaviour
                  Controller.instance.SpawnACar((int)carIndex, (ParkingPlace)parkPlace);
                  Destroy(gameObject);
              }));//بعد از نیم ثانیه که انیمیشن تموم شد ماشین داخل پارکینگ مورد نظر ایجاد شود
+            controller.guideManager.OpenGiftBox();
         }
     }
 }

@@ -13,7 +13,8 @@ public class IAPCafeBazar : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        StartCoroutine(IEInit());
+        //StartCoroutine(IEInit());
+        BazaarIAB.init(RSA);//در صورت موفقیت رخداد
 
         //billingSupportedEvent
         //فراخوانی می شود و در صورت عدم موفقیت رخداد

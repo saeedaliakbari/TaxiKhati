@@ -19,7 +19,6 @@ public class ShopPanel : MonoBehaviour
     void Start()
     {
         BtnSelect(true);
-
     }
     public void OpenPanel()
     {
