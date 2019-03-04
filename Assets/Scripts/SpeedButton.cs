@@ -6,12 +6,12 @@ using UnityEngine.UI;
 
 public class SpeedButton : MonoBehaviour
 {
-    public GameObject objImgSpeed;
+    //public GameObject objImgSpeed;
     public Text txtSpeedTime;
     private bool showTime = false;
     public void UpdateButtonState(bool showTime)
     {
-        objImgSpeed.SetActive(!showTime);
+        //objImgSpeed.SetActive(!showTime);
         this.showTime = showTime;
         if (showTime)
         {
