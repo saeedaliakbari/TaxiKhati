@@ -10,7 +10,7 @@ public class GoToScene : MonoBehaviour
 {
     IEnumerator goToScene(string scene)
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         yield return null;
         AsyncOperation ao = SceneManager.LoadSceneAsync(scene);
         ao.allowSceneActivation = false;

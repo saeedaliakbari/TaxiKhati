@@ -21,6 +21,7 @@ public class GiftBox : MonoBehaviour
         carIndex = index;//شماره ماشین
         spriteBox.sprite = sprBox[modelBox];//باکس در لول های پایین تر از 4 و بالاتر از 4 متفاوت است
         parkPlace = place;//بهش پارکینگ را هم می دهد
+
     }
     public void StartAutoOpen()//بعد از 3 ثانیه باکس خودش باز شود
     {

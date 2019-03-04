@@ -22,6 +22,7 @@ public class Controller : MonoBehaviour
     public VideoAds videoAds;
     public BatchPlugin batchPlugin;
     public GuideManager guideManager;
+    public SettingPanel settingPanel;
     //public ShopDialog shop;
     //public ExchangeSpeedDialog exchangeDialog;
     public MergeCar mergeCar;
@@ -91,16 +92,18 @@ public class Controller : MonoBehaviour
     }
     IEnumerator IESliderPanelSplash()
     {
-        //mute sfx
+
         DateTime time = DateTime.Now.AddSeconds(5);
         double timer = time.Subtract(new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds;
         while (time > DateTime.Now)
         {
+            settingPanel.muteSfx.TransitionTo(1f);
             double now = DateTime.Now.Subtract(new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds;
             imgSliderSplash.fillAmount = 1 - ((float)(timer - now) / 5);
             yield return new WaitForSeconds(0.1f);
         }
-        //if sfx is unmute > unmute sfx
+        if (PlayerPrefs.GetInt("SfxMute", 1) == 1)
+            settingPanel.unmuteSfx.TransitionTo(0.2f);
         panelSplash.SetActive(false);
         if (ObscuredPrefs.GetInt("helpStep", 0) != 22)
         {

@@ -23447,7 +23447,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "1.0.0 \uFEEA\uFEA8\uFEB4\uFEE7"
+  m_Text: "0.9.0 \uFEEA\uFEA8\uFEB4\uFEE7"
 --- !u!222 &576706903
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -28214,7 +28214,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &682656667
 RectTransform:
   m_ObjectHideFlags: 0
@@ -45311,6 +45311,7 @@ MonoBehaviour:
   videoAds: {fileID: 1085018824}
   batchPlugin: {fileID: 1231707831}
   guideManager: {fileID: 905291734}
+  settingPanel: {fileID: 1085018828}
   mergeCar: {fileID: 1202044279}
   levelBonus: {fileID: 1066917862}
   deleteBin: {fileID: 1588907980}
@@ -88482,16 +88483,16 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 905291734}
-        m_MethodName: PlusStep
-        m_Mode: 1
+      - m_Target: {fileID: 1037802893}
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null

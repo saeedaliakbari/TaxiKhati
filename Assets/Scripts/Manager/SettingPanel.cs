@@ -11,19 +11,16 @@ public class SettingPanel : MonoBehaviour
     public Sprite sprRed, sprGreen;
     public Text txtBtnMusic, txtBtnSfx;
     public Image imgBtnMusic, imgBtnSfx;
-    public AudioMixerSnapshot muteMusic,unmuteMusic,muteSfx,unmuteSfx;
+    public AudioMixerSnapshot muteMusic, unmuteMusic, muteSfx, unmuteSfx;
     void Start()
     {
-
         if (PlayerPrefs.GetInt("MusicMute", 1) == 1)
         {
             unmuteMusic.TransitionTo(0.2f);
-            //muteMusic.TransitionTo(1f);
             txtBtnMusic.text = "فعال";
             imgBtnMusic.sprite = sprGreen;
         }
         else {
-            //unmuteMusic.TransitionTo(0.2f);
             muteMusic.TransitionTo(1f);
             txtBtnMusic.text = "غیرفعال";
             imgBtnMusic.sprite = sprRed;
@@ -31,12 +28,12 @@ public class SettingPanel : MonoBehaviour
 
         if (PlayerPrefs.GetInt("SfxMute", 1) == 1)
         {
-            muteSfx.TransitionTo(1f);
+            unmuteSfx.TransitionTo(0.2f);
             txtBtnSfx.text = "فعال";
             imgBtnSfx.sprite = sprGreen;
         }
         else {
-            unmuteSfx.TransitionTo(0.2f);
+            muteSfx.TransitionTo(1f);
             txtBtnSfx.text = "غیرفعال";
             imgBtnSfx.sprite = sprRed;
         }
@@ -75,18 +72,16 @@ public class SettingPanel : MonoBehaviour
         if (PlayerPrefs.GetInt("MusicMute", 1) == 1)
         {
             muteMusic.TransitionTo(1f);
-            txtBtnMusic.text = "فعال";
-            imgBtnMusic.sprite = sprGreen;
+            txtBtnMusic.text = "غیرفعال";
+            imgBtnMusic.sprite = sprRed;
             PlayerPrefs.SetInt("MusicMute", 0);
         }
         else {
             unmuteMusic.TransitionTo(0.2f);
-            txtBtnMusic.text = "غیرفعال";
-            imgBtnMusic.sprite = sprRed;
+            txtBtnMusic.text = "فعال";
+            imgBtnMusic.sprite = sprGreen;
             PlayerPrefs.SetInt("MusicMute", 1);
         }
-        PlayerPrefs.Save();
-        Start();
     }
 
     public void ChangeSfx()
@@ -94,17 +89,15 @@ public class SettingPanel : MonoBehaviour
         if (PlayerPrefs.GetInt("SfxMute", 1) == 1)
         {
             muteSfx.TransitionTo(1f);
-            txtBtnSfx.text = "فعال";
-            imgBtnSfx.sprite = sprGreen;
+            txtBtnSfx.text = "غیرفعال";
+            imgBtnSfx.sprite = sprRed;
             PlayerPrefs.SetInt("SfxMute", 0);
         }
         else {
             unmuteSfx.TransitionTo(0.2f);
-            txtBtnSfx.text = "غیرفعال";
-            imgBtnSfx.sprite = sprRed;
+            txtBtnSfx.text = "فعال";
+            imgBtnSfx.sprite = sprGreen;
             PlayerPrefs.SetInt("SfxMute", 1);
         }
-        PlayerPrefs.Save();
-        Start();
     }
 }
