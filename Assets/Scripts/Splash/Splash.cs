@@ -1,16 +1,16 @@
 ﻿﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//using GameAnalyticsSDK;
+using GameAnalyticsSDK;
 
 public class Splash : MonoBehaviour
 {
-    public GoToScene goTo;
+    public GoToScene goToSecne;
 
     void Start()
     {
-        //GameAnalytics.Initialize();
-        goTo.go("Main");
+        GameAnalytics.Initialize();
+        goToSecne.go("Main");
     }
 
 }

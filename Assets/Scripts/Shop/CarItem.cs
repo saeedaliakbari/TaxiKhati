@@ -17,7 +17,7 @@ public class CarItem : MonoBehaviour
         int index = transform.GetSiblingIndex();//یعنی از نظر فرزندی برای پدرخود چندم است در هایرارکی
         double balance;
         offDetection(visible);
-        bool open=i< ObscuredPrefs.GetInt("unlocked_car", 1);
+        bool open = i < ObscuredPrefs.GetInt("unlocked_car", 1);
         txtName.text = open ? controller.carName[index] : "???";
         car.sprite = open ? controller.activeCar[index] : controller.inActiveCar[index];//با توجه به فعال یا غیرفعال بودن اسپرایت فعال یا غیرفعال می شود
         earnSlider.fillAmount = controller.earning[index]/* / controller.earning[49]*/;
@@ -46,8 +46,8 @@ public class CarItem : MonoBehaviour
             {
                 double coinPrice = ObscuredPrefs.GetDouble("car_price_" + index, System.Math.Round(controller.basePrice[index]));
                 //Debug.Log(index+">coinPrice : " + coinPrice);
-                coinPrice = coinPrice * ObscuredPrefs.GetFloat("offCar", 1);
-                txtCoin.text = coinPrice.ToString();
+                coinPrice = coinPrice * (1 - ObscuredPrefs.GetFloat("offCar", 0));
+                txtCoin.text = coinPrice.ToString("0.##");
                 balance = ObscuredPrefs.GetDouble("coin", 5000);
                 btnBuyCoin.interactable = visible && balance >= coinPrice;
             }
@@ -61,7 +61,7 @@ public class CarItem : MonoBehaviour
     }
     private void offDetection(bool visible)
     {
-        float off = 1 - ObscuredPrefs.GetFloat("offCar", 1f);
+        float off = ObscuredPrefs.GetFloat("offCar", 0f);
         if (off != 0 && visible)
         {
             imgOff.gameObject.SetActive(true);

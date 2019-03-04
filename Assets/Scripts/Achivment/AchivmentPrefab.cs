@@ -10,7 +10,7 @@ public class AchivmentPrefab : MonoBehaviour
     public Text txtTitle, txtGem, txtSlider;
     public Button btnGet;
     public Color inActvie;
-    public Image imgBack, imgSlider;
+    public Image imgBack, imgSlider, imgTik;
     public GameObject objSlider, objGemIcon, objGemTxt;
     [HideInInspector]
     public Controller controller;
@@ -33,6 +33,7 @@ public class AchivmentPrefab : MonoBehaviour
             objGemTxt.SetActive(false);
             objSlider.SetActive(false);
             listAchvGet.Add(gameObject);
+            imgTik.gameObject.SetActive(true);
         }
         else if (ObscuredPrefs.GetInt(stringPrefs + id, 0) >= max)//unlock
         {
@@ -50,6 +51,7 @@ public class AchivmentPrefab : MonoBehaviour
     public void GetGift()
     {
         imgBack.color = inActvie;
+        imgTik.gameObject.SetActive(true);
         Debug.Log("GEM> " + ObscuredPrefs.GetDouble("gem", 0));
         ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem", 0) + gem);
         Debug.Log("GEM> " + ObscuredPrefs.GetDouble("gem", 0));

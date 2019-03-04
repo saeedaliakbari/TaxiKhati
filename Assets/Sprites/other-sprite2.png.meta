@@ -8,6 +8,9 @@ TextureImporter:
     21300006: other-sprite2_3
     21300008: other-sprite2_4
     21300010: other-sprite2_5
+    21300012: other-sprite2_6
+    21300014: other-sprite2_7
+    21300016: other-sprite2_8
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -168,10 +171,52 @@ TextureImporter:
       name: other-sprite2_5
       rect:
         serializedVersion: 2
-        x: 651
-        y: 14
+        x: 849
+        y: 642
         width: 163
         height: 196
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: other-sprite2_6
+      rect:
+        serializedVersion: 2
+        x: 514
+        y: 173
+        width: 489
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: other-sprite2_7
+      rect:
+        serializedVersion: 2
+        x: 514
+        y: 120
+        width: 489
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: other-sprite2_8
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 52
+        width: 503
+        height: 40
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

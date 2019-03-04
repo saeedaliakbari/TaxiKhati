@@ -4,7 +4,7 @@
           xmlns:tools="http://schemas.android.com/tools"
           android:installLocation="auto"
           android:versionName="1"
-          android:versionCode="5">
+          android:versionCode="6">
   <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="26" />
   <supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" android:xlargeScreens="true" android:anyDensity="true" />
   <uses-permission android:name="android.permission.INTERNET" />

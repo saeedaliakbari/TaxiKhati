@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Batch;
 using CodeStage.AntiCheat.ObscuredTypes;
+using System;
 
 public class Controller : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class Controller : MonoBehaviour
     public GiftBox boxPrefab;
     public Text /*txtLevelBuyCar,*/ txtError, txtPanelMessage;
     public InputField inputFieldName;
-    public Image imgBuyCar;
+    public Image imgBuyCar, imgSliderSplash;
     public ParkingManager parkingManager;
     public RunSlotManager slotManager;
     public PlayerLevel playerLevel;
@@ -25,12 +26,13 @@ public class Controller : MonoBehaviour
     //public ExchangeSpeedDialog exchangeDialog;
     public MergeCar mergeCar;
     public LevelUpBonus levelBonus;
-    public GameObject deleteBin, panelMessage, panelShopGem, btnVip,btnGoToVipPanelMessage;
-    public GameObject coinEffectPrefab, panelSplash,panelWait;
+    public GameObject deleteBin, panelMessage, panelShopGem, btnVip, btnGoToVipPanelMessage;
+    public GameObject coinEffectPrefab, panelSplash, panelWait;
     public OfflineEraning offEarning;
     public Text txtGem;
     public TrimNumberText txtCoin, txtCoinTop;
     public TrimNumberText txtToken, buyPrice;
+    public Animator animIncome;
     //public RubyShop rubyShop;
     public static Controller instance;
 
@@ -80,21 +82,36 @@ public class Controller : MonoBehaviour
         LoadGame();
         NewCarTimeing();
         GiftDaily();//اگر عضو بود بهش الماس روزانه میدهد
-        Timer.Schedule(this, 5f, () =>
+                    //Timer.Schedule(this, 5f, () =>
+                    //{
+        StartCoroutine(IESliderPanelSplash());
+        //}
+        //);
+    }
+    IEnumerator IESliderPanelSplash()
+    {
+        //mute sfx
+        DateTime time = DateTime.Now.AddSeconds(5);
+        double timer = time.Subtract(new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds;
+        while (time > DateTime.Now)
         {
-            panelSplash.SetActive(false);
-            if (ObscuredPrefs.GetInt("helpStep", 0) != 22)
-            {
-                ObscuredPrefs.SetInt("helpStep", 0);
-                guideManager.panelLockGuide.SetActive(true);
-            }
-            else
-            {
-                Destroy(guideManager.panelLockGuide);
-                Destroy(guideManager.gameObject);
-            }
+            double now = DateTime.Now.Subtract(new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds;
+            imgSliderSplash.fillAmount = 1 - ((float)(timer - now) / 5);
+            yield return new WaitForSeconds(0.1f);
         }
-        );
+        //if sfx is unmute > unmute sfx
+        panelSplash.SetActive(false);
+        if (ObscuredPrefs.GetInt("helpStep", 0) != 22)
+        {
+            ObscuredPrefs.SetInt("helpStep", 0);
+            guideManager.panelLockGuide.SetActive(true);
+        }
+        else
+        {
+            Destroy(guideManager.panelLockGuide);
+            Destroy(guideManager.gameObject);
+        }
+        yield return 0;
     }
     private void ConfigBatch()
     {
@@ -111,15 +128,11 @@ public class Controller : MonoBehaviour
         slotManager.InitSlots();//لاین های شروع را ایجاد می کند
         //CurrencyController.onBalanceChanged();
         UpdatePrice();
-        if (ObscuredPrefs.GetInt("returned_car", 0) == 0)//اگر راهنما به پایان نرسیده بود هنوز
-        {
-            //guideManager.UpdateAfter(0.5f);
-        }
     }
     public void UpdatePrice()
     {//قیمت ماشین ها را می گذارد
         int index = ObscuredPrefs.GetInt("curr_car_index", 0);//az 0 shoro mishavad
-        buyPrice.text = ObscuredPrefs.GetDouble("car_price_" + index, System.Math.Round(basePrice[index])).ToString("0.##");
+        buyPrice.text = (ObscuredPrefs.GetDouble("car_price_" + index, System.Math.Round(basePrice[index])) * (1 - ObscuredPrefs.GetFloat("offCar", 0))).ToString("0.##");
         //txtLevelBuyCar.text = "خرید ماشین سطح " + (index + 1);
         //Debug.Log("index Car : " + index + " sprite Name :" + activeCar[index].name);
         imgBuyCar.sprite = activeCar[index];
@@ -275,7 +288,7 @@ public class Controller : MonoBehaviour
     }
     public void NewCarTimeing()
     {
-        float randomDelay = Random.Range(20, 31);
+        float randomDelay = UnityEngine.Random.Range(20, 31);
         Timer.Schedule(this, randomDelay, () =>
          {
              Debug.Log("NewCarTimeing");
@@ -287,7 +300,7 @@ public class Controller : MonoBehaviour
     {
         ParkingPlace parkPlace = parkingManager.GetEmptyPlace();
         int taxiLvl = ObscuredPrefs.GetInt("unlocked_car", 1);
-        int index = taxiLvl - Random.Range(taxiDefferenceLvl[taxiLvl - 1].min, taxiDefferenceLvl[taxiLvl - 1].max);
+        int index = taxiLvl - UnityEngine.Random.Range(taxiDefferenceLvl[taxiLvl - 1].min, taxiDefferenceLvl[taxiLvl - 1].max);
         index = index > 0 ? index : 1;
         Debug.Log("taxiLvl: " + ObscuredPrefs.GetInt("unlocked_car", 1) + " UNLOCK CAR : " + index);
         try
@@ -458,7 +471,7 @@ public class Controller : MonoBehaviour
     {
         if (ObscuredPrefs.GetString("username", "") == "")
         {
-            ObscuredPrefs.SetString("username", "تاکسی ران " + Random.Range(100000000, 999999999));
+            ObscuredPrefs.SetString("username", "تاکسی ران " + UnityEngine.Random.Range(100000000, 999999999));
         }
         inputFieldName.text = ObscuredPrefs.GetString("username", "");
     }
@@ -560,7 +573,7 @@ public class Controller : MonoBehaviour
                 if (carObj.driving)//اگر ماشین در حال حرکت بود
                 {
                     car.StartDriveInSecond(time);//بعد از تایم مشخص حرکت را شروع کند
-                    //time += 0.5f;//به تایم یک مقداری اضافه می کنیم که همه همزمان شروع به حرکت نکنند و بینشون فاصله باشد
+                    time += 0.5f;//به تایم یک مقداری اضافه می کنیم که همه همزمان شروع به حرکت نکنند و بینشون فاصله باشد
                 }
             }
         }
@@ -600,9 +613,11 @@ public class Controller : MonoBehaviour
     }
     public void ShowCoinEffect(Vector3 position)
     {
-        //GameObject eff = Instantiate(coinEffectPrefab, Vector3.zero, Quaternion.identity);
-        //eff.transform.localScale = Vector3.one;
-        //eff.transform.position = position;
+        animIncome.Play("IncomeCoin");
+        GameObject eff = Instantiate(coinEffectPrefab, Vector3.zero, Quaternion.identity);
+        eff.transform.localScale = Vector3.one;
+        eff.transform.position = position;
+
     }
     public void GiftDaily()
     {
@@ -624,10 +639,12 @@ public class Controller : MonoBehaviour
     }
     public void ClosePanelShopCar()
     {
-        int random = Random.Range(3, 6);
+        int random = UnityEngine.Random.Range(4, 7);
+        Debug.Log("removeAds: " + ObscuredPrefs.GetInt("removeAds", 0));
         if (ObscuredPrefs.GetInt("removeAds", 0) == 0)//اگر تبلیغات براش فعال بود   
         {
-            if (ObscuredPrefs.GetInt("countCloseShop", 1) < random)//اگر کمتر از 3 بار پنل باز شده بود
+            Debug.Log("countCloseShop : " + ObscuredPrefs.GetInt("countCloseShop", 1) + ">RANDOM :" + random);
+            if (ObscuredPrefs.GetInt("countCloseShop", 1) < 4)//اگر کمتر از 3 بار پنل باز شده بود
             {
                 ObscuredPrefs.SetInt("countCloseShop", ObscuredPrefs.GetInt("countCloseShop", 1) + 1);
             }

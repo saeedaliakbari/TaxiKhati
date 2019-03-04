@@ -36,8 +36,8 @@ public class ShopItemOff : MonoBehaviour {
         {
            ObscuredPrefs.SetDouble("token",ObscuredPrefs.GetDouble("token") - price);
             ObscuredPrefs.SetInt("offShopCarLevel", ObscuredPrefs.GetInt("offShopCarLevel", 0) + 1);
-            int level = ObscuredPrefs.GetInt("upIncomeLevel", 0);
-            ObscuredPrefs.SetFloat("offCar", offShopCar[level]);
+            int level = ObscuredPrefs.GetInt("offShopCarLevel", 0);
+            ObscuredPrefs.SetFloat("offCar", offShopCar[level-1]);
             runSlotManager.UpdateEarningSpeedText();
             OpenPanel();
         }
