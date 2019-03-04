@@ -10,7 +10,7 @@ public class GuideManager : MonoBehaviour
     public Controller controller;
     [HideInInspector]
     public List<ParkingPlace> parkPlace = new List<ParkingPlace>();
-  
+
     public void PlusStep()
     {
         ObscuredPrefs.SetInt("helpStep", ObscuredPrefs.GetInt("helpStep", 0) + 1);
@@ -45,6 +45,7 @@ public class GuideManager : MonoBehaviour
         if (ObscuredPrefs.GetInt("helpStep", 0) == 6)
         {
             startDriveGuide.SetActive(false);
+            controller.colliderCarHelp.enabled = false;
             StartCoroutine(IEReturn());
             PlusStep();
         }
@@ -61,6 +62,7 @@ public class GuideManager : MonoBehaviour
     IEnumerator IEReturn()
     {
         yield return new WaitForSeconds(4.1f);
+        controller.colliderCarHelp.enabled = true;
         returnPanelGuide.SetActive(true);
     }
     public void ReturnCar()

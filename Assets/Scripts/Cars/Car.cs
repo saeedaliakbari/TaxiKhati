@@ -168,6 +168,7 @@ public class Car : MonoBehaviour
     }
     public void StartDrive()//شروع حرکت
     {
+        controller.colliderCarHelp = GetComponent<Collider2D>();
         controller.guideManager.StartDrive();
         moving = true;
         moveCar = SpawnACar();

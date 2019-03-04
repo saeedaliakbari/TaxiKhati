@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CodeStage.AntiCheat.ObscuredTypes;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
 public class SettingPanel : MonoBehaviour
 {
@@ -10,29 +11,32 @@ public class SettingPanel : MonoBehaviour
     public Sprite sprRed, sprGreen;
     public Text txtBtnMusic, txtBtnSfx;
     public Image imgBtnMusic, imgBtnSfx;
+    public AudioMixerSnapshot muteMusic,unmuteMusic,muteSfx,unmuteSfx;
     void Start()
     {
 
         if (PlayerPrefs.GetInt("MusicMute", 1) == 1)
         {
+            unmuteMusic.TransitionTo(0.2f);
             //muteMusic.TransitionTo(1f);
             txtBtnMusic.text = "فعال";
             imgBtnMusic.sprite = sprGreen;
         }
         else {
             //unmuteMusic.TransitionTo(0.2f);
+            muteMusic.TransitionTo(1f);
             txtBtnMusic.text = "غیرفعال";
             imgBtnMusic.sprite = sprRed;
         }
 
         if (PlayerPrefs.GetInt("SfxMute", 1) == 1)
         {
-            //muteSfx.TransitionTo(1f);
+            muteSfx.TransitionTo(1f);
             txtBtnSfx.text = "فعال";
             imgBtnSfx.sprite = sprGreen;
         }
         else {
-            //unmuteSfx.TransitionTo(0.2f);
+            unmuteSfx.TransitionTo(0.2f);
             txtBtnSfx.text = "غیرفعال";
             imgBtnSfx.sprite = sprRed;
         }
@@ -70,35 +74,37 @@ public class SettingPanel : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("MusicMute", 1) == 1)
         {
-            //muteMusic.TransitionTo(1f);
+            muteMusic.TransitionTo(1f);
             txtBtnMusic.text = "فعال";
             imgBtnMusic.sprite = sprGreen;
             PlayerPrefs.SetInt("MusicMute", 0);
         }
         else {
-            //unmuteMusic.TransitionTo(0.2f);
+            unmuteMusic.TransitionTo(0.2f);
             txtBtnMusic.text = "غیرفعال";
             imgBtnMusic.sprite = sprRed;
             PlayerPrefs.SetInt("MusicMute", 1);
         }
         PlayerPrefs.Save();
+        Start();
     }
 
     public void ChangeSfx()
     {
         if (PlayerPrefs.GetInt("SfxMute", 1) == 1)
         {
-            //muteSfx.TransitionTo(1f);
+            muteSfx.TransitionTo(1f);
             txtBtnSfx.text = "فعال";
             imgBtnSfx.sprite = sprGreen;
             PlayerPrefs.SetInt("SfxMute", 0);
         }
         else {
-            //unmuteSfx.TransitionTo(0.2f);
+            unmuteSfx.TransitionTo(0.2f);
             txtBtnSfx.text = "غیرفعال";
             imgBtnSfx.sprite = sprRed;
             PlayerPrefs.SetInt("SfxMute", 1);
         }
         PlayerPrefs.Save();
+        Start();
     }
 }

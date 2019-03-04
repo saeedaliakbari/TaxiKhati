@@ -35,7 +35,8 @@ public class Controller : MonoBehaviour
     public Animator animIncome;
     //public RubyShop rubyShop;
     public static Controller instance;
-
+    [HideInInspector]
+    public Collider2D colliderCarHelp;
 
     [Header("Config Cars")]
     public string[] carName;
