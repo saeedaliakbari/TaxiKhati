@@ -1,35 +1,54 @@
-/*****************************************************************************
- * Automatic import and advanced preview added by Mitch Thompson
- * Full irrevocable rights and permissions granted to Esoteric Software
-*****************************************************************************/
+/******************************************************************************
+ * Spine Runtimes Software License v2.5
+ *
+ * Copyright (c) 2013-2016, Esoteric Software
+ * All rights reserved.
+ *
+ * You are granted a perpetual, non-exclusive, non-sublicensable, and
+ * non-transferable license to use, install, execute, and perform the Spine
+ * Runtimes software and derivative works solely for personal or internal
+ * use. Without the written permission of Esoteric Software (see Section 2 of
+ * the Spine Software License Agreement), you may not (a) modify, translate,
+ * adapt, or develop new applications using the Spine Runtimes or otherwise
+ * create derivative works or improvements of the Spine Runtimes or (b) remove,
+ * delete, alter, or obscure any trademarks or any copyright, trademark, patent,
+ * or other intellectual property or proprietary rights notices on or in the
+ * Software, including any copy thereof. Redistributions in binary or source
+ * form must include this license and terms.
+ *
+ * THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE "AS IS" AND ANY EXPRESS OR
+ * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+ * EVENT SHALL ESOTERIC SOFTWARE BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES, BUSINESS INTERRUPTION, OR LOSS OF
+ * USE, DATA, OR PROFITS) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+ * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *****************************************************************************/
+
 #define SPINE_SKELETON_ANIMATOR
-#define SPINE_BAKING
 
 using System;
+using System.Reflection;
 using System.Collections.Generic;
 using UnityEditor;
-
-#if !UNITY_4_3
-using UnityEditor.AnimatedValues;
-#endif
 using UnityEngine;
+
 using Spine;
 
 namespace Spine.Unity.Editor {
-	[CustomEditor(typeof(SkeletonDataAsset))]
-	public class SkeletonDataAssetInspector : UnityEditor.Editor {
-		static bool showAnimationStateData = true;
-		static bool showAnimationList = true;
-		static bool showSlotList = false;
-		static bool showAttachments = false;
+	using Event = UnityEngine.Event;
+	using Icons = SpineEditorUtilities.Icons;
+	using Animation = Spine.Animation;
 
-		#if SPINE_BAKING
-		static bool isBakingExpanded = false;
-		static bool bakeAnimations = true;
-		static bool bakeIK = true;
-		static SendMessageOptions bakeEventOptions = SendMessageOptions.DontRequireReceiver;
-		const string ShowBakingPrefsKey = "SkeletonDataAssetInspector_showUnity";
-		#endif
+	[CustomEditor(typeof(SkeletonDataAsset)), CanEditMultipleObjects]
+	public class SkeletonDataAssetInspector : UnityEditor.Editor {
+		internal static bool showAnimationStateData = true;
+		internal static bool showAnimationList = true;
+		internal static bool showSlotList = false;
+		internal static bool showAttachments = false;
 
 		SerializedProperty atlasAssets, skeletonJSON, scale, fromAnimation, toAnimation, duration, defaultMix;
 		#if SPINE_TK2D
@@ -41,20 +60,39 @@ namespace Spine.Unity.Editor {
 		SerializedProperty controller;
 		#endif
 
-		bool m_initialized = false;
-		SkeletonDataAsset m_skeletonDataAsset;
-		SkeletonData m_skeletonData;
-		string m_skeletonDataAssetGUID;
-		bool needToSerialize;
+		SkeletonDataAsset targetSkeletonDataAsset;
+		SkeletonData targetSkeletonData;
 
-		List<string> warnings = new List<string>();
+		readonly List<string> warnings = new List<string>();
+		readonly SkeletonInspectorPreview preview = new SkeletonInspectorPreview();
 
 		GUIStyle activePlayButtonStyle, idlePlayButtonStyle;
+		readonly GUIContent DefaultMixLabel = new GUIContent("Default Mix Duration", "Sets 'SkeletonDataAsset.defaultMix' in the asset and 'AnimationState.data.defaultMix' at runtime load time.");
+
+		string TargetAssetGUID { get { return AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(targetSkeletonDataAsset)); } }
+		string LastSkinKey { get { return TargetAssetGUID + "_lastSkin"; } }
+		string LastSkinName { get { return EditorPrefs.GetString(LastSkinKey, ""); } }
 
 		void OnEnable () {
-			SpineEditorUtilities.ConfirmInitialization();
+			InitializeEditor();
+		}
 
-			atlasAssets = serializedObject.FindProperty("atlasAssets");
+		void OnDestroy () {
+			HandleOnDestroyPreview();
+			AppDomain.CurrentDomain.DomainUnload -= OnDomainUnload;
+			EditorApplication.update -= preview.HandleEditorUpdate;
+		}
+
+		private void OnDomainUnload (object sender, EventArgs e) {
+			OnDestroy();
+		}
+
+		void InitializeEditor () {
+			SpineEditorUtilities.ConfirmInitialization();
+			targetSkeletonDataAsset = (SkeletonDataAsset)target;
+
+			bool newAtlasAssets = atlasAssets == null;
+			if (newAtlasAssets) atlasAssets = serializedObject.FindProperty("atlasAssets");
 			skeletonJSON = serializedObject.FindProperty("skeletonJSON");
 			scale = serializedObject.FindProperty("scale");
 			fromAnimation = serializedObject.FindProperty("fromAnimation");
@@ -67,47 +105,204 @@ namespace Spine.Unity.Editor {
 			#endif
 
 			#if SPINE_TK2D
-			atlasAssets.isExpanded = false;
+			if (newAtlasAssets) atlasAssets.isExpanded = false;
 			spriteCollection = serializedObject.FindProperty("spriteCollection");
 			#else
-			atlasAssets.isExpanded = true;
-			#endif
+			// Analysis disable once ConvertIfToOrExpression
+			if (newAtlasAssets) atlasAssets.isExpanded = true;
+#endif
 
-			#if SPINE_BAKING
-			isBakingExpanded = EditorPrefs.GetBool(ShowBakingPrefsKey, false);
-			#endif
+			// This handles the case where the managed editor assembly is unloaded before recompilation when code changes.
+			AppDomain.CurrentDomain.DomainUnload -= OnDomainUnload;
+			AppDomain.CurrentDomain.DomainUnload += OnDomainUnload;
 
-			m_skeletonDataAsset = (SkeletonDataAsset)target;
-			m_skeletonDataAssetGUID = AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(m_skeletonDataAsset));
-			EditorApplication.update += EditorUpdate;
-			m_skeletonData = m_skeletonDataAsset.GetSkeletonData(false);
-			RepopulateWarnings();
+			EditorApplication.update -= preview.HandleEditorUpdate;
+			EditorApplication.update += preview.HandleEditorUpdate;
+			preview.OnSkinChanged -= HandlePreviewSkinChanged;
+			preview.OnSkinChanged += HandlePreviewSkinChanged;
+
+			PopulateWarnings();
+			if (targetSkeletonDataAsset.skeletonJSON == null) {
+				targetSkeletonData = null;
+				return;	
+			}
+
+			targetSkeletonData = warnings.Count == 0 ? targetSkeletonDataAsset.GetSkeletonData(false) : null;
+
+			if (targetSkeletonData != null && warnings.Count <= 0) {
+				preview.Initialize(this.Repaint, targetSkeletonDataAsset, this.LastSkinName);
+			}
+				
 		}
 
-		void OnDestroy () {
-			m_initialized = false;
-			EditorApplication.update -= EditorUpdate;
-			this.DestroyPreviewInstances();
-			if (this.m_previewUtility != null) {
-				this.m_previewUtility.Cleanup();
-				this.m_previewUtility = null;
-			}
+		void Clear () {
+			preview.Clear();
+			targetSkeletonDataAsset.Clear();
+			targetSkeletonData = null;
 		}
 
 		override public void OnInspectorGUI () {
-			// Lazy initialization
-			{ 
-				// Accessing EditorStyles values in OnEnable during a recompile causes UnityEditor to throw null exceptions. (Unity 5.3.5)
-				idlePlayButtonStyle = idlePlayButtonStyle ?? new GUIStyle(EditorStyles.toolbarButton);
+			// Multi-Editing
+			if (serializedObject.isEditingMultipleObjects) {
+				OnInspectorGUIMulti();
+				return;
+			}
+
+			{ // Lazy initialization because accessing EditorStyles values in OnEnable during a recompile causes UnityEditor to throw null exceptions. (Unity 5.3.5)
+				idlePlayButtonStyle = idlePlayButtonStyle ?? new GUIStyle(EditorStyles.miniButton);
 				if (activePlayButtonStyle == null) {
-					activePlayButtonStyle = new GUIStyle(EditorStyles.toolbarButton);
+					activePlayButtonStyle = new GUIStyle(idlePlayButtonStyle);
 					activePlayButtonStyle.normal.textColor = Color.red;
 				}
 			}
 
 			serializedObject.Update();
 
-			EditorGUI.BeginChangeCheck();
+			// Header
+			EditorGUILayout.LabelField(SpineInspectorUtility.TempContent(target.name + " (SkeletonDataAsset)", Icons.spine), EditorStyles.whiteLargeLabel);
+			if (targetSkeletonData != null) EditorGUILayout.LabelField("(Drag and Drop to instantiate.)", EditorStyles.miniLabel);
+
+			// Main Serialized Fields
+			using (var changeCheck = new EditorGUI.ChangeCheckScope()) {
+				using (new SpineInspectorUtility.BoxScope())
+					DrawSkeletonDataFields();
+
+				using (new SpineInspectorUtility.BoxScope()) {
+					DrawAtlasAssetsFields();
+					HandleAtlasAssetsNulls();
+				}
+
+				if (changeCheck.changed) {
+					if (serializedObject.ApplyModifiedProperties()) {
+						this.Clear();
+						this.InitializeEditor();
+						return;
+					}
+				}
+			}
+
+			// Unity Quirk: Some code depends on valid preview. If preview is initialized elsewhere, this can cause contents to change between Layout and Repaint events, causing GUILayout control count errors.
+			if (warnings.Count <= 0)
+				preview.Initialize(this.Repaint, targetSkeletonDataAsset, this.LastSkinName);
+
+			if (targetSkeletonData != null) {
+				GUILayout.Space(20f);
+
+				using (new SpineInspectorUtility.BoxScope(false)) {
+					EditorGUILayout.LabelField(SpineInspectorUtility.TempContent("Mix Settings", Icons.animationRoot), EditorStyles.boldLabel);
+					DrawAnimationStateInfo();
+					EditorGUILayout.Space();
+				}
+
+				EditorGUILayout.LabelField("Preview", EditorStyles.boldLabel);
+				DrawAnimationList();
+				if (targetSkeletonData.Animations.Count > 0) {
+					const string AnimationReferenceButtonText = "Create Animation Reference Assets";
+					const string AnimationReferenceTooltipText = "AnimationReferenceAsset acts as Unity asset for a reference to a Spine.Animation. This can be used in inspectors.\n\nIt serializes  a reference to a SkeletonDataAsset and an animationName.\n\nAt runtime, a reference to its Spine.Animation is loaded and cached into the object to be used as needed. This skips the need to find and cache animation references in individual MonoBehaviours.";
+					if (GUILayout.Button(SpineInspectorUtility.TempContent(AnimationReferenceButtonText, Icons.animationRoot, AnimationReferenceTooltipText), GUILayout.Width(250), GUILayout.Height(26))) {
+						CreateAnimationReferenceAssets();
+					}
+				}
+				EditorGUILayout.Space();
+				DrawSlotList();
+				EditorGUILayout.Space();
+
+				DrawUnityTools();
+
+			} else {
+				#if !SPINE_TK2D
+				// Draw Reimport Button
+				using (new EditorGUI.DisabledGroupScope(skeletonJSON.objectReferenceValue == null)) {
+					if (GUILayout.Button(SpineInspectorUtility.TempContent("Attempt Reimport", Icons.warning)))
+						DoReimport();
+				}
+				#else
+				EditorGUILayout.HelpBox("Couldn't load SkeletonData.", MessageType.Error);
+				#endif
+
+				DrawWarningList();
+			}
+
+			if (!Application.isPlaying)
+				serializedObject.ApplyModifiedProperties();
+		}
+
+		void CreateAnimationReferenceAssets () {
+			const string AssetFolderName = "ReferenceAssets";
+			string parentFolder = System.IO.Path.GetDirectoryName(AssetDatabase.GetAssetPath(targetSkeletonDataAsset));
+			string dataPath = parentFolder + "/" + AssetFolderName;
+			if (!AssetDatabase.IsValidFolder(dataPath)) {
+				AssetDatabase.CreateFolder(parentFolder, AssetFolderName);
+			}
+
+			FieldInfo nameField = typeof(AnimationReferenceAsset).GetField("animationName", BindingFlags.NonPublic | BindingFlags.Instance);
+			FieldInfo skeletonDataAssetField = typeof(AnimationReferenceAsset).GetField("skeletonDataAsset", BindingFlags.NonPublic | BindingFlags.Instance);
+			foreach (var animation in targetSkeletonData.Animations) {
+				string assetPath = string.Format("{0}/{1}.asset", dataPath, SpineEditorUtilities.GetPathSafeName(animation.Name));
+				AnimationReferenceAsset existingAsset = AssetDatabase.LoadAssetAtPath<AnimationReferenceAsset>(assetPath);
+				if (existingAsset == null) {
+					AnimationReferenceAsset newAsset = ScriptableObject.CreateInstance<AnimationReferenceAsset>();
+					skeletonDataAssetField.SetValue(newAsset, targetSkeletonDataAsset);
+					nameField.SetValue(newAsset, animation.Name);
+					AssetDatabase.CreateAsset(newAsset, assetPath);
+				}
+			}
+
+			var folderObject = AssetDatabase.LoadAssetAtPath(dataPath, typeof(UnityEngine.Object));
+			if (folderObject != null) {
+				Selection.activeObject = folderObject;
+				EditorGUIUtility.PingObject(folderObject);
+			}
+		}
+
+		void OnInspectorGUIMulti () {
+			
+			// Skeleton data file field.
+			using (new SpineInspectorUtility.BoxScope()) {
+				EditorGUILayout.LabelField("SkeletonData", EditorStyles.boldLabel);
+				EditorGUILayout.PropertyField(skeletonJSON, SpineInspectorUtility.TempContent(skeletonJSON.displayName, Icons.spine));
+				EditorGUILayout.PropertyField(scale);
+			}
+
+			// Texture source field.
+			using (new SpineInspectorUtility.BoxScope()) {
+				EditorGUILayout.LabelField("Atlas", EditorStyles.boldLabel);
+				#if !SPINE_TK2D
+				EditorGUILayout.PropertyField(atlasAssets, true);
+				#else
+				using (new EditorGUI.DisabledGroupScope(spriteCollection.objectReferenceValue != null)) {
+					EditorGUILayout.PropertyField(atlasAssets, true);
+				}
+				EditorGUILayout.LabelField("spine-tk2d", EditorStyles.boldLabel);
+				EditorGUILayout.PropertyField(spriteCollection, true);
+				#endif
+			}
+
+			// Mix settings.
+			using (new SpineInspectorUtility.BoxScope()) {
+				EditorGUILayout.LabelField("Mix Settings", EditorStyles.boldLabel);
+				SpineInspectorUtility.PropertyFieldWideLabel(defaultMix, DefaultMixLabel, 160);
+				EditorGUILayout.Space();
+			}
+
+		}
+
+		void DrawSkeletonDataFields () {
+			using (new EditorGUILayout.HorizontalScope()) {
+				EditorGUILayout.LabelField("SkeletonData", EditorStyles.boldLabel);
+				if (targetSkeletonData != null) {
+					var sd = targetSkeletonData;
+					string m = string.Format("{8} - {0} {1}\nBones: {2}\nConstraints: \n {5} IK \n {6} Path \n {7} Transform\n\nSlots: {3}\nSkins: {4}\n\nAnimations: {9}",
+						sd.Version, string.IsNullOrEmpty(sd.Version) ? "" : "export          ", sd.Bones.Count, sd.Slots.Count, sd.Skins.Count, sd.IkConstraints.Count, sd.PathConstraints.Count, sd.TransformConstraints.Count, skeletonJSON.objectReferenceValue.name, sd.Animations.Count);
+					EditorGUILayout.LabelField(GUIContent.none, new GUIContent(Icons.info, m), GUILayout.Width(30f));
+				}
+			}
+			EditorGUILayout.PropertyField(skeletonJSON, SpineInspectorUtility.TempContent(skeletonJSON.displayName, Icons.spine));
+			EditorGUILayout.PropertyField(scale);
+		}
+
+		void DrawAtlasAssetsFields () {
+			EditorGUILayout.LabelField("Atlas", EditorStyles.boldLabel);
 			#if !SPINE_TK2D
 			EditorGUILayout.PropertyField(atlasAssets, true);
 			#else
@@ -117,272 +312,144 @@ namespace Spine.Unity.Editor {
 			EditorGUILayout.LabelField("spine-tk2d", EditorStyles.boldLabel);
 			EditorGUILayout.PropertyField(spriteCollection, true);
 			#endif
-			EditorGUILayout.Space();
-			EditorGUILayout.PropertyField(skeletonJSON);
-			EditorGUILayout.PropertyField(scale);
-			EditorGUILayout.Space();
-			if (EditorGUI.EndChangeCheck()) {
-				if (serializedObject.ApplyModifiedProperties()) {
-					if (m_previewUtility != null) {
-						m_previewUtility.Cleanup();
-						m_previewUtility = null;
-					}
-					RepopulateWarnings();
-					OnEnable();
-					return;
-				}
-			}
-				
-			if (m_skeletonData != null) {
-				DrawAnimationStateInfo();
-				DrawAnimationList();
-				DrawSlotList();
-				DrawUnityTools();
-			} else {
-				#if !SPINE_TK2D
-				// Reimport Button
-				using (new EditorGUI.DisabledGroupScope(skeletonJSON.objectReferenceValue == null)) {
-					if (GUILayout.Button(new GUIContent("Attempt Reimport", SpineEditorUtilities.Icons.warning))) {
-						DoReimport();
-						return;
-					}
-				}
-				#else
-				EditorGUILayout.HelpBox("Couldn't load SkeletonData.", MessageType.Error);
-				#endif
 
-				// List warnings.
-				foreach (var line in warnings)
-					EditorGUILayout.LabelField(new GUIContent(line, SpineEditorUtilities.Icons.warning));
-				
-			}
-
-			if (!Application.isPlaying)
-				serializedObject.ApplyModifiedProperties();
+			if (atlasAssets.arraySize == 0)
+				EditorGUILayout.HelpBox("AtlasAssets array is empty. Skeleton's attachments will load without being mapped to images.", MessageType.Info);
 		}
 
-		void DrawUnityTools () {
-			#if SPINE_SKELETON_ANIMATOR
-			isMecanimExpanded = EditorGUILayout.Foldout(isMecanimExpanded, new GUIContent("SkeletonAnimator", SpineEditorUtilities.Icons.unityIcon));
-			if (isMecanimExpanded) {
-				EditorGUI.indentLevel++;
-				EditorGUILayout.PropertyField(controller, new GUIContent("Controller", SpineEditorUtilities.Icons.controllerIcon));		
-				if (controller.objectReferenceValue == null) {
-					
-					// Generate Mecanim Controller Button
-					using (new GUILayout.HorizontalScope()) {
-						GUILayout.Space(EditorGUIUtility.labelWidth);
-						if (GUILayout.Button(new GUIContent("Generate Mecanim Controller"), GUILayout.Height(20)))
-							SkeletonBaker.GenerateMecanimAnimationClips(m_skeletonDataAsset);						
-					}
-					EditorGUILayout.HelpBox("SkeletonAnimator is the Mecanim alternative to SkeletonAnimation.\nIt is not required.", MessageType.Info);
-
-				} else {
-					
-					// Update AnimationClips button.
-					using (new GUILayout.HorizontalScope()) {
-						GUILayout.Space(EditorGUIUtility.labelWidth);
-						if (GUILayout.Button(new GUIContent("Force Update AnimationClips"), GUILayout.Height(20)))
-							SkeletonBaker.GenerateMecanimAnimationClips(m_skeletonDataAsset);				
-					}
-
+		void HandleAtlasAssetsNulls () {
+			bool hasNulls = false;
+			foreach (var a in targetSkeletonDataAsset.atlasAssets) {
+				if (a == null) {
+					hasNulls = true;
+					break;
 				}
-				EditorGUI.indentLevel--;
 			}
-			#endif
-
-			#if SPINE_BAKING
-			bool pre = isBakingExpanded;
-			isBakingExpanded = EditorGUILayout.Foldout(isBakingExpanded, new GUIContent("Baking", SpineEditorUtilities.Icons.unityIcon));
-			if (pre != isBakingExpanded)
-				EditorPrefs.SetBool(ShowBakingPrefsKey, isBakingExpanded);
-			
-			if (isBakingExpanded) {
-				EditorGUI.indentLevel++;
-				const string BakingWarningMessage =
-					"WARNING!" +
-					"\nBaking is NOT the same as SkeletonAnimator!" +
-
-					"\n\nThe main use of Baking is to export Spine projects to be used without the Spine Runtime (ie: for sale on the Asset Store, or background objects that are animated only with a wind noise generator)" +
-
-					"\n\nBaking also does not support the following:" +
-					"\n\tDisabled transform inheritance" +
-					"\n\tShear" +
-					"\n\tColor Keys" +
-					"\n\tDraw Order Keys" +
-					"\n\tAll Constraint types" +
-
-					"\n\nCurves are sampled at 60fps and are not realtime." +
-					"\nPlease read SkeletonBaker.cs comments for full details.";
-				EditorGUILayout.HelpBox(BakingWarningMessage, MessageType.Warning, true);
-
-				EditorGUI.indentLevel++;
-				bakeAnimations = EditorGUILayout.Toggle("Bake Animations", bakeAnimations);
-				using (new EditorGUI.DisabledGroupScope(!bakeAnimations)) {
-					EditorGUI.indentLevel++;
-					bakeIK = EditorGUILayout.Toggle("Bake IK", bakeIK);
-					bakeEventOptions = (SendMessageOptions)EditorGUILayout.EnumPopup("Event Options", bakeEventOptions);
-					EditorGUI.indentLevel--;
+			if (hasNulls) {
+				if (targetSkeletonDataAsset.atlasAssets.Length == 1) {
+					EditorGUILayout.HelpBox("Atlas array cannot have null entries!", MessageType.None);
 				}
+				else {
+					EditorGUILayout.HelpBox("Atlas array should not have null entries!", MessageType.Error);
+					if (SpineInspectorUtility.CenteredButton(SpineInspectorUtility.TempContent("Remove null entries"))) {
+						var trimmedAtlasAssets = new List<AtlasAsset>();
+						foreach (var a in targetSkeletonDataAsset.atlasAssets) {
+							if (a != null)
+								trimmedAtlasAssets.Add(a);
+						}
+						targetSkeletonDataAsset.atlasAssets = trimmedAtlasAssets.ToArray();
+						serializedObject.Update();
+					}
+				}
+			}
+		}
 
-				// Bake Skin buttons.
-				using (new GUILayout.HorizontalScope()) {
-					if (GUILayout.Button(new GUIContent("Bake All Skins", SpineEditorUtilities.Icons.unityIcon), GUILayout.Height(32), GUILayout.Width(150)))
-						SkeletonBaker.BakeToPrefab(m_skeletonDataAsset, m_skeletonData.Skins, "", bakeAnimations, bakeIK, bakeEventOptions);
+		void DrawAnimationStateInfo () {
+			using (new SpineInspectorUtility.IndentScope())
+				showAnimationStateData = EditorGUILayout.Foldout(showAnimationStateData, "Animation State Data");
 
-					// If m_skeletonAnimation is lazy-instantiated elsewhere, this can cause contents to change between Layout and Repaint events, causing scope errors.
-					if (m_skeletonData != null && m_skeletonAnimation == null)
-						InitPreview();
-					
-					if (m_skeletonAnimation != null && m_skeletonAnimation.skeleton != null) {
-						Skin bakeSkin = m_skeletonAnimation.skeleton.Skin;
+			if (!showAnimationStateData)
+				return;
 
-						string skinName = "<No Skin>";
-						if (bakeSkin == null) {
-							skinName = "Default";
-							bakeSkin = m_skeletonData.Skins.Items[0];
-						} else
-							skinName = m_skeletonAnimation.skeleton.Skin.Name;
+			using (var cc = new EditorGUI.ChangeCheckScope()) {
+				using (new SpineInspectorUtility.IndentScope())
+					SpineInspectorUtility.PropertyFieldWideLabel(defaultMix, DefaultMixLabel, 160);
 
-						using (new GUILayout.VerticalScope()) {
-							if (GUILayout.Button(new GUIContent("Bake \"" + skinName + "\"", SpineEditorUtilities.Icons.unityIcon), GUILayout.Height(32), GUILayout.Width(250)))
-								SkeletonBaker.BakeToPrefab(m_skeletonDataAsset, new ExposedList<Skin>(new [] { bakeSkin }), "", bakeAnimations, bakeIK, bakeEventOptions);
-							using (new GUILayout.HorizontalScope()) {
-								GUILayout.Label(new GUIContent("Skins", SpineEditorUtilities.Icons.skinsRoot), GUILayout.Width(50));
-								if (GUILayout.Button(skinName, EditorStyles.popup, GUILayout.Width(196))) {
-									DrawSkinDropdown();
-								}
-							}
+				// Do not use EditorGUIUtility.indentLevel. It will add spaces on every field.
+				for (int i = 0; i < fromAnimation.arraySize; i++) {
+					SerializedProperty from = fromAnimation.GetArrayElementAtIndex(i);
+					SerializedProperty to = toAnimation.GetArrayElementAtIndex(i);
+					SerializedProperty durationProp = duration.GetArrayElementAtIndex(i);
+					using (new EditorGUILayout.HorizontalScope()) {
+						GUILayout.Space(16f);
+						EditorGUILayout.PropertyField(from, GUIContent.none);
+						EditorGUILayout.PropertyField(to, GUIContent.none);
+						durationProp.floatValue = EditorGUILayout.FloatField(durationProp.floatValue, GUILayout.MinWidth(25f), GUILayout.MaxWidth(60f));
+						if (GUILayout.Button("Delete", EditorStyles.miniButton)) {
+							duration.DeleteArrayElementAtIndex(i);
+							toAnimation.DeleteArrayElementAtIndex(i);
+							fromAnimation.DeleteArrayElementAtIndex(i);
 						}
 					}
 				}
 
-				EditorGUI.indentLevel--;
-				EditorGUI.indentLevel--;
-			}
-			#endif
-		}
-
-		void DoReimport () {
-			SpineEditorUtilities.ImportSpineContent(new string[] { AssetDatabase.GetAssetPath(skeletonJSON.objectReferenceValue) }, true);
-
-			if (m_previewUtility != null) {
-				m_previewUtility.Cleanup();
-				m_previewUtility = null;
-			}
-
-			RepopulateWarnings();
-			OnEnable();
-
-			EditorUtility.SetDirty(m_skeletonDataAsset);
-		}
-
-		void DrawAnimationStateInfo () {
-			showAnimationStateData = EditorGUILayout.Foldout(showAnimationStateData, "Animation State Data");
-			if (!showAnimationStateData)
-				return;
-
-			EditorGUI.BeginChangeCheck();
-			EditorGUILayout.PropertyField(defaultMix);
-
-			var animations = new string[m_skeletonData.Animations.Count];
-			for (int i = 0; i < animations.Length; i++)
-				animations[i] = m_skeletonData.Animations.Items[i].Name;
-
-			for (int i = 0; i < fromAnimation.arraySize; i++) {
-				SerializedProperty from = fromAnimation.GetArrayElementAtIndex(i);
-				SerializedProperty to = toAnimation.GetArrayElementAtIndex(i);
-				SerializedProperty durationProp = duration.GetArrayElementAtIndex(i);
 				using (new EditorGUILayout.HorizontalScope()) {
-					from.stringValue = animations[EditorGUILayout.Popup(Math.Max(Array.IndexOf(animations, from.stringValue), 0), animations)];
-					to.stringValue = animations[EditorGUILayout.Popup(Math.Max(Array.IndexOf(animations, to.stringValue), 0), animations)];
-					durationProp.floatValue = EditorGUILayout.FloatField(durationProp.floatValue);
-					if (GUILayout.Button("Delete")) {
-						duration.DeleteArrayElementAtIndex(i);
-						toAnimation.DeleteArrayElementAtIndex(i);
-						fromAnimation.DeleteArrayElementAtIndex(i);
+					EditorGUILayout.Space();
+					if (GUILayout.Button("Add Mix")) {
+						duration.arraySize++;
+						toAnimation.arraySize++;
+						fromAnimation.arraySize++;
 					}
+					EditorGUILayout.Space();
 				}
-			}
 
-			using (new EditorGUILayout.HorizontalScope()) {
-				EditorGUILayout.Space();
-				if (GUILayout.Button("Add Mix")) {
-					duration.arraySize++;
-					toAnimation.arraySize++;
-					fromAnimation.arraySize++;
+				if (cc.changed) {
+					targetSkeletonDataAsset.FillStateData();
+					EditorUtility.SetDirty(targetSkeletonDataAsset);
+					serializedObject.ApplyModifiedProperties();
 				}
-				EditorGUILayout.Space();
-			}
-
-			if (EditorGUI.EndChangeCheck()) {
-				m_skeletonDataAsset.FillStateData();
-				EditorUtility.SetDirty(m_skeletonDataAsset);
-				serializedObject.ApplyModifiedProperties();
-				needToSerialize = true;
 			}
 		}
 
 		void DrawAnimationList () {
-			showAnimationList = EditorGUILayout.Foldout(showAnimationList, new GUIContent("Animations", SpineEditorUtilities.Icons.animationRoot));
+			showAnimationList = EditorGUILayout.Foldout(showAnimationList, SpineInspectorUtility.TempContent(string.Format("Animations [{0}]", targetSkeletonData.Animations.Count), Icons.animationRoot));
 			if (!showAnimationList)
 				return;
 
-			if (m_skeletonAnimation != null && m_skeletonAnimation.state != null) {
-				if (GUILayout.Button(new GUIContent("Setup Pose", SpineEditorUtilities.Icons.skeleton), GUILayout.Width(105), GUILayout.Height(18))) {
-					StopAnimation();
-					m_skeletonAnimation.skeleton.SetToSetupPose();
-					m_requireRefresh = true;
+			bool isPreviewWindowOpen = preview.IsValid;
+			
+			if (isPreviewWindowOpen) {
+				if (GUILayout.Button(SpineInspectorUtility.TempContent("Setup Pose", Icons.skeleton), GUILayout.Width(105), GUILayout.Height(18))) {
+					preview.ClearAnimationSetupPose();
+					preview.RefreshOnNextUpdate();
 				}
 			} else {
 				EditorGUILayout.HelpBox("Animations can be previewed if you expand the Preview window below.", MessageType.Info);
 			}
 
-			EditorGUILayout.LabelField("Name", "Duration");
-			foreach (Spine.Animation animation in m_skeletonData.Animations) {
+			EditorGUILayout.LabelField("Name", "      Duration");
+			//bool nonessential = targetSkeletonData.ImagesPath != null; // Currently the only way to determine if skeleton data has nonessential data. (Spine 3.6)
+			//float fps = targetSkeletonData.Fps;
+			//if (nonessential && fps == 0) fps = 30;
+
+			var activeTrack = preview.ActiveTrack;
+			foreach (Animation animation in targetSkeletonData.Animations) {
 				using (new GUILayout.HorizontalScope()) {
-					if (m_skeletonAnimation != null && m_skeletonAnimation.state != null) {
-						var activeTrack = m_skeletonAnimation.state.GetCurrent(0);
-						if (activeTrack != null && activeTrack.Animation == animation) {
-							if (GUILayout.Button("\u25BA", activePlayButtonStyle, GUILayout.Width(24))) {
-								StopAnimation();
-							}
-						} else {
-							if (GUILayout.Button("\u25BA", idlePlayButtonStyle, GUILayout.Width(24))) {
-								PlayAnimation(animation.Name, true);
-							}
+					if (isPreviewWindowOpen) {
+						bool active = activeTrack != null && activeTrack.Animation == animation;
+						//bool sameAndPlaying = active && activeTrack.TimeScale > 0f;
+						if (GUILayout.Button("\u25BA", active ? activePlayButtonStyle : idlePlayButtonStyle, GUILayout.Width(24))) {
+							preview.PlayPauseAnimation(animation.Name, true);
+							activeTrack = preview.ActiveTrack;
 						}
 					} else {
 						GUILayout.Label("-", GUILayout.Width(24));
 					}
-					EditorGUILayout.LabelField(new GUIContent(animation.Name, SpineEditorUtilities.Icons.animation), new GUIContent(animation.Duration.ToString("f3") + "s" + ("(" + (Mathf.RoundToInt(animation.Duration * 30)) + ")").PadLeft(12, ' ')));
+					//string frameCountString = (fps > 0) ? ("(" + (Mathf.RoundToInt(animation.Duration * fps)) + ")").PadLeft(12, ' ') : string.Empty;
+					//EditorGUILayout.LabelField(new GUIContent(animation.Name, Icons.animation), SpineInspectorUtility.TempContent(animation.Duration.ToString("f3") + "s" + frameCountString));
+					EditorGUILayout.LabelField(new GUIContent(animation.Name, Icons.animation), SpineInspectorUtility.TempContent(animation.Duration.ToString("f3") + "s"));
 				}
 			}
 		}
 
 		void DrawSlotList () {
-			showSlotList = EditorGUILayout.Foldout(showSlotList, new GUIContent("Slots", SpineEditorUtilities.Icons.slotRoot));
+			showSlotList = EditorGUILayout.Foldout(showSlotList, SpineInspectorUtility.TempContent("Slots", Icons.slotRoot));
 
 			if (!showSlotList) return;
-			if (m_skeletonAnimation == null || m_skeletonAnimation.skeleton == null) return;
+			if (!preview.IsValid) return;
 
 			EditorGUI.indentLevel++;
+			showAttachments = EditorGUILayout.ToggleLeft("Show Attachments", showAttachments);
+			var slotAttachments = new List<Attachment>();
+			var slotAttachmentNames = new List<string>();
+			var defaultSkinAttachmentNames = new List<string>();
+			var defaultSkin = targetSkeletonData.Skins.Items[0];
+			Skin skin = preview.Skeleton.Skin ?? defaultSkin;
+			var slotsItems = preview.Skeleton.Slots.Items;
 
-			try {
-				showAttachments = EditorGUILayout.ToggleLeft("Show Attachments", showAttachments);
-			} catch {
-				return;
-			}
-
-			List<Attachment> slotAttachments = new List<Attachment>();
-			List<string> slotAttachmentNames = new List<string>();
-			List<string> defaultSkinAttachmentNames = new List<string>();
-			var defaultSkin = m_skeletonData.Skins.Items[0];
-			Skin skin = m_skeletonAnimation.skeleton.Skin ?? defaultSkin;
-
-			for (int i = m_skeletonAnimation.skeleton.Slots.Count - 1; i >= 0; i--) {
-				Slot slot = m_skeletonAnimation.skeleton.Slots.Items[i];
-				EditorGUILayout.LabelField(new GUIContent(slot.Data.Name, SpineEditorUtilities.Icons.slot));
+			for (int i = preview.Skeleton.Slots.Count - 1; i >= 0; i--) {
+				Slot slot = slotsItems[i];
+				EditorGUILayout.LabelField(SpineInspectorUtility.TempContent(slot.Data.Name, Icons.slot));
 				if (showAttachments) {
 					
 					EditorGUI.indentLevel++;
@@ -404,40 +471,20 @@ namespace Spine.Unity.Editor {
 					for (int a = 0; a < slotAttachments.Count; a++) {
 						Attachment attachment = slotAttachments[a];
 						string attachmentName = slotAttachmentNames[a];
-
-						Texture2D icon = null;
-						var type = attachment.GetType();
-
-						if (type == typeof(RegionAttachment))
-							icon = SpineEditorUtilities.Icons.image;
-						else if (type == typeof(MeshAttachment))
-							icon = SpineEditorUtilities.Icons.mesh;
-						else if (type == typeof(BoundingBoxAttachment))
-							icon = SpineEditorUtilities.Icons.boundingBox;
-						else if (type == typeof(PathAttachment))
-							icon = SpineEditorUtilities.Icons.boundingBox;
-						else
-							icon = SpineEditorUtilities.Icons.warning;
-						//JOHN: left todo: Icon for paths. Generic icon for unidentified attachments.
-
-						// MITCH: left todo:  Waterboard Nate
-						//if (name != attachment.Name)
-						//icon = SpineEditorUtilities.Icons.skinPlaceholder;
-
+						Texture2D icon = Icons.GetAttachmentIcon(attachment);
 						bool initialState = slot.Attachment == attachment;
-
-						bool toggled = EditorGUILayout.ToggleLeft(new GUIContent(attachmentName, icon), slot.Attachment == attachment);
+						bool toggled = EditorGUILayout.ToggleLeft(SpineInspectorUtility.TempContent(attachmentName, icon), slot.Attachment == attachment);
 
 						if (!defaultSkinAttachmentNames.Contains(attachmentName)) {
 							Rect skinPlaceHolderIconRect = GUILayoutUtility.GetLastRect();
-							skinPlaceHolderIconRect.width = SpineEditorUtilities.Icons.skinPlaceholder.width;
-							skinPlaceHolderIconRect.height = SpineEditorUtilities.Icons.skinPlaceholder.height;
-							GUI.DrawTexture(skinPlaceHolderIconRect, SpineEditorUtilities.Icons.skinPlaceholder);
+							skinPlaceHolderIconRect.width = Icons.skinPlaceholder.width;
+							skinPlaceHolderIconRect.height = Icons.skinPlaceholder.height;
+							GUI.DrawTexture(skinPlaceHolderIconRect, Icons.skinPlaceholder);
 						}
 
 						if (toggled != initialState) {
 							slot.Attachment = toggled ? attachment : null;
-							m_requireRefresh = true;
+							preview.RefreshOnNextUpdate();
 						}
 					}
 					EditorGUI.indentLevel--;
@@ -445,152 +492,132 @@ namespace Spine.Unity.Editor {
 			}
 			EditorGUI.indentLevel--;
 		}
-			
-		void RepopulateWarnings () {
+
+		void DrawUnityTools () {
+			#if SPINE_SKELETON_ANIMATOR
+			using (new SpineInspectorUtility.BoxScope()) {
+				isMecanimExpanded = EditorGUILayout.Foldout(isMecanimExpanded, SpineInspectorUtility.TempContent("SkeletonAnimator", SpineInspectorUtility.UnityIcon<SceneAsset>()));
+				if (isMecanimExpanded) {
+					EditorGUI.indentLevel++;
+					EditorGUILayout.PropertyField(controller, SpineInspectorUtility.TempContent("Controller", SpineInspectorUtility.UnityIcon<Animator>()));		
+					if (controller.objectReferenceValue == null) {
+
+						// Generate Mecanim Controller Button
+						using (new GUILayout.HorizontalScope()) {
+							GUILayout.Space(EditorGUIUtility.labelWidth);
+							if (GUILayout.Button(SpineInspectorUtility.TempContent("Generate Mecanim Controller"), GUILayout.Height(20)))
+								SkeletonBaker.GenerateMecanimAnimationClips(targetSkeletonDataAsset);						
+						}
+						EditorGUILayout.HelpBox("SkeletonAnimator is the Mecanim alternative to SkeletonAnimation.\nIt is not required.", MessageType.Info);
+
+					} else {
+
+						// Update AnimationClips button.
+						using (new GUILayout.HorizontalScope()) {
+							GUILayout.Space(EditorGUIUtility.labelWidth);
+							if (GUILayout.Button(SpineInspectorUtility.TempContent("Force Update AnimationClips"), GUILayout.Height(20)))
+								SkeletonBaker.GenerateMecanimAnimationClips(targetSkeletonDataAsset);				
+						}
+
+					}
+					EditorGUI.indentLevel--;
+				}
+			}
+			#endif
+		}
+
+		void DrawWarningList () {
+			foreach (string line in warnings)
+				EditorGUILayout.LabelField(SpineInspectorUtility.TempContent(line, Icons.warning));
+		}
+
+		void PopulateWarnings () {
 			warnings.Clear();
 
 			if (skeletonJSON.objectReferenceValue == null) {
 				warnings.Add("Missing Skeleton JSON");
 			} else {
-				if (SpineEditorUtilities.IsValidSpineData((TextAsset)skeletonJSON.objectReferenceValue) == false) {
+				var fieldValue = (TextAsset)skeletonJSON.objectReferenceValue;
+				if (!SpineEditorUtilities.SkeletonDataFileValidator.IsSpineData(fieldValue)) {
 					warnings.Add("Skeleton data file is not a valid JSON or binary file.");
 				} else {
-					#if !SPINE_TK2D
-					bool detectedNullAtlasEntry = false;
-					var atlasList = new List<Atlas>();
-					for (int i = 0; i < atlasAssets.arraySize; i++) {
-						if (atlasAssets.GetArrayElementAtIndex(i).objectReferenceValue == null) {
-							detectedNullAtlasEntry = true;
-							break;
-						} else {
-							atlasList.Add(((AtlasAsset)atlasAssets.GetArrayElementAtIndex(i).objectReferenceValue).GetAtlas());
-						}
-					}
+					#if SPINE_TK2D
+					bool searchForSpineAtlasAssets = true;
+					bool isSpriteCollectionNull = spriteCollection.objectReferenceValue == null;
+					if (!isSpriteCollectionNull) searchForSpineAtlasAssets = false;
+					#else
+					// Analysis disable once ConvertToConstant.Local
+					bool searchForSpineAtlasAssets = true;
+					#endif
 
-					if (detectedNullAtlasEntry)
-						warnings.Add("AtlasAsset elements cannot be Null");
-					else {
-						// Get requirements.
-						var missingPaths = SpineEditorUtilities.GetRequiredAtlasRegions(AssetDatabase.GetAssetPath((TextAsset)skeletonJSON.objectReferenceValue));
+					if (searchForSpineAtlasAssets) {
+						bool detectedNullAtlasEntry = false;
+						var atlasList = new List<Atlas>();
+						var actualAtlasAssets = targetSkeletonDataAsset.atlasAssets;
 
-						foreach (var atlas in atlasList) {
-							for (int i = 0; i < missingPaths.Count; i++) {
-								if (atlas.FindRegion(missingPaths[i]) != null) {
-									missingPaths.RemoveAt(i);
-									i--;
-								}
+						for (int i = 0; i < actualAtlasAssets.Length; i++) {
+							if (targetSkeletonDataAsset.atlasAssets[i] == null) {
+								detectedNullAtlasEntry = true;
+								break;
+							} else {
+								atlasList.Add(actualAtlasAssets[i].GetAtlas());
 							}
 						}
 
-						foreach (var str in missingPaths)
-							warnings.Add("Missing Region: '" + str + "'");
-						
-					}
-					#else
-					if (spriteCollection.objectReferenceValue == null) {
-						warnings.Add("SkeletonDataAsset requires tk2DSpriteCollectionData.");
-					} else {
-						warnings.Add("Your sprite collection may have missing images.");
-					}
-					#endif
-				}
-			}
-		}
+						if (detectedNullAtlasEntry) {
+							warnings.Add("AtlasAsset elements should not be null.");
+						} else {
+							List<string> missingPaths = null;
+							if (atlasAssets.arraySize > 0) {
+								missingPaths = SpineEditorUtilities.GetRequiredAtlasRegions(AssetDatabase.GetAssetPath(skeletonJSON.objectReferenceValue));
 
-		#region Preview Window
-		PreviewRenderUtility m_previewUtility;
-		GameObject m_previewInstance;
-		Vector2 previewDir;
-		SkeletonAnimation m_skeletonAnimation;
-		static readonly int SliderHash = "Slider".GetHashCode();
-		float m_lastTime;
-		bool m_playing;
-		bool m_requireRefresh;
-		Color m_originColor = new Color(0.3f, 0.3f, 0.3f, 1);
+								foreach (var atlas in atlasList) {
+									for (int i = 0; i < missingPaths.Count; i++) {
+										if (atlas.FindRegion(missingPaths[i]) != null) {
+											missingPaths.RemoveAt(i);
+											i--;
+										}
+									}
+								}
 
-		void StopAnimation () {
-			if (m_skeletonAnimation == null) {
-				Debug.LogWarning("Animation was stopped but preview doesn't exist. It's possible that the Preview Panel is closed.");
-			}
+								#if SPINE_TK2D
+								if (missingPaths.Count > 0)
+									warnings.Add("Missing regions. SkeletonDataAsset requires tk2DSpriteCollectionData or Spine AtlasAssets.");
+								#endif
+							}
 
-			m_skeletonAnimation.state.ClearTrack(0);
-			m_playing = false;
-		}
-
-		List<Spine.Event> m_animEvents = new List<Spine.Event>();
-		List<float> m_animEventFrames = new List<float>();
-
-		void PlayAnimation (string animName, bool loop) {
-			m_animEvents.Clear();
-			m_animEventFrames.Clear();
-
-			m_skeletonAnimation.state.SetAnimation(0, animName, loop);
-
-			Spine.Animation a = m_skeletonAnimation.state.GetCurrent(0).Animation;
-			foreach (Timeline t in a.Timelines) {
-				if (t.GetType() == typeof(EventTimeline)) {
-					EventTimeline et = (EventTimeline)t;
-
-					for (int i = 0; i < et.Events.Length; i++) {
-						m_animEvents.Add(et.Events[i]);
-						m_animEventFrames.Add(et.Frames[i]);
+							if (missingPaths != null) {
+								foreach (string str in missingPaths)
+									warnings.Add("Missing Region: '" + str + "'");
+							}
+							
+						}
 					}
 
 				}
 			}
-
-			m_playing = true;
 		}
 
-		void InitPreview () {
-			if (this.m_previewUtility == null) {
-				this.m_lastTime = Time.realtimeSinceStartup;
-				this.m_previewUtility = new PreviewRenderUtility(true);
-				this.m_previewUtility.m_Camera.orthographic = true;
-				this.m_previewUtility.m_Camera.orthographicSize = 1;
-				this.m_previewUtility.m_Camera.cullingMask = -2147483648;
-				this.m_previewUtility.m_Camera.nearClipPlane = 0.01f;
-				this.m_previewUtility.m_Camera.farClipPlane = 1000f;
-				this.CreatePreviewInstances();
-			}
+		void DoReimport () {
+			SpineEditorUtilities.ImportSpineContent(new [] { AssetDatabase.GetAssetPath(skeletonJSON.objectReferenceValue) }, true);
+			preview.Clear();
+			InitializeEditor();
+			EditorUtility.SetDirty(targetSkeletonDataAsset);
 		}
 
-		void CreatePreviewInstances () {
-			this.DestroyPreviewInstances();
-
-			var skeletonDataAsset = (SkeletonDataAsset)target;
-			if (skeletonDataAsset.GetSkeletonData(false) == null)
-				return;
-
-			if (this.m_previewInstance == null) {
-				string skinName = EditorPrefs.GetString(m_skeletonDataAssetGUID + "_lastSkin", "");
-				m_previewInstance = SpineEditorUtilities.InstantiateSkeletonAnimation(skeletonDataAsset, skinName).gameObject;
-
-				if (m_previewInstance != null) {
-					m_previewInstance.hideFlags = HideFlags.HideAndDontSave;
-					m_previewInstance.layer = 0x1f;
-					m_skeletonAnimation = m_previewInstance.GetComponent<SkeletonAnimation>();
-					m_skeletonAnimation.initialSkinName = skinName;
-					m_skeletonAnimation.LateUpdate();
-					m_skeletonData = m_skeletonAnimation.skeletonDataAsset.GetSkeletonData(true);
-					m_previewInstance.GetComponent<Renderer>().enabled = false;
-					m_initialized = true;
-				}
-
-				AdjustCameraGoals(true);
-			}
+		void HandlePreviewSkinChanged (string skinName) {
+			EditorPrefs.SetString(LastSkinKey, skinName);
 		}
 
-		void DestroyPreviewInstances () {
-			if (this.m_previewInstance != null) {
-				DestroyImmediate(this.m_previewInstance);
-				m_previewInstance = null;
-			}
-			m_initialized = false;
+		#region Preview Handlers
+		void HandleOnDestroyPreview () {
+			EditorApplication.update -= preview.HandleEditorUpdate;
+			preview.OnDestroy();
 		}
 
-		public override bool HasPreviewGUI () {
-			// MITCH: left todo: validate json data
+		override public bool HasPreviewGUI () {			
+			if (serializedObject.isEditingMultipleObjects)
+				return false;
 
 			for (int i = 0; i < atlasAssets.arraySize; i++) {
 				var prop = atlasAssets.GetArrayElementAtIndex(i);
@@ -601,179 +628,433 @@ namespace Spine.Unity.Editor {
 			return skeletonJSON.objectReferenceValue != null;
 		}
 
-		Texture m_previewTex = new Texture();
+		override public void OnInteractivePreviewGUI (Rect r, GUIStyle background) {
+			if (warnings.Count <= 0) {
+				preview.Initialize(this.Repaint, targetSkeletonDataAsset, this.LastSkinName);
+				preview.HandleInteractivePreviewGUI(r, background);
+			}
+		}
 
-		public override void OnInteractivePreviewGUI (Rect r, GUIStyle background) {
-			this.InitPreview();
+		override public GUIContent GetPreviewTitle () { return SpineInspectorUtility.TempContent("Preview"); }
+		public override void OnPreviewSettings () { preview.HandleDrawSettings(); }
+		public override Texture2D RenderStaticPreview (string assetPath, UnityEngine.Object[] subAssets, int width, int height) { return preview.GetStaticPreview(width, height); }
+		#endregion
+	}
 
-			if (UnityEngine.Event.current.type == EventType.Repaint) {
-				if (m_requireRefresh) {
-					this.m_previewUtility.BeginPreview(r, background);
-					this.DoRenderPreview(true);
-					this.m_previewTex = this.m_previewUtility.EndPreview();
-					m_requireRefresh = false;
+	internal class SkeletonInspectorPreview {
+		Color OriginColor = new Color(0.3f, 0.3f, 0.3f, 1);
+		static readonly int SliderHash = "Slider".GetHashCode();
+
+		SkeletonDataAsset skeletonDataAsset;
+		SkeletonData skeletonData;
+
+		SkeletonAnimation skeletonAnimation;
+		GameObject previewGameObject;
+		internal bool requiresRefresh;
+
+		#if !(UNITY_2017_4 || UNITY_2018)
+		float animationLastTime;
+		#endif
+
+		static float CurrentTime { get { return (float)EditorApplication.timeSinceStartup; } }
+
+		Action Repaint;
+		public event Action<string> OnSkinChanged;
+
+		Texture previewTexture;
+		PreviewRenderUtility previewRenderUtility;
+		Camera PreviewUtilityCamera {
+			get {
+				if (previewRenderUtility == null) return null;
+				#if UNITY_2017_1_OR_NEWER
+				return previewRenderUtility.camera;
+				#else
+				return previewRenderUtility.m_Camera;
+				#endif
+			}
+		}
+
+		static Vector3 lastCameraPositionGoal;
+		static float lastCameraOrthoGoal;
+		float cameraOrthoGoal = 1;
+		Vector3 cameraPositionGoal = new Vector3(0, 0, -10);
+		double cameraAdjustEndFrame = 0;
+
+		List<Spine.Event> currentAnimationEvents = new List<Spine.Event>();
+		List<float> currentAnimationEventTimes = new List<float>();
+		List<SpineEventTooltip> currentAnimationEventTooltips = new List<SpineEventTooltip>();
+
+		public bool IsValid { get { return skeletonAnimation != null && skeletonAnimation.valid; } }
+
+		public Skeleton Skeleton { get { return IsValid ? skeletonAnimation.Skeleton : null; } }
+
+		public float TimeScale {
+			get { return IsValid ? skeletonAnimation.timeScale : 1f; }
+			set { if (IsValid) skeletonAnimation.timeScale = value; }
+		}
+
+		public bool IsPlayingAnimation { get {
+				if (!IsValid) return false;
+				var currentTrack = skeletonAnimation.AnimationState.GetCurrent(0);
+				return currentTrack != null && currentTrack.TimeScale > 0;
+			}
+		}
+
+		public TrackEntry ActiveTrack { get { return IsValid ? skeletonAnimation.AnimationState.GetCurrent(0) : null; } }
+
+		public Vector3 PreviewCameraPosition {
+			get { return PreviewUtilityCamera.transform.position; }
+			set { PreviewUtilityCamera.transform.position = value; }
+		}
+
+		public void HandleDrawSettings () {
+			const float SliderWidth = 150;
+			const float SliderSnap = 0.25f;
+			const float SliderMin = 0f;
+			const float SliderMax = 2f;
+
+			if (IsValid) {
+				float timeScale = GUILayout.HorizontalSlider(TimeScale, SliderMin, SliderMax, GUILayout.MaxWidth(SliderWidth));
+				timeScale = Mathf.RoundToInt(timeScale / SliderSnap) * SliderSnap;
+				TimeScale = timeScale;
+			}
+		}
+
+		public void HandleEditorUpdate () {
+			AdjustCamera();
+			if (IsPlayingAnimation) {
+				RefreshOnNextUpdate();
+				Repaint();
+			} else if (requiresRefresh) {
+				Repaint();
+			}
+		}
+
+		public void Initialize (Action repaintCallback, SkeletonDataAsset skeletonDataAsset, string skinName = "") {
+			if (skeletonDataAsset == null) return;
+			if (skeletonDataAsset.GetSkeletonData(false) == null) {
+				DestroyPreviewGameObject();
+				return;
+			}
+
+			this.Repaint = repaintCallback;
+			this.skeletonDataAsset = skeletonDataAsset;
+			this.skeletonData = skeletonDataAsset.GetSkeletonData(false);
+
+			if (skeletonData == null) {
+				DestroyPreviewGameObject();
+				return;
+			}
+
+			if (previewRenderUtility == null) {
+				previewRenderUtility = new PreviewRenderUtility(true);
+				#if !(UNITY_2017_4 || UNITY_2018)
+				animationLastTime = CurrentTime;
+				#endif
+
+				const int PreviewLayer = 30;
+				const int PreviewCameraCullingMask = 1 << PreviewLayer;
+
+				{
+					var c = this.PreviewUtilityCamera;
+					c.orthographic = true;
+					c.cullingMask = PreviewCameraCullingMask;
+					c.nearClipPlane = 0.01f;
+					c.farClipPlane = 1000f;
+					c.orthographicSize = lastCameraOrthoGoal;
+					c.transform.position = lastCameraPositionGoal;
 				}
-				if (this.m_previewTex != null)
-					GUI.DrawTexture(r, m_previewTex, ScaleMode.StretchToFill, false);
+
+				DestroyPreviewGameObject();
+
+				if (previewGameObject == null) {
+					try {
+						previewGameObject = SpineEditorUtilities.InstantiateSkeletonAnimation(skeletonDataAsset, skinName).gameObject;
+
+						if (previewGameObject != null) {
+							previewGameObject.hideFlags = HideFlags.HideAndDontSave;
+							previewGameObject.layer = PreviewLayer;
+							skeletonAnimation = previewGameObject.GetComponent<SkeletonAnimation>();
+							skeletonAnimation.initialSkinName = skinName;
+							skeletonAnimation.LateUpdate();
+							previewGameObject.GetComponent<Renderer>().enabled = false;
+
+							#if UNITY_2017_4 || UNITY_2018
+							previewRenderUtility.AddSingleGO(previewGameObject);
+							#endif
+						}
+
+						if (this.ActiveTrack != null) cameraAdjustEndFrame = EditorApplication.timeSinceStartup + skeletonAnimation.AnimationState.GetCurrent(0).Alpha;
+						AdjustCameraGoals();
+					} catch {
+						DestroyPreviewGameObject();
+					}
+
+					RefreshOnNextUpdate();
+				}
+			}
+		}
+
+		public void HandleInteractivePreviewGUI (Rect r, GUIStyle background) {
+			if (Event.current.type == EventType.Repaint) {
+				if (requiresRefresh) {
+					previewRenderUtility.BeginPreview(r, background);
+					DoRenderPreview(true);
+					previewTexture = previewRenderUtility.EndPreview();
+					requiresRefresh = false;
+				}
+				if (previewTexture != null)
+					GUI.DrawTexture(r, previewTexture, ScaleMode.StretchToFill, false);
 			}
 
 			DrawSkinToolbar(r);
-			NormalizedTimeBar(r);
-			// MITCH: left a todo: Implement panning
-			// this.previewDir = Drag2D(this.previewDir, r);
-			MouseScroll(r);
+			//DrawSetupPoseButton(r);
+			DrawTimeBar(r);
+			HandleMouseScroll(r);
 		}
 
-		float m_orthoGoal = 1;
-		Vector3 m_posGoal = new Vector3(0, 0, -10);
-		double m_adjustFrameEndTime = 0;
+		public Texture2D GetStaticPreview (int width, int height) {
+			var c = this.PreviewUtilityCamera;
+			if (c == null)
+				return null;
 
-		void AdjustCameraGoals (bool calculateMixTime) {
-			if (this.m_previewInstance == null)
+			RefreshOnNextUpdate();
+			AdjustCameraGoals();
+			c.orthographicSize = cameraOrthoGoal / 2;
+			c.transform.position = cameraPositionGoal;
+			previewRenderUtility.BeginStaticPreview(new Rect(0, 0, width, height));
+			DoRenderPreview(false);
+			var tex = previewRenderUtility.EndStaticPreview();
+
+			return tex;
+		}
+
+		public void DoRenderPreview (bool drawHandles) {
+			if (this.PreviewUtilityCamera.activeTexture == null || this.PreviewUtilityCamera.targetTexture == null)
 				return;
 
-			if (calculateMixTime) {
-				if (m_skeletonAnimation.state.GetCurrent(0) != null)
-					m_adjustFrameEndTime = EditorApplication.timeSinceStartup + m_skeletonAnimation.state.GetCurrent(0).Mix;
-			}
+			GameObject go = previewGameObject;
+			if (requiresRefresh && go != null) {
+				var renderer = go.GetComponent<Renderer>();
+				renderer.enabled = true;
+
 				
-			GameObject go = this.m_previewInstance;
-			Bounds bounds = go.GetComponent<Renderer>().bounds;
-			m_orthoGoal = bounds.size.y;
-			m_posGoal = bounds.center + new Vector3(0, 0, -10);
+				if (!EditorApplication.isPlaying) {
+					#if !(UNITY_2017_4 || UNITY_2018)
+					float current = CurrentTime;
+					float deltaTime = (current - animationLastTime);
+					skeletonAnimation.Update(deltaTime);
+					animationLastTime = current;
+					#endif
+					skeletonAnimation.LateUpdate();
+				}
+
+				var thisPreviewUtilityCamera = this.PreviewUtilityCamera;
+
+				if (drawHandles) {
+					Handles.SetCamera(thisPreviewUtilityCamera);
+					Handles.color = OriginColor;
+
+					// Draw Cross
+					float scale = skeletonDataAsset.scale;
+					float cl = 1000 * scale;
+					Handles.DrawLine(new Vector3(-cl, 0), new Vector3(cl, 0));
+					Handles.DrawLine(new Vector3(0, cl), new Vector3(0, -cl));
+				}
+
+				thisPreviewUtilityCamera.Render();
+
+				if (drawHandles) {
+					Handles.SetCamera(thisPreviewUtilityCamera);
+					SpineHandles.DrawBoundingBoxes(skeletonAnimation.transform, skeletonAnimation.skeleton);
+					if (SkeletonDataAssetInspector.showAttachments)
+						SpineHandles.DrawPaths(skeletonAnimation.transform, skeletonAnimation.skeleton);
+				}
+
+				renderer.enabled = false;
+			}
+		}
+
+		public void AdjustCamera () {
+			if (previewRenderUtility == null)
+				return;
+
+			if (CurrentTime < cameraAdjustEndFrame)
+				AdjustCameraGoals();
+
+			lastCameraPositionGoal = cameraPositionGoal;
+			lastCameraOrthoGoal = cameraOrthoGoal;
+
+			var c = this.PreviewUtilityCamera;
+			float orthoSet = Mathf.Lerp(c.orthographicSize, cameraOrthoGoal, 0.1f);
+
+			c.orthographicSize = orthoSet;
+
+			float dist = Vector3.Distance(c.transform.position, cameraPositionGoal);
+			if (dist > 0f) {
+				Vector3 pos = Vector3.Lerp(c.transform.position, cameraPositionGoal, 0.1f);
+				pos.x = 0;
+				c.transform.position = pos;
+				c.transform.rotation = Quaternion.identity;
+				RefreshOnNextUpdate();
+			}
 		}
 
 		void AdjustCameraGoals () {
-			AdjustCameraGoals(false);
+			if (previewGameObject == null) return;
+
+			Bounds bounds = previewGameObject.GetComponent<Renderer>().bounds;
+			cameraOrthoGoal = bounds.size.y;
+			cameraPositionGoal = bounds.center + new Vector3(0, 0, -10f);
 		}
 
-		void AdjustCamera () {
-			if (m_previewUtility == null)
-				return;
-
-			if (EditorApplication.timeSinceStartup < m_adjustFrameEndTime)
-				AdjustCameraGoals();
-
-			float orthoSet = Mathf.Lerp(this.m_previewUtility.m_Camera.orthographicSize, m_orthoGoal, 0.1f);
-
-			this.m_previewUtility.m_Camera.orthographicSize = orthoSet;
-
-			float dist = Vector3.Distance(m_previewUtility.m_Camera.transform.position, m_posGoal);
-			if(dist > 0f) {
-				Vector3 pos = Vector3.Lerp(this.m_previewUtility.m_Camera.transform.position, m_posGoal, 0.1f);
-				pos.x = 0;
-				this.m_previewUtility.m_Camera.transform.position = pos;
-				this.m_previewUtility.m_Camera.transform.rotation = Quaternion.identity;
-				m_requireRefresh = true;
+		void HandleMouseScroll (Rect position) {
+			Event current = Event.current;
+			int controlID = GUIUtility.GetControlID(SliderHash, FocusType.Passive);
+			switch (current.GetTypeForControl(controlID)) {
+				case EventType.ScrollWheel:
+					if (position.Contains(current.mousePosition)) {
+						cameraOrthoGoal += current.delta.y * 0.06f;
+						cameraOrthoGoal = Mathf.Max(0.01f, cameraOrthoGoal);
+						GUIUtility.hotControl = controlID;
+						current.Use();
+					}
+					break;
 			}
 		}
 
-		void DoRenderPreview (bool drawHandles) {
-			GameObject go = this.m_previewInstance;
+		public void RefreshOnNextUpdate () {
+			requiresRefresh = true;
+		}
 
-			if (m_requireRefresh && go != null) {
-				go.GetComponent<Renderer>().enabled = true;
+		public void ClearAnimationSetupPose () {
+			if (skeletonAnimation == null) {
+				Debug.LogWarning("Animation was stopped but preview doesn't exist. It's possible that the Preview Panel is closed.");
+			}
 
-				if (!EditorApplication.isPlaying)
-					m_skeletonAnimation.Update((Time.realtimeSinceStartup - m_lastTime));
+			skeletonAnimation.AnimationState.ClearTracks();
+			skeletonAnimation.Skeleton.SetToSetupPose();
+		}
 
-				m_lastTime = Time.realtimeSinceStartup;
+		public void PlayPauseAnimation (string animationName, bool loop) {
+			if (skeletonData == null) return;
 
-				if (!EditorApplication.isPlaying)
-					m_skeletonAnimation.LateUpdate();
+			if (skeletonAnimation == null) {
+				//Debug.LogWarning("Animation was stopped but preview doesn't exist. It's possible that the Preview Panel is closed.");
+				return;
+			}
 
-				if (drawHandles) {			
-					Handles.SetCamera(m_previewUtility.m_Camera);
-					Handles.color = m_originColor;
+			if (!skeletonAnimation.valid) return;
 
-					Handles.DrawLine(new Vector3(-1000 * m_skeletonDataAsset.scale, 0, 0), new Vector3(1000 * m_skeletonDataAsset.scale, 0, 0));
-					Handles.DrawLine(new Vector3(0, 1000 * m_skeletonDataAsset.scale, 0), new Vector3(0, -1000 * m_skeletonDataAsset.scale, 0));
-				}
+			if (string.IsNullOrEmpty(animationName)) {
+				skeletonAnimation.Skeleton.SetToSetupPose();
+				skeletonAnimation.AnimationState.ClearTracks();
+				return;
+			}
 
-				this.m_previewUtility.m_Camera.Render();
+			var targetAnimation = skeletonData.FindAnimation(animationName);
+			if (targetAnimation != null) {
+				var currentTrack = this.ActiveTrack;
+				bool isEmpty = (currentTrack == null);
+				bool isNewAnimation = isEmpty || currentTrack.Animation != targetAnimation;
 
-				if (drawHandles) {
-					Handles.SetCamera(m_previewUtility.m_Camera);
-					foreach (var slot in m_skeletonAnimation.skeleton.Slots) {
-						var boundingBoxAttachment = slot.Attachment as BoundingBoxAttachment;
-						if (boundingBoxAttachment != null)
-							DrawBoundingBox (slot, boundingBoxAttachment);
+				var skeleton = skeletonAnimation.Skeleton;
+				var animationState = skeletonAnimation.AnimationState;
+
+				if (isEmpty) {
+					skeleton.SetToSetupPose();
+					animationState.SetAnimation(0, targetAnimation, loop);
+				} else {					
+					bool sameAnimation = (currentTrack.Animation == targetAnimation);
+					if (sameAnimation) {
+						currentTrack.TimeScale = (currentTrack.TimeScale == 0) ? 1f : 0f; // pause/play
+					} else {
+						currentTrack.TimeScale = 1f;
+						animationState.SetAnimation(0, targetAnimation, loop);
 					}
 				}
 
-				go.GetComponent<Renderer>().enabled = false;
-			}
-				
-		}
-
-		static void DrawBoundingBox (Slot slot, BoundingBoxAttachment box) {
-			if (box.Vertices.Length <= 0) return; // Handle cases where user creates a BoundingBoxAttachment but doesn't actually define it.
-
-			var worldVerts = new float[box.Vertices.Length];
-			box.ComputeWorldVertices(slot, worldVerts);
-
-			Handles.color = Color.green;
-			Vector3 lastVert = Vector3.back;
-			Vector3 vert = Vector3.back;
-			Vector3 firstVert = new Vector3(worldVerts[0], worldVerts[1], -1);
-			for (int i = 0; i < worldVerts.Length; i += 2) {
-				vert.x = worldVerts[i];
-				vert.y = worldVerts[i + 1];
-
-				if (i > 0)
-					Handles.DrawLine(lastVert, vert);
-
-				lastVert = vert;
-			}
-
-			Handles.DrawLine(lastVert, firstVert);
-
-		}
-
-		void EditorUpdate () {
-			AdjustCamera();
-
-			if (m_playing) {
-				m_requireRefresh = true;
-				Repaint();
-			} else if (m_requireRefresh) {
-				Repaint();
+				if (isNewAnimation) {
+					currentAnimationEvents.Clear();
+					currentAnimationEventTimes.Clear();
+					foreach (Timeline timeline in targetAnimation.Timelines) {
+						var eventTimeline = timeline as EventTimeline;
+						if (eventTimeline != null) {
+							for (int i = 0; i < eventTimeline.Events.Length; i++) {
+								currentAnimationEvents.Add(eventTimeline.Events[i]);
+								currentAnimationEventTimes.Add(eventTimeline.Frames[i]);
+							}
+						}
+					}
+				}
 			} else {
-				//only needed if using smooth menus
+				Debug.LogFormat("The Spine.Animation named '{0}' was not found for this Skeleton.", animationName);
 			}
 
-			if (needToSerialize) {
-				needToSerialize = false;
-				serializedObject.ApplyModifiedProperties();
-			}
 		}
 
 		void DrawSkinToolbar (Rect r) {
-			if (m_skeletonAnimation == null)
-				return;
+			if (!this.IsValid) return;
 
-			if (m_skeletonAnimation.skeleton != null) {
-				string label = (m_skeletonAnimation.skeleton != null && m_skeletonAnimation.skeleton.Skin != null) ? m_skeletonAnimation.skeleton.Skin.Name : "default";
+			var skeleton = this.Skeleton;
+			string label = (skeleton.Skin != null) ? skeleton.Skin.Name : "default";
 
-				Rect popRect = new Rect(r);
-				popRect.y += 32;
-				popRect.x += 4;
-				popRect.height = 24;
-				popRect.width = 40;
-				EditorGUI.DropShadowLabel(popRect, new GUIContent("Skin", SpineEditorUtilities.Icons.skinsRoot));
+			Rect popRect = new Rect(r);
+			popRect.y += 32;
+			popRect.x += 4;
+			popRect.height = 24;
+			popRect.width = 40;
+			EditorGUI.DropShadowLabel(popRect, SpineInspectorUtility.TempContent("Skin"));
 
-				popRect.y += 11;
-				popRect.width = 150;
-				popRect.x += 44;
+			popRect.y += 11;
+			popRect.width = 150;
+			popRect.x += 44;
 
-				if (GUI.Button(popRect, label, EditorStyles.popup)) {
-					DrawSkinDropdown();
-				}
+			if (GUI.Button(popRect, SpineInspectorUtility.TempContent(label, Icons.skin), EditorStyles.popup)) {
+				DrawSkinDropdown();
 			}
 		}
-			
-		void NormalizedTimeBar (Rect r) {
-			if (m_skeletonAnimation == null)
+
+		void DrawSetupPoseButton (Rect r) {
+			if (!this.IsValid)
+				return;
+
+			var skeleton = this.Skeleton;
+
+			Rect popRect = new Rect(r);
+			popRect.y += 64;
+			popRect.x += 4;
+			popRect.height = 24;
+			popRect.width = 40;
+
+			//popRect.y += 11;
+			popRect.width = 150;
+			//popRect.x += 44;
+
+			if (GUI.Button(popRect, SpineInspectorUtility.TempContent("Reset to SetupPose", Icons.skeleton))) {
+				ClearAnimationSetupPose();
+				RefreshOnNextUpdate();
+			}
+		}
+
+		void DrawSkinDropdown () {
+			var menu = new GenericMenu();
+			foreach (Skin s in skeletonData.Skins)
+				menu.AddItem(new GUIContent(s.Name, Icons.skin), skeletonAnimation.skeleton.Skin == s, HandleSkinDropdownSelection, s);
+
+			menu.ShowAsContext();
+		}
+
+		void HandleSkinDropdownSelection (object o) {
+			Skin skin = (Skin)o;
+			skeletonAnimation.initialSkinName = skin.Name;
+			skeletonAnimation.Initialize(true);
+			RefreshOnNextUpdate();
+			if (OnSkinChanged != null) OnSkinChanged(skin.Name);
+		}
+
+		void DrawTimeBar (Rect r) {
+			if (skeletonAnimation == null)
 				return;
 
 			Rect barRect = new Rect(r);
@@ -784,175 +1065,92 @@ namespace Spine.Unity.Editor {
 			GUI.Box(barRect, "");
 
 			Rect lineRect = new Rect(barRect);
-			float width = lineRect.width;
-			TrackEntry t = m_skeletonAnimation.state.GetCurrent(0);
+			float lineRectWidth = lineRect.width;
+			TrackEntry t = skeletonAnimation.AnimationState.GetCurrent(0);
 
 			if (t != null) {
-				int loopCount = (int)(t.Time / t.EndTime);
-				float currentTime = t.Time - (t.EndTime * loopCount);
-
+				int loopCount = (int)(t.TrackTime / t.TrackEnd);
+				float currentTime = t.TrackTime - (t.TrackEnd * loopCount);
 				float normalizedTime = currentTime / t.Animation.Duration;
+				float wrappedTime = normalizedTime % 1f;
 
-				lineRect.x = barRect.x + (width * normalizedTime) - 0.5f;
+				lineRect.x = barRect.x + (lineRectWidth * wrappedTime) - 0.5f;
 				lineRect.width = 2;
 
 				GUI.color = Color.red;
 				GUI.DrawTexture(lineRect, EditorGUIUtility.whiteTexture);
 				GUI.color = Color.white;
 
-				for (int i = 0; i < m_animEvents.Count; i++) {
-					// MITCH: left todo: Tooltip
-					//Spine.Event spev = animEvents[i];
+				currentAnimationEventTooltips = currentAnimationEventTooltips ?? new List<SpineEventTooltip>();
+				currentAnimationEventTooltips.Clear();
+				for (int i = 0; i < currentAnimationEvents.Count; i++) {
+					float eventTime = currentAnimationEventTimes[i];
+					var userEventIcon = Icons.userEvent;
+					var evRect = new Rect(barRect) {
+						x = Mathf.Max(((eventTime / t.Animation.Duration) * lineRectWidth) - (userEventIcon.width / 2), barRect.x),
+						y = barRect.y + userEventIcon.height,
+						width = userEventIcon.width,
+						height = userEventIcon.height
+					};
+					GUI.DrawTexture(evRect, userEventIcon);
 
-					float fr = m_animEventFrames[i];
-					var evRect = new Rect(barRect);
-					evRect.x = Mathf.Clamp(((fr / t.Animation.Duration) * width) - (SpineEditorUtilities.Icons._event.width / 2), barRect.x, float.MaxValue);
-					evRect.width = SpineEditorUtilities.Icons._event.width;
-					evRect.height = SpineEditorUtilities.Icons._event.height;
-					evRect.y += SpineEditorUtilities.Icons._event.height;
-					GUI.DrawTexture(evRect, SpineEditorUtilities.Icons._event);
+					Event ev = Event.current;
+					if (ev.type == EventType.Repaint) {
+						if (evRect.Contains(ev.mousePosition)) {
+							string eventName = currentAnimationEvents[i].Data.Name;
+							Rect tooltipRect = new Rect(evRect) {
+								width = EditorStyles.helpBox.CalcSize(new GUIContent(eventName)).x
+							};
+							tooltipRect.y -= 4;
+							tooltipRect.y -= tooltipRect.height * currentAnimationEventTooltips.Count; // Avoid several overlapping tooltips.
+							tooltipRect.x += 4;
 
-					// MITCH: left todo:  Tooltip
-//					UnityEngine.Event ev = UnityEngine.Event.current;
-//					if (ev.isMouse) {
-//						if (evRect.Contains(ev.mousePosition)) {
-//							Rect tooltipRect = new Rect(evRect);
-//							tooltipRect.width = 500;
-//							tooltipRect.y -= 4;
-//							tooltipRect.x += 4;
-//							GUI.Label(tooltipRect, spev.Data.Name);
-//						}
-//					}
+							// Handle tooltip overflowing to the right.
+							float rightEdgeOverflow = (tooltipRect.x + tooltipRect.width) - (barRect.x + barRect.width);
+							if (rightEdgeOverflow > 0)
+								tooltipRect.x -= rightEdgeOverflow;
+
+							currentAnimationEventTooltips.Add(new SpineEventTooltip { rect = tooltipRect, text = eventName });
+						}
+					}
+				}
+
+				// Draw tooltips.
+				for (int i = 0; i < currentAnimationEventTooltips.Count; i++) {
+					GUI.Label(currentAnimationEventTooltips[i].rect, currentAnimationEventTooltips[i].text, EditorStyles.helpBox);
+					GUI.tooltip = currentAnimationEventTooltips[i].text;
 				}
 			}
 		}
 
-		void MouseScroll (Rect position) {
-			UnityEngine.Event current = UnityEngine.Event.current;
-			int controlID = GUIUtility.GetControlID(SliderHash, FocusType.Passive);
-			switch (current.GetTypeForControl(controlID)) {
-			case EventType.ScrollWheel:
-				if (position.Contains(current.mousePosition)) {
-					m_orthoGoal += current.delta.y * 0.06f;
-					m_orthoGoal = Mathf.Max(0.01f, m_orthoGoal);
-					GUIUtility.hotControl = controlID;
-					current.Use();
-				}
-				break;
+		public void OnDestroy () {
+			DisposePreviewRenderUtility();
+			DestroyPreviewGameObject();
+		}
+
+		public void Clear () {
+			DisposePreviewRenderUtility();
+			DestroyPreviewGameObject();
+		}
+
+		void DisposePreviewRenderUtility () {
+			if (previewRenderUtility != null) {
+				previewRenderUtility.Cleanup();
+				previewRenderUtility = null;
 			}
 		}
 
-		// MITCH: left todo:  Implement preview panning
-		/*
-		static Vector2 Drag2D(Vector2 scrollPosition, Rect position)
-		{
-			int controlID = GUIUtility.GetControlID(sliderHash, FocusType.Passive);
-			UnityEngine.Event current = UnityEngine.Event.current;
-			switch (current.GetTypeForControl(controlID))
-			{
-			case EventType.MouseDown:
-				if (position.Contains(current.mousePosition) && (position.width > 50f))
-				{
-					GUIUtility.hotControl = controlID;
-					current.Use();
-					EditorGUIUtility.SetWantsMouseJumping(1);
-				}
-				return scrollPosition;
-				
-			case EventType.MouseUp:
-				if (GUIUtility.hotControl == controlID)
-				{
-					GUIUtility.hotControl = 0;
-				}
-				EditorGUIUtility.SetWantsMouseJumping(0);
-				return scrollPosition;
-				
-			case EventType.MouseMove:
-				return scrollPosition;
-				
-			case EventType.MouseDrag:
-				if (GUIUtility.hotControl == controlID)
-				{
-					scrollPosition -= (Vector2) (((current.delta * (!current.shift ? ((float) 1) : ((float) 3))) / Mathf.Min(position.width, position.height)) * 140f);
-					scrollPosition.y = Mathf.Clamp(scrollPosition.y, -90f, 90f);
-					current.Use();
-					GUI.changed = true;
-				}
-				return scrollPosition;
-			}
-			return scrollPosition;
-		}
-		*/
-
-		public override GUIContent GetPreviewTitle () {
-			return new GUIContent("Preview");
-		}
-
-		public override void OnPreviewSettings () {
-			if (!m_initialized) {
-				GUILayout.HorizontalSlider(0, 0, 2, GUILayout.MaxWidth(64));
-			} else {
-				float speed = GUILayout.HorizontalSlider(m_skeletonAnimation.timeScale, 0, 2, GUILayout.MaxWidth(64));
-
-				//snap to nearest 0.25
-				float y = speed / 0.25f;
-				int q = Mathf.RoundToInt(y);
-				speed = q * 0.25f;
-
-				m_skeletonAnimation.timeScale = speed;
+		void DestroyPreviewGameObject () {
+			if (previewGameObject != null) {
+				GameObject.DestroyImmediate(previewGameObject);
+				previewGameObject = null;
 			}
 		}
 
-		// MITCH: left todo: Fix first-import error
-		// MITCH: left todo: Update preview without thumbnail
-		public override Texture2D RenderStaticPreview (string assetPath, UnityEngine.Object[] subAssets, int width, int height) {
-			var tex = new Texture2D(width, height, TextureFormat.ARGB32, false);
-
-			this.InitPreview();
-
-			if (this.m_previewUtility.m_Camera == null)
-				return null;
-
-			m_requireRefresh = true;
-			this.DoRenderPreview(false);
-			AdjustCameraGoals(false);
-
-			this.m_previewUtility.m_Camera.orthographicSize = m_orthoGoal / 2;
-			this.m_previewUtility.m_Camera.transform.position = m_posGoal;
-			this.m_previewUtility.BeginStaticPreview(new Rect(0, 0, width, height));
-			this.DoRenderPreview(false);
-
-			//MITCH: left todo:  Figure out why this is throwing errors on first attempt
-			//		if(m_previewUtility != null){
-			//			Handles.SetCamera(this.m_previewUtility.m_Camera);
-			//			Handles.BeginGUI();
-			//			GUI.DrawTexture(new Rect(40,60,width,height), SpineEditorUtilities.Icons.spine, ScaleMode.StretchToFill);
-			//			Handles.EndGUI();
-			//		}
-			tex = this.m_previewUtility.EndStaticPreview();
-			return tex;
+		internal struct SpineEventTooltip {
+			public Rect rect;
+			public string text;
 		}
-		#endregion
-
-		#region Skin Dropdown Context Menu
-		void DrawSkinDropdown () {
-			var menu = new GenericMenu();
-			foreach (Skin s in m_skeletonData.Skins)
-				menu.AddItem(new GUIContent(s.Name), this.m_skeletonAnimation.skeleton.Skin == s, SetSkin, s);
-			
-			menu.ShowAsContext();
-		}
-
-		void SetSkin (object o) {
-			Skin skin = (Skin)o;
-
-			m_skeletonAnimation.initialSkinName = skin.Name;
-			m_skeletonAnimation.Initialize(true);
-			m_requireRefresh = true;
-
-			EditorPrefs.SetString(m_skeletonDataAssetGUID + "_lastSkin", skin.Name);
-		}
-		#endregion
 	}
-		
+
 }
