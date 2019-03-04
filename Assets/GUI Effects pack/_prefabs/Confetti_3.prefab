@@ -85,12 +85,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 11400000, guid: 3d5bbfeeb58aadd45a2e4ca64c92649a, type: 2}
   initialSkinName: default
+  initialFlipX: 0
+  initialFlipY: 0
   separatorSlotNames: []
   zSpacing: 0
-  renderMeshes: 1
+  useClipping: 1
   immutableTriangles: 0
   pmaVertexColors: 1
-  calculateNormals: 0
+  clearStateOnDisable: 0
+  tintBlack: 0
+  singleSubmesh: 0
+  addNormals: 0
   calculateTangents: 0
   logErrors: 0
   disableRenderingOnOverride: 1
