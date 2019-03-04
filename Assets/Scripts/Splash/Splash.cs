@@ -1,7 +1,7 @@
 ﻿﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using GameAnalyticsSDK;
+//using GameAnalyticsSDK;
 
 public class Splash : MonoBehaviour
 {
@@ -9,7 +9,7 @@ public class Splash : MonoBehaviour
 
     void Start()
     {
-        GameAnalytics.Initialize();
+        //GameAnalytics.Initialize();
         goTo.go("Main");
     }
 

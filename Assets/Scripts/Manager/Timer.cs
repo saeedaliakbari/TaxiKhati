@@ -16,7 +16,7 @@ public class Timer
 
     private static IEnumerator DoTask(Task task, float delay)
     {
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSecondsRealtime(delay);
         task();
     }
 }

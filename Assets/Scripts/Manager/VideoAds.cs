@@ -370,6 +370,7 @@ public class VideoAds : MonoBehaviour
         if (ObscuredPrefs.GetInt("countShowAd", 1) > 5)
         {
             panelNoAds.SetActive(true);
+            controller.parkingManager.gameObject.SetActive(false);
             ObscuredPrefs.SetInt("countShowAd", 1);
         }
     }
