@@ -1,35 +1,7 @@
-/******************************************************************************
- * Spine Runtimes Software License v2.5
- *
- * Copyright (c) 2013-2016, Esoteric Software
- * All rights reserved.
- *
- * You are granted a perpetual, non-exclusive, non-sublicensable, and
- * non-transferable license to use, install, execute, and perform the Spine
- * Runtimes software and derivative works solely for personal or internal
- * use. Without the written permission of Esoteric Software (see Section 2 of
- * the Spine Software License Agreement), you may not (a) modify, translate,
- * adapt, or develop new applications using the Spine Runtimes or otherwise
- * create derivative works or improvements of the Spine Runtimes or (b) remove,
- * delete, alter, or obscure any trademarks or any copyright, trademark, patent,
- * or other intellectual property or proprietary rights notices on or in the
- * Software, including any copy thereof. Redistributions in binary or source
- * form must include this license and terms.
- *
- * THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
- * EVENT SHALL ESOTERIC SOFTWARE BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES, BUSINESS INTERRUPTION, OR LOSS OF
- * USE, DATA, OR PROFITS) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
- * IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- *****************************************************************************/
-
-// Contributed by: Mitch Thompson
-
+/*****************************************************************************
+ * SkeletonBaker added by Mitch Thompson
+ * Full irrevocable rights and permissions granted to Esoteric Software
+*****************************************************************************/
 #define SPINE_SKELETON_ANIMATOR
 
 using UnityEngine;
@@ -42,46 +14,54 @@ using System.Reflection;
 using System.IO;
 using Spine;
 
-namespace Spine.Unity.Editor {
 
-	/// <summary>
-	/// [SUPPORTS]
-	/// Linear, Constant, and Bezier Curves* 
-	/// Inverse Kinematics*
-	/// Inherit Rotation
-	/// Translate Timeline
-	/// Rotate Timeline
-	/// Scale Timeline**
-	/// Event Timeline***
-	/// Attachment Timeline
-	/// 
-	/// RegionAttachment
-	/// MeshAttachment (optionally Skinned)
-	/// 
-	/// [LIMITATIONS]
-	/// *Bezier Curves are baked into the animation at 60fps and are not realtime. Use bakeIncrement constant to adjust key density if desired.
-	/// *Inverse Kinematics is baked into the animation at 60fps and are not realtime. Use bakeIncrement constant to adjust key density if desired.
-	/// ***Events may only fire 1 type of data per event in Unity safely so priority to String data if present in Spine key, otherwise a Float is sent whether the Spine key was Int or Float with priority given to Int.
-	/// 
-	/// [DOES NOT SUPPORT]
-	/// FFD (Unity does not provide access to BlendShapes with code)
-	/// Color Keys (Maybe one day when Unity supports full FBX standard and provides access with code)
-	/// Draw Order Keyframes
-	/// </summary>
+/// <summary>
+/// [SUPPORTS]
+/// Linear, Constant, and Bezier Curves* 
+/// Inverse Kinematics*
+/// Inherit Rotation
+/// Translate Timeline
+/// Rotate Timeline
+/// Scale Timeline**
+/// Event Timeline***
+/// Attachment Timeline
+/// 
+/// RegionAttachment
+/// MeshAttachment
+/// SkinnedMeshAttachment
+/// 
+/// [LIMITATIONS]
+/// *Inverse Kinematics & Bezier Curves are baked into the animation at 60fps and are not realtime. Use bakeIncrement constant to adjust key density if desired.
+/// **Non-uniform Scale Keys  (ie:  if ScaleX and ScaleY are not equal to eachother, it will not be accurate to Spine source)
+/// ***Events may only fire 1 type of data per event in Unity safely so priority to String data if present in Spine key, otherwise a Float is sent whether the Spine key was Int or Float with priority given to Int.
+/// 
+/// [DOES NOT SUPPORT]
+/// FlipX or FlipY (Maybe one day)
+/// FFD (Unity does not provide access to BlendShapes with code)
+/// Color Keys (Maybe one day when Unity supports full FBX standard and provides access with code)
+/// InheritScale (Never.  Unity and Spine do scaling very differently)
+/// Draw Order Keyframes
+/// </summary>
+/// 
+namespace Spine.Unity.Editor {
 	public static class SkeletonBaker {
 
 		#region SkeletonAnimator's Mecanim Clips
 		#if SPINE_SKELETON_ANIMATOR
 		public static void GenerateMecanimAnimationClips (SkeletonDataAsset skeletonDataAsset) {
+			//skeletonDataAsset.Clear();
 			var data = skeletonDataAsset.GetSkeletonData(true);
 			if (data == null) {
-				Debug.LogError("SkeletonData loading failed!", skeletonDataAsset);
+				Debug.LogError("SkeletonData failed!", skeletonDataAsset);
 				return;
 			}
 
 			string dataPath = AssetDatabase.GetAssetPath(skeletonDataAsset);
-			string controllerPath = dataPath.Replace(SpineEditorUtilities.SkeletonDataSuffix, "_Controller").Replace(".asset", ".controller");
+			string controllerPath = dataPath.Replace("_SkeletonData", "_Controller").Replace(".asset", ".controller");
+
+		#if UNITY_5
 			UnityEditor.Animations.AnimatorController controller;
+
 			if (skeletonDataAsset.controller != null) {
 				controller = (UnityEditor.Animations.AnimatorController)skeletonDataAsset.controller;
 				controllerPath = AssetDatabase.GetAssetPath(controller);
@@ -97,6 +77,24 @@ namespace Spine.Unity.Editor {
 				}
 
 			}
+		#else
+		UnityEditorInternal.AnimatorController controller;
+
+		if (skeletonDataAsset.controller != null) {
+			controller = (UnityEditorInternal.AnimatorController)skeletonDataAsset.controller;
+			controllerPath = AssetDatabase.GetAssetPath(controller);
+		} else {
+			if (File.Exists(controllerPath)) {
+				if (EditorUtility.DisplayDialog("Controller Overwrite Warning", "Unknown Controller already exists at: " + controllerPath, "Update", "Overwrite")) {
+					controller = (UnityEditorInternal.AnimatorController)AssetDatabase.LoadAssetAtPath(controllerPath, typeof(RuntimeAnimatorController));
+				} else {
+					controller = (UnityEditorInternal.AnimatorController)UnityEditorInternal.AnimatorController.CreateAnimatorControllerAtPath(controllerPath);
+				}
+			} else {
+				controller = (UnityEditorInternal.AnimatorController)UnityEditorInternal.AnimatorController.CreateAnimatorControllerAtPath(controllerPath);
+			}
+		}
+		#endif
 
 			skeletonDataAsset.controller = controller;
 			EditorUtility.SetDirty(skeletonDataAsset);
@@ -122,35 +120,43 @@ namespace Spine.Unity.Editor {
 				}
 			}
 
-			foreach (var animations in data.Animations) {
-				string animationName = animations.Name; // Review for unsafe names. Requires runtime implementation too.
-				spineAnimationTable.Add(animationName, animations);
+			foreach (var anim in data.Animations) {
+				string name = anim.Name;
+				spineAnimationTable.Add(name, anim);
 
-				if (unityAnimationClipTable.ContainsKey(animationName) == false) {
-					AnimationClip newClip = new AnimationClip {
-						name = animationName
-					};
-					//AssetDatabase.CreateAsset(newClip, Path.GetDirectoryName(dataPath) + "/" + animationName + ".asset");
+				if (unityAnimationClipTable.ContainsKey(name) == false) {
+					//generate new dummy clip
+					AnimationClip newClip = new AnimationClip();
+					newClip.name = name;
+					#if !(UNITY_5)
+					AnimationUtility.SetAnimationType(newClip, ModelImporterAnimationType.Generic);
+					#endif
 					AssetDatabase.AddObjectToAsset(newClip, controller);
-					unityAnimationClipTable.Add(animationName, newClip);
+					unityAnimationClipTable.Add(name, newClip);
 				}
 
-				AnimationClip clip = unityAnimationClipTable[animationName];
-				clip.SetCurve("", typeof(GameObject), "dummy", AnimationCurve.Linear(0, 0, animations.Duration, 0));
+				AnimationClip clip = unityAnimationClipTable[name];
+
+				clip.SetCurve("", typeof(GameObject), "dummy", AnimationCurve.Linear(0, 0, anim.Duration, 0));
 				var settings = AnimationUtility.GetAnimationClipSettings(clip);
-				settings.stopTime = animations.Duration;
+				settings.stopTime = anim.Duration;
+
 				SetAnimationSettings(clip, settings);
 
 				AnimationUtility.SetAnimationEvents(clip, new AnimationEvent[0]);
-				foreach (Timeline t in animations.Timelines) {
-					if (t is EventTimeline)
+
+				foreach (Timeline t in anim.Timelines) {
+					if (t is EventTimeline) {
 						ParseEventTimeline((EventTimeline)t, clip, SendMessageOptions.DontRequireReceiver);
+					}
 				}
 
 				EditorUtility.SetDirty(clip);
-				unityAnimationClipTable.Remove(animationName);
+
+				unityAnimationClipTable.Remove(name);
 			}
 
+			//clear no longer used animations
 			foreach (var clip in unityAnimationClipTable.Values) {
 				AnimationClip.DestroyImmediate(clip, true);
 			}
@@ -165,11 +171,11 @@ namespace Spine.Unity.Editor {
 		#endif
 		#endregion
 
-		#region Prefab and AnimationClip Baking
+		#region Baking
 		/// <summary>
 		/// Interval between key sampling for Bezier curves, IK controlled bones, and Inherit Rotation effected bones.
 		/// </summary>
-		const float BakeIncrement = 1 / 60f;
+		const float bakeIncrement = 1 / 60f;
 
 		public static void BakeToPrefab (SkeletonDataAsset skeletonDataAsset, ExposedList<Skin> skins, string outputPath = "", bool bakeAnimations = true, bool bakeIK = true, SendMessageOptions eventOptions = SendMessageOptions.DontRequireReceiver) {
 			if (skeletonDataAsset == null || skeletonDataAsset.GetSkeletonData(true) == null) {
@@ -184,19 +190,32 @@ namespace Spine.Unity.Editor {
 
 			var skeletonData = skeletonDataAsset.GetSkeletonData(true);
 			bool hasAnimations = bakeAnimations && skeletonData.Animations.Count > 0;
+			#if UNITY_5
 			UnityEditor.Animations.AnimatorController controller = null;
+			#else
+			UnityEditorInternal.AnimatorController controller = null;
+			#endif
 			if (hasAnimations) {
 				string controllerPath = outputPath + "/" + skeletonDataAsset.skeletonJSON.name + " Controller.controller";
 				bool newAnimContainer = false;
 
 				var runtimeController = AssetDatabase.LoadAssetAtPath(controllerPath, typeof(RuntimeAnimatorController));
 
+				#if UNITY_5
 				if (runtimeController != null) {
 					controller = (UnityEditor.Animations.AnimatorController)runtimeController;
 				} else {
 					controller = UnityEditor.Animations.AnimatorController.CreateAnimatorControllerAtPath(controllerPath);
 					newAnimContainer = true;
 				}
+				#else
+				if (runtimeController != null) {
+				controller = (UnityEditorInternal.AnimatorController)runtimeController;
+				} else {
+				controller = UnityEditorInternal.AnimatorController.CreateAnimatorControllerAtPath(controllerPath);
+				newAnimContainer = true;
+				}
+				#endif
 
 				var existingClipTable = new Dictionary<string, AnimationClip>();
 				var unusedClipNames = new List<string>();
@@ -241,7 +260,12 @@ namespace Spine.Unity.Editor {
 						unusedClipNames.Remove(clip.name);
 					} else {
 						AssetDatabase.AddObjectToAsset(clip, controller);
+						#if UNITY_5
 						controller.AddMotion(clip);
+						#else
+						UnityEditorInternal.AnimatorController.AddAnimationClipToController(controller, clip);
+						#endif
+
 					}
 				}
 
@@ -312,13 +336,12 @@ namespace Spine.Unity.Editor {
 
 					boneTransform.parent = parentTransform;
 					boneTransform.localPosition = new Vector3(boneData.X, boneData.Y, 0);
-					var tm = boneData.TransformMode;
-					if (tm.InheritsRotation())
+					if (boneData.InheritRotation)
 						boneTransform.localRotation = Quaternion.Euler(0, 0, boneData.Rotation);
 					else
 						boneTransform.rotation = Quaternion.Euler(0, 0, boneData.Rotation);
 
-					if (tm.InheritsScale())
+					if (boneData.InheritScale)
 						boneTransform.localScale = new Vector3(boneData.ScaleX, boneData.ScaleY, 1);
 				}
 
@@ -342,8 +365,8 @@ namespace Spine.Unity.Editor {
 
 					for (int a = 0; a < attachments.Count; a++) {
 						var attachment = attachments[a];
-						string attachmentName = attachmentNames[a];
-						string attachmentMeshName = "[" + slotData.Name + "] " + attachmentName;
+						var attachmentName = attachmentNames[a];
+						var attachmentMeshName = "[" + slotData.Name + "] " + attachmentName;
 						Vector3 offset = Vector3.zero;
 						float rotation = 0;
 						Mesh mesh = null;
@@ -358,7 +381,7 @@ namespace Spine.Unity.Editor {
 							offset.y = regionAttachment.Y;
 							rotation = regionAttachment.Rotation;
 							mesh = ExtractRegionAttachment(attachmentMeshName, regionAttachment, mesh);
-							material = attachment.GetMaterial();
+							material = ExtractMaterial(attachment);
 							unusedMeshNames.Remove(attachmentMeshName);
 							if (newPrefab || meshTable.ContainsKey(attachmentMeshName) == false)
 								AssetDatabase.AddObjectToAsset(mesh, prefab);
@@ -374,7 +397,7 @@ namespace Spine.Unity.Editor {
 							else
 								mesh = ExtractMeshAttachment(attachmentMeshName, meshAttachment, mesh);
 							
-							material = attachment.GetMaterial();
+							material = ExtractMaterial(attachment);
 							unusedMeshNames.Remove(attachmentMeshName);
 							if (newPrefab || meshTable.ContainsKey(attachmentMeshName) == false)
 								AssetDatabase.AddObjectToAsset(mesh, prefab);
@@ -445,20 +468,18 @@ namespace Spine.Unity.Editor {
 
 		}
 
-		#region Attachment Baking
-		static Bone DummyBone;
-		static Slot DummySlot;
+		static Bone extractionBone;
+		static Slot extractionSlot;
 
-		internal static Bone GetDummyBone () {
-			if (DummyBone != null)
-				return DummyBone;
+		static Bone GetExtractionBone () {
+			if (extractionBone != null)
+				return extractionBone;
 
 			SkeletonData skelData = new SkeletonData();
-			BoneData data = new BoneData(0, "temp", null) {
-				ScaleX = 1,
-				ScaleY = 1,
-				Length = 100
-			};
+			BoneData data = new BoneData(0, "temp", null);
+			data.ScaleX = 1;
+			data.ScaleY = 1;
+			data.Length = 100;
 
 			skelData.Bones.Add(data);
 
@@ -467,46 +488,57 @@ namespace Spine.Unity.Editor {
 			Bone bone = new Bone(data, skeleton, null);
 			bone.UpdateWorldTransform();
 
-			DummyBone = bone;
+			extractionBone = bone;
 
-			return DummyBone;
+			return extractionBone;
 		}
 
-		internal static Slot GetDummySlot () {
-			if (DummySlot != null)
-				return DummySlot;
+		static Slot GetExtractionSlot () {
+			if (extractionSlot != null)
+				return extractionSlot;
 
-			Bone bone = GetDummyBone();
+			Bone bone = GetExtractionBone();
 
 			SlotData data = new SlotData(0, "temp", bone.Data);
 			Slot slot = new Slot(data, bone);
-			DummySlot = slot;
-			return DummySlot;
+			extractionSlot = slot;
+			return extractionSlot;
 		}
 
-		internal static Mesh ExtractRegionAttachment (string name, RegionAttachment attachment, Mesh mesh = null, bool centered = true) {
-			var bone = GetDummyBone();
+		static Material ExtractMaterial (Attachment attachment) {
+			if (attachment == null || attachment is BoundingBoxAttachment)
+				return null;
 
-			if (centered) {
-				bone.X = -attachment.X;
-				bone.Y = -attachment.Y;
-			}	
+			if (attachment is RegionAttachment) {
+				var att = (RegionAttachment)attachment;
+				return (Material)((AtlasRegion)att.RendererObject).page.rendererObject;
+			} else if (attachment is MeshAttachment) {
+				var att = (MeshAttachment)attachment;
+				return (Material)((AtlasRegion)att.RendererObject).page.rendererObject;
+			} else {
+				return null;
+			}
+		}
 
+		static Mesh ExtractRegionAttachment (string name, RegionAttachment attachment, Mesh mesh = null) {
+			var bone = GetExtractionBone();
+
+			bone.X = -attachment.X;
+			bone.Y = -attachment.Y;
 			bone.UpdateWorldTransform();
 
 			Vector2[] uvs = ExtractUV(attachment.UVs);
 			float[] floatVerts = new float[8];
-			attachment.ComputeWorldVertices(bone, floatVerts, 0);
+			attachment.ComputeWorldVertices(bone, floatVerts);
 			Vector3[] verts = ExtractVerts(floatVerts);
 
 			//unrotate verts now that they're centered
-			if (centered) {
-				for (int i = 0; i < verts.Length; i++)
-					verts[i] = Quaternion.Euler(0, 0, -attachment.Rotation) * verts[i];
+			for (int i = 0; i < verts.Length; i++) {
+				verts[i] = Quaternion.Euler(0, 0, -attachment.Rotation) * verts[i];
 			}
 
-			int[] triangles = { 1, 3, 0, 2, 3, 1 };
-			Color color = attachment.GetColor();
+			int[] triangles = new int[6] { 1, 3, 0, 2, 3, 1 };
+			Color color = new Color(attachment.R, attachment.G, attachment.B, attachment.A);
 
 			if (mesh == null)
 				mesh = new Mesh();
@@ -516,7 +548,7 @@ namespace Spine.Unity.Editor {
 			mesh.vertices = verts;
 			mesh.uv = uvs;
 			mesh.triangles = triangles;
-			mesh.colors = new [] { color, color, color, color };
+			mesh.colors = new Color[] { color, color, color, color };
 			mesh.RecalculateBounds();
 			mesh.RecalculateNormals();
 			mesh.name = name;
@@ -524,8 +556,8 @@ namespace Spine.Unity.Editor {
 			return mesh;
 		}
 
-		internal static Mesh ExtractMeshAttachment (string name, MeshAttachment attachment, Mesh mesh = null) {
-			var slot = GetDummySlot();
+		static Mesh ExtractMeshAttachment (string name, MeshAttachment attachment, Mesh mesh = null) {
+			var slot = GetExtractionSlot();
 
 			slot.Bone.X = 0;
 			slot.Bone.Y = 0;
@@ -537,7 +569,7 @@ namespace Spine.Unity.Editor {
 			Vector3[] verts = ExtractVerts(floatVerts);
 
 			int[] triangles = attachment.Triangles;
-			Color color = attachment.GetColor();
+			Color color = new Color(attachment.R, attachment.G, attachment.B, attachment.A);
 
 			if (mesh == null)
 				mesh = new Mesh();
@@ -589,8 +621,8 @@ namespace Spine.Unity.Editor {
 			}
 		}
 
-		internal static Mesh ExtractWeightedMeshAttachment (string name, MeshAttachment attachment, int slotIndex, SkeletonData skeletonData, List<Transform> boneList, Mesh mesh = null) {
-			if (!attachment.IsWeighted())
+		static Mesh ExtractWeightedMeshAttachment (string name, MeshAttachment attachment, int slotIndex, SkeletonData skeletonData, List<Transform> boneList, Mesh mesh = null) {
+			if (attachment.Bones == null)
 				throw new System.ArgumentException("Mesh is not weighted.", "attachment");
 
 			Skeleton skeleton = new Skeleton(skeletonData);
@@ -705,7 +737,7 @@ namespace Spine.Unity.Editor {
 			return mesh;
 		}
 
-		internal static Vector2[] ExtractUV (float[] floats) {
+		static Vector2[] ExtractUV (float[] floats) {
 			Vector2[] arr = new Vector2[floats.Length / 2];
 
 			for (int i = 0; i < floats.Length; i += 2) {
@@ -715,7 +747,7 @@ namespace Spine.Unity.Editor {
 			return arr;
 		}
 
-		internal static Vector3[] ExtractVerts (float[] floats) {
+		static Vector3[] ExtractVerts (float[] floats) {
 			Vector3[] arr = new Vector3[floats.Length / 2];
 
 			for (int i = 0; i < floats.Length; i += 2) {
@@ -724,9 +756,7 @@ namespace Spine.Unity.Editor {
 
 			return arr;
 		}
-		#endregion
 
-		#region Animation Baking
 		static AnimationClip ExtractAnimation (string name, SkeletonData skeletonData, Dictionary<int, List<string>> slotLookup, bool bakeIK, SendMessageOptions eventOptions, AnimationClip clip = null) {
 			var animation = skeletonData.FindAnimation(name);
 
@@ -739,6 +769,12 @@ namespace Spine.Unity.Editor {
 				AnimationUtility.SetAnimationEvents(clip, new AnimationEvent[0]);
 			}
 
+			#if UNITY_5
+
+			#else
+			AnimationUtility.SetAnimationType(clip, ModelImporterAnimationType.Generic);
+			#endif
+
 			clip.name = name;
 
 			Skeleton skeleton = new Skeleton(skeletonData);
@@ -750,18 +786,18 @@ namespace Spine.Unity.Editor {
 					foreach (Bone b in i.Bones) {
 						int index = skeleton.FindBoneIndex(b.Data.Name);
 						ignoreRotateTimelineIndexes.Add(index);
-						BakeBoneConstraints(b, animation, clip);
+						BakeBone(b, animation, clip);
 					}
 				}
 			}
 
 			foreach (Bone b in skeleton.Bones) {
-				if (!b.Data.TransformMode.InheritsRotation()) {
+				if (b.Data.InheritRotation == false) {
 					int index = skeleton.FindBoneIndex(b.Data.Name);
 
 					if (ignoreRotateTimelineIndexes.Contains(index) == false) {
 						ignoreRotateTimelineIndexes.Add(index);
-						BakeBoneConstraints(b, animation, clip);
+						BakeBone(b, animation, clip);
 					}
 				}
 			}
@@ -808,484 +844,9 @@ namespace Spine.Unity.Editor {
 					low = current + 1;
 				else
 					high = current;
-
 				if (low == high) return (low + 1);
 				current = (int)((uint)(low + high) >> 1);
 			}
-		}
-
-		static void BakeBoneConstraints (Bone bone, Spine.Animation animation, AnimationClip clip) {
-			Skeleton skeleton = bone.Skeleton;
-			bool inheritRotation = bone.Data.TransformMode.InheritsRotation();
-
-			animation.PoseSkeleton(skeleton, 0);
-			skeleton.UpdateWorldTransform();
-			float duration = animation.Duration;
-
-			AnimationCurve curve = new AnimationCurve();
-
-			List<Keyframe> keys = new List<Keyframe>();
-
-			float rotation = bone.AppliedRotation;
-			if (!inheritRotation)
-				rotation = GetUninheritedAppliedRotation(bone);
-
-			keys.Add(new Keyframe(0, rotation, 0, 0));
-
-			int listIndex = 1;
-
-			float r = rotation;
-
-			int steps = Mathf.CeilToInt(duration / BakeIncrement);
-
-			float currentTime = 0;
-			float angle = rotation;
-
-			for (int i = 1; i <= steps; i++) {
-				currentTime += BakeIncrement;
-				if (i == steps)
-					currentTime = duration;
-
-				animation.PoseSkeleton(skeleton, currentTime, true);
-				skeleton.UpdateWorldTransform();
-
-				int pIndex = listIndex - 1;
-
-				Keyframe pk = keys[pIndex];
-
-				pk = keys[pIndex];
-
-				rotation = inheritRotation ? bone.AppliedRotation : GetUninheritedAppliedRotation(bone);
-
-				angle += Mathf.DeltaAngle(angle, rotation);
-
-				r = angle;
-
-				float rOut = (r - pk.value) / (currentTime - pk.time);
-
-				pk.outTangent = rOut;
-
-				keys.Add(new Keyframe(currentTime, r, rOut, 0));
-
-				keys[pIndex] = pk;
-
-				listIndex++;
-			}
-
-			curve = EnsureCurveKeyCount(new AnimationCurve(keys.ToArray()));
-
-			string path = GetPath(bone.Data);
-			string propertyName = "localEulerAnglesBaked";
-
-			EditorCurveBinding xBind = EditorCurveBinding.FloatCurve(path, typeof(Transform), propertyName + ".x");
-			AnimationUtility.SetEditorCurve(clip, xBind, new AnimationCurve());
-			EditorCurveBinding yBind = EditorCurveBinding.FloatCurve(path, typeof(Transform), propertyName + ".y");
-			AnimationUtility.SetEditorCurve(clip, yBind, new AnimationCurve());
-			EditorCurveBinding zBind = EditorCurveBinding.FloatCurve(path, typeof(Transform), propertyName + ".z");
-			AnimationUtility.SetEditorCurve(clip, zBind, curve);
-		}
-
-		static void ParseTranslateTimeline (Skeleton skeleton, TranslateTimeline timeline, AnimationClip clip) {
-			var boneData = skeleton.Data.Bones.Items[timeline.BoneIndex];
-			var bone = skeleton.Bones.Items[timeline.BoneIndex];
-
-			AnimationCurve xCurve = new AnimationCurve();
-			AnimationCurve yCurve = new AnimationCurve();
-			AnimationCurve zCurve = new AnimationCurve();
-
-			float endTime = timeline.Frames[(timeline.FrameCount * 3) - 3];
-
-			float currentTime = timeline.Frames[0];
-
-			List<Keyframe> xKeys = new List<Keyframe>();
-			List<Keyframe> yKeys = new List<Keyframe>();
-
-			xKeys.Add(new Keyframe(timeline.Frames[0], timeline.Frames[1] + boneData.X, 0, 0));
-			yKeys.Add(new Keyframe(timeline.Frames[0], timeline.Frames[2] + boneData.Y, 0, 0));
-
-			int listIndex = 1;
-			int frameIndex = 1;
-			int f = 3;
-			float[] frames = timeline.Frames;
-			skeleton.SetToSetupPose();
-			float lastTime = 0;
-			while (currentTime < endTime) {
-				int pIndex = listIndex - 1;
-
-				float curveType = timeline.GetCurveType(frameIndex - 1);
-				if (curveType == 0) {
-					//linear
-					Keyframe px = xKeys[pIndex];
-					Keyframe py = yKeys[pIndex];
-
-					float time = frames[f];
-					float x = frames[f + 1] + boneData.X;
-					float y = frames[f + 2] + boneData.Y;
-
-					float xOut = (x - px.value) / (time - px.time);
-					float yOut = (y - py.value) / (time - py.time);
-
-					px.outTangent = xOut;
-					py.outTangent = yOut;
-
-					xKeys.Add(new Keyframe(time, x, xOut, 0));
-					yKeys.Add(new Keyframe(time, y, yOut, 0));
-
-					xKeys[pIndex] = px;
-					yKeys[pIndex] = py;
-
-					currentTime = time;
-
-					timeline.Apply(skeleton, lastTime, currentTime, null, 1, MixPose.Setup, MixDirection.In);
-
-					lastTime = time;
-					listIndex++;
-				} else if (curveType == 1) {
-					//stepped
-					Keyframe px = xKeys[pIndex];
-					Keyframe py = yKeys[pIndex];
-
-					float time = frames[f];
-					float x = frames[f + 1] + boneData.X;
-					float y = frames[f + 2] + boneData.Y;
-
-					float xOut = float.PositiveInfinity;
-					float yOut = float.PositiveInfinity;
-
-					px.outTangent = xOut;
-					py.outTangent = yOut;
-
-					xKeys.Add(new Keyframe(time, x, xOut, 0));
-					yKeys.Add(new Keyframe(time, y, yOut, 0));
-
-					xKeys[pIndex] = px;
-					yKeys[pIndex] = py;
-
-					currentTime = time;
-
-					timeline.Apply(skeleton, lastTime, currentTime, null, 1, MixPose.Setup, MixDirection.In);
-
-					lastTime = time;
-					listIndex++;
-				} else if (curveType == 2) {
-
-					//bezier
-					Keyframe px = xKeys[pIndex];
-					Keyframe py = yKeys[pIndex];
-
-					float time = frames[f];
-
-					int steps = Mathf.FloorToInt((time - px.time) / BakeIncrement);
-
-					for (int i = 1; i <= steps; i++) {
-						currentTime += BakeIncrement;
-						if (i == steps)
-							currentTime = time;
-
-						timeline.Apply(skeleton, lastTime, currentTime, null, 1, MixPose.Setup, MixDirection.In);
-
-						px = xKeys[listIndex - 1];
-						py = yKeys[listIndex - 1];
-
-						float xOut = (bone.X - px.value) / (currentTime - px.time);
-						float yOut = (bone.Y - py.value) / (currentTime - py.time);
-
-						px.outTangent = xOut;
-						py.outTangent = yOut;
-
-						xKeys.Add(new Keyframe(currentTime, bone.X, xOut, 0));
-						yKeys.Add(new Keyframe(currentTime, bone.Y, yOut, 0));
-
-						xKeys[listIndex - 1] = px;
-						yKeys[listIndex - 1] = py;
-
-						listIndex++;
-						lastTime = currentTime;
-					}
-				}
-
-				frameIndex++;
-				f += 3;
-			}
-
-			xCurve = EnsureCurveKeyCount(new AnimationCurve(xKeys.ToArray()));
-			yCurve = EnsureCurveKeyCount(new AnimationCurve(yKeys.ToArray()));
-
-
-
-			string path = GetPath(boneData);
-			const string propertyName = "localPosition";
-
-			clip.SetCurve(path, typeof(Transform), propertyName + ".x", xCurve);
-			clip.SetCurve(path, typeof(Transform), propertyName + ".y", yCurve);
-			clip.SetCurve(path, typeof(Transform), propertyName + ".z", zCurve);
-		}
-
-		static void ParseScaleTimeline (Skeleton skeleton, ScaleTimeline timeline, AnimationClip clip) {
-			var boneData = skeleton.Data.Bones.Items[timeline.BoneIndex];
-			var bone = skeleton.Bones.Items[timeline.BoneIndex];
-
-			AnimationCurve xCurve = new AnimationCurve();
-			AnimationCurve yCurve = new AnimationCurve();
-			AnimationCurve zCurve = new AnimationCurve();
-
-			float endTime = timeline.Frames[(timeline.FrameCount * 3) - 3];
-
-			float currentTime = timeline.Frames[0];
-
-			List<Keyframe> xKeys = new List<Keyframe>();
-			List<Keyframe> yKeys = new List<Keyframe>();
-
-			xKeys.Add(new Keyframe(timeline.Frames[0], timeline.Frames[1] * boneData.ScaleX, 0, 0));
-			yKeys.Add(new Keyframe(timeline.Frames[0], timeline.Frames[2] * boneData.ScaleY, 0, 0));
-
-			int listIndex = 1;
-			int frameIndex = 1;
-			int f = 3;
-			float[] frames = timeline.Frames;
-			skeleton.SetToSetupPose();
-			float lastTime = 0;
-			while (currentTime < endTime) {
-				int pIndex = listIndex - 1;
-				float curveType = timeline.GetCurveType(frameIndex - 1);
-
-				if (curveType == 0) {
-					//linear
-					Keyframe px = xKeys[pIndex];
-					Keyframe py = yKeys[pIndex];
-
-					float time = frames[f];
-					float x = frames[f + 1] * boneData.ScaleX;
-					float y = frames[f + 2] * boneData.ScaleY;
-
-					float xOut = (x - px.value) / (time - px.time);
-					float yOut = (y - py.value) / (time - py.time);
-
-					px.outTangent = xOut;
-					py.outTangent = yOut;
-
-					xKeys.Add(new Keyframe(time, x, xOut, 0));
-					yKeys.Add(new Keyframe(time, y, yOut, 0));
-
-					xKeys[pIndex] = px;
-					yKeys[pIndex] = py;
-
-					currentTime = time;
-
-					timeline.Apply(skeleton, lastTime, currentTime, null, 1, MixPose.Setup, MixDirection.In);
-
-					lastTime = time;
-					listIndex++;
-				} else if (curveType == 1) {
-					//stepped
-					Keyframe px = xKeys[pIndex];
-					Keyframe py = yKeys[pIndex];
-
-					float time = frames[f];
-					float x = frames[f + 1] * boneData.ScaleX;
-					float y = frames[f + 2] * boneData.ScaleY;
-
-					float xOut = float.PositiveInfinity;
-					float yOut = float.PositiveInfinity;
-
-					px.outTangent = xOut;
-					py.outTangent = yOut;
-
-					xKeys.Add(new Keyframe(time, x, xOut, 0));
-					yKeys.Add(new Keyframe(time, y, yOut, 0));
-
-					xKeys[pIndex] = px;
-					yKeys[pIndex] = py;
-
-					currentTime = time;
-
-					timeline.Apply(skeleton, lastTime, currentTime, null, 1, MixPose.Setup, MixDirection.In);
-
-					lastTime = time;
-					listIndex++;
-				} else if (curveType == 2) {
-					//bezier
-					Keyframe px = xKeys[pIndex];
-					Keyframe py = yKeys[pIndex];
-
-					float time = frames[f];
-
-					int steps = Mathf.FloorToInt((time - px.time) / BakeIncrement);
-
-					for (int i = 1; i <= steps; i++) {
-						currentTime += BakeIncrement;
-						if (i == steps)
-							currentTime = time;
-
-						timeline.Apply(skeleton, lastTime, currentTime, null, 1, MixPose.Setup, MixDirection.In);
-
-						px = xKeys[listIndex - 1];
-						py = yKeys[listIndex - 1];
-
-						float xOut = (bone.ScaleX - px.value) / (currentTime - px.time);
-						float yOut = (bone.ScaleY - py.value) / (currentTime - py.time);
-
-						px.outTangent = xOut;
-						py.outTangent = yOut;
-
-						xKeys.Add(new Keyframe(currentTime, bone.ScaleX, xOut, 0));
-						yKeys.Add(new Keyframe(currentTime, bone.ScaleY, yOut, 0));
-
-						xKeys[listIndex - 1] = px;
-						yKeys[listIndex - 1] = py;
-
-						listIndex++;
-						lastTime = currentTime;
-					}
-				}
-
-				frameIndex++;
-				f += 3;
-			}
-
-			xCurve = EnsureCurveKeyCount(new AnimationCurve(xKeys.ToArray()));
-			yCurve = EnsureCurveKeyCount(new AnimationCurve(yKeys.ToArray()));
-
-			string path = GetPath(boneData);
-			string propertyName = "localScale";
-
-			clip.SetCurve(path, typeof(Transform), propertyName + ".x", xCurve);
-			clip.SetCurve(path, typeof(Transform), propertyName + ".y", yCurve);
-			clip.SetCurve(path, typeof(Transform), propertyName + ".z", zCurve);
-		}
-
-		static void ParseRotateTimeline (Skeleton skeleton, RotateTimeline timeline, AnimationClip clip) {
-			var boneData = skeleton.Data.Bones.Items[timeline.BoneIndex];
-			var bone = skeleton.Bones.Items[timeline.BoneIndex];
-
-			AnimationCurve curve = new AnimationCurve();
-
-			float endTime = timeline.Frames[(timeline.FrameCount * 2) - 2];
-
-			float currentTime = timeline.Frames[0];
-
-			List<Keyframe> keys = new List<Keyframe>();
-
-			float rotation = timeline.Frames[1] + boneData.Rotation;
-
-			keys.Add(new Keyframe(timeline.Frames[0], rotation, 0, 0));
-
-			int listIndex = 1;
-			int frameIndex = 1;
-			int f = 2;
-			float[] frames = timeline.Frames;
-			skeleton.SetToSetupPose();
-			float lastTime = 0;
-			float angle = rotation;
-			while (currentTime < endTime) {
-				int pIndex = listIndex - 1;
-				float curveType = timeline.GetCurveType(frameIndex - 1);
-
-				if (curveType == 0) {
-					//linear
-					Keyframe pk = keys[pIndex];
-
-					float time = frames[f];
-
-					rotation = frames[f + 1] + boneData.Rotation;
-					angle += Mathf.DeltaAngle(angle, rotation);
-					float r = angle;
-
-					float rOut = (r - pk.value) / (time - pk.time);
-
-					pk.outTangent = rOut;
-
-					keys.Add(new Keyframe(time, r, rOut, 0));
-
-					keys[pIndex] = pk;
-
-					currentTime = time;
-
-					timeline.Apply(skeleton, lastTime, currentTime, null, 1, MixPose.Setup, MixDirection.In);
-
-					lastTime = time;
-					listIndex++;
-				} else if (curveType == 1) {
-					//stepped
-
-					Keyframe pk = keys[pIndex];
-
-					float time = frames[f];
-
-					rotation = frames[f + 1] + boneData.Rotation;
-					angle += Mathf.DeltaAngle(angle, rotation);
-					float r = angle;
-
-					float rOut = float.PositiveInfinity;
-
-					pk.outTangent = rOut;
-
-					keys.Add(new Keyframe(time, r, rOut, 0));
-
-					keys[pIndex] = pk;
-
-					currentTime = time;
-
-					timeline.Apply(skeleton, lastTime, currentTime, null, 1, MixPose.Setup, MixDirection.In);
-
-					lastTime = time;
-					listIndex++;
-				} else if (curveType == 2) {
-					//bezier
-					Keyframe pk = keys[pIndex];
-
-					float time = frames[f];
-
-					timeline.Apply(skeleton, lastTime, currentTime, null, 1, MixPose.Setup, MixDirection.In);
-					skeleton.UpdateWorldTransform();
-
-					rotation = frames[f + 1] + boneData.Rotation;
-					angle += Mathf.DeltaAngle(angle, rotation);
-					float r = angle;
-
-					int steps = Mathf.FloorToInt((time - pk.time) / BakeIncrement);
-
-					for (int i = 1; i <= steps; i++) {
-						currentTime += BakeIncrement;
-						if (i == steps)
-							currentTime = time;
-
-						timeline.Apply(skeleton, lastTime, currentTime, null, 1, MixPose.Setup, MixDirection.In);
-						skeleton.UpdateWorldTransform();
-						pk = keys[listIndex - 1];
-
-						rotation = bone.Rotation;
-						angle += Mathf.DeltaAngle(angle, rotation);
-						r = angle;
-
-						float rOut = (r - pk.value) / (currentTime - pk.time);
-
-						pk.outTangent = rOut;
-
-						keys.Add(new Keyframe(currentTime, r, rOut, 0));
-
-						keys[listIndex - 1] = pk;
-
-						listIndex++;
-						lastTime = currentTime;
-					}
-				}
-
-				frameIndex++;
-				f += 2;
-			}
-
-			curve = EnsureCurveKeyCount(new AnimationCurve(keys.ToArray()));
-
-			string path = GetPath(boneData);
-			const string propertyName = "localEulerAnglesBaked";
-
-			EditorCurveBinding xBind = EditorCurveBinding.FloatCurve(path, typeof(Transform), propertyName + ".x");
-			AnimationUtility.SetEditorCurve(clip, xBind, new AnimationCurve());
-			EditorCurveBinding yBind = EditorCurveBinding.FloatCurve(path, typeof(Transform), propertyName + ".y");
-			AnimationUtility.SetEditorCurve(clip, yBind, new AnimationCurve());
-			EditorCurveBinding zBind = EditorCurveBinding.FloatCurve(path, typeof(Transform), propertyName + ".z");
-			AnimationUtility.SetEditorCurve(clip, zBind, curve);
 		}
 
 		static void ParseEventTimeline (EventTimeline timeline, AnimationClip clip, SendMessageOptions eventOptions) {
@@ -1385,14 +946,8 @@ namespace Spine.Unity.Editor {
 			}
 		}
 
-		static AnimationCurve EnsureCurveKeyCount (AnimationCurve curve) {
-			if (curve.length == 1)
-				curve.AddKey(curve.keys[0].time + 0.25f, curve.keys[0].value);
+		static float GetUninheritedRotation (Bone b) {
 
-			return curve;
-		}
-
-		static float GetUninheritedAppliedRotation (Bone b) {
 			Bone parent = b.Parent;
 			float angle = b.AppliedRotation;
 
@@ -1403,20 +958,520 @@ namespace Spine.Unity.Editor {
 
 			return angle;
 		}
-		#endregion
-		#endregion
+
+		static void BakeBone (Bone bone, Spine.Animation animation, AnimationClip clip) {
+			Skeleton skeleton = bone.Skeleton;
+			bool inheritRotation = bone.Data.InheritRotation;
+
+			skeleton.SetToSetupPose();
+			animation.Apply(skeleton, 0, 0, true, null);
+			skeleton.UpdateWorldTransform();
+			float duration = animation.Duration;
+
+			AnimationCurve curve = new AnimationCurve();
+
+			List<Keyframe> keys = new List<Keyframe>();
+
+			float rotation = bone.AppliedRotation;
+			if (!inheritRotation)
+				rotation = GetUninheritedRotation(bone);
+
+			keys.Add(new Keyframe(0, rotation, 0, 0));
+
+			int listIndex = 1;
+
+			float r = rotation;
+
+			int steps = Mathf.CeilToInt(duration / bakeIncrement);
+
+			float currentTime = 0;
+			float lastTime = 0;
+			float angle = rotation;
+
+			for (int i = 1; i <= steps; i++) {
+				currentTime += bakeIncrement;
+				if (i == steps)
+					currentTime = duration;
+
+				animation.Apply(skeleton, lastTime, currentTime, true, null);
+				skeleton.UpdateWorldTransform();
+
+				int pIndex = listIndex - 1;
+
+				Keyframe pk = keys[pIndex];
+
+				pk = keys[pIndex];
+
+				if (inheritRotation)
+					rotation = bone.AppliedRotation;
+				else {
+					rotation = GetUninheritedRotation(bone);
+				}
+
+				angle += Mathf.DeltaAngle(angle, rotation);
+
+				r = angle;
+
+				float rOut = (r - pk.value) / (currentTime - pk.time);
+
+				pk.outTangent = rOut;
+
+				keys.Add(new Keyframe(currentTime, r, rOut, 0));
+
+				keys[pIndex] = pk;
+
+				listIndex++;
+				lastTime = currentTime;
+			}
+
+			curve = EnsureCurveKeyCount(new AnimationCurve(keys.ToArray()));
+
+			string path = GetPath(bone.Data);
+			string propertyName = "localEulerAnglesBaked";
+
+			EditorCurveBinding xBind = EditorCurveBinding.FloatCurve(path, typeof(Transform), propertyName + ".x");
+			AnimationUtility.SetEditorCurve(clip, xBind, new AnimationCurve());
+			EditorCurveBinding yBind = EditorCurveBinding.FloatCurve(path, typeof(Transform), propertyName + ".y");
+			AnimationUtility.SetEditorCurve(clip, yBind, new AnimationCurve());
+			EditorCurveBinding zBind = EditorCurveBinding.FloatCurve(path, typeof(Transform), propertyName + ".z");
+			AnimationUtility.SetEditorCurve(clip, zBind, curve);
+		}
+
+		static void ParseTranslateTimeline (Skeleton skeleton, TranslateTimeline timeline, AnimationClip clip) {
+			var boneData = skeleton.Data.Bones.Items[timeline.BoneIndex];
+			var bone = skeleton.Bones.Items[timeline.BoneIndex];
+
+			AnimationCurve xCurve = new AnimationCurve();
+			AnimationCurve yCurve = new AnimationCurve();
+			AnimationCurve zCurve = new AnimationCurve();
+
+			float endTime = timeline.Frames[(timeline.FrameCount * 3) - 3];
+
+			float currentTime = timeline.Frames[0];
+
+			List<Keyframe> xKeys = new List<Keyframe>();
+			List<Keyframe> yKeys = new List<Keyframe>();
+
+			xKeys.Add(new Keyframe(timeline.Frames[0], timeline.Frames[1] + boneData.X, 0, 0));
+			yKeys.Add(new Keyframe(timeline.Frames[0], timeline.Frames[2] + boneData.Y, 0, 0));
+
+			int listIndex = 1;
+			int frameIndex = 1;
+			int f = 3;
+			float[] frames = timeline.Frames;
+			skeleton.SetToSetupPose();
+			float lastTime = 0;
+			while (currentTime < endTime) {
+				int pIndex = listIndex - 1;
+
+
+
+				float curveType = timeline.GetCurveType(frameIndex - 1);
+
+				if (curveType == 0) {
+					//linear
+					Keyframe px = xKeys[pIndex];
+					Keyframe py = yKeys[pIndex];
+
+					float time = frames[f];
+					float x = frames[f + 1] + boneData.X;
+					float y = frames[f + 2] + boneData.Y;
+
+					float xOut = (x - px.value) / (time - px.time);
+					float yOut = (y - py.value) / (time - py.time);
+
+					px.outTangent = xOut;
+					py.outTangent = yOut;
+
+					xKeys.Add(new Keyframe(time, x, xOut, 0));
+					yKeys.Add(new Keyframe(time, y, yOut, 0));
+
+					xKeys[pIndex] = px;
+					yKeys[pIndex] = py;
+
+					currentTime = time;
+
+					timeline.Apply(skeleton, lastTime, currentTime, null, 1);
+
+					lastTime = time;
+					listIndex++;
+				} else if (curveType == 1) {
+					//stepped
+					Keyframe px = xKeys[pIndex];
+					Keyframe py = yKeys[pIndex];
+
+					float time = frames[f];
+					float x = frames[f + 1] + boneData.X;
+					float y = frames[f + 2] + boneData.Y;
+
+					float xOut = float.PositiveInfinity;
+					float yOut = float.PositiveInfinity;
+
+					px.outTangent = xOut;
+					py.outTangent = yOut;
+
+					xKeys.Add(new Keyframe(time, x, xOut, 0));
+					yKeys.Add(new Keyframe(time, y, yOut, 0));
+
+					xKeys[pIndex] = px;
+					yKeys[pIndex] = py;
+
+					currentTime = time;
+
+					timeline.Apply(skeleton, lastTime, currentTime, null, 1);
+
+					lastTime = time;
+					listIndex++;
+				} else if (curveType == 2) {
+
+					//bezier
+					Keyframe px = xKeys[pIndex];
+					Keyframe py = yKeys[pIndex];
+
+					float time = frames[f];
+
+					int steps = Mathf.FloorToInt((time - px.time) / bakeIncrement);
+
+					for (int i = 1; i <= steps; i++) {
+						currentTime += bakeIncrement;
+						if (i == steps)
+							currentTime = time;
+
+						timeline.Apply(skeleton, lastTime, currentTime, null, 1);
+
+						px = xKeys[listIndex - 1];
+						py = yKeys[listIndex - 1];
+
+						float xOut = (bone.X - px.value) / (currentTime - px.time);
+						float yOut = (bone.Y - py.value) / (currentTime - py.time);
+
+						px.outTangent = xOut;
+						py.outTangent = yOut;
+
+						xKeys.Add(new Keyframe(currentTime, bone.X, xOut, 0));
+						yKeys.Add(new Keyframe(currentTime, bone.Y, yOut, 0));
+
+						xKeys[listIndex - 1] = px;
+						yKeys[listIndex - 1] = py;
+
+						listIndex++;
+						lastTime = currentTime;
+					}
+				}
+
+				frameIndex++;
+				f += 3;
+			}
+
+			xCurve = EnsureCurveKeyCount(new AnimationCurve(xKeys.ToArray()));
+			yCurve = EnsureCurveKeyCount(new AnimationCurve(yKeys.ToArray()));
+
+
+
+			string path = GetPath(boneData);
+			const string propertyName = "localPosition";
+
+			clip.SetCurve(path, typeof(Transform), propertyName + ".x", xCurve);
+			clip.SetCurve(path, typeof(Transform), propertyName + ".y", yCurve);
+			clip.SetCurve(path, typeof(Transform), propertyName + ".z", zCurve);
+		}
+
+		static AnimationCurve EnsureCurveKeyCount (AnimationCurve curve) {
+			if (curve.length == 1)
+				curve.AddKey(curve.keys[0].time + 0.25f, curve.keys[0].value);
+
+			return curve;
+		}
+
+		static void ParseScaleTimeline (Skeleton skeleton, ScaleTimeline timeline, AnimationClip clip) {
+			var boneData = skeleton.Data.Bones.Items[timeline.BoneIndex];
+			var bone = skeleton.Bones.Items[timeline.BoneIndex];
+
+			AnimationCurve xCurve = new AnimationCurve();
+			AnimationCurve yCurve = new AnimationCurve();
+			AnimationCurve zCurve = new AnimationCurve();
+
+			float endTime = timeline.Frames[(timeline.FrameCount * 3) - 3];
+
+			float currentTime = timeline.Frames[0];
+
+			List<Keyframe> xKeys = new List<Keyframe>();
+			List<Keyframe> yKeys = new List<Keyframe>();
+
+			xKeys.Add(new Keyframe(timeline.Frames[0], timeline.Frames[1] * boneData.ScaleX, 0, 0));
+			yKeys.Add(new Keyframe(timeline.Frames[0], timeline.Frames[2] * boneData.ScaleY, 0, 0));
+
+			int listIndex = 1;
+			int frameIndex = 1;
+			int f = 3;
+			float[] frames = timeline.Frames;
+			skeleton.SetToSetupPose();
+			float lastTime = 0;
+			while (currentTime < endTime) {
+				int pIndex = listIndex - 1;
+				float curveType = timeline.GetCurveType(frameIndex - 1);
+
+				if (curveType == 0) {
+					//linear
+					Keyframe px = xKeys[pIndex];
+					Keyframe py = yKeys[pIndex];
+
+					float time = frames[f];
+					float x = frames[f + 1] * boneData.ScaleX;
+					float y = frames[f + 2] * boneData.ScaleY;
+
+					float xOut = (x - px.value) / (time - px.time);
+					float yOut = (y - py.value) / (time - py.time);
+
+					px.outTangent = xOut;
+					py.outTangent = yOut;
+
+					xKeys.Add(new Keyframe(time, x, xOut, 0));
+					yKeys.Add(new Keyframe(time, y, yOut, 0));
+
+					xKeys[pIndex] = px;
+					yKeys[pIndex] = py;
+
+					currentTime = time;
+
+					timeline.Apply(skeleton, lastTime, currentTime, null, 1);
+
+					lastTime = time;
+					listIndex++;
+				} else if (curveType == 1) {
+					//stepped
+					Keyframe px = xKeys[pIndex];
+					Keyframe py = yKeys[pIndex];
+
+					float time = frames[f];
+					float x = frames[f + 1] * boneData.ScaleX;
+					float y = frames[f + 2] * boneData.ScaleY;
+
+					float xOut = float.PositiveInfinity;
+					float yOut = float.PositiveInfinity;
+
+					px.outTangent = xOut;
+					py.outTangent = yOut;
+
+					xKeys.Add(new Keyframe(time, x, xOut, 0));
+					yKeys.Add(new Keyframe(time, y, yOut, 0));
+
+					xKeys[pIndex] = px;
+					yKeys[pIndex] = py;
+
+					currentTime = time;
+
+					timeline.Apply(skeleton, lastTime, currentTime, null, 1);
+
+					lastTime = time;
+					listIndex++;
+				} else if (curveType == 2) {
+					//bezier
+					Keyframe px = xKeys[pIndex];
+					Keyframe py = yKeys[pIndex];
+
+					float time = frames[f];
+
+					int steps = Mathf.FloorToInt((time - px.time) / bakeIncrement);
+
+					for (int i = 1; i <= steps; i++) {
+						currentTime += bakeIncrement;
+						if (i == steps)
+							currentTime = time;
+
+						timeline.Apply(skeleton, lastTime, currentTime, null, 1);
+
+						px = xKeys[listIndex - 1];
+						py = yKeys[listIndex - 1];
+
+						float xOut = (bone.ScaleX - px.value) / (currentTime - px.time);
+						float yOut = (bone.ScaleY - py.value) / (currentTime - py.time);
+
+						px.outTangent = xOut;
+						py.outTangent = yOut;
+
+						xKeys.Add(new Keyframe(currentTime, bone.ScaleX, xOut, 0));
+						yKeys.Add(new Keyframe(currentTime, bone.ScaleY, yOut, 0));
+
+						xKeys[listIndex - 1] = px;
+						yKeys[listIndex - 1] = py;
+
+						listIndex++;
+						lastTime = currentTime;
+					}
+				}
+
+				frameIndex++;
+				f += 3;
+			}
+
+			xCurve = EnsureCurveKeyCount(new AnimationCurve(xKeys.ToArray()));
+			yCurve = EnsureCurveKeyCount(new AnimationCurve(yKeys.ToArray()));
+
+			string path = GetPath(boneData);
+			string propertyName = "localScale";
+
+			clip.SetCurve(path, typeof(Transform), propertyName + ".x", xCurve);
+			clip.SetCurve(path, typeof(Transform), propertyName + ".y", yCurve);
+			clip.SetCurve(path, typeof(Transform), propertyName + ".z", zCurve);
+		}
+
+		static void ParseRotateTimeline (Skeleton skeleton, RotateTimeline timeline, AnimationClip clip) {
+			var boneData = skeleton.Data.Bones.Items[timeline.BoneIndex];
+			var bone = skeleton.Bones.Items[timeline.BoneIndex];
+
+			AnimationCurve curve = new AnimationCurve();
+
+			float endTime = timeline.Frames[(timeline.FrameCount * 2) - 2];
+
+			float currentTime = timeline.Frames[0];
+
+			List<Keyframe> keys = new List<Keyframe>();
+
+			float rotation = timeline.Frames[1] + boneData.Rotation;
+
+			keys.Add(new Keyframe(timeline.Frames[0], rotation, 0, 0));
+
+			int listIndex = 1;
+			int frameIndex = 1;
+			int f = 2;
+			float[] frames = timeline.Frames;
+			skeleton.SetToSetupPose();
+			float lastTime = 0;
+			float angle = rotation;
+			while (currentTime < endTime) {
+				int pIndex = listIndex - 1;
+				float curveType = timeline.GetCurveType(frameIndex - 1);
+
+				if (curveType == 0) {
+					//linear
+					Keyframe pk = keys[pIndex];
+
+					float time = frames[f];
+
+					rotation = frames[f + 1] + boneData.Rotation;
+					angle += Mathf.DeltaAngle(angle, rotation);
+					float r = angle;
+
+					float rOut = (r - pk.value) / (time - pk.time);
+
+					pk.outTangent = rOut;
+
+					keys.Add(new Keyframe(time, r, rOut, 0));
+
+					keys[pIndex] = pk;
+
+					currentTime = time;
+
+					timeline.Apply(skeleton, lastTime, currentTime, null, 1);
+
+					lastTime = time;
+					listIndex++;
+				} else if (curveType == 1) {
+					//stepped
+
+					Keyframe pk = keys[pIndex];
+
+					float time = frames[f];
+
+					rotation = frames[f + 1] + boneData.Rotation;
+					angle += Mathf.DeltaAngle(angle, rotation);
+					float r = angle;
+
+					float rOut = float.PositiveInfinity;
+
+					pk.outTangent = rOut;
+
+					keys.Add(new Keyframe(time, r, rOut, 0));
+
+					keys[pIndex] = pk;
+
+					currentTime = time;
+
+					timeline.Apply(skeleton, lastTime, currentTime, null, 1);
+
+					lastTime = time;
+					listIndex++;
+				} else if (curveType == 2) {
+					//bezier
+					Keyframe pk = keys[pIndex];
+
+					float time = frames[f];
+
+					timeline.Apply(skeleton, lastTime, currentTime, null, 1);
+					skeleton.UpdateWorldTransform();
+
+					rotation = frames[f + 1] + boneData.Rotation;
+					angle += Mathf.DeltaAngle(angle, rotation);
+					float r = angle;
+
+					int steps = Mathf.FloorToInt((time - pk.time) / bakeIncrement);
+
+					for (int i = 1; i <= steps; i++) {
+						currentTime += bakeIncrement;
+						if (i == steps)
+							currentTime = time;
+
+						timeline.Apply(skeleton, lastTime, currentTime, null, 1);
+						skeleton.UpdateWorldTransform();
+						pk = keys[listIndex - 1];
+
+						rotation = bone.Rotation;
+						angle += Mathf.DeltaAngle(angle, rotation);
+						r = angle;
+
+						float rOut = (r - pk.value) / (currentTime - pk.time);
+
+						pk.outTangent = rOut;
+
+						keys.Add(new Keyframe(currentTime, r, rOut, 0));
+
+						keys[listIndex - 1] = pk;
+
+						listIndex++;
+						lastTime = currentTime;
+					}
+				}
+
+				frameIndex++;
+				f += 2;
+			}
+
+			curve = EnsureCurveKeyCount(new AnimationCurve(keys.ToArray()));
+
+			string path = GetPath(boneData);
+			string propertyName = "localEulerAnglesBaked";
+
+			EditorCurveBinding xBind = EditorCurveBinding.FloatCurve(path, typeof(Transform), propertyName + ".x");
+			AnimationUtility.SetEditorCurve(clip, xBind, new AnimationCurve());
+			EditorCurveBinding yBind = EditorCurveBinding.FloatCurve(path, typeof(Transform), propertyName + ".y");
+			AnimationUtility.SetEditorCurve(clip, yBind, new AnimationCurve());
+			EditorCurveBinding zBind = EditorCurveBinding.FloatCurve(path, typeof(Transform), propertyName + ".z");
+			AnimationUtility.SetEditorCurve(clip, zBind, curve);
+		}
 
 		static string GetPath (BoneData b) {
 			return GetPathRecurse(b).Substring(1);
 		}
 
 		static string GetPathRecurse (BoneData b) {
-			if (b == null) return "";
+			if (b == null) {
+				return "";
+			}
+
 			return GetPathRecurse(b.Parent) + "/" + b.Name;
 		}
+		#endregion
 
 		static void SetAnimationSettings (AnimationClip clip, AnimationClipSettings settings) {
+			#if UNITY_5
 			AnimationUtility.SetAnimationClipSettings(clip, settings);
+			#else
+			MethodInfo methodInfo = typeof(AnimationUtility).GetMethod("SetAnimationClipSettings", BindingFlags.Static | BindingFlags.NonPublic);
+			methodInfo.Invoke(null, new object[] { clip, settings });
+
+			EditorUtility.SetDirty(clip);
+			#endif
 		}
 
 

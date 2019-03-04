@@ -26387,6 +26387,7 @@ GameObject:
   - component: {fileID: 234574335}
   - component: {fileID: 234574337}
   - component: {fileID: 234574336}
+  - component: {fileID: 234574338}
   m_Layer: 5
   m_Name: Lighting
   m_TagString: Untagged
@@ -26445,6 +26446,23 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 234574334}
+--- !u!95 &234574338
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 234574334}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d7399ec476fadbf479e6efe085ddc575, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &235143509
 GameObject:
   m_ObjectHideFlags: 0
@@ -91760,7 +91778,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a40ea8edf6553ce4faedf0619970b5a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objImgSpeed: {fileID: 1138943863}
   txtSpeedTime: {fileID: 840723766}
 --- !u!1 &1071069686
 GameObject:
@@ -92707,8 +92724,10 @@ MonoBehaviour:
   panelMessage: {fileID: 1814044181}
   panelShopGem: {fileID: 1831901871}
   btnVip: {fileID: 1841788387}
+  btnGoToVipPanelMessage: {fileID: 0}
   coinEffectPrefab: {fileID: 0}
   panelSplash: {fileID: 682656666}
+  panelWait: {fileID: 0}
   offEarning: {fileID: 769815151}
   txtGem: {fileID: 368876601}
   txtCoin: {fileID: 1896488206}
@@ -93098,7 +93117,6 @@ MonoBehaviour:
   imgNowCar: {fileID: 1937279388}
   imgUpCar: {fileID: 1407617856}
   indexCar: 0
-  panelWait: {fileID: 845138326}
   panelError: {fileID: 0}
   txtPanelError: {fileID: 0}
   zoneOfflineEarning:
