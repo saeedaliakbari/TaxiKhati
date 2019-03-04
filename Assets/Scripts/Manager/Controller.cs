@@ -25,8 +25,8 @@ public class Controller : MonoBehaviour
     //public ExchangeSpeedDialog exchangeDialog;
     public MergeCar mergeCar;
     public LevelUpBonus levelBonus;
-    public GameObject deleteBin, panelMessage, panelShopGem, btnVip;
-    public GameObject coinEffectPrefab, panelSplash;
+    public GameObject deleteBin, panelMessage, panelShopGem, btnVip,btnGoToVipPanelMessage;
+    public GameObject coinEffectPrefab, panelSplash,panelWait;
     public OfflineEraning offEarning;
     public Text txtGem;
     public TrimNumberText txtCoin, txtCoinTop;

@@ -100,7 +100,7 @@ public class BazaarIABEventListener : MonoBehaviour
         ObscuredPrefs.SetInt("removeAds", 0);
         ObscuredPrefs.SetInt("gemPerDay", 0);
         ObscuredPrefs.SetFloat("speedVip", 1);
-        //Debug.Log(string.Format("queryInventorySucceededEvent. total purchases: {0}, total skus: {1}", purchases.Count, skus.Count));
+        Debug.Log(string.Format("queryInventorySucceededEvent. total purchases: {0}, total skus: {1}", purchases.Count, skus.Count));
         for (int i = 0; i < purchases.Count; ++i)
         {
             if (purchases[i].ProductId == iapCafeBazar.skus[6])
@@ -215,8 +215,7 @@ public class BazaarIABEventListener : MonoBehaviour
                     iapCafeBazar.controller.parkingManager.gameObject.SetActive(true);
                 }
                 else {
-                    iapCafeBazar.controller.panelMessage.SetActive(true);
-                    iapCafeBazar.controller.txtPanelMessage.text = "لطفا منتظر بمانید";
+                    iapCafeBazar.controller.panelWait.SetActive(true);
                     BazaarIAB.queryInventory(new string[] { purchase.ProductId });
                 }
             }
@@ -248,11 +247,12 @@ public class BazaarIABEventListener : MonoBehaviour
         Debug.Log("consumePurchaseSucceededEvent: " + purchase);
         for (int i = 0; i < iapCafeBazar.skus.Length; i++)
         {
-            if (i != 1)//Eshteraki nemitavanim masraf konim
+            if (i < 6)//Eshteraki nemitavanim masraf konim
             {
                 if (purchase.ProductId == iapCafeBazar.skus[i])
                 {
                     ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem") + iapCafeBazar.gem[i]);
+                    iapCafeBazar.controller.panelWait.SetActive(false);
                     iapCafeBazar.controller.txtPanelMessage.text = "تبریک\n" + iapCafeBazar.gem[i] + " جم اضافه شد";
                     iapCafeBazar.controller.panelMessage.SetActive(true);
                     iapCafeBazar.controller.SetText();

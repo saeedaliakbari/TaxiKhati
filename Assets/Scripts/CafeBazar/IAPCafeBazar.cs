@@ -38,7 +38,6 @@ public class IAPCafeBazar : MonoBehaviour
     }
     public void BtnPurchase(string sku)
     {
-
         Debug.Log("btn Purchase: " + sku);
         ObscuredPrefs.SetString("developerPayload", Random.Range(10000, 99999).ToString() + Random.Range(10000, 99999).ToString());
         BazaarIAB.purchaseProduct(sku, ObscuredPrefs.GetString("developerPayload"));
@@ -54,7 +53,11 @@ public class IAPCafeBazar : MonoBehaviour
     }
     public void BtnPurchaseEshterak(string sku)
     {
-        ObscuredPrefs.SetString("developerPayload", ObscuredPrefs.GetString("id", "saeedaliakbari") + Random.Range(10000, 99999).ToString());
+        if (ObscuredPrefs.GetString("username", "") == "")
+        {
+            ObscuredPrefs.SetString("username", "تاکسی ران " + Random.Range(100000, 999999));
+        }
+        ObscuredPrefs.SetString("developerPayload", ObscuredPrefs.GetString("username", "تاکسی ران ") + Random.Range(10000, 99999).ToString());
         BazaarIAB.purchaseProduct(sku, ObscuredPrefs.GetString("developerPayload"));
     }
 }

@@ -249,8 +249,7 @@ MonoBehaviour:
   controller: {fileID: 0}
   moveCarPrefab: {fileID: 114567707426187788, guid: 508c13f334cd4904f86cb434923adaef,
     type: 2}
-  audioSource: {fileID: 82535714596306338, guid: 1e9df9a15d3cc914a920b1c6617b69a7,
-    type: 2}
+  audioSource: {fileID: 82219454974658702}
   khatePayan: {fileID: 8300000, guid: b42e091d9ee68134e88614009feb3a55, type: 3}
   trash: {fileID: 8300000, guid: 8ade28a164dd2d94e835dd930e42571e, type: 3}
   carPlacement: {fileID: 8300000, guid: 5dacc272b21ee524d9ebb8e03a79e825, type: 3}

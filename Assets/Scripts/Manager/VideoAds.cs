@@ -21,7 +21,7 @@ public class VideoAds : MonoBehaviour
 
     private string sdkToken = "ntmnrcicifbdkgjlgqcnnqqcmkedhbbjdgmldpmnmhehcsjctdrfkoobmidbjkimkggbig";
 
-    public GameObject panelWait, panelError;
+    public GameObject panelError;
 
     public Text txtPanelError;
 
@@ -43,11 +43,11 @@ public class VideoAds : MonoBehaviour
         if (ObscuredPrefs.GetInt(zoneOfflineEarning.zoneId) == 0)
         {
             LoadAd(zoneOfflineEarning);
-            //panelWait.SetActive(true);
+            controller.panelWait.SetActive(true);
             Debug.Log("Wait");
             yield return new WaitForSeconds(8f);
             Debug.Log("Wait Done");
-            //panelWait.SetActive(false);
+            controller.panelWait.SetActive(false);
         }
         if (ObscuredPrefs.GetInt(zoneOfflineEarning.zoneId) == 1)
         {
@@ -95,11 +95,11 @@ public class VideoAds : MonoBehaviour
         if (ObscuredPrefs.GetInt(zoneGiftPanel.zoneId) == 0)
         {
             LoadAd(zoneGiftPanel);
-            //panelWait.SetActive(true);
+            controller.panelWait.SetActive(true);
             Debug.Log("Wait");
             yield return new WaitForSeconds(8f);
             Debug.Log("Wait Done");
-            //panelWait.SetActive(false);
+            controller.panelWait.SetActive(false);
         }
         if (ObscuredPrefs.GetInt(zoneGiftPanel.zoneId) == 1)
         {
@@ -139,11 +139,11 @@ public class VideoAds : MonoBehaviour
         if (ObscuredPrefs.GetInt(zoneShopCar.zoneId) == 0)
         {
             LoadAd(zoneShopCar);
-            //panelWait.SetActive(true);
+            controller.panelWait.SetActive(true);
             Debug.Log("Wait");
             yield return new WaitForSeconds(8f);
             Debug.Log("Wait Done");
-            //panelWait.SetActive(false);
+            controller.panelWait.SetActive(false);
         }
         if (ObscuredPrefs.GetInt(zoneShopCar.zoneId) == 1)
         {
@@ -187,11 +187,11 @@ public class VideoAds : MonoBehaviour
         if (ObscuredPrefs.GetInt(zoneCarUp.zoneId) == 0)
         {
             LoadAd(zoneCarUp);
-            //panelWait.SetActive(true);
+            controller.panelWait.SetActive(true);
             Debug.Log("Wait");
             yield return new WaitForSeconds(8f);
             Debug.Log("Wait Done");
-            //panelWait.SetActive(false);
+            controller.panelWait.SetActive(false);
         }
         if (ObscuredPrefs.GetInt(zoneCarUp.zoneId) == 1)
         {
@@ -249,11 +249,11 @@ public class VideoAds : MonoBehaviour
         if (ObscuredPrefs.GetInt(zoneWheelOfFurtune.zoneId) == 0)
         {
             LoadAd(zoneWheelOfFurtune);
-            //panelWait.SetActive(true);
+            controller.panelWait.SetActive(true);
             Debug.Log("Wait");
             yield return new WaitForSeconds(8f);
             Debug.Log("Wait Done");
-            //panelWait.SetActive(false);
+            controller.panelWait.SetActive(false);
         }
         if (ObscuredPrefs.GetInt(zoneWheelOfFurtune.zoneId) == 1)
         {
@@ -291,11 +291,11 @@ public class VideoAds : MonoBehaviour
         if (ObscuredPrefs.GetInt(zoneSpeedX2.zoneId) == 0)
         {
             LoadAd(zoneSpeedX2);
-            //panelWait.SetActive(true);
+            controller.panelWait.SetActive(true);
             Debug.Log("Wait");
             yield return new WaitForSeconds(8f);
             Debug.Log("Wait Done");
-            //panelWait.SetActive(false);
+            controller.panelWait.SetActive(false);
         }
         if (ObscuredPrefs.GetInt(zoneSpeedX2.zoneId) == 1)
         {
@@ -338,11 +338,11 @@ public class VideoAds : MonoBehaviour
         if (ObscuredPrefs.GetInt(zoneShopClose.zoneId) == 0)
         {
             LoadAd(zoneShopClose);
-            //panelWait.SetActive(true);
+            controller.panelWait.SetActive(true);
             Debug.Log("Wait");
             yield return new WaitForSeconds(8f);
             Debug.Log("Wait Done");
-            //panelWait.SetActive(false);
+            controller.panelWait.SetActive(false);
         }
         if (ObscuredPrefs.GetInt(zoneShopClose.zoneId) == 1)
         {
