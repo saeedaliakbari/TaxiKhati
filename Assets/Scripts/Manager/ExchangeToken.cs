@@ -42,7 +42,6 @@ public class ExchangeToken : MonoBehaviour
         tokenValue = double.Parse(inputTokenValue.text);
         ObscuredPrefs.SetDouble("token", ObscuredPrefs.GetDouble("token", 0) + tokenValue);
         ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) - (tokenValue * rate));
-        SetTxtTokenValue();
         controller.SetText();
     }
     public void BtnPlus(int i)

@@ -5,12 +5,23 @@ using CodeStage.AntiCheat.ObscuredTypes;
 public class GuideManager : MonoBehaviour
 {
     public GameObject panelLockGuide, btnBuyCar, buyGuide, mergeGuide, startDriveGuide,
-        ClosePanelMergeGuide, btnCloseMerge, returnPanelGuide, openBoxGuide,
-        mergeGuide2, imgDriver, imgPanelText, txtStep10, btnStep10;
+        ClosePanelMergeGuide, btnCloseMerge, returnPanelGuide;
     public Controller controller;
-    [HideInInspector]
+    //[HideInInspector]
     public List<ParkingPlace> parkPlace = new List<ParkingPlace>();
-  
+    void Start()
+    {
+        if (ObscuredPrefs.GetInt("helpStep", 0) != 13)
+        {
+            ObscuredPrefs.SetInt("helpStep", 0);
+            panelLockGuide.SetActive(true);
+        }
+        else
+        {
+            Destroy(panelLockGuide);
+            Destroy(gameObject);
+        }
+    }
     public void PlusStep()
     {
         ObscuredPrefs.SetInt("helpStep", ObscuredPrefs.GetInt("helpStep", 0) + 1);
@@ -48,15 +59,6 @@ public class GuideManager : MonoBehaviour
             StartCoroutine(IEReturn());
             PlusStep();
         }
-        else if (ObscuredPrefs.GetInt("helpStep", 0) == 11)
-        {
-            startDriveGuide.SetActive(false);
-            imgDriver.SetActive(true);
-            imgPanelText.SetActive(true);
-            txtStep10.SetActive(true);
-            btnStep10.SetActive(true);
-            PlusStep();
-        }
     }
     IEnumerator IEReturn()
     {
@@ -69,35 +71,7 @@ public class GuideManager : MonoBehaviour
         {
             returnPanelGuide.SetActive(false);
             controller.SpawnABox(1, parkPlace[3], 0);
-            openBoxGuide.SetActive(true);
-            PlusStep();
-        }
-    }
-    public void OpenGiftBox()
-    {
-        if (ObscuredPrefs.GetInt("helpStep", 0) == 8)
-        {
-            openBoxGuide.SetActive(false);
-            mergeGuide2.SetActive(true);
-            PlusStep();
-        }
-    }
-    public void MergeStep2()
-    {
-        if (ObscuredPrefs.GetInt("helpStep", 0) == 9)
-        {
-            mergeGuide2.SetActive(false);
-            panelLockGuide.SetActive(false);
-            PlusStep();
-        }
-    }
-    public void Merge2Done()
-    {
-        if (ObscuredPrefs.GetInt("helpStep", 0) == 10)
-        {
-            panelLockGuide.SetActive(true);
-            mergeGuide2.SetActive(false);
-            startDriveGuide.SetActive(true);
+
             PlusStep();
         }
     }

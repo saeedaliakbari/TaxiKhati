@@ -69,21 +69,8 @@ public class BazaarIABEventListener : MonoBehaviour
         {
             str[i] = iapCafeBazar.skus[i];
         }
-        //BazaarIAB.querySkuDetails(str);//برای گرفتن اطلاعات محصولاتی که در پنل پرداخت درون برنامه ای تعریف کرده اید مثل قیمت، عنوان و … باید از این تابع استفاده کنید. برای استفاده از این تابع نیازی نیست که کاربر حتما در برنامه‌ی بازار لاگین کرده باشد.
-        StartCoroutine(IECheckNet());
-        //BazaarIAB.queryInventory(str);
-    }
-    IEnumerator IECheckNet()
-    {
-        WWW www = new WWW("https://balootvas.ir/");
-        yield return www;
-        if (www.error == null)
-        {
-            if (www.isDone)
-            {
-                BazaarIAB.queryInventory(str);
-            }
-        }
+        BazaarIAB.querySkuDetails(str);//برای گرفتن اطلاعات محصولاتی که در پنل پرداخت درون برنامه ای تعریف کرده اید مثل قیمت، عنوان و … باید از این تابع استفاده کنید. برای استفاده از این تابع نیازی نیست که کاربر حتما در برنامه‌ی بازار لاگین کرده باشد.
+        BazaarIAB.queryInventory(str);
     }
     void billingNotSupportedEvent(string error)
     {
@@ -210,9 +197,8 @@ public class BazaarIABEventListener : MonoBehaviour
                 {
                     ObscuredPrefs.SetInt("removeAds", 1);//remove ads in shop
                     iapCafeBazar.controller.panelMessage.SetActive(true);
-                    iapCafeBazar.controller.txtPanelMessage.text = "تبلیغات بنري بازي حذف شد";
+                    iapCafeBazar.controller.txtPanelMessage.text = "تبلیغات بنری بازی حذف شد";
                     iapCafeBazar.controller.videoAds.panelNoAds.SetActive(false);
-                    iapCafeBazar.controller.parkingManager.gameObject.SetActive(true);
                 }
                 else {
                     iapCafeBazar.controller.panelMessage.SetActive(true);
