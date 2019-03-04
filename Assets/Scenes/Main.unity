@@ -28618,7 +28618,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 179, y: 215.7}
+  m_AnchoredPosition: {x: 179, y: 215.70001}
   m_SizeDelta: {x: 537.8, y: 699.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &691194446
@@ -44084,7 +44084,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:

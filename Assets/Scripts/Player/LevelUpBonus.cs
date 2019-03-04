@@ -12,6 +12,7 @@ public class LevelUpBonus : MonoBehaviour
     public PlayerLevel playerLevel;
     public Controller controller;
     public Image imgSlider;
+    public Animator FrameAnimator;
     int newLevel;
     public void ShowLevelUpBonus(int newLevel)
     {
@@ -82,6 +83,7 @@ public class LevelUpBonus : MonoBehaviour
                         parkItem.transform.localPosition = new Vector3(-230, 0);
                         gemItem.transform.localPosition = new Vector3(0, 0);
                         lineItem.transform.localPosition = new Vector3(230, 0);
+                        FrameAnimator.Play("PLG");
                     }
                     else
                     {
@@ -97,11 +99,13 @@ public class LevelUpBonus : MonoBehaviour
                         //پارکینگ و لاین
                         parkItem.transform.localPosition = new Vector3(-120, 0);
                         lineItem.transform.localPosition = new Vector3(120, 0);
+                        FrameAnimator.Play("PL");
                     }
                     else
                     {
                         //پارکینگ
                         parkItem.transform.localPosition = new Vector3(0, 0);
+                        FrameAnimator.Play("P");
                     }
                 }
             }
@@ -129,6 +133,7 @@ public class LevelUpBonus : MonoBehaviour
                         //سکه وجم
                         coinItem.transform.localPosition = new Vector3(-120, 0);
                         gemItem.transform.localPosition = new Vector3(120, 0);
+                        FrameAnimator.Play("CG");
                     }
                 }
                 else
@@ -143,6 +148,7 @@ public class LevelUpBonus : MonoBehaviour
                     {
                         //سکه
                         coinItem.transform.localPosition = new Vector3(0, 0);
+                        FrameAnimator.Play("C");
                     }
                 }
             }
