@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using Batch;
 using CodeStage.AntiCheat.ObscuredTypes;
+using GameAnalyticsSDK;
 
 public class Controller : MonoBehaviour
 {
-
     public Car[] carPrefabs;//ماشین ها
     public RangeLevel[] taxiDefferenceLvl;
     public GiftBox boxPrefab;
@@ -49,6 +49,7 @@ public class Controller : MonoBehaviour
     private int def;
     void Awake()
     {
+        GameAnalytics.NewDesignEvent("yess");
         //Debug.Log(
         instance = this;
         ObscuredPrefs.SetInt("mainAchiv16", ObscuredPrefs.GetInt("mainAchiv16", 0) + 1);
