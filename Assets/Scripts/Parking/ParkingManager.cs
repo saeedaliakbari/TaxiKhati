@@ -64,9 +64,6 @@ public class ParkingManager : MonoBehaviour
         ObscuredPrefs.SetInt("checkLevel", 1);
         Timer.Schedule(this, 0.5f, (Timer.Task)(() =>
         {
-            btnCarSpeed.interactable = false;
-            btnExchangeDecline.interactable = false;
-            btnOfflineEarning.interactable = false;
             for (int i = 0; i < places.Count; i++)
             {
                 if (!places[i].IsEmpty() && places[i].GetBox() == null)
@@ -211,7 +208,7 @@ public class ParkingManager : MonoBehaviour
         ParkingPlaceVIP place = (ParkingPlaceVIP)Instantiate(placeVIP, Vector3.zero, Quaternion.identity);
         place.transform.SetParent(transform);
         place.transform.localScale = Vector3.one * 0.6f;
-        place.controller = controller;
+        //place.controller = controller;
         placesPosition.Add(place.gameObject);
         VipPlace = true;
     }
@@ -229,7 +226,7 @@ public class ParkingManager : MonoBehaviour
     {//ایجاد پارکینگ جدید
         DeleteVipPlace();
         ParkingPlace place = (ParkingPlace)Instantiate(placePrefab, Vector3.zero, Quaternion.identity);
-        if (ObscuredPrefs.GetInt("helpStep", 0) != 22)
+        if (ObscuredPrefs.GetInt("helpStep", 0) != 13)
         {
             controller.guideManager.parkPlace.Add(place);
         }

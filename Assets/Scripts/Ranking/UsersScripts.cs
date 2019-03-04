@@ -18,34 +18,23 @@ public class UsersScripts : MonoBehaviour
     private string strInsertUser = "https://balootvas.ir/balootvas/TaxiKhati/insertUser.php";
     private string strUpdateUser = "https://balootvas.ir/balootvas/TaxiKhati/updateUser.php";
     #endregion
-    public void StartRanking(bool btnRank)
+    public void StartRanking()
     {
-        if (btnRank)
+        if (listRanking.Count == 0 || Manager.GetCurrentTime() > Manager.GetActionTime("updateRank"))
         {
+            Debug.Log(Manager.GetCurrentTime() + "< " + Manager.GetActionTime("updateRank"));
+            Debug.Log("count " + listRanking.Count);
             GetRanking();
-            Timer.Schedule(this, 120f, () =>
+        }
+        else
+        {
+            double delay = Manager.GetActionTime("updateRank") - Manager.GetCurrentTime();
+            Debug.Log("Delay : " + delay);
+            Timer.Schedule(this, (float)delay, () =>
             {
                 Debug.Log("Schedule(thiss");
                 GetRanking();
             });
-        }
-        else {
-            if (listRanking.Count == 0 || Manager.GetCurrentTime() > Manager.GetActionTime("updateRank"))
-            {
-                Debug.Log(Manager.GetCurrentTime() + "< " + Manager.GetActionTime("updateRank"));
-                Debug.Log("count " + listRanking.Count);
-                GetRanking();
-            }
-            else
-            {
-                double delay = Manager.GetActionTime("updateRank") - Manager.GetCurrentTime();
-                Debug.Log("Delay : " + delay);
-                Timer.Schedule(this, (float)delay, () =>
-                {
-                    Debug.Log("Schedule(thiss");
-                    GetRanking();
-                });
-            }
         }
     }
     #region Get Rank User
@@ -163,10 +152,6 @@ public class UsersScripts : MonoBehaviour
         else
         {
             Debug.LogError("error to connet internet");
-            controller.panelMessage.SetActive(true);
-            controller.txtPanelMessage.text = "اتصال به اینترنت برقرار نشد بعدا تلاش نمایید";
-            gameObject.SetActive(false);
-            panelWait.SetActive(false);
             yield break;
         }
     }
@@ -215,13 +200,6 @@ public class UsersScripts : MonoBehaviour
                 }
             }
         }
-        else
-        {
-            controller.panelMessage.SetActive(true);
-            controller.txtPanelMessage.text = "اتصال به اینترنت برقرار نشد بعدا تلاش نمایید";
-            gameObject.SetActive(false);
-            panelWait.SetActive(false);
-        }
     }
     IEnumerator IEUpdateUser(bool GetRank)
     {
@@ -245,13 +223,6 @@ public class UsersScripts : MonoBehaviour
                     StartCoroutine(IEGetRanking());
                 }
             }
-        }
-        else
-        {
-            controller.panelMessage.SetActive(true);
-            controller.txtPanelMessage.text = "اتصال به اینترنت برقرار نشد بعدا تلاش نمایید";
-            gameObject.SetActive(false);
-            panelWait.SetActive(false);
         }
     }
 }
