@@ -18,13 +18,17 @@ public class OfflineEraning : MonoBehaviour
     {
         btnDouble.interactable = true;
         btnThird.interactable = true;
-        if (time > 345600)//تایم بیشتر از 4 روز نباشد
+        if (time > 21600)//تایم بیشتر از 4 روز نباشد
         {
-            time = 345600;
+            time = 21600;
         }
         value = controller.slotManager.EarningPerSec * time * offlineEarningRate / 100f;
         value = value * ObscuredPrefs.GetFloat("offlineEarnTycoonBoosts", 1) * ObscuredPrefs.GetFloat("offliceEarnVip", 1);
         valueTxt.text = value.ToString("0.##");
+        if (value > 0)
+        {
+            gameObject.SetActive(true);//پنل آفلاین بدست آوردن سکه را فعال می کند
+        }
     }
 
     public void ClaimClick()

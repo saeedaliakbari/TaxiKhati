@@ -365,7 +365,7 @@ public class Controller : MonoBehaviour
     }
     IEnumerator IESpawnABoxWheel()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(UnityEngine.Random.Range(2f, 3f));
         SpawnABoxWheel();
     }
     public void SpawnABoxSpecialOffer()
@@ -401,7 +401,7 @@ public class Controller : MonoBehaviour
     }
     IEnumerator IESpawnABoxSpecialOffer()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(UnityEngine.Random.Range(2f, 3f));
         SpawnABoxSpecialOffer();
     }
     //public void ShowCareerDialog()
@@ -609,9 +609,9 @@ public class Controller : MonoBehaviour
         {
             time = (int)(Manager.GetCurrentTime() - Manager.GetActionTime("offline_earning"));
         }
-        if (time >= 60 && slotManager.EarningPerSec > 0)
+        if (time >= 180 && slotManager.EarningPerSec > 0)
         {
-            offEarning.gameObject.SetActive(true);//پنل آفلاین بدست آوردن سکه را فعال می کند
+            
             offEarning.txtCoin = txtCoin;
             offEarning.ShowEarning(time, offlineEarningRate);//با توجه به نرخی که می ذاریم مقدار سکه را زیاد می کنیم
         }
