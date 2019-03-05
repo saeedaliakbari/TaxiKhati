@@ -61,13 +61,14 @@ public class Car : MonoBehaviour
                             ObscuredPrefs.SetInt("mergeCarForVideo", ObscuredPrefs.GetInt("mergeCarForVideo", 1) + 1);
                             GetComponent<Animator>().Play("Merge");//انیمیشن مرج اجرا شود
                             GetComponent<SpriteRenderer>().enabled = false;
-                            Destroy(car2.gameObject);//ماشین دومی را از بین می بریم که یک ماشین باقی بماند
+                            car2.gameObject.SetActive(false);
                             //بعد از نیم ثانیه کارهای زیر را انجام بده
                             Timer.Schedule(this, 0.5f, (Timer.Task)(() =>
                             {
                                 controller.SpawnACar((int)level, (ParkingPlace)nearPlace, (bool)true);//ماشین جدید ساخته می شه به جای ماشین که تاچ شه
                                 ObscuredPrefs.SetInt("checkLevel", 0);
                                 Destroy(gameObject);//ماشین فعلی از بین میره
+                                Destroy(car2.gameObject);//ماشین دومی را از بین می بریم که یک ماشین باقی بماند
                             }));
                             int unlockedLevel = ObscuredPrefs.GetInt("unlocked_car", 1);
                             //Debug.Log("unlockedLevel" + unlockedLevel + "level" + level);
