@@ -12,9 +12,21 @@ public class CafeIntent : MonoBehaviour
     private string version;
     private int bundle;
     private int forceUpdate;
-
+    private int bundleCodeVersion = 0;
     void Start()
     {
+#if UNITY_EDITOR
+        Debug.Log("UNITY_EDITOR bundleCodeVersion:" + UnityEditor.PlayerSettings.Android.bundleVersionCode);
+        bundleCodeVersion = UnityEditor.PlayerSettings.Android.bundleVersionCode;
+#endif
+#if UNITY_ANDROID && !UNITY_EDITOR
+        AndroidJavaClass up = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+        var ca = up.GetStatic<AndroidJavaObject>("currentActivity");
+        AndroidJavaObject packageManager = ca.Call<AndroidJavaObject>("getPackageManager");
+        var pInfo = packageManager.Call<AndroidJavaObject>("getPackageInfo", Application.identifier, 0);
+        bundleCodeVersion = pInfo.Get<int>("versionCode");
+        Debug.Log("UNITY_ANDROID bundleCodeVersion:" + bundleCodeVersion);
+#endif
         StartCoroutine(IEGetApp());
     }
     public void btnAre()
@@ -79,7 +91,7 @@ public class CafeIntent : MonoBehaviour
                 version = jsonBooks[0][2].ToString();
                 forceUpdate = int.Parse(jsonBooks[0][3].ToString());
                 Debug.Log("bundle: " + bundle + " forceUpdate: " + forceUpdate);
-                if (bundle > 8)
+                if (bundle > bundleCodeVersion)
                 {
                     panelUpdate.SetActive(true);
                     controller.parkingManager.gameObject.SetActive(false);
