@@ -62,7 +62,7 @@ public class BazaarIABEventListener : MonoBehaviour
     #region Init
     void billingSupportedEvent()
     {
-        BazaarIAB.enableLogging(true);//فعال سازی اطلاعات فراخوانی توابع در زمان اشکال زدایی
+        BazaarIAB.enableLogging(false);//فعال سازی اطلاعات فراخوانی توابع در زمان اشکال زدایی
         Debug.Log("billingSupportedEvent");
         str = new string[iapCafeBazar.skus.Length];
         for (int i = 0; i < iapCafeBazar.skus.Length; i++)

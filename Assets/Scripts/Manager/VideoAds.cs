@@ -31,7 +31,7 @@ public class VideoAds : MonoBehaviour
     {
         //ObscuredPrefs.SetDouble("coin", 93021943);
         Tapsell.initialize(sdkToken);
-        LoadAd(zoneOfflineEarning);
+        LoadAd(zoneOfflineEarning, false);
     }
     #region Double Offline Earning
     public void BtnDoubleOfflineEarn()
@@ -42,12 +42,14 @@ public class VideoAds : MonoBehaviour
     {
         if (ObscuredPrefs.GetInt(zoneOfflineEarning.zoneId) == 0)
         {
-            LoadAd(zoneOfflineEarning);
+            LoadAd(zoneOfflineEarning, true);
+            controller.parkingManager.gameObject.SetActive(false);
             controller.panelWait.SetActive(true);
             Debug.Log("Wait");
             yield return new WaitForSeconds(8f);
             Debug.Log("Wait Done");
             controller.panelWait.SetActive(false);
+            controller.parkingManager.gameObject.SetActive(true);
         }
         if (ObscuredPrefs.GetInt(zoneOfflineEarning.zoneId) == 1)
         {
@@ -62,13 +64,14 @@ public class VideoAds : MonoBehaviour
                     }
                     else
                     {
-                        LoadAd(zoneOfflineEarning);
+                        LoadAd(zoneOfflineEarning, false);
                     }
                 }
             );
         }
         else
         {
+
             Debug.Log("Error");
             //panelError.SetActive(true);
             //txtPanelError.text = "خطا در لود ویدئو";
@@ -94,12 +97,14 @@ public class VideoAds : MonoBehaviour
     {
         if (ObscuredPrefs.GetInt(zoneGiftPanel.zoneId) == 0)
         {
-            LoadAd(zoneGiftPanel);
+            LoadAd(zoneGiftPanel, true);
+            controller.parkingManager.gameObject.SetActive(false);
             controller.panelWait.SetActive(true);
             Debug.Log("Wait");
             yield return new WaitForSeconds(8f);
             Debug.Log("Wait Done");
             controller.panelWait.SetActive(false);
+            controller.parkingManager.gameObject.SetActive(true);
         }
         if (ObscuredPrefs.GetInt(zoneGiftPanel.zoneId) == 1)
         {
@@ -114,13 +119,16 @@ public class VideoAds : MonoBehaviour
                     }
                     else
                     {
-                        LoadAd(zoneGiftPanel);
+                        LoadAd(zoneGiftPanel, false);
                     }
                 }
             );
         }
         else
         {
+            controller.panelMessage.SetActive(true);
+            controller.txtPanelMessage.text = "در حال حاضر امکان نمایش ویدئو وجود ندارد";
+            controller.parkingManager.gameObject.SetActive(false);
             Debug.Log("Error");
             specialOffer.btnGem.interactable = true;
             specialOffer.btnVideo.interactable = true;
@@ -138,12 +146,14 @@ public class VideoAds : MonoBehaviour
     {
         if (ObscuredPrefs.GetInt(zoneShopCar.zoneId) == 0)
         {
-            LoadAd(zoneShopCar);
+            LoadAd(zoneShopCar, true);
+            controller.parkingManager.gameObject.SetActive(false);
             controller.panelWait.SetActive(true);
             Debug.Log("Wait");
             yield return new WaitForSeconds(8f);
             Debug.Log("Wait Done");
             controller.panelWait.SetActive(false);
+            controller.parkingManager.gameObject.SetActive(true);
         }
         if (ObscuredPrefs.GetInt(zoneShopCar.zoneId) == 1)
         {
@@ -159,13 +169,16 @@ public class VideoAds : MonoBehaviour
                     }
                     else
                     {
-                        LoadAd(zoneShopCar);
+                        LoadAd(zoneShopCar, false);
                     }
                 }
             );
         }
         else
         {
+            controller.panelMessage.SetActive(true);
+            controller.txtPanelMessage.text = "در حال حاضر امکان نمایش ویدئو وجود ندارد";
+            controller.parkingManager.gameObject.SetActive(false);
             Debug.Log("Error");
             //panelError.SetActive(true);
             //txtPanelError.text = "خطا در لود ویدئو";
@@ -186,12 +199,14 @@ public class VideoAds : MonoBehaviour
     {
         if (ObscuredPrefs.GetInt(zoneCarUp.zoneId) == 0)
         {
-            LoadAd(zoneCarUp);
+            LoadAd(zoneCarUp, true);
+            controller.parkingManager.gameObject.SetActive(false);
             controller.panelWait.SetActive(true);
             Debug.Log("Wait");
             yield return new WaitForSeconds(8f);
             Debug.Log("Wait Done");
             controller.panelWait.SetActive(false);
+            controller.parkingManager.gameObject.SetActive(true);
         }
         if (ObscuredPrefs.GetInt(zoneCarUp.zoneId) == 1)
         {
@@ -207,7 +222,7 @@ public class VideoAds : MonoBehaviour
                     else
                     {
                         GiftCarUp(false);
-                        LoadAd(zoneShopCar);
+                        LoadAd(zoneShopCar, false);
                     }
                 }
             );
@@ -215,6 +230,9 @@ public class VideoAds : MonoBehaviour
         else
         {
             Debug.Log("Error");
+            controller.panelMessage.SetActive(true);
+            controller.txtPanelMessage.text = "در حال حاضر امکان نمایش ویدئو وجود ندارد";
+            controller.parkingManager.gameObject.SetActive(false);
             //panelError.SetActive(true);
             //txtPanelError.text = "خطا در لود ویدئو";
         }
@@ -248,12 +266,14 @@ public class VideoAds : MonoBehaviour
     {
         if (ObscuredPrefs.GetInt(zoneWheelOfFurtune.zoneId) == 0)
         {
-            LoadAd(zoneWheelOfFurtune);
+            controller.parkingManager.gameObject.SetActive(false);
+            LoadAd(zoneWheelOfFurtune, true);
             controller.panelWait.SetActive(true);
             Debug.Log("Wait");
             yield return new WaitForSeconds(8f);
             Debug.Log("Wait Done");
             controller.panelWait.SetActive(false);
+            controller.parkingManager.gameObject.SetActive(true);
         }
         if (ObscuredPrefs.GetInt(zoneWheelOfFurtune.zoneId) == 1)
         {
@@ -268,7 +288,7 @@ public class VideoAds : MonoBehaviour
                     }
                     else
                     {
-                        LoadAd(zoneShopCar);
+                        LoadAd(zoneShopCar, false);
                     }
                 }
             );
@@ -276,6 +296,9 @@ public class VideoAds : MonoBehaviour
         else
         {
             Debug.Log("Error");
+            controller.panelMessage.SetActive(true);
+            controller.txtPanelMessage.text = "در حال حاضر امکان نمایش ویدئو وجود ندارد";
+            controller.parkingManager.gameObject.SetActive(false);
             //panelError.SetActive(true);
             //txtPanelError.text = "خطا در لود ویدئو";
         }
@@ -290,12 +313,14 @@ public class VideoAds : MonoBehaviour
     {
         if (ObscuredPrefs.GetInt(zoneSpeedX2.zoneId) == 0)
         {
-            LoadAd(zoneSpeedX2);
+            LoadAd(zoneSpeedX2, true);
+            controller.parkingManager.gameObject.SetActive(false);
             controller.panelWait.SetActive(true);
             Debug.Log("Wait");
             yield return new WaitForSeconds(8f);
             Debug.Log("Wait Done");
             controller.panelWait.SetActive(false);
+            controller.parkingManager.gameObject.SetActive(true);
         }
         if (ObscuredPrefs.GetInt(zoneSpeedX2.zoneId) == 1)
         {
@@ -310,13 +335,16 @@ public class VideoAds : MonoBehaviour
                     }
                     else
                     {
-                        LoadAd(zoneSpeedX2);
+                        LoadAd(zoneSpeedX2, false);
                     }
                 }
             );
         }
         else
         {
+            controller.panelMessage.SetActive(true);
+            controller.txtPanelMessage.text = "در حال حاضر امکان نمایش ویدئو وجود ندارد";
+            controller.parkingManager.gameObject.SetActive(false);
             Debug.Log("Error");
         }
     }
@@ -337,12 +365,14 @@ public class VideoAds : MonoBehaviour
     {
         if (ObscuredPrefs.GetInt(zoneShopClose.zoneId) == 0)
         {
-            LoadAd(zoneShopClose);
+            LoadAd(zoneShopClose, true);
+            controller.parkingManager.gameObject.SetActive(false);
             controller.panelWait.SetActive(true);
             Debug.Log("Wait");
             yield return new WaitForSeconds(8f);
             Debug.Log("Wait Done");
             controller.panelWait.SetActive(false);
+            controller.parkingManager.gameObject.SetActive(true);
         }
         if (ObscuredPrefs.GetInt(zoneShopClose.zoneId) == 1)
         {
@@ -352,12 +382,15 @@ public class VideoAds : MonoBehaviour
                 (TapsellAdFinishedResult result) =>
                 {
                     GiftBtnCloseShopCar();
-                    LoadAd(zoneShopClose);
+                    LoadAd(zoneShopClose, false);
                 }
             );
         }
         else
         {
+            controller.panelMessage.SetActive(true);
+            controller.txtPanelMessage.text = "در حال حاضر امکان نمایش تبلیغ وجود ندارد";
+            controller.parkingManager.gameObject.SetActive(false);
             Debug.Log("Error");
         }
     }
@@ -378,12 +411,12 @@ public class VideoAds : MonoBehaviour
     {
         if (ObscuredPrefs.GetInt(zoneShopClose.zoneId) == 0 && ObscuredPrefs.GetInt("removeAds", 0) == 0)
         {
-            LoadAd(zoneShopClose);
+            LoadAd(zoneShopClose, false);
         }
     }
     #endregion
     #region Main Methods
-    public void LoadAd(ZoneVideo zone)//درخواست تبلیغ
+    public void LoadAd(ZoneVideo zone, bool ErrorHandling)//درخواست تبلیغ
     {
         Tapsell.requestAd(zone.zoneId, zone.cached,
             (TapsellAd result) =>
@@ -403,6 +436,15 @@ public class VideoAds : MonoBehaviour
                 Debug.Log("No Ad Available");
                 Debug.Log("End Load ad : " + zone.ad == null ? "NULL" : "id:" + zone.ad.adId);
                 Debug.Log(zone.zoneName + ": " + ObscuredPrefs.GetInt(zone.zoneId));
+                if (ErrorHandling)
+                {
+                    controller.panelMessage.SetActive(true);
+                    controller.txtPanelMessage.text = "در حال حاضر تبلیغی برای نمایش وجود ندارد";
+                    controller.parkingManager.gameObject.SetActive(false);
+                    controller.panelWait.SetActive(false);
+                    controller.parkingManager.gameObject.SetActive(true);
+                }
+
             },
 
             (TapsellError error) =>
@@ -412,6 +454,14 @@ public class VideoAds : MonoBehaviour
                 Debug.Log(error.error);
                 Debug.Log("End Load ad : " + zone.ad == null ? "NULL" : "id:" + zone.ad.adId);
                 Debug.Log(zone.zoneName + ": " + ObscuredPrefs.GetInt(zone.zoneId));
+                if (ErrorHandling)
+                {
+                    controller.panelMessage.SetActive(true);
+                    controller.txtPanelMessage.text = "مشکلی بوجودآمده لطفا مجددا تلاش نمایید";
+                    controller.parkingManager.gameObject.SetActive(false);
+                    controller.panelWait.SetActive(false);
+                    controller.parkingManager.gameObject.SetActive(true);
+                }
             },
 
             (string zoneId) =>
@@ -421,6 +471,14 @@ public class VideoAds : MonoBehaviour
                 Debug.Log("No Network: " + zoneId);
                 Debug.Log("End Load ad : " + zone.ad == null ? "NULL" : "id:" + zone.ad.adId);
                 Debug.Log(zone.zoneName + ": " + ObscuredPrefs.GetInt(zone.zoneId));
+                if (ErrorHandling)
+                {
+                    controller.panelMessage.SetActive(true);
+                    controller.txtPanelMessage.text = "مشکل در برقراری ارتباط با اینترنت";
+                    controller.parkingManager.gameObject.SetActive(false);
+                    controller.panelWait.SetActive(false);
+                    controller.parkingManager.gameObject.SetActive(true);
+                }
             },
 
             (TapsellAd result) =>
@@ -430,8 +488,9 @@ public class VideoAds : MonoBehaviour
                 ObscuredPrefs.SetInt(zone.zoneId, 0);
                 zone.ad = null;
                 Debug.Log("End Load ad : " + zone.ad == null ? "NULL" : "id:" + zone.ad.adId);
-                LoadAd(zone);
-
+                LoadAd(zone, false);
+                controller.panelWait.SetActive(false);
+                controller.parkingManager.gameObject.SetActive(true);
             }
 
         );

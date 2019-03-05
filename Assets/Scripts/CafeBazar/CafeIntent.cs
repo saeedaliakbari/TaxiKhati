@@ -1,23 +1,32 @@
-﻿using UnityEngine;
-
+﻿using LitJson;
+using System.Collections;
+using UnityEngine;
+using UnityEngine.UI;
 public class CafeIntent : MonoBehaviour
 {
-    public GameObject panelNazar;
-
-    public void btnHatman()
+    public Controller controller;
+    public GameObject panelComment, panelUpdate, btnClosePanelUpdate, panelSendMessage;
+    public InputField inputComment;
+    private string strLinkGetInfo = "https://balootvas.ir/balootvas/TaxiKhati/getinfo.php";
+    private string strLinkSendComment = "https://balootvas.ir/balootvas/TaxiKhati/insertComment.php";
+    private string version;
+    private int bundle;
+    private int forceUpdate;
+    void Start()
     {
-        PlayerPrefs.SetInt("isComment", 1);
+        StartCoroutine(IEGetApp());
+    }
+    public void btnAre()
+    {
+        PlayerPrefs.SetInt("comment", 1);
         CafeIntent ci = new CafeIntent();
-        ci.Like("com.glimgames.resturant");
-        PlayerPrefs.SetInt("isComment", 1);
+        ci.Like("ir.balootgames.taxi");
+        PlayerPrefs.SetInt("comment", 1);
     }
-    public void btnBadan()
+    public void btnSendComment()
     {
-        panelNazar.gameObject.SetActive(false);
-    }
-    public void btnHichvaght()
-    {
-        PlayerPrefs.SetInt("isComment", 1);
+        controller.panelWait.SetActive(true);
+        StartCoroutine(IESendComment());
     }
 
     public void OpenAPP(string PackageName)
@@ -55,4 +64,58 @@ public class CafeIntent : MonoBehaviour
 
     }
 
+    IEnumerator IEGetApp()
+    {
+        WWWForm wwwForm = new WWWForm();
+        WWW www = new WWW(strLinkGetInfo, wwwForm);
+        yield return www;
+        if (www.error == null)
+        {
+            if (www.isDone)
+            {
+                JsonData jsonBooks = JsonMapper.ToObject(www.text);
+                bundle = int.Parse(jsonBooks[0][1].ToString());
+                version = jsonBooks[0][2].ToString();
+                forceUpdate = int.Parse(jsonBooks[0][3].ToString());
+                Debug.Log("bundle: " + bundle + " forceUpdate: " + forceUpdate);
+                if (bundle > UnityEditor.PlayerSettings.Android.bundleVersionCode)
+                {
+                    panelUpdate.SetActive(true);
+                    controller.parkingManager.gameObject.SetActive(false);
+                    if (forceUpdate == 1)
+                    {
+                        btnClosePanelUpdate.SetActive(false);
+                    }
+                    else
+                    {
+                        btnClosePanelUpdate.SetActive(true);
+                    }
+                }
+            }
+        }
+    }
+    IEnumerator IESendComment()
+    {
+        WWWForm wwwForm = new WWWForm();
+        wwwForm.AddField("comment", inputComment.text);
+        WWW www = new WWW(strLinkSendComment, wwwForm);
+        yield return www;
+        controller.panelWait.SetActive(false);
+        if (www.error == null)
+        {
+            if (www.isDone)
+            {
+                panelSendMessage.SetActive(false);
+                controller.parkingManager.gameObject.SetActive(true);
+                PlayerPrefs.SetInt("comment", 1);
+
+            }
+        }
+        else
+        {
+            Debug.Log(www.error.ToString());
+            controller.panelMessage.SetActive(true);
+            controller.txtPanelMessage.text = "خطا در ارسال نظر\nلطفا اینترنت خود را چک نمایید";
+        }
+    }
 }

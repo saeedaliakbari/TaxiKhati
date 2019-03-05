@@ -23,6 +23,7 @@ public class Controller : MonoBehaviour
     public BatchPlugin batchPlugin;
     public GuideManager guideManager;
     public SettingPanel settingPanel;
+    public CafeIntent cafeIntent;
     //public ShopDialog shop;
     //public ExchangeSpeedDialog exchangeDialog;
     public MergeCar mergeCar;
