@@ -12,6 +12,7 @@ public class CafeIntent : MonoBehaviour
     private string version;
     private int bundle;
     private int forceUpdate;
+
     void Start()
     {
         StartCoroutine(IEGetApp());
@@ -78,7 +79,7 @@ public class CafeIntent : MonoBehaviour
                 version = jsonBooks[0][2].ToString();
                 forceUpdate = int.Parse(jsonBooks[0][3].ToString());
                 Debug.Log("bundle: " + bundle + " forceUpdate: " + forceUpdate);
-                if (bundle > UnityEditor.PlayerSettings.Android.bundleVersionCode)
+                if (bundle > 8)
                 {
                     panelUpdate.SetActive(true);
                     controller.parkingManager.gameObject.SetActive(false);

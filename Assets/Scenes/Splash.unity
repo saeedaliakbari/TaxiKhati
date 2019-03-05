@@ -426,31 +426,31 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22433880, guid: a63cd8bb53ac3a348b162d8b77780f1f, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22468130, guid: a63cd8bb53ac3a348b162d8b77780f1f, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22482478, guid: a63cd8bb53ac3a348b162d8b77780f1f, type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0.44444445
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22482478, guid: a63cd8bb53ac3a348b162d8b77780f1f, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22471416, guid: a63cd8bb53ac3a348b162d8b77780f1f, type: 2}
       propertyPath: m_AnchorMin.x
-      value: 0.44444445
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22471416, guid: a63cd8bb53ac3a348b162d8b77780f1f, type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0.44444445
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22471416, guid: a63cd8bb53ac3a348b162d8b77780f1f, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22329738, guid: a63cd8bb53ac3a348b162d8b77780f1f, type: 2}
       propertyPath: m_Camera
@@ -466,7 +466,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 169236, guid: a63cd8bb53ac3a348b162d8b77780f1f, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a63cd8bb53ac3a348b162d8b77780f1f, type: 2}
@@ -608,7 +608,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1444915162
 MonoBehaviour:
@@ -629,7 +629,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 6b8d4a870d49e9e46b6e6697161f78aa, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d25d3282021c35b4a8c394b5abcb44b6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
