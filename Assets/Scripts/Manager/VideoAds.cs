@@ -32,6 +32,7 @@ public class VideoAds : MonoBehaviour
         //ObscuredPrefs.SetDouble("coin", 93021943);
         Tapsell.initialize(sdkToken);
         LoadAd(zoneOfflineEarning, false);
+        shopPanel.UpdateCarItems();
     }
     #region Double Offline Earning
     public void BtnDoubleOfflineEarn()
