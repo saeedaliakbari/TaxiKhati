@@ -44,13 +44,13 @@ public class VideoAds : MonoBehaviour
         if (ObscuredPrefs.GetInt(zoneOfflineEarning.zoneId) == 0)
         {
             LoadAd(zoneOfflineEarning, true);
-            controller.parkingManager.gameObject.SetActive(false);
+            controller.parkingManager.DisableCarInPark();
             controller.panelWait.SetActive(true);
             Debug.Log("Wait");
             yield return new WaitForSeconds(8f);
             Debug.Log("Wait Done");
             controller.panelWait.SetActive(false);
-            controller.parkingManager.gameObject.SetActive(true);
+            controller.parkingManager.EnableCarInPark();
         }
         if (ObscuredPrefs.GetInt(zoneOfflineEarning.zoneId) == 1)
         {
@@ -99,13 +99,13 @@ public class VideoAds : MonoBehaviour
         if (ObscuredPrefs.GetInt(zoneGiftPanel.zoneId) == 0)
         {
             LoadAd(zoneGiftPanel, true);
-            controller.parkingManager.gameObject.SetActive(false);
+            controller.parkingManager.DisableCarInPark();
             controller.panelWait.SetActive(true);
             Debug.Log("Wait");
             yield return new WaitForSeconds(8f);
             Debug.Log("Wait Done");
             controller.panelWait.SetActive(false);
-            controller.parkingManager.gameObject.SetActive(true);
+            controller.parkingManager.EnableCarInPark();
         }
         if (ObscuredPrefs.GetInt(zoneGiftPanel.zoneId) == 1)
         {
@@ -129,7 +129,7 @@ public class VideoAds : MonoBehaviour
         {
             controller.panelMessage.SetActive(true);
             controller.txtPanelMessage.text = "در حال حاضر امکان نمایش ویدئو وجود ندارد";
-            controller.parkingManager.gameObject.SetActive(false);
+            controller.parkingManager.DisableCarInPark();
             Debug.Log("Error");
             specialOffer.btnGem.interactable = true;
             specialOffer.btnVideo.interactable = true;
@@ -148,13 +148,13 @@ public class VideoAds : MonoBehaviour
         if (ObscuredPrefs.GetInt(zoneShopCar.zoneId) == 0)
         {
             LoadAd(zoneShopCar, true);
-            controller.parkingManager.gameObject.SetActive(false);
+            controller.parkingManager.DisableCarInPark();
             controller.panelWait.SetActive(true);
             Debug.Log("Wait");
             yield return new WaitForSeconds(8f);
             Debug.Log("Wait Done");
             controller.panelWait.SetActive(false);
-            controller.parkingManager.gameObject.SetActive(true);
+            controller.parkingManager.EnableCarInPark();
         }
         if (ObscuredPrefs.GetInt(zoneShopCar.zoneId) == 1)
         {
@@ -179,7 +179,7 @@ public class VideoAds : MonoBehaviour
         {
             controller.panelMessage.SetActive(true);
             controller.txtPanelMessage.text = "در حال حاضر امکان نمایش ویدئو وجود ندارد";
-            controller.parkingManager.gameObject.SetActive(false);
+            controller.parkingManager.DisableCarInPark();
             Debug.Log("Error");
             //panelError.SetActive(true);
             //txtPanelError.text = "خطا در لود ویدئو";
@@ -201,13 +201,13 @@ public class VideoAds : MonoBehaviour
         if (ObscuredPrefs.GetInt(zoneCarUp.zoneId) == 0)
         {
             LoadAd(zoneCarUp, true);
-            controller.parkingManager.gameObject.SetActive(false);
+            controller.parkingManager.DisableCarInPark();
             controller.panelWait.SetActive(true);
             Debug.Log("Wait");
             yield return new WaitForSeconds(8f);
             Debug.Log("Wait Done");
             controller.panelWait.SetActive(false);
-            controller.parkingManager.gameObject.SetActive(true);
+            controller.parkingManager.EnableCarInPark();
         }
         if (ObscuredPrefs.GetInt(zoneCarUp.zoneId) == 1)
         {
@@ -233,7 +233,7 @@ public class VideoAds : MonoBehaviour
             Debug.Log("Error");
             controller.panelMessage.SetActive(true);
             controller.txtPanelMessage.text = "در حال حاضر امکان نمایش ویدئو وجود ندارد";
-            controller.parkingManager.gameObject.SetActive(false);
+            controller.parkingManager.DisableCarInPark();
             //panelError.SetActive(true);
             //txtPanelError.text = "خطا در لود ویدئو";
         }
@@ -267,14 +267,14 @@ public class VideoAds : MonoBehaviour
     {
         if (ObscuredPrefs.GetInt(zoneWheelOfFurtune.zoneId) == 0)
         {
-            controller.parkingManager.gameObject.SetActive(false);
+            controller.parkingManager.DisableCarInPark();
             LoadAd(zoneWheelOfFurtune, true);
             controller.panelWait.SetActive(true);
             Debug.Log("Wait");
             yield return new WaitForSeconds(8f);
             Debug.Log("Wait Done");
             controller.panelWait.SetActive(false);
-            controller.parkingManager.gameObject.SetActive(true);
+            controller.parkingManager.EnableCarInPark();
         }
         if (ObscuredPrefs.GetInt(zoneWheelOfFurtune.zoneId) == 1)
         {
@@ -299,7 +299,7 @@ public class VideoAds : MonoBehaviour
             Debug.Log("Error");
             controller.panelMessage.SetActive(true);
             controller.txtPanelMessage.text = "در حال حاضر امکان نمایش ویدئو وجود ندارد";
-            controller.parkingManager.gameObject.SetActive(false);
+            controller.parkingManager.DisableCarInPark();
             //panelError.SetActive(true);
             //txtPanelError.text = "خطا در لود ویدئو";
         }
@@ -315,13 +315,13 @@ public class VideoAds : MonoBehaviour
         if (ObscuredPrefs.GetInt(zoneSpeedX2.zoneId) == 0)
         {
             LoadAd(zoneSpeedX2, true);
-            controller.parkingManager.gameObject.SetActive(false);
+            controller.parkingManager.DisableCarInPark();
             controller.panelWait.SetActive(true);
             Debug.Log("Wait");
             yield return new WaitForSeconds(8f);
             Debug.Log("Wait Done");
             controller.panelWait.SetActive(false);
-            controller.parkingManager.gameObject.SetActive(true);
+            controller.parkingManager.EnableCarInPark();
         }
         if (ObscuredPrefs.GetInt(zoneSpeedX2.zoneId) == 1)
         {
@@ -345,7 +345,7 @@ public class VideoAds : MonoBehaviour
         {
             controller.panelMessage.SetActive(true);
             controller.txtPanelMessage.text = "در حال حاضر امکان نمایش ویدئو وجود ندارد";
-            controller.parkingManager.gameObject.SetActive(false);
+            controller.parkingManager.DisableCarInPark();
             Debug.Log("Error");
         }
     }
@@ -367,13 +367,13 @@ public class VideoAds : MonoBehaviour
         if (ObscuredPrefs.GetInt(zoneShopClose.zoneId) == 0)
         {
             LoadAd(zoneShopClose, true);
-            controller.parkingManager.gameObject.SetActive(false);
+            controller.parkingManager.DisableCarInPark();
             controller.panelWait.SetActive(true);
             Debug.Log("Wait");
             yield return new WaitForSeconds(8f);
             Debug.Log("Wait Done");
             controller.panelWait.SetActive(false);
-            controller.parkingManager.gameObject.SetActive(true);
+            controller.parkingManager.EnableCarInPark();
         }
         if (ObscuredPrefs.GetInt(zoneShopClose.zoneId) == 1)
         {
@@ -391,7 +391,7 @@ public class VideoAds : MonoBehaviour
         {
             controller.panelMessage.SetActive(true);
             controller.txtPanelMessage.text = "در حال حاضر امکان نمایش تبلیغ وجود ندارد";
-            controller.parkingManager.gameObject.SetActive(false);
+            controller.parkingManager.DisableCarInPark();
             Debug.Log("Error");
         }
     }
@@ -404,7 +404,7 @@ public class VideoAds : MonoBehaviour
         if (ObscuredPrefs.GetInt("countShowAd", 1) > 5)
         {
             panelNoAds.SetActive(true);
-            controller.parkingManager.gameObject.SetActive(false);
+            controller.parkingManager.DisableCarInPark();
             ObscuredPrefs.SetInt("countShowAd", 1);
         }
     }
@@ -441,9 +441,9 @@ public class VideoAds : MonoBehaviour
                 {
                     controller.panelMessage.SetActive(true);
                     controller.txtPanelMessage.text = "در حال حاضر تبلیغی برای نمایش وجود ندارد";
-                    controller.parkingManager.gameObject.SetActive(false);
+                    controller.parkingManager.DisableCarInPark();
                     controller.panelWait.SetActive(false);
-                    controller.parkingManager.gameObject.SetActive(true);
+                    controller.parkingManager.EnableCarInPark();
                 }
 
             },
@@ -459,9 +459,9 @@ public class VideoAds : MonoBehaviour
                 {
                     controller.panelMessage.SetActive(true);
                     controller.txtPanelMessage.text = "مشکلی بوجودآمده لطفا مجددا تلاش نمایید";
-                    controller.parkingManager.gameObject.SetActive(false);
+                    controller.parkingManager.DisableCarInPark();
                     controller.panelWait.SetActive(false);
-                    controller.parkingManager.gameObject.SetActive(true);
+                    controller.parkingManager.EnableCarInPark();
                 }
             },
 
@@ -476,9 +476,9 @@ public class VideoAds : MonoBehaviour
                 {
                     controller.panelMessage.SetActive(true);
                     controller.txtPanelMessage.text = "مشکل در برقراری ارتباط با اینترنت";
-                    controller.parkingManager.gameObject.SetActive(false);
+                    controller.parkingManager.DisableCarInPark();
                     controller.panelWait.SetActive(false);
-                    controller.parkingManager.gameObject.SetActive(true);
+                    controller.parkingManager.EnableCarInPark();
                 }
             },
 
@@ -491,7 +491,7 @@ public class VideoAds : MonoBehaviour
                 Debug.Log("End Load ad : " + zone.ad == null ? "NULL" : "id:" + zone.ad.adId);
                 LoadAd(zone, false);
                 controller.panelWait.SetActive(false);
-                controller.parkingManager.gameObject.SetActive(true);
+                controller.parkingManager.EnableCarInPark();
             }
 
         );

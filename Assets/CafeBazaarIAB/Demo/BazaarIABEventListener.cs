@@ -212,7 +212,7 @@ public class BazaarIABEventListener : MonoBehaviour
                     iapCafeBazar.controller.panelMessage.SetActive(true);
                     iapCafeBazar.controller.txtPanelMessage.text = "تبلیغات بنري بازي حذف شد";
                     iapCafeBazar.controller.videoAds.panelNoAds.SetActive(false);
-                    iapCafeBazar.controller.parkingManager.gameObject.SetActive(true);
+                    iapCafeBazar.controller.parkingManager.EnableCarInPark();
                 }
                 else {
                     iapCafeBazar.controller.panelWait.SetActive(true);

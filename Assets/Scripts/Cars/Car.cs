@@ -73,7 +73,7 @@ public class Car : MonoBehaviour
                                     if (((unlockedLevel + 1) % 7 == 0))
                                     {
                                         controller.cafeIntent.panelComment.SetActive(true);
-                                        controller.parkingManager.gameObject.SetActive(false);
+                                        controller.parkingManager.DisableCarInPark();
                                     }
                                 }
                                 nearPlace.animLight.Play("Merge");

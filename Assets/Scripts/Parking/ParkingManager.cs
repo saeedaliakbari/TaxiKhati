@@ -21,7 +21,7 @@ public class ParkingManager : MonoBehaviour
     public Button btnCarSpeed, btnOfflineEarning, btnExchangeDecline;
     public Image imgPeykanOfflineEarn, imgCarOfflienEarn, imgPeykanSpeed, imgCarSpeed, imgPeykanExchangeDecline, imgCarExchangeDecline;
     public Text txtCarSpeed, txtSpeedNew, txtSpeedOld, txtLevelSpeed, txtOfflineEarning, txtOfflineEarnNew, txtOfflineEarnOld, txtLevelOfflineEarn, txtExchangeDecline, txtExchangeDeclineNew, txtExchangeDeclineOld, txtLevelExchangeDecline;
-    public GameObject objCarOfflineEarn, objCarSpeed, objCarExchangeDecline,lblNewOffline,lblNewSpeed,lblNewExchangeDecline;
+    public GameObject objCarOfflineEarn, objCarSpeed, objCarExchangeDecline, lblNewOffline, lblNewSpeed, lblNewExchangeDecline;
     public void SpawnPlaces()
     {//با توجه به تعداد مکان ها ، پارکینگ ها را ایجاد می کند
         int numPlaces = ObscuredPrefs.GetInt("num_of_places", 4);
@@ -329,6 +329,27 @@ public class ParkingManager : MonoBehaviour
         }
     }
 
+    public void DisableCarInPark()
+    {
+        foreach (ParkingPlace pl in places)
+        {
+            if (!pl.IsEmpty())
+            {
+                pl.transform.GetChild(1).GetComponent<Collider2D>().enabled = false;
+            }
+        }
+    }
+
+    public void EnableCarInPark()
+    {
+        foreach (ParkingPlace pl in places)
+        {
+            if (!pl.IsEmpty())
+            {
+                pl.transform.GetChild(1).GetComponent<Collider2D>().enabled = true;
+            }
+        }
+    }
 }
 [System.Serializable]
 public class ParkingPosManage
