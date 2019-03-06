@@ -74,6 +74,9 @@ public class Controller : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        ///
+        ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem") + 100000);
+        ///
         ObscuredPrefs.SetInt("countCloseShop", 1);
         ConfigBatch();
         iTween.dimensionMode = iTween.DimensionMode.mode2D;//دوبعدی کردن حرکت ماشین
