@@ -13,7 +13,7 @@ public class PlayerLevel : MonoBehaviour
 
     public Move myMove;
 
-    public GameObject moveObj;
+    public GameObject moveObj, NewIteamPanel;
     // Use this for initialization
     void Start()
     {
@@ -45,80 +45,80 @@ public class PlayerLevel : MonoBehaviour
     }
     private void CheckLevel(int level, bool first)
     {
-        if (level > 6)
+        if (!first)
         {
-            btnRank.SetActive(true);
-            if (first)
+            if (level > 6)
             {
+                btnRank.SetActive(true);
+            }
+            if (level > 7)
+            {
+                btnQuest.SetActive(true);
+            }
+            if (level > 8)
+            {
+                btnWheel.SetActive(true);
+            }
 
-                Debug.Log("______________________________________________________________________");
+            if (level > 9)
+            {
+                btnTimeBoost.SetActive(true);
+            }
+
+            if (level > 10)
+            {
+                btnBoosters.SetActive(true);
+            }
+        }
+
+        else
+        {
+
+            if (level == 7)
+            {
                 myMove.num = 0;
                 myMove.target = btnRank.transform;
                 myMove.TargetObj = btnRank;
+                NewIteamPanel.SetActive(true);
                 moveObj.SetActive(true);
+                btnRank.SetActive(true);
             }
-
-
-
-        }
-
-        if (level > 7)
-        {
-            if (first)
+            if (level == 8)
             {
-                Debug.Log("_____________________________7_________________________________________");
                 myMove.num = 1;
                 myMove.target = btnQuest.transform;
                 myMove.TargetObj = btnQuest;
+                NewIteamPanel.SetActive(true);
                 moveObj.SetActive(true);
-
+                btnQuest.SetActive(true);
             }
-
-            btnQuest.SetActive(true);
-
-        }
-
-        if (level > 8)
-        {
-            if (first)
+            if (level == 9)
             {
-                Debug.Log("_____________________________8_________________________________________");
-                myMove.num = 1;
-                myMove.target = btnQuest.transform;
-                myMove.TargetObj = btnQuest;
+                myMove.num = 2;
+                myMove.target = btnWheel.transform;
+                myMove.TargetObj = btnWheel;
+                btnWheel.SetActive(true);
+                NewIteamPanel.SetActive(true);
                 moveObj.SetActive(true);
             }
-
-            btnWheel.SetActive(true);
-
-        }
-
-        if (level > 9)
-        {
-            if (first)
+            if (level == 10)
             {
-                Debug.Log("_____________________________9_________________________________________");
-                myMove.num = 1;
-                myMove.target = btnQuest.transform;
-                myMove.TargetObj = btnQuest;
+                myMove.num = 3;
+                myMove.target = btnTimeBoost.transform;
+                myMove.TargetObj = btnTimeBoost;
+                NewIteamPanel.SetActive(true);
                 moveObj.SetActive(true);
+                btnTimeBoost.SetActive(true);
             }
-
-            btnTimeBoost.SetActive(true);
-
-        }
-        if (level > 10)
-        {
-            if (first)
+            if (level == 11)
             {
-                Debug.Log("_____________________________10_________________________________________");
-                myMove.num = 1;
-                myMove.target = btnQuest.transform;
-                myMove.TargetObj = btnQuest;
+                myMove.num = 4;
+                myMove.target = btnBoosters.transform;
+                myMove.TargetObj = btnBoosters;
+                btnBoosters.SetActive(true);
+                NewIteamPanel.SetActive(true);
                 moveObj.SetActive(true);
             }
-
-            btnBoosters.SetActive(true);
 
         }
     }
