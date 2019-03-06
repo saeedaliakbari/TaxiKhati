@@ -58,9 +58,9 @@ public class Controller : MonoBehaviour
         instance = this;
         ObscuredPrefs.SetInt("mainAchiv16", ObscuredPrefs.GetInt("mainAchiv16", 0) + 1);
         achivmentManager.OpenPanel();
-        ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem", 5));
-        ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 25000));
-        ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 25000));
+        ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem", 5) + 1000);
+        ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 21000));
+        ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 21000));
         ObscuredPrefs.SetDouble("token", ObscuredPrefs.GetDouble("token", 0));
         SetText();
 
@@ -611,7 +611,7 @@ public class Controller : MonoBehaviour
         }
         if (time >= 180 && slotManager.EarningPerSec > 0)
         {
-            
+
             offEarning.txtCoin = txtCoin;
             offEarning.ShowEarning(time, offlineEarningRate);//با توجه به نرخی که می ذاریم مقدار سکه را زیاد می کنیم
         }
@@ -659,6 +659,17 @@ public class Controller : MonoBehaviour
             }
         }
     }
+    //public IEnumerator IEPlus(double plus, double now, Text txt)
+    //{
+    //    double nowPlus = 0;
+    //    while (nowPlus <= plus)
+    //    {
+    //        nowPlus += 1;
+    //        txt.text = (now + nowPlus).ToString();
+    //        yield return new WaitForSeconds(0.1F);
+    //    }
+    //    txt.text=ObscuredDouble.
+    //}
 }
 [System.Serializable]
 public class RangeLevel

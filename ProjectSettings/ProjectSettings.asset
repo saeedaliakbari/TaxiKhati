@@ -40,7 +40,7 @@ PlayerSettings:
     height: 1
   m_SplashScreenLogos:
   - logo: {fileID: 21300000, guid: 94647c1eac8925044acc920489576112, type: 3}
-    duration: 2
+    duration: 3
   m_VirtualRealitySplashScreen: {fileID: 0}
   m_HolographicTrackingLossScreen: {fileID: 0}
   defaultScreenWidth: 1024
@@ -245,7 +245,7 @@ PlayerSettings:
   AndroidTargetDevice: 3
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: E:/Baloot Games/TaxiKhati/TaxiKhati/taxikhati.keystore
+  AndroidKeystoreName: E:/TaxiKhati/taxikhati.keystore
   AndroidKeyaliasName: taxikhati
   AndroidTVCompatibility: 1
   AndroidIsGame: 1
