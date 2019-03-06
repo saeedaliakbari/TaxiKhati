@@ -45468,6 +45468,7 @@ MonoBehaviour:
   btnWheelVideo: {fileID: 851121599}
   btnWheelGem: {fileID: 1837071923}
   objTimeVideo: {fileID: 1707247628}
+  lblFree: {fileID: 0}
   goWheel: {fileID: 1418016035}
   audioWheel: {fileID: 0}
   audioGift: {fileID: 0}
@@ -52790,6 +52791,8 @@ MonoBehaviour:
   btnTimeBoost: {fileID: 188366903}
   btnBoosters: {fileID: 397907959}
   controller: {fileID: 1085018823}
+  myMove: {fileID: 0}
+  moveObj: {fileID: 0}
 --- !u!1 &1254539233
 GameObject:
   m_ObjectHideFlags: 0
@@ -80159,6 +80162,9 @@ MonoBehaviour:
   objCarOfflineEarn: {fileID: 1621681935}
   objCarSpeed: {fileID: 1168908917}
   objCarExchangeDecline: {fileID: 1758450652}
+  lblNewOffline: {fileID: 0}
+  lblNewSpeed: {fileID: 0}
+  lblNewExchangeDecline: {fileID: 0}
 --- !u!1 &1927144854
 GameObject:
   m_ObjectHideFlags: 0
@@ -86798,6 +86804,7 @@ MonoBehaviour:
   imgUnselectOther: {fileID: 645521710}
   objTaxi: {fileID: 2137950173}
   objOther: {fileID: 1198312765}
+  objLblNews: []
   clrSel: {r: 0.3019608, g: 0.24313726, b: 0.07058824, a: 1}
   clrUnSel: {r: 0.07058824, g: 0.14901961, b: 0.28627452, a: 1}
   txtTaxi: {fileID: 1246437677}
