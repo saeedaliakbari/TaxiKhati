@@ -127,10 +127,10 @@ public class VideoAds : MonoBehaviour
         }
         else
         {
-            controller.panelMessage.SetActive(true);
-            controller.txtPanelMessage.text = "در حال حاضر امکان نمایش ویدئو وجود ندارد";
-            controller.parkingManager.DisableCarInPark();
-            Debug.Log("Error");
+            //controller.panelMessage.SetActive(true);
+            //controller.txtPanelMessage.text = "در حال حاضر امکان نمایش ویدئو وجود ندارد";
+            //controller.parkingManager.DisableCarInPark();
+            //Debug.Log("Error");
             specialOffer.btnGem.interactable = true;
             specialOffer.btnVideo.interactable = true;
             //panelError.SetActive(true);
@@ -175,15 +175,15 @@ public class VideoAds : MonoBehaviour
                 }
             );
         }
-        else
-        {
-            controller.panelMessage.SetActive(true);
-            controller.txtPanelMessage.text = "در حال حاضر امکان نمایش ویدئو وجود ندارد";
-            controller.parkingManager.DisableCarInPark();
-            Debug.Log("Error");
-            //panelError.SetActive(true);
-            //txtPanelError.text = "خطا در لود ویدئو";
-        }
+        //else
+        //{
+        //    controller.panelMessage.SetActive(true);
+        //    controller.txtPanelMessage.text = "در حال حاضر امکان نمایش ویدئو وجود ندارد";
+        //    controller.parkingManager.DisableCarInPark();
+        //    Debug.Log("Error");
+        //    //panelError.SetActive(true);
+        //    //txtPanelError.text = "خطا در لود ویدئو";
+        //}
     }
     private void GiftShopCar(int index)
     {
@@ -228,15 +228,15 @@ public class VideoAds : MonoBehaviour
                 }
             );
         }
-        else
-        {
-            Debug.Log("Error");
-            controller.panelMessage.SetActive(true);
-            controller.txtPanelMessage.text = "در حال حاضر امکان نمایش ویدئو وجود ندارد";
-            controller.parkingManager.DisableCarInPark();
-            //panelError.SetActive(true);
-            //txtPanelError.text = "خطا در لود ویدئو";
-        }
+        //else
+        //{
+        //    Debug.Log("Error");
+        //    controller.panelMessage.SetActive(true);
+        //    controller.txtPanelMessage.text = "در حال حاضر امکان نمایش ویدئو وجود ندارد";
+        //    controller.parkingManager.DisableCarInPark();
+        //    //panelError.SetActive(true);
+        //    //txtPanelError.text = "خطا در لود ویدئو";
+        //}
     }
     private void GiftCarUp(bool status)
     {
@@ -294,15 +294,15 @@ public class VideoAds : MonoBehaviour
                 }
             );
         }
-        else
-        {
-            Debug.Log("Error");
-            controller.panelMessage.SetActive(true);
-            controller.txtPanelMessage.text = "در حال حاضر امکان نمایش ویدئو وجود ندارد";
-            controller.parkingManager.DisableCarInPark();
-            //panelError.SetActive(true);
-            //txtPanelError.text = "خطا در لود ویدئو";
-        }
+        //else
+        //{
+        //    Debug.Log("Error");
+        //    controller.panelMessage.SetActive(true);
+        //    controller.txtPanelMessage.text = "در حال حاضر امکان نمایش ویدئو وجود ندارد";
+        //    controller.parkingManager.DisableCarInPark();
+        //    //panelError.SetActive(true);
+        //    //txtPanelError.text = "خطا در لود ویدئو";
+        //}
     }
     #endregion
     #region Btn Speeed X2
@@ -341,13 +341,13 @@ public class VideoAds : MonoBehaviour
                 }
             );
         }
-        else
-        {
-            controller.panelMessage.SetActive(true);
-            controller.txtPanelMessage.text = "در حال حاضر امکان نمایش ویدئو وجود ندارد";
-            controller.parkingManager.DisableCarInPark();
-            Debug.Log("Error");
-        }
+        //else
+        //{
+        //    controller.panelMessage.SetActive(true);
+        //    controller.txtPanelMessage.text = "در حال حاضر امکان نمایش ویدئو وجود ندارد";
+        //    controller.parkingManager.DisableCarInPark();
+        //    Debug.Log("Error");
+        //}
     }
     private void GiftSpeedX2()
     {
@@ -387,13 +387,13 @@ public class VideoAds : MonoBehaviour
                 }
             );
         }
-        else
-        {
-            controller.panelMessage.SetActive(true);
-            controller.txtPanelMessage.text = "در حال حاضر امکان نمایش تبلیغ وجود ندارد";
-            controller.parkingManager.DisableCarInPark();
-            Debug.Log("Error");
-        }
+        //else
+        //{
+        //    controller.panelMessage.SetActive(true);
+        //    controller.txtPanelMessage.text = "در حال حاضر امکان نمایش تبلیغ وجود ندارد";
+        //    controller.parkingManager.DisableCarInPark();
+        //    Debug.Log("Error");
+        //}
     }
     private void GiftBtnCloseShopCar()
     {

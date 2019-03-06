@@ -29,7 +29,7 @@ public class Controller : MonoBehaviour
     public MergeCar mergeCar;
     public LevelUpBonus levelBonus;
     public GameObject deleteBin, panelMessage, panelShopGem, btnVip, btnGoToVipPanelMessage;
-    public GameObject coinEffectPrefab, panelSplash, panelWait;
+    public GameObject coinEffectPrefab, panelSplash, panelWait, panelNoGem;
     public OfflineEraning offEarning;
     public Text txtGem;
     public TrimNumberText txtCoin, txtCoinTop;
@@ -231,16 +231,19 @@ public class Controller : MonoBehaviour
         }
         else
         {
-            txtError.text = "مقدار کافی " + (useGem ? "الماس " : "سکه ") + "ندارید!";
             if (useGem)
             {
-                panelShopGem.SetActive(true);
+                parkingManager.DisableCarInPark();
+                panelNoGem.SetActive(true);
             }
-            txtError.gameObject.SetActive(true);
-            Timer.Schedule(this, 3f, () =>
-            {
-                txtError.gameObject.SetActive(false);
-            });
+            else {
+                txtError.text = "مقدار کافی سکه ندارید! ";
+                txtError.gameObject.SetActive(true);
+                Timer.Schedule(this, 3f, () =>
+                {
+                    txtError.gameObject.SetActive(false);
+                });
+            }
             //Debug.LogError("Not enough " + (useGem ? "gem" : "coins") + "! YourCoin: " + ObscuredPrefs.GetDouble("coin", 5000));
             //Toast.instance.ShowMessage("Not enough " + (useRuby ? "rubies" : "coins") + "!");
         }

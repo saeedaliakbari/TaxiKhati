@@ -77,6 +77,8 @@ public class SpecialOffer : MonoBehaviour
         }
         else
         {
+            controller.panelNoGem.SetActive(true);
+            controller.parkingManager.DisableCarInPark();
             Debug.Log("Gem<5");
         }
     }

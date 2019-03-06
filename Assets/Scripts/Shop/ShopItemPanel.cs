@@ -45,12 +45,13 @@ public class ShopItemPanel : MonoBehaviour
         }
         else
         {
-            controller.txtError.text = "به مقدار کافی الماس ندارید";
-            controller.txtError.gameObject.SetActive(true);
-            Timer.Schedule(this, 3f, () =>
-            {
-                controller.txtError.gameObject.SetActive(false);
-            });
+            //controller.txtError.text = "به مقدار کافی الماس ندارید";
+            controller.panelNoGem.SetActive(true);
+            controller.parkingManager.DisableCarInPark();
+            //Timer.Schedule(this, 3f, () =>
+            //{
+            //    controller.txtError.gameObject.SetActive(false);
+            //});
         }
     }
 }
