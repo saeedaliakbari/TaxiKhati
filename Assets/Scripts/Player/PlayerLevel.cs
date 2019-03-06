@@ -10,6 +10,10 @@ public class PlayerLevel : MonoBehaviour
     public Levels[] levelsInfo;
     public GameObject btnRank, btnQuest, btnWheel, btnTimeBoost, btnBoosters;
     public Controller controller;
+
+    public Move myMove;
+
+    public GameObject moveObj;
     // Use this for initialization
     void Start()
     {
@@ -43,29 +47,79 @@ public class PlayerLevel : MonoBehaviour
     {
         if (level > 6)
         {
+            btnRank.SetActive(true);
             if (first)
             {
 
+                Debug.Log("______________________________________________________________________");
+                myMove.num = 0;
+                myMove.target = btnRank.transform;
+                myMove.TargetObj = btnRank;
+                moveObj.SetActive(true);
             }
-            else {
-                btnRank.SetActive(true);
-            }
+
+
+
         }
+
         if (level > 7)
         {
+            if (first)
+            {
+                Debug.Log("_____________________________7_________________________________________");
+                myMove.num = 1;
+                myMove.target = btnQuest.transform;
+                myMove.TargetObj = btnQuest;
+                moveObj.SetActive(true);
+
+            }
+
             btnQuest.SetActive(true);
+
         }
+
         if (level > 8)
         {
+            if (first)
+            {
+                Debug.Log("_____________________________8_________________________________________");
+                myMove.num = 1;
+                myMove.target = btnQuest.transform;
+                myMove.TargetObj = btnQuest;
+                moveObj.SetActive(true);
+            }
+
             btnWheel.SetActive(true);
+
         }
+
         if (level > 9)
         {
+            if (first)
+            {
+                Debug.Log("_____________________________9_________________________________________");
+                myMove.num = 1;
+                myMove.target = btnQuest.transform;
+                myMove.TargetObj = btnQuest;
+                moveObj.SetActive(true);
+            }
+
             btnTimeBoost.SetActive(true);
+
         }
         if (level > 10)
         {
+            if (first)
+            {
+                Debug.Log("_____________________________10_________________________________________");
+                myMove.num = 1;
+                myMove.target = btnQuest.transform;
+                myMove.TargetObj = btnQuest;
+                moveObj.SetActive(true);
+            }
+
             btnBoosters.SetActive(true);
+
         }
     }
 }
