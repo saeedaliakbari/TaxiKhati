@@ -21,7 +21,7 @@ public class ParkingManager : MonoBehaviour
     public Button btnCarSpeed, btnOfflineEarning, btnExchangeDecline;
     public Image imgPeykanOfflineEarn, imgCarOfflienEarn, imgPeykanSpeed, imgCarSpeed, imgPeykanExchangeDecline, imgCarExchangeDecline;
     public Text txtCarSpeed, txtSpeedNew, txtSpeedOld, txtLevelSpeed, txtOfflineEarning, txtOfflineEarnNew, txtOfflineEarnOld, txtLevelOfflineEarn, txtExchangeDecline, txtExchangeDeclineNew, txtExchangeDeclineOld, txtLevelExchangeDecline;
-    public GameObject objCarOfflineEarn, objCarSpeed, objCarExchangeDecline;
+    public GameObject objCarOfflineEarn, objCarSpeed, objCarExchangeDecline,lblNewOffline,lblNewSpeed,lblNewExchangeDecline;
     public void SpawnPlaces()
     {//با توجه به تعداد مکان ها ، پارکینگ ها را ایجاد می کند
         int numPlaces = ObscuredPrefs.GetInt("num_of_places", 4);
@@ -106,6 +106,7 @@ public class ParkingManager : MonoBehaviour
     }
     private void CheckCarSpeedTycoon(int[] carsLevel)
     {
+        lblNewSpeed.SetActive(false);
         int levelSpeed = ObscuredPrefs.GetInt("carSpeedTycoonLevel", 0);
         txtCarSpeed.text = "سطح " + (levelSpeed + 1);
         imgCarSpeed.sprite = controller.activeCar[carSpeedTycoonBoosts.level[levelSpeed] - 1];
@@ -119,6 +120,7 @@ public class ParkingManager : MonoBehaviour
             txtSpeedNew.gameObject.SetActive(false);
             imgPeykanSpeed.gameObject.SetActive(false);
             btnCarSpeed.gameObject.SetActive(false);
+            lblNewSpeed.SetActive(false);
             //Debug.Log("FULL ");
         }
         else {
@@ -126,6 +128,7 @@ public class ParkingManager : MonoBehaviour
             {
                 //Debug.Log("Get Gift" + earningOfflineTycoonBoosts.level[ObscuredPrefs.GetInt("offlineEarnTycoonLevel", 0)]);
                 btnCarSpeed.interactable = true;
+                lblNewSpeed.SetActive(true);
             }
         }
     }
@@ -139,6 +142,7 @@ public class ParkingManager : MonoBehaviour
     }
     private void CheckOfflineEarningTycoon(int[] carsLevel)
     {
+        lblNewOffline.SetActive(false);
         int levelOfflineEarning = ObscuredPrefs.GetInt("offlineEarnTycoonLevel", 0);
         txtOfflineEarning.text = "سطح " + (levelOfflineEarning + 1);
         //Debug.Log("CheckOfflineEarningTycoon LEVEL CAR :" + earningOfflineTycoonBoosts.level[levelOfflineEarning]);
@@ -153,6 +157,7 @@ public class ParkingManager : MonoBehaviour
             txtOfflineEarnNew.gameObject.SetActive(false);
             imgPeykanOfflineEarn.gameObject.SetActive(false);
             btnOfflineEarning.gameObject.SetActive(false);
+            lblNewOffline.SetActive(false);
             //Debug.Log("FULL ");
         }
         else {
@@ -160,6 +165,7 @@ public class ParkingManager : MonoBehaviour
             {
                 //Debug.Log("Get Gift" + earningOfflineTycoonBoosts.level[ObscuredPrefs.GetInt("offlineEarnTycoonLevel", 0)]);
                 btnOfflineEarning.interactable = true;
+                lblNewOffline.SetActive(true);
             }
         }
     }
@@ -173,6 +179,7 @@ public class ParkingManager : MonoBehaviour
     }
     private void CheckExchangeRateDecline(int[] carsLevel)
     {
+        lblNewExchangeDecline.SetActive(false);
         int levelExchangeDecline = ObscuredPrefs.GetInt("exchangeDeclineTycoonLevel", 0);
         txtExchangeDecline.text = "سطح " + (levelExchangeDecline + 1);
         //Debug.Log("CheckExchangeRateDecline LEVEL CAR :" + exchangeDeclineTycoonBoosts.level[levelExchangeDecline]);
@@ -188,12 +195,14 @@ public class ParkingManager : MonoBehaviour
             imgPeykanExchangeDecline.gameObject.SetActive(false);
             btnExchangeDecline.gameObject.SetActive(false);
             //Debug.Log("FULL ");
+            lblNewExchangeDecline.SetActive(false);
         }
         else {
             if (carsLevel[exchangeDeclineTycoonBoosts.level[levelExchangeDecline] - 1] >= 3)
             {
                 //Debug.Log("Get Gift" + earningOfflineTycoonBoosts.level[ObscuredPrefs.GetInt("offlineEarnTycoonLevel", 0)]);
                 btnExchangeDecline.interactable = true;
+                lblNewExchangeDecline.SetActive(true);
             }
         }
     }

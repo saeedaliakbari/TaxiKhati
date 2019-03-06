@@ -86,6 +86,7 @@ public class Car : MonoBehaviour
                                 ObscuredPrefs.SetInt("unlocked_car", level + 1);
                                 ObscuredPrefs.SetInt("curr_car_index", controller.lastSalableCoreLevel[ObscuredPrefs.GetInt("unlocked_car", 1) - 1] - 1);
                                 controller.ShowMergeNewCar(level - 1);//در صورتی که ماشین جدید باز شود پنل مرج باز می شود که مرج انجام می شود
+                                controller.UpdatePrice();//برای اینکه باتن کور آپدیت شود
                             }
                             else {//در صورتی که ماشین لول جدید باز نشود با مرج و ماشین های قبلی تولید شود وقت صدای مرج پخش می شود
                                 audioSource.clip = combindCar;

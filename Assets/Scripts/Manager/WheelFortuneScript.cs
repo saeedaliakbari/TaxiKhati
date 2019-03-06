@@ -17,7 +17,7 @@ public class WheelFortuneScript : MonoBehaviour
 
     public Text txtNumVideoWheel, txtTimeRemain;
     public Button btnWheelVideo, btnWheelGem;
-    public GameObject objTimeVideo;
+    public GameObject objTimeVideo, lblFree;
     public GameObject goWheel;
     public AudioSource audioWheel, audioGift;
     private string[] timeWheel = { "timeWheel1", "timeWheel2", "timeWheel3" };
@@ -27,6 +27,7 @@ public class WheelFortuneScript : MonoBehaviour
     }
     private void CheckVideoTime()//این تابع در ابتدا مقادیر را داخل تکست باکس ها ست می کند و سپس با توجه به زمان فعلی و اینکه تعداد شانس ها کمتر از 3 باشد زمان شانس بعدی را می سنجد تا اضافه شود
     {
+        CheckLblFree();
         //Debug.Log("CheckVideoTime >" + ObscuredPrefs.GetInt("VideoWheel", 3));
         txtNumVideoWheel.text = ObscuredPrefs.GetInt("VideoWheel", 3).ToString() + "/3";
         string[] arr = ObscuredPrefs.GetString("TimeVideoWheel", "1992,11,30,00,00,00").Split(',');
@@ -79,6 +80,7 @@ public class WheelFortuneScript : MonoBehaviour
     {
         Debug.Log("GiftWheelWithVideo");
         ObscuredPrefs.SetInt("VideoWheel", ObscuredPrefs.GetInt("VideoWheel", 3) - 1);
+        CheckLblFree();
         Debug.Log("GiftWheelWithVideo" + ObscuredPrefs.GetInt("VideoWheel", 3));
         if (ObscuredPrefs.GetString("TimeVideoWheel", "NotSet") == "NotSet")
         {
@@ -94,6 +96,7 @@ public class WheelFortuneScript : MonoBehaviour
     IEnumerator IETimerVideoWheel(float deltaTime)//تابع تایمر ویدئو
     {
         Debug.Log("Start Remain Time :" + deltaTime);
+        objTimeVideo.SetActive(true);
         for (; deltaTime > 0; deltaTime -= 1f)
         {
             int s = (int)(deltaTime % 60);
@@ -265,6 +268,17 @@ public class WheelFortuneScript : MonoBehaviour
             ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 0) + (videoAds.controller.slotManager.earnPerSec * 4 * 60 * 60));
             videoAds.controller.SetText();
             videoAds.controller.txtPanelMessage.text = "به اندازه 4 ساعت درآمد فعلی  به شما پرداخت شد";
+        }
+    }
+    public void CheckLblFree()
+    {
+        if (ObscuredPrefs.GetInt("VideoWheel", 3) > 0)
+        {
+            lblFree.SetActive(true);
+        }
+        else
+        {
+            lblFree.SetActive(false);
         }
     }
 }

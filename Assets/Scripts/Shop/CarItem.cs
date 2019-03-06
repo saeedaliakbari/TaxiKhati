@@ -10,7 +10,8 @@ public class CarItem : MonoBehaviour
     public Text txtCoin, txtGem, txtName, txtOff;
     public Button btnBuyCoin, btnBuyGem, btnVideo;
     public Controller controller;
-
+    [HideInInspector]
+    public GameObject objLblNew;
     public void UpdateCarItem(int i, int lastSalableLevel, int defrenceLastSalableLevel)
     {//وضعیت ماشین را بروز رسانی می کند در فروشگاه
         bool visible = i < lastSalableLevel;
@@ -33,12 +34,14 @@ public class CarItem : MonoBehaviour
         imgLock.gameObject.SetActive(!visible);
         if (video && ObscuredPrefs.GetInt("mergeCarForVideo", 1) >= 10)
         {
+            objLblNew.SetActive(visible);
             btnVideo.gameObject.SetActive(visible);
             btnBuyCoin.gameObject.SetActive(false);
             btnBuyGem.gameObject.SetActive(false);
         }
         else
         {
+            objLblNew.SetActive(false);
             btnVideo.gameObject.SetActive(false);
             btnBuyCoin.gameObject.SetActive(coin && visible);
             btnBuyGem.gameObject.SetActive(!coin && visible);

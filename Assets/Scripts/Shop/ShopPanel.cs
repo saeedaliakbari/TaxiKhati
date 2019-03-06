@@ -11,6 +11,7 @@ public class ShopPanel : MonoBehaviour
     public Image imgSelectTaxi, imgUnselectTaxi;
     public Image imgSelectOther, imgUnselectOther;
     public GameObject objTaxi, objOther;
+    public GameObject[] objLblNews;
     public Color clrSel, clrUnSel;
     public Outline txtTaxi, txtOther;
     public ScrollRect scrCar;
@@ -47,6 +48,10 @@ public class ShopPanel : MonoBehaviour
     }
     public void UpdateCarItems()
     {
+        for (int i = 0; i < carItems.Length; i++)
+        {
+            carItems[i].objLblNew = objLblNews[i];
+        }
         int unloacked = ObscuredPrefs.GetInt("unlocked_car", 1);
         //Debug.Log("unloacked" + unloacked + "lastSalableLevel>" + controller.lastSalableLevel[unloacked - 1]);
         carItems[0].UpdateCarItem(0, controller.lastSalableLevel[unloacked - 1], 0);
