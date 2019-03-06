@@ -253,7 +253,7 @@ public class BazaarIABEventListener : MonoBehaviour
                 {
                     ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem") + iapCafeBazar.gem[i]);
                     iapCafeBazar.controller.panelWait.SetActive(false);
-                    iapCafeBazar.controller.txtPanelMessage.text = "تبریک\n" + iapCafeBazar.gem[i] + " جم اضافه شد";
+                    iapCafeBazar.controller.txtPanelMessage.text = "تبریک\n" + iapCafeBazar.gem[i] + " الماس اضافه شد";
                     iapCafeBazar.controller.panelMessage.SetActive(true);
                     iapCafeBazar.controller.SetText();
                 }

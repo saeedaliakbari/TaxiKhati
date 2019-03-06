@@ -58,7 +58,7 @@ public class SpeedPanel : MonoBehaviour
         }
         else
         {
-            controller.txtError.text = "به مقدار کافی جم ندارید";
+            controller.txtError.text = "به مقدار کافی الماس ندارید";
             controller.txtError.gameObject.SetActive(true);
             Timer.Schedule(this, 3f, () =>
             {
