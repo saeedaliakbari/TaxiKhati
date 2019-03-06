@@ -14,7 +14,7 @@ public class PlayerLevel : MonoBehaviour
     void Start()
     {
         SetEleman();
-        CheckLevel(ObscuredPrefs.GetInt("Level", 1));
+        CheckLevel(ObscuredPrefs.GetInt("Level", 1), false);
     }
     public void UpdateProgress()
     {
@@ -27,7 +27,7 @@ public class PlayerLevel : MonoBehaviour
             ObscuredPrefs.SetInt("mainAchiv12", ObscuredPrefs.GetInt("Level", 1));
             ObscuredPrefs.SetInt("mainAchiv13", ObscuredPrefs.GetInt("Level", 1));
             controller.achivmentManager.OpenPanel();
-            CheckLevel(ObscuredPrefs.GetInt("Level", 1));
+            CheckLevel(ObscuredPrefs.GetInt("Level", 1), true);
         }
         SetEleman();
     }
@@ -39,11 +39,17 @@ public class PlayerLevel : MonoBehaviour
         //Debug.Log("XP: " + ObscuredPrefs.GetInt("Xp", 0) + "MaxXP:" + levelsInfo[ObscuredPrefs.GetInt("Level", 1) - 1].maxXp + ">>" + slider);
         imgProgress.fillAmount = slider;
     }
-    private void CheckLevel(int level)
+    private void CheckLevel(int level, bool first)
     {
         if (level > 6)
         {
-            btnRank.SetActive(true);
+            if (first)
+            {
+
+            }
+            else {
+                btnRank.SetActive(true);
+            }
         }
         if (level > 7)
         {
