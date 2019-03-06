@@ -29,22 +29,23 @@ public class ShopPanel : MonoBehaviour
         //sbrCar.value = scrCar.verticalNormalizedPosition;
         //if (unloacked > 22)
         //{
-        //    Debug.Log("def=2>" + scrCar.verticalNormalizedPosition + ">" + sbrCar.value);
+        //Debug.Log(unloacked + "> " + scrCar.verticalNormalizedPosition);
         //    scrCar.verticalNormalizedPosition = 1 - ((unloacked - 7) * 0.0215f);
         //    sbrCar.value = scrCar.verticalNormalizedPosition;
         //    Debug.Log("def=2>" + scrCar.verticalNormalizedPosition + ">" + sbrCar.value);
         //}
         //else 
-        if (unloacked > 12)
+        if (unloacked >6)
         {
-            scrCar.verticalNormalizedPosition = 1 - ((unloacked - 6) * 0.0215f);
+            scrCar.verticalNormalizedPosition = 1 - ((unloacked - 6) * 0.0213f);
             //sbrCar.value = scrCar.verticalNormalizedPosition;
         }
-        else if (unloacked > 6)
-        {
-            scrCar.verticalNormalizedPosition = 1 - ((unloacked - 5) * 0.0215f);
-            //sbrCar.value = scrCar.verticalNormalizedPosition;
-        }
+        //else if (unloacked > 6)
+        //{
+        //    scrCar.verticalNormalizedPosition = 1 - ((unloacked - 5) * 0.0215f);
+        //    //sbrCar.value = scrCar.verticalNormalizedPosition;
+        //}
+        //Debug.Log(unloacked + "> " + scrCar.verticalNormalizedPosition);
     }
     public void UpdateCarItems()
     {

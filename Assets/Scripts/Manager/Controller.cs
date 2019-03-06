@@ -58,7 +58,7 @@ public class Controller : MonoBehaviour
         instance = this;
         ObscuredPrefs.SetInt("mainAchiv16", ObscuredPrefs.GetInt("mainAchiv16", 0) + 1);
         achivmentManager.OpenPanel();
-        ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem", 5) + 1000);
+        ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem", 5));
         ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 21000));
         ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 21000));
         ObscuredPrefs.SetDouble("token", ObscuredPrefs.GetDouble("token", 0));
@@ -209,7 +209,7 @@ public class Controller : MonoBehaviour
                 else
                     SpawnACar(index, parkPlace);
                 //}
-                //Debug.Log(price + "*((100+"+increaseRate[index] + ")/"+100 + ")====>>>"+ (price * ((100f + increaseRate[index]) / 100))+">>>>"+(System.Math.Round(price * ((100 + increaseRate[index]) / 100))));
+                //Debug.Log(price + "*((100+" + increaseRate[index] + ")/" + 100 + ")====>>>" + (price * ((100f + increaseRate[index]) / 100)) + ">>>>" + (System.Math.Round(price * ((100 + increaseRate[index]) / 100))));
                 double newPrice = System.Math.Round(price * ((100f + increaseRate[index]) / 100));//قیمت جدید را بدست می آورد
                 //Debug.Log("newPrice : " + newPrice);
                 if (!useGem)
@@ -622,7 +622,10 @@ public class Controller : MonoBehaviour
         GameObject eff = Instantiate(coinEffectPrefab, Vector3.zero, Quaternion.identity);
         eff.transform.localScale = Vector3.one;
         eff.transform.position = position;
-
+        Timer.Schedule(this, 1f, () =>
+        {
+            Destroy(eff);
+        });
     }
     public void GiftDaily()
     {

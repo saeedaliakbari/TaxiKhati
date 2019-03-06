@@ -94,7 +94,7 @@ public class CafeIntent : MonoBehaviour
                 if (bundle > bundleCodeVersion)
                 {
                     panelUpdate.SetActive(true);
-                    controller.parkingManager.gameObject.SetActive(false);
+                    controller.parkingManager.DisableCarInPark();
                     if (forceUpdate == 1)
                     {
                         btnClosePanelUpdate.SetActive(false);
@@ -119,7 +119,7 @@ public class CafeIntent : MonoBehaviour
             if (www.isDone)
             {
                 panelSendMessage.SetActive(false);
-                controller.parkingManager.gameObject.SetActive(true);
+                controller.parkingManager.EnableCarInPark();
                 PlayerPrefs.SetInt("comment", 1);
 
             }

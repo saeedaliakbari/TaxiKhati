@@ -23,6 +23,11 @@ public class GuideManager : MonoBehaviour
             btnBuyCar.SetActive(false);
             buyGuide.SetActive(false);
             mergeGuide.SetActive(true);
+            controller.parkingManager.EnableCarInPark();
+        }
+        else
+        {
+            controller.parkingManager.DisableCarInPark();
         }
     }
     public void MergeStep()

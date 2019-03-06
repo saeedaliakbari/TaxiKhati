@@ -212,7 +212,7 @@ public class BazaarIABEventListener : MonoBehaviour
                     iapCafeBazar.controller.panelMessage.SetActive(true);
                     iapCafeBazar.controller.txtPanelMessage.text = "تبلیغات بنري بازي حذف شد";
                     iapCafeBazar.controller.videoAds.panelNoAds.SetActive(false);
-                    iapCafeBazar.controller.parkingManager.gameObject.SetActive(true);
+                    iapCafeBazar.controller.parkingManager.EnableCarInPark();
                 }
                 else {
                     iapCafeBazar.controller.panelWait.SetActive(true);
@@ -253,7 +253,7 @@ public class BazaarIABEventListener : MonoBehaviour
                 {
                     ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem") + iapCafeBazar.gem[i]);
                     iapCafeBazar.controller.panelWait.SetActive(false);
-                    iapCafeBazar.controller.txtPanelMessage.text = "تبریک\n" + iapCafeBazar.gem[i] + " جم اضافه شد";
+                    iapCafeBazar.controller.txtPanelMessage.text = "تبریک\n" + iapCafeBazar.gem[i] + " الماس اضافه شد";
                     iapCafeBazar.controller.panelMessage.SetActive(true);
                     iapCafeBazar.controller.SetText();
                 }
