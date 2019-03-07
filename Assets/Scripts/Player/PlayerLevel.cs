@@ -77,7 +77,7 @@ public class PlayerLevel : MonoBehaviour
             if (level == 7)
             {
                 myMove.num = 0;
-                myMove.target = btnRank.transform;
+                //myMove.target = btnRank.transform;
                 myMove.TargetObj = btnRank;
                 NewIteamPanel.SetActive(true);
                 moveObj.SetActive(true);
@@ -86,7 +86,7 @@ public class PlayerLevel : MonoBehaviour
             if (level == 8)
             {
                 myMove.num = 1;
-                myMove.target = btnQuest.transform;
+                //myMove.target = btnQuest.transform;
                 myMove.TargetObj = btnQuest;
                 NewIteamPanel.SetActive(true);
                 moveObj.SetActive(true);
@@ -95,7 +95,7 @@ public class PlayerLevel : MonoBehaviour
             if (level == 9)
             {
                 myMove.num = 2;
-                myMove.target = btnWheel.transform;
+                //myMove.target = btnWheel.transform;
                 myMove.TargetObj = btnWheel;
                 btnWheel.SetActive(true);
                 NewIteamPanel.SetActive(true);
@@ -104,7 +104,7 @@ public class PlayerLevel : MonoBehaviour
             if (level == 10)
             {
                 myMove.num = 3;
-                myMove.target = btnTimeBoost.transform;
+                //myMove.target = btnTimeBoost.transform;
                 myMove.TargetObj = btnTimeBoost;
                 NewIteamPanel.SetActive(true);
                 moveObj.SetActive(true);
@@ -113,7 +113,7 @@ public class PlayerLevel : MonoBehaviour
             if (level == 11)
             {
                 myMove.num = 4;
-                myMove.target = btnBoosters.transform;
+                //myMove.target = btnBoosters.transform;
                 myMove.TargetObj = btnBoosters;
                 btnBoosters.SetActive(true);
                 NewIteamPanel.SetActive(true);

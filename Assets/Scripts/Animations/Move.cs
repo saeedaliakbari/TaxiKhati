@@ -6,6 +6,7 @@ public class Move : MonoBehaviour
 {//in code ra be har chizi bedahim be samt target ravane mishavad
 
     public Transform target;//target hadaf mibashad
+    public GameObject MoveTarget;
     public float speed;
     public Image MyImage;
     public GameObject TargetObj;
@@ -26,40 +27,44 @@ public class Move : MonoBehaviour
 
     private void OnEnable()
     {
+        MoveTarget.transform.position=new Vector3(TargetObj.transform.position.x,TargetObj.transform.position.y,TargetObj.transform.position.z);
+        target = MoveTarget.transform;
+       
+
         if (num == 0)
         {
             MyImage.sprite = cup.sprite;
-            cup.color = new Color(1, 1, 1, 0);
+            //cup.color = new Color(1, 1, 1, 0);
             NewIteamText.text = "رتبه بندی";
 
         }
         else if (num == 1)
         {
             MyImage.sprite = quest.sprite;
-            quest.color = new Color(1, 1, 1, 0);
+            //quest.color = new Color(1, 1, 1, 0);
             NewIteamText.text = "ماموریت";
         }
         else if (num == 2)
         {
             MyImage.sprite = whell.sprite;
-            whell.color = new Color(1, 1, 1, 0);
+            //whell.color = new Color(1, 1, 1, 0);
             NewIteamText.text = "گردونه شانس";
         }
         else if (num == 3)
         {
             MyImage.sprite = time.sprite;
-            time.color = new Color(1, 1, 1, 0);
+            //time.color = new Color(1, 1, 1, 0);
             NewIteamText.text = "سفر در زمان";
         }
         else
         {
             MyImage.sprite = tycoon.sprite;
-            tycoon.color = new Color(1, 1, 1, 0);
+            //tycoon.color = new Color(1, 1, 1, 0);
             NewIteamText.text = "شتاب دهنده";
         }
 
 
-
+        TargetObj.SetActive(false);
         MyImage.SetNativeSize();
         this.transform.position = new Vector3(0, 0, 0);
         //MyImage.transform.localScale=new Vector3();
@@ -76,6 +81,7 @@ public class Move : MonoBehaviour
         }
         else if (this.Arrived())
         {
+            TargetObj.SetActive(true);
             //this.transform.SetParent(target, true);
             if (num == 0)
             {
@@ -97,6 +103,8 @@ public class Move : MonoBehaviour
             {
                 tycoon.color = new Color(1, 1, 1, 1);
             }
+
+            speed = 0;
             this.gameObject.SetActive(false);
         }
         //speed = (HypotenuseLength(target.position.x, this.transform.position.x) + HypotenuseLength(target.position.y, this.transform.position.y));
@@ -110,7 +118,7 @@ public class Move : MonoBehaviour
 
     public void StartMove()
     {
-        speed = 75;
+        speed = 100;
     }
 
 
