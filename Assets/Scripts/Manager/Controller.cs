@@ -480,7 +480,7 @@ public class Controller : MonoBehaviour
     {
         if (ObscuredPrefs.GetString("username", "") == "")
         {
-            ObscuredPrefs.SetString("username", "تاکسی ران " + UnityEngine.Random.Range(100000000, 999999999));
+            ObscuredPrefs.SetString("username", "تاکسی ران " + UnityEngine.Random.Range(100000, 999999));
         }
         inputFieldName.text = ObscuredPrefs.GetString("username", "");
     }
@@ -674,7 +674,7 @@ public class Controller : MonoBehaviour
     }
     public IEnumerator IEClose(GameObject panel)
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds((20 / 60f));
         panel.SetActive(false);
     }
     public void CloseAnimSetting(GameObject panel)
@@ -683,7 +683,7 @@ public class Controller : MonoBehaviour
     }
     public IEnumerator IECloseAnimSetting(GameObject panel)
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds((15 / 60f));
         panel.SetActive(false);
     }
     //public IEnumerator IEPlus(double plus, double now, Text txt)

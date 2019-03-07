@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class UsersScripts : MonoBehaviour
 {
-    public GameObject panelWait, userRank, userRankMe, panelParentRanking;
+    public GameObject panelWait, userRank, userRankMe, panelParentRanking, btnRename;
     private List<GameObject> listRanking = new List<GameObject>();
     public UserRank myRank;
     public Controller controller;
@@ -95,6 +95,15 @@ public class UsersScripts : MonoBehaviour
                 myRank.txtRank.text = rankUser.ToString();
                 myRank.txtCoin.text = jsonBooks[0]["coin"].ToString();
                 myRank.txtName.text = ObscuredPrefs.GetString("username", "تاکسی ران");
+                float length = myRank.txtName.text.Length * myRank.txtName.fontSize * 0.75f + 30;
+                bool isLeft = true;
+                if (length/2  > 232)
+                {
+                    length = 232*2;
+                }
+                btnRename.transform.localPosition = new Vector3(isLeft ? -length / 2f : length / 2.5f, 5f);
+                //Debug.Log("length: " + length + "/ " + myRank.txtName.text.Length + "/ " + myRank.txtName.fontSize);
+                //Debug.Log(btnRename.transform.localPosition);
                 if (rankUser < 4)
                 {
                     myRank.txtRank.gameObject.SetActive(false);

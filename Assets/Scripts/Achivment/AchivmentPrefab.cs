@@ -37,13 +37,13 @@ public class AchivmentPrefab : MonoBehaviour
         }
         else if (ObscuredPrefs.GetInt(stringPrefs + id, 0) >= max)//unlock
         {
-            btnGet.interactable = true;
+            btnGet.gameObject.SetActive(true);
             controller.achivmentManager.lblNew.SetActive(true);
             listAchvDone.Add(gameObject);
         }
         else//lock
         {
-            btnGet.interactable = false;
+            btnGet.gameObject.SetActive(false);
             listAchv.Add(gameObject);
 
         }
