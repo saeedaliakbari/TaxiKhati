@@ -49778,6 +49778,7 @@ MonoBehaviour:
     type: 2}
   panelSplash: {fileID: 682656666}
   panelWait: {fileID: 845138326}
+  panelNoGem: {fileID: 0}
   offEarning: {fileID: 769815151}
   txtGem: {fileID: 368876601}
   txtCoin: {fileID: 1896488206}

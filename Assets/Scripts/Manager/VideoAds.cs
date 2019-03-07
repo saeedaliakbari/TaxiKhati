@@ -398,7 +398,7 @@ public class VideoAds : MonoBehaviour
     private void GiftBtnCloseShopCar()
     {
         Debug.Log("Gift" + ObscuredPrefs.GetInt("countCloseShop", 1));
-        ObscuredPrefs.SetInt("countCloseShop", 1);
+        //ObscuredPrefs.SetInt("countCloseShop", 1);
         ObscuredPrefs.SetInt("countShowAd", ObscuredPrefs.GetInt("countShowAd", 1) + 1);
         Debug.Log("Gift End" + ObscuredPrefs.GetInt("countCloseShop", 1));
         if (ObscuredPrefs.GetInt("countShowAd", 1) > 5)

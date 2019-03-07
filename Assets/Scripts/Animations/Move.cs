@@ -4,24 +4,21 @@ using UnityEngine.UI;
 [RequireComponent(typeof(GameObject))]
 public class Move : MonoBehaviour
 {//in code ra be har chizi bedahim be samt target ravane mishavad
-
+    [HideInInspector]
     public Transform target;//target hadaf mibashad
+    [HideInInspector]
     public float speed;
     public Image MyImage;
+    [HideInInspector]
     public GameObject TargetObj;
     public Image cup, quest, whell, time, tycoon;
+    [HideInInspector]
     public int num;
     public Text NewIteamText;
 
     float HypotenuseLength(float sideALength, float sideBLength)
     {
         return Mathf.Sqrt(sideALength * sideALength + sideBLength * sideBLength);
-    }
-    void Start()
-    {
-
-
-
     }
 
     private void OnEnable()
@@ -30,7 +27,7 @@ public class Move : MonoBehaviour
         {
             MyImage.sprite = cup.sprite;
             cup.color = new Color(1, 1, 1, 0);
-            NewIteamText.text = "رتبه بندی";
+            NewIteamText.text = "رتبه بندي";
 
         }
         else if (num == 1)
