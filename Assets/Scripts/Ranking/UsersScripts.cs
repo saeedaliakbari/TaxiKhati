@@ -86,7 +86,7 @@ public class UsersScripts : MonoBehaviour
                 {
                     ObscuredPrefs.SetInt("mainAchiv5", 1);
                 }
-                else if (rankUser < 5000)
+                if (rankUser < 5000)
                 {
                     ObscuredPrefs.SetInt("mainAchiv4", 1);
                 }

@@ -74,9 +74,6 @@ public class Controller : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        ///
-        ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem") + 100000);
-        ///
         ObscuredPrefs.SetInt("countCloseShop", 1);
         ConfigBatch();
         iTween.dimensionMode = iTween.DimensionMode.mode2D;//دوبعدی کردن حرکت ماشین
@@ -469,7 +466,8 @@ public class Controller : MonoBehaviour
     public void CloseOffEarning()
     {//بستن پنل بدست آوردن سکه
         //Sound.instance.PlayButton();
-        offEarning.gameObject.SetActive(false);
+        //offEarning.gameObject.SetActive(false);
+        Close(offEarning.gameObject);
     }
     public void CloseSetting()
     {
@@ -664,9 +662,29 @@ public class Controller : MonoBehaviour
             }
             else
             {
+                ObscuredPrefs.SetInt("countCloseShop", 1);
                 videoAds.BtnCloseShopCar();//نمایش تبلیغ بنری
             }
         }
+
+    }
+    public void Close(GameObject panel)
+    {
+        StartCoroutine(IEClose(panel));
+    }
+    public IEnumerator IEClose(GameObject panel)
+    {
+        yield return new WaitForSeconds(1);
+        panel.SetActive(false);
+    }
+    public void CloseAnimSetting(GameObject panel)
+    {
+        StartCoroutine(IECloseAnimSetting(panel));
+    }
+    public IEnumerator IECloseAnimSetting(GameObject panel)
+    {
+        yield return new WaitForSeconds(0.5f);
+        panel.SetActive(false);
     }
     //public IEnumerator IEPlus(double plus, double now, Text txt)
     //{
