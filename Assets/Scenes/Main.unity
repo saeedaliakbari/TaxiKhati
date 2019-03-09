@@ -22565,7 +22565,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &501495834
 RectTransform:
   m_ObjectHideFlags: 0
@@ -28975,8 +28975,8 @@ MonoBehaviour:
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: "\u06AF\u0631\u062F\u0648\u0646\u0647 \u0634\u0627\u0646\u0633"
 --- !u!222 &636375819
@@ -31720,7 +31720,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &682656667
 RectTransform:
   m_ObjectHideFlags: 0
@@ -39988,7 +39988,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &868060179
 RectTransform:
   m_ObjectHideFlags: 0
@@ -41632,6 +41632,7 @@ MonoBehaviour:
   btnStep10: {fileID: 655895937}
   controller: {fileID: 1085018823}
   parkPlace: []
+  enableHelp: 0
 --- !u!1 &907626759
 GameObject:
   m_ObjectHideFlags: 0
@@ -45034,12 +45035,12 @@ Prefab:
     - target: {fileID: 224638170250842840, guid: 061550c3ef9cd964abfb430e288059e4,
         type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 224387004116155608, guid: 061550c3ef9cd964abfb430e288059e4,
         type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 224681920828231886, guid: 061550c3ef9cd964abfb430e288059e4,
         type: 2}
@@ -50945,6 +50946,7 @@ MonoBehaviour:
   settingPanel: {fileID: 1085018828}
   cafeIntent: {fileID: 987241135}
   mergeCar: {fileID: 1202044279}
+  speedPanel: {fileID: 774480590}
   levelBonus: {fileID: 1066917862}
   deleteBin: {fileID: 1588907980}
   panelMessage: {fileID: 1814044181}
@@ -53558,7 +53560,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
 --- !u!222 &1138079223
@@ -89421,8 +89423,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 105.26, y: -1.34}
-  m_SizeDelta: {x: 117.04, y: 82.09}
+  m_AnchoredPosition: {x: 121, y: -6}
+  m_SizeDelta: {x: 153.6, y: 96.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1922164086
 MonoBehaviour:
@@ -89459,18 +89461,18 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: b8668e1593144e64aa47cbc9aaee25ba, type: 3}
-    m_FontSize: 50
+    m_FontSize: 60
     m_FontStyle: 0
     m_BestFit: 1
-    m_MinSize: 30
-    m_MaxSize: 50
-    m_Alignment: 4
+    m_MinSize: 35
+    m_MaxSize: 60
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 0
+  m_Text: 30k
 --- !u!222 &1922164088
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -6,7 +6,7 @@ public class Manager
 {
     public static double GetCurrentTime()
     {//زمان فعلی را بصورت مقدار ثانیه برمیگرداند
-        TimeSpan span = DateTime.Now.Subtract(new DateTime(1970, 1, 1, 0, 0, 0));
+        TimeSpan span = DateTime.Now.Subtract(new DateTime(2010, 1, 1, 0, 0, 0));
         return span.TotalSeconds;
     }
 

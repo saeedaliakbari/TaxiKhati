@@ -153,8 +153,7 @@ public class VideoAds : MonoBehaviour
             Debug.Log("Wait");
             yield return new WaitForSeconds(8f);
             Debug.Log("Wait Done");
-            controller.panelWait.SetActive(false);
-            controller.parkingManager.EnableCarInPark();
+            
         }
         if (ObscuredPrefs.GetInt(zoneShopCar.zoneId) == 1)
         {
@@ -175,6 +174,8 @@ public class VideoAds : MonoBehaviour
                 }
             );
         }
+        controller.panelWait.SetActive(false);
+        controller.parkingManager.EnableCarInPark();
         //else
         //{
         //    controller.panelMessage.SetActive(true);
@@ -206,8 +207,7 @@ public class VideoAds : MonoBehaviour
             Debug.Log("Wait");
             yield return new WaitForSeconds(8f);
             Debug.Log("Wait Done");
-            controller.panelWait.SetActive(false);
-            controller.parkingManager.EnableCarInPark();
+            
         }
         if (ObscuredPrefs.GetInt(zoneCarUp.zoneId) == 1)
         {
@@ -228,6 +228,8 @@ public class VideoAds : MonoBehaviour
                 }
             );
         }
+        controller.panelWait.SetActive(false);
+        controller.parkingManager.EnableCarInPark();
         //else
         //{
         //    Debug.Log("Error");
@@ -259,6 +261,8 @@ public class VideoAds : MonoBehaviour
         }
         else
         {
+            controller.txtPanelMessage.text = "فرصت ویدئویي رایگان وجود ندارد";
+            controller.panelMessage.SetActive(true);
             Debug.Log("Bayad Ta Zaman Baz Shodan Video Sabr Konid");
         }
 
@@ -273,8 +277,7 @@ public class VideoAds : MonoBehaviour
             Debug.Log("Wait");
             yield return new WaitForSeconds(8f);
             Debug.Log("Wait Done");
-            controller.panelWait.SetActive(false);
-            controller.parkingManager.EnableCarInPark();
+            
         }
         if (ObscuredPrefs.GetInt(zoneWheelOfFurtune.zoneId) == 1)
         {
@@ -294,6 +297,8 @@ public class VideoAds : MonoBehaviour
                 }
             );
         }
+        controller.panelWait.SetActive(false);
+        controller.parkingManager.EnableCarInPark();
         //else
         //{
         //    Debug.Log("Error");
@@ -320,8 +325,7 @@ public class VideoAds : MonoBehaviour
             Debug.Log("Wait");
             yield return new WaitForSeconds(8f);
             Debug.Log("Wait Done");
-            controller.panelWait.SetActive(false);
-            controller.parkingManager.EnableCarInPark();
+            
         }
         if (ObscuredPrefs.GetInt(zoneSpeedX2.zoneId) == 1)
         {
@@ -341,6 +345,8 @@ public class VideoAds : MonoBehaviour
                 }
             );
         }
+        controller.panelWait.SetActive(false);
+        controller.parkingManager.EnableCarInPark();
         //else
         //{
         //    controller.panelMessage.SetActive(true);
@@ -352,9 +358,17 @@ public class VideoAds : MonoBehaviour
     private void GiftSpeedX2()
     {
         float timeValue = Mathf.Max(0, (float)(Manager.GetActionTime("speed_x2") - Manager.GetCurrentTime()));
+        float plus = 150;
+        if (timeValue + 150 > 1800)
+        {
+            plus = 1800 - timeValue;
+        }
+        Debug.Log("plus: " + plus + " time: " + timeValue);
         double nowtime = Math.Round(Manager.GetCurrentTime());
-        double plusTime = Math.Round(150 + timeValue + Manager.GetCurrentTime());
+        double plusTime = Math.Round(plus + timeValue + Manager.GetCurrentTime());
+        Debug.Log("New Time : " + plusTime);
         Manager.SetActionTime("speed_x2", plusTime);
+        controller.UpdateTimeSpeed2X();
     }
     #endregion
     #region Close Shop Car
@@ -364,19 +378,20 @@ public class VideoAds : MonoBehaviour
     }
     IEnumerator IEBtnCloseShopCar()
     {
+        Debug.Log("Start Ejra Tabligh");
         if (ObscuredPrefs.GetInt(zoneShopClose.zoneId) == 0)
         {
-            LoadAd(zoneShopClose, true);
+            Debug.Log("Load Tablogh");
+            LoadAd(zoneShopClose, false);
             controller.parkingManager.DisableCarInPark();
             controller.panelWait.SetActive(true);
             Debug.Log("Wait");
             yield return new WaitForSeconds(8f);
             Debug.Log("Wait Done");
-            controller.panelWait.SetActive(false);
-            controller.parkingManager.EnableCarInPark();
         }
         if (ObscuredPrefs.GetInt(zoneShopClose.zoneId) == 1)
         {
+            Debug.Log("Ejra Tabligh");
             ObscuredPrefs.SetInt(zoneShopClose.zoneId, 0);
             ShowAd(zoneShopClose);
             Tapsell.setRewardListener(
@@ -387,6 +402,8 @@ public class VideoAds : MonoBehaviour
                 }
             );
         }
+        controller.panelWait.SetActive(false);
+        controller.parkingManager.EnableCarInPark();
         //else
         //{
         //    controller.panelMessage.SetActive(true);
@@ -475,7 +492,7 @@ public class VideoAds : MonoBehaviour
                 if (ErrorHandling)
                 {
                     controller.panelMessage.SetActive(true);
-                    controller.txtPanelMessage.text = "مشکل در برقراری ارتباط با اینترنت";
+                    controller.txtPanelMessage.text = "مشکل در برقراري ارتباط با اینترنت";
                     controller.parkingManager.DisableCarInPark();
                     controller.panelWait.SetActive(false);
                     controller.parkingManager.EnableCarInPark();

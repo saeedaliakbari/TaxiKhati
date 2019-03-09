@@ -27,6 +27,7 @@ public class Controller : MonoBehaviour
     //public ShopDialog shop;
     //public ExchangeSpeedDialog exchangeDialog;
     public MergeCar mergeCar;
+    public SpeedPanel speedPanel;
     public LevelUpBonus levelBonus;
     public GameObject deleteBin, panelMessage, panelShopGem, btnVip, btnGoToVipPanelMessage;
     public GameObject coinEffectPrefab, panelSplash, panelWait, panelNoGem;
@@ -88,6 +89,7 @@ public class Controller : MonoBehaviour
                     //Timer.Schedule(this, 5f, () =>
                     //{
         StartCoroutine(IESliderPanelSplash());
+        UpdateTimeSpeed2X();// تایمر سرعت دوبرابر فعال شود
         //}
         //);
     }
@@ -652,11 +654,11 @@ public class Controller : MonoBehaviour
     public void ClosePanelShopCar()
     {
         int random = UnityEngine.Random.Range(4, 7);
-        Debug.Log("removeAds: " + ObscuredPrefs.GetInt("removeAds", 0));
+        Debug.Log("Vasiat Tablighat removeAds: " + ObscuredPrefs.GetInt("removeAds", 0));
         if (ObscuredPrefs.GetInt("removeAds", 0) == 0)//اگر تبلیغات براش فعال بود   
         {
-            Debug.Log("countCloseShop : " + ObscuredPrefs.GetInt("countCloseShop", 1) + ">RANDOM :" + random);
-            if (ObscuredPrefs.GetInt("countCloseShop", 1) < 4)//اگر کمتر از 3 بار پنل باز شده بود
+            Debug.Log("Tedad Bastan Shop : " + ObscuredPrefs.GetInt("countCloseShop", 1) + "<adad Random :" + random);
+            if (ObscuredPrefs.GetInt("countCloseShop", 1) < random)//اگر کمتر از 3 بار پنل باز شده بود
             {
                 ObscuredPrefs.SetInt("countCloseShop", ObscuredPrefs.GetInt("countCloseShop", 1) + 1);
             }
@@ -697,6 +699,37 @@ public class Controller : MonoBehaviour
     //    }
     //    txt.text=ObscuredDouble.
     //}
+    public void UpdateTimeSpeed2X()
+    {
+        float timeValue = Mathf.Max(0, (float)(Math.Round(Manager.GetActionTime("speed_x2") - Manager.GetCurrentTime())));
+        if (timeValue > 1800)
+        {
+            Manager.SetActionTime("speed_x2", (Manager.GetActionTime("speed_x2") - (timeValue - 1800)));
+            timeValue = 1800;
+        }
+        if (speedPanel.lastRoutinenu != null)
+        {
+            StopCoroutine(speedPanel.lastRoutinenu);
+        }
+        speedPanel.lastRoutinenu = StartCoroutine(IETimerSpeed2X(timeValue));
+    }
+
+    private IEnumerator IETimerSpeed2X(float timeValue)
+    {
+        while (Manager.GetActionTime("speed_x2") > Manager.GetCurrentTime())
+        {
+            TimeSpan t = TimeSpan.FromSeconds(timeValue);
+            speedPanel.txtTimer.text = string.Format("{0:D2}:{1:D2}", t.Minutes, t.Seconds);
+            float percent = Mathf.Min(1, timeValue / (150 * 12));
+            speedPanel.imgProgress.fillAmount = percent;
+            yield return new WaitForSecondsRealtime(1f);
+            timeValue--;
+            Manager.SetActionTime("speed_x2", (Manager.GetActionTime("speed_x2") - 1));
+        }
+        speedPanel.imgProgress.fillAmount = 0;
+        speedPanel.txtTimer.text = "00:00";
+        yield return 0;
+    }
 }
 [System.Serializable]
 public class RangeLevel

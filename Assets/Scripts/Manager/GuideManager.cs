@@ -10,7 +10,18 @@ public class GuideManager : MonoBehaviour
     public Controller controller;
     [HideInInspector]
     public List<ParkingPlace> parkPlace = new List<ParkingPlace>();
-
+    public bool enableHelp = true;
+    void Start()
+    {
+        if (enableHelp)
+        {
+            ObscuredPrefs.SetInt("helpStep", 0);
+        }
+        else
+        {
+            ObscuredPrefs.SetInt("helpStep", 22);
+        }
+    }
     public void PlusStep()
     {
         ObscuredPrefs.SetInt("helpStep", ObscuredPrefs.GetInt("helpStep", 0) + 1);

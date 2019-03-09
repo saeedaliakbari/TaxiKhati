@@ -21,14 +21,16 @@ public class WheelFortuneScript : MonoBehaviour
     public GameObject goWheel;
     public AudioSource audioWheel, audioGift;
     private string[] timeWheel = { "timeWheel1", "timeWheel2", "timeWheel3" };
+    private Coroutine lastRoutine = null;
     void Start()
     {
+
         CheckVideoTime();
     }
     private void CheckVideoTime()//این تابع در ابتدا مقادیر را داخل تکست باکس ها ست می کند و سپس با توجه به زمان فعلی و اینکه تعداد شانس ها کمتر از 3 باشد زمان شانس بعدی را می سنجد تا اضافه شود
     {
         CheckLblFree();
-        //Debug.Log("CheckVideoTime >" + ObscuredPrefs.GetInt("VideoWheel", 3));
+        Debug.Log("CheckVideoTime >" + ObscuredPrefs.GetInt("VideoWheel", 3));
         txtNumVideoWheel.text = ObscuredPrefs.GetInt("VideoWheel", 3).ToString() + "/3";
         string[] arr = ObscuredPrefs.GetString("TimeVideoWheel", "1992,11,30,00,00,00").Split(',');
         DateTime wheelTime = new DateTime(Int32.Parse(arr[0]), Int32.Parse(arr[1]), Int32.Parse(arr[2]), Int32.Parse(arr[3]), Int32.Parse(arr[4]), Int32.Parse(arr[5]));
@@ -38,36 +40,39 @@ public class WheelFortuneScript : MonoBehaviour
             StartCoroutine(GetDateTime.IEGetDateTime((status) =>
             {
                 Debug.Log("status" + status + " WHeelTIME: " + wheelTime);
-                TimeSpan remainTime = new TimeSpan(wheelTime.Day - status.Day, wheelTime.Hour - status.Hour, wheelTime.Minute - status.Minute, wheelTime.Second - status.Second);
-                float reamainSec = remainTime.Days * 3600 * 24 + remainTime.Hours * 3600 + remainTime.Minutes * 60 + remainTime.Seconds;
-                Debug.Log("reamainSec >" + (-reamainSec));
+                TimeSpan remain = wheelTime.Subtract(status);
+                Debug.Log("remain: " + remain.ToString());
+                double reamainSec = remain.TotalSeconds;
+                Debug.Log("reamainSec >" + reamainSec);
                 if (wheelTime <= status)
                 {
                     Debug.Log("wheelTime <= status");
-                    while ((-reamainSec) - 28800 >= 0 && ObscuredPrefs.GetInt("VideoWheel", 3) < 3)
+                    while ((-reamainSec) - 28800 >= 0 && ObscuredPrefs.GetInt("VideoWheel", 3) <= 3)
                     {
                         Debug.Log("Up +1");
                         ObscuredPrefs.SetInt("VideoWheel", ObscuredPrefs.GetInt("VideoWheel", 3) + 1);
                         txtNumVideoWheel.text = ObscuredPrefs.GetInt("VideoWheel", 3).ToString() + "/3";
-                        reamainSec += 28800f;
-                        TimeSpan nowTimeSpan = new TimeSpan(status.Day, status.Hour, status.Minute, status.Second);
-                        TimeSpan plusTimeSpan = new TimeSpan(0, 8, 0, 0);
-                        TimeSpan result = plusTimeSpan + nowTimeSpan;
-                        ObscuredPrefs.SetString("TimeVideoWheel", DateTime.Now.Year.ToString() + "," + DateTime.Now.Month.ToString() + "," + result.Days.ToString() + "," + result.Hours.ToString() + "," + result.Minutes.ToString() + "," + result.Seconds.ToString());
+                        objTimeVideo.SetActive(false);
+                        reamainSec += 28800;
+                        Debug.Log("Wheel: " + wheelTime);
+                        wheelTime = wheelTime.AddHours(8);
+                        Debug.Log("Wheel: " + wheelTime);
+                        Debug.Log("Old Wheel Time : " + ObscuredPrefs.GetString("TimeVideoWheel", "1992,11,30,00,00,00"));
+                        ObscuredPrefs.SetString("TimeVideoWheel", wheelTime.Year.ToString() + "," + DateTime.Now.Month.ToString() + "," + wheelTime.Day.ToString() + "," + wheelTime.Hour.ToString() + "," + wheelTime.Minute.ToString() + "," + wheelTime.Second.ToString());
+                        Debug.Log("New Wheel Time : " + ObscuredPrefs.GetString("TimeVideoWheel", "1992,11,30,00,00,00"));
                     }
-                    if (ObscuredPrefs.GetInt("VideoWheel", 3) < 3)
+                    if (ObscuredPrefs.GetInt("VideoWheel", 3) <= 3)
                     {
-                        Debug.Log("wheelTime <= status AND VideoWheel< 3");
-                        TimeSpan nowTimeSpan = new TimeSpan(status.Day, status.Hour, status.Minute, status.Second);
-                        TimeSpan plusTimeSpan = new TimeSpan(0, 8, 0, 0);
-                        TimeSpan result = plusTimeSpan + nowTimeSpan;
-                        ObscuredPrefs.SetString("TimeVideoWheel", DateTime.Now.Year.ToString() + "," + DateTime.Now.Month.ToString() + "," + result.Days.ToString() + "," + result.Hours.ToString() + "," + result.Minutes.ToString() + "," + result.Seconds.ToString());
-                        StartCoroutine(IETimerVideoWheel(28800));//زمان 8 ساعت را می شمارد
+                        CheckVideoTime();
                     }
                 }
                 else
                 {
-                    StartCoroutine(IETimerVideoWheel(reamainSec));
+                    if (lastRoutine != null)
+                    {
+                        StopCoroutine(lastRoutine);
+                    }
+                    lastRoutine = StartCoroutine(IETimerVideoWheel(reamainSec));
                 }
             }));
         }
@@ -82,10 +87,11 @@ public class WheelFortuneScript : MonoBehaviour
         ObscuredPrefs.SetInt("VideoWheel", ObscuredPrefs.GetInt("VideoWheel", 3) - 1);
         CheckLblFree();
         Debug.Log("GiftWheelWithVideo" + ObscuredPrefs.GetInt("VideoWheel", 3));
-        if (ObscuredPrefs.GetString("TimeVideoWheel", "NotSet") == "NotSet")
+        if (ObscuredPrefs.GetString("TimeVideoWheel", "1992,11,30,00,00,00") == "1992,11,30,00,00,00")
         {
             TimeSpan nowTimeSpan = new TimeSpan(DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
             TimeSpan plusTimeSpan = new TimeSpan(0, 8, 0, 0);
+            //TimeSpan plusTimeSpan = new TimeSpan(0, 0, 2, 0);
             TimeSpan result = plusTimeSpan + nowTimeSpan;
             ObscuredPrefs.SetString("TimeVideoWheel", DateTime.Now.Year.ToString() + "," + DateTime.Now.Month.ToString() + "," + result.Days.ToString() + "," + result.Hours.ToString() + "," + result.Minutes.ToString() + "," + result.Seconds.ToString());
             Debug.Log("NOT SET >>" + ObscuredPrefs.GetString("TimeVideoWheel"));
@@ -93,12 +99,13 @@ public class WheelFortuneScript : MonoBehaviour
         CheckVideoTime();
         WheelStart(true);
     }
-    IEnumerator IETimerVideoWheel(float deltaTime)//تابع تایمر ویدئو
+    IEnumerator IETimerVideoWheel(double deltaTime)//تابع تایمر ویدئو
     {
-        Debug.Log("Start Remain Time :" + deltaTime);
+        Debug.Log("Start Remain  Video :" + deltaTime);
         objTimeVideo.SetActive(true);
         for (; deltaTime > 0; deltaTime -= 1f)
         {
+            objTimeVideo.SetActive(true);
             int s = (int)(deltaTime % 60);
             int m = (int)((deltaTime % 3600) / 60);
             int h = (int)(deltaTime / 3600);

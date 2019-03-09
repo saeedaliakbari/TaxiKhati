@@ -11,31 +11,33 @@ public class SpeedPanel : MonoBehaviour
     public Text txtTimer;
     public Image imgProgress;
     private int COST = 3, BUY_TIME = 150;
+    [HideInInspector]
+    public Coroutine lastRoutinenu = null;
     public void ShowDialog()
     {
-        UpdateTime();
+        //UpdateTimeSpeed2X();
     }
 
-    private void UpdateTime()
-    {
-        float timeValue = Mathf.Max(0, (float)(Math.Round(Manager.GetActionTime("speed_x2") - Manager.GetCurrentTime())));
-        TimeSpan t = TimeSpan.FromSeconds(timeValue);
-        TimeSpan max = new TimeSpan(0, 30, 0);
-        //Debug.Log("t : " + t + " max: " + max);
-        if (t > max)
-        {
-            Manager.SetActionTime("speed_x2", (Manager.GetActionTime("speed_x2") - (t - max).TotalSeconds));
-            t = max;
-        }
-        txtTimer.text = string.Format("{0:D2}:{1:D2}", t.Minutes, t.Seconds);
-        float percent = Mathf.Min(1, timeValue / (BUY_TIME * 12));
-        imgProgress.fillAmount = percent;
-    }
+    //private void UpdateTime()
+    //{
+    //    float timeValue = Mathf.Max(0, (float)(Math.Round(Manager.GetActionTime("speed_x2") - Manager.GetCurrentTime())));
+    //    TimeSpan t = TimeSpan.FromSeconds(timeValue);
+    //    TimeSpan max = new TimeSpan(0, 30, 0);
+    //    //Debug.Log("t : " + t + " max: " + max);
+    //    if (t > max)
+    //    {
+    //        Manager.SetActionTime("speed_x2", (Manager.GetActionTime("speed_x2") - (t - max).TotalSeconds));
+    //        t = max;
+    //    }
+    //    txtTimer.text = string.Format("{0:D2}:{1:D2}", t.Minutes, t.Seconds);
+    //    float percent = Mathf.Min(1, timeValue / (BUY_TIME * 12));
+    //    imgProgress.fillAmount = percent;
+    //}
 
-    void FixedUpdate()
-    {
-        UpdateTime();
-    }
+    //void FixedUpdate()
+    //{
+    //    UpdateTime();
+    //}
 
     public void BuySpeedX2WithGem()
     {
@@ -55,6 +57,7 @@ public class SpeedPanel : MonoBehaviour
             Manager.SetActionTime("speed_x2", plusTime);
             ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem", 0) - COST);
             controller.SetText();
+            controller.UpdateTimeSpeed2X();
         }
         else
         {
@@ -67,4 +70,6 @@ public class SpeedPanel : MonoBehaviour
             //});
         }
     }
+
+
 }
