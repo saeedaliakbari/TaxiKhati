@@ -19,6 +19,7 @@ AudioMixerController:
   m_AudioMixerGroupViews:
   - guids:
     - 0f3e11d381e2b1049b7bebb74e7192ee
+    - 5d0e5e7233dcb5549b5d837c9c608250
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 245594306695225366}
@@ -30,7 +31,8 @@ AudioMixerGroupController:
   m_Name: Master
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 0f3e11d381e2b1049b7bebb74e7192ee
-  m_Children: []
+  m_Children:
+  - {fileID: 243119522357430868}
   m_Volume: c7d35828ac65ac94abafecb99795703b
   m_Pitch: 8bdb809328846f943b640ee2cdf92fb1
   m_Effects:
@@ -62,7 +64,38 @@ AudioMixerSnapshotController:
   m_SnapshotID: 565923200f561fa43a595679381c508a
   m_FloatValues:
     c7d35828ac65ac94abafecb99795703b: -80
+    1ea652b832459d148913e298c06a3cb9: -80
   m_TransitionOverrides: {}
+--- !u!243 &243119522357430868
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: KhatePayan
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 5d0e5e7233dcb5549b5d837c9c608250
+  m_Children: []
+  m_Volume: 1ea652b832459d148913e298c06a3cb9
+  m_Pitch: 5f372dd5b2130254c92a9da561bbae8f
+  m_Effects:
+  - {fileID: 244132803348197080}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!244 &244132803348197080
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_EffectID: 95dcd24fe14c46642a4d2e723be7a5b5
+  m_EffectName: Attenuation
+  m_MixLevel: 2a84fe693ba5be7459cdcaf73d7820fe
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!245 &245594306695225366
 AudioMixerSnapshotController:
   m_ObjectHideFlags: 0
@@ -73,4 +106,5 @@ AudioMixerSnapshotController:
   m_SnapshotID: bb920431272575946ad4ac503917bbab
   m_FloatValues:
     c7d35828ac65ac94abafecb99795703b: -2
+    1ea652b832459d148913e298c06a3cb9: -6
   m_TransitionOverrides: {}
