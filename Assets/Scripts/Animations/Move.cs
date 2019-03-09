@@ -123,7 +123,7 @@ public class Move : MonoBehaviour
 
     public void StartMove()
     {
-        speed = 100;
+        speed = 150;
     }
 
 
