@@ -71,6 +71,7 @@ public class Controller : MonoBehaviour
         txtToken.text = ObscuredPrefs.GetDouble("token", 0).ToString("0.##");
         txtCoin.text = txtCoinTop.text = ObscuredPrefs.GetDouble("coin", 5000).ToString("0.##");
         txtGem.text = ObscuredPrefs.GetDouble("gem").ToString();
+        videoAds.shopPanel.UpdateCarItems();
     }
     // Use this for initialization
     void Start()

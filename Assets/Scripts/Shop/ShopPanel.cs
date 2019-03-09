@@ -7,7 +7,7 @@ public class ShopPanel : MonoBehaviour
 {
     public CarItem[] carItems;
     public Controller controller;
-    public Button btnTaxi, btnOther;
+    public Button btnTaxi, btnOther, btnBuyCore;
     public Image imgSelectTaxi, imgUnselectTaxi;
     public Image imgSelectOther, imgUnselectOther;
     public GameObject objTaxi, objOther;
@@ -52,6 +52,7 @@ public class ShopPanel : MonoBehaviour
         for (int i = 0; i < carItems.Length; i++)
         {
             carItems[i].objLblNew = objLblNews[i];
+            carItems[i].btnBuyCore = btnBuyCore;
         }
         int unloacked = ObscuredPrefs.GetInt("unlocked_car", 1);
         //Debug.Log("unloacked" + unloacked + "lastSalableLevel>" + controller.lastSalableLevel[unloacked - 1]);

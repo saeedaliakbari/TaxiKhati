@@ -97970,6 +97970,7 @@ MonoBehaviour:
   controller: {fileID: 1085018823}
   btnTaxi: {fileID: 1236198047}
   btnOther: {fileID: 1098053241}
+  btnBuyCore: {fileID: 351898209}
   imgSelectTaxi: {fileID: 1111626253}
   imgUnselectTaxi: {fileID: 1396184161}
   imgSelectOther: {fileID: 80692068}

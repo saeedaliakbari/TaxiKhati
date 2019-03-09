@@ -9,6 +9,8 @@ public class CarItem : MonoBehaviour
     public Image car, earnSlider, speedSlider, imgLock, imgOff;
     public Text txtCoin, txtGem, txtName, txtOff;
     public Button btnBuyCoin, btnBuyGem, btnVideo;
+    [HideInInspector]
+    public Button btnBuyCore;
     public Controller controller;
     [HideInInspector]
     public GameObject objLblNew;
@@ -53,6 +55,11 @@ public class CarItem : MonoBehaviour
                 txtCoin.text = coinPrice.ToString("0.##");
                 balance = ObscuredPrefs.GetDouble("coin", 5000);
                 btnBuyCoin.interactable = visible && balance >= coinPrice;
+                int indexCore = ObscuredPrefs.GetInt("curr_car_index", 0);
+                if (indexCore == index)
+                {
+                    btnBuyCore.interactable = btnBuyCoin.interactable;
+                }
             }
             else
             {
