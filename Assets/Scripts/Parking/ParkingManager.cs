@@ -138,6 +138,7 @@ public class ParkingManager : MonoBehaviour
         ObscuredPrefs.SetFloat("carsSpeedTycoon", carSpeedTycoonBoosts.incSpeed[ObscuredPrefs.GetInt("carSpeedTycoonLevel", 0)]);
         ObscuredPrefs.SetInt("carSpeedTycoonLevel", ObscuredPrefs.GetInt("carSpeedTycoonLevel", 0) + 1);
         //txtCarSpeed.text = "Level Car Speed " + (ObscuredPrefs.GetInt("carSpeedTycoonLevel", 0) + 1);
+        controller.SpeedRatio();
         PrintLevelsCarsInPark();
     }
     private void CheckOfflineEarningTycoon(int[] carsLevel)
@@ -335,9 +336,21 @@ public class ParkingManager : MonoBehaviour
         {
             if (!pl.IsEmpty())
             {
-                pl.transform.GetChild(1).GetComponent<Collider2D>().enabled = false;
+                pl.transform.GetChild(2).GetComponent<Collider2D>().enabled = false;
             }
         }
+        if (VipPlace == true)
+        {
+            placesPosition[placesPosition.Count - 1].GetComponent<Collider2D>().enabled = false;
+        }
+        try
+        {
+            controller.videoAds.specialOffer.specialOfferObj.GetComponent<Collider2D>().enabled = false;
+        }
+        catch (System.Exception)
+        {
+        }
+
     }
 
     public void EnableCarInPark()
@@ -346,8 +359,19 @@ public class ParkingManager : MonoBehaviour
         {
             if (!pl.IsEmpty())
             {
-                pl.transform.GetChild(1).GetComponent<Collider2D>().enabled = true;
+                pl.transform.GetChild(2).GetComponent<Collider2D>().enabled = true;
             }
+        }
+        if (VipPlace == true)
+        {
+            placesPosition[placesPosition.Count - 1].GetComponent<Collider2D>().enabled = true;
+        }
+        try
+        {
+            controller.videoAds.specialOffer.specialOfferObj.GetComponent<Collider2D>().enabled = true;
+        }
+        catch (System.Exception)
+        {
         }
     }
 }

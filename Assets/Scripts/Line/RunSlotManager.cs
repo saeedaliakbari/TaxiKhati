@@ -44,11 +44,13 @@ public class RunSlotManager : MonoBehaviour
     {
         int index = ObscuredPrefs.GetInt("unlocked_airline", 1) - 1;//عدد آخرین هواپیمای باز شده
         //Debug.Log("index unlocked_airline: " + index + ">>>earningPerSec: " + earningPerSec);
-        float ratio = ((Manager.GetCurrentTime() < Manager.GetActionTime("speed_x2")) ? 2 : 1) /** Const.AIRLINE_INCREASE_PERCENT[index]*/;//ریت بدست آوردن سکه
-        ratio *= ((Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m")) ? 5 : 1);
-        ratio *= ((Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m_special")) ? 5 : 1);
-        ratio *= ((Manager.GetCurrentTime() < Manager.GetActionTime("2x_speed_for_150s")) ? 2 : 1);
-        earnPerSec = System.Math.Round(earningPerSec * ratio * ObscuredPrefs.GetFloat("incomeLine", 1) * ObscuredPrefs.GetFloat("speedVip", 1));
+        float ratio = ((Manager.GetCurrentTime() < Manager.GetActionTime("speed_x2")) ? 2 : 0) /** Const.AIRLINE_INCREASE_PERCENT[index]*/;//ریت بدست آوردن سکه
+        ratio += ((Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m")) ? 5 : 0);
+        ratio += ((Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m_special")) ? 5 : 0);
+        ratio += ((Manager.GetCurrentTime() < Manager.GetActionTime("2x_speed_for_150s")) ? 2 : 0);
+        ratio += ObscuredPrefs.GetFloat("speedVip", 0);
+        ratio += ObscuredPrefs.GetFloat("incomeLine", 1);
+        earnPerSec = System.Math.Round(earningPerSec * ratio);
         earningPerSecTxt.text = earnPerSec.ToString("0.##");
         txtEarningWithSec.text = "ﻪﯿﻧﺎﺛ / " + earningPerSecTxt.text;
     }

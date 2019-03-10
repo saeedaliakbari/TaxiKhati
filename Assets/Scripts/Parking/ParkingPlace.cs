@@ -1,38 +1,38 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class ParkingPlace : MonoBehaviour
 {
     public Animator animLight;
+    public GameObject objBack;
     public Car GetCar()
     {//اگر ماشینی داخل این پارکینگ باشد اونو برمیگردونه
-        if (transform.childCount > 0 && transform.GetChild(1).tag == "Car")
+        if (transform.childCount > 0 && transform.GetChild(2).tag == "Car")
         {
-            return transform.GetChild(1).GetComponent<Car>();
+            return transform.GetChild(2).GetComponent<Car>();
         }
         return null;
     }
 
     public GiftBox GetBox()//اگر باکسی داخل این پارکینگ هست را برمیگردارند
     {
-        if (transform.childCount > 0 && transform.GetChild(1).tag == "Box")
+        if (transform.childCount > 0 && transform.GetChild(2).tag == "Box")
         {
-            return transform.GetChild(1).GetComponent<GiftBox>();
+            return transform.GetChild(2).GetComponent<GiftBox>();
         }
         return null;
     }
 
     public bool IsEmpty()//اگر پارکینگ خالی باشد درست برمیگرداند و درغیراینصورت غلط برمیگرداند
     {
-        return transform.childCount == 1;
+        return transform.childCount == 2;
     }
 
     public void CheckAutoOpenGift()//بصورت اتوماتیک باز شود باکس داخل پارکینگ
     {
-        if (transform.childCount > 0 && transform.GetChild(1).tag == "Box")
+        if (transform.childCount > 0 && transform.GetChild(2).tag == "Box")
         {
-            transform.GetChild(1).GetComponent<GiftBox>().StartAutoOpen();
+            transform.GetChild(2).GetComponent<GiftBox>().StartAutoOpen();
         }
     }
 

@@ -10,7 +10,6 @@ public class Car : MonoBehaviour
     public int xp;
     public double earnings;
     public float speed;
-    public float increasePercent;
     [HideInInspector]
     public TrimNumberText txtCoin;
     [HideInInspector]
@@ -21,7 +20,7 @@ public class Car : MonoBehaviour
     public Controller controller;
     public MoveCar moveCarPrefab;
     public AudioSource audioSource;
-    public AudioMixerGroup audioMixerMaster,audioMixerKhatePayan;
+    public AudioMixerGroup audioMixerMaster, audioMixerKhatePayan;
     public AudioClip khatePayan, trash, carPlacement, combindCar;
     private MoveCar moveCar;
     private const float timeLab = 19.39939f;
@@ -49,6 +48,7 @@ public class Car : MonoBehaviour
             //Debug.Log("!moving");
             if (nearPlace != null && nearPlace != parkingPlace)//اگر نزدیکترین مکان خالی نبود و با مکان فعلی یکسان نبود
             {
+                parkingPlace.objBack.SetActive(false);
                 if (!nearPlace.IsEmpty())//اگر نزدیکترین مکان خالی نبود
                 {
                     Car car2 = nearPlace.GetCar();
@@ -115,7 +115,7 @@ public class Car : MonoBehaviour
                     }
                     else//اگر ماشین داخل پارکینگ نزدیک نباشه یا در حال حرکت باشد
                     {
-
+                        nearPlace.objBack.SetActive(false);
                         transform.position = parkingPlace.transform.position;//ماشین جابه جا نمی شود و به مکان اولیه برمیگردد
                         //Sound.instance.Play(Sound.Others.Unswap);
                     }
@@ -134,21 +134,27 @@ public class Car : MonoBehaviour
             {//اگر نزدیکترین مکانی تشخیص نداد یا اینکه ان مکان با مکان فعلی یکسان بود
                 if (!controller.slotManager.IsFull() /*جایگاه های استارت پر نباشد*/&& (Mathf.Abs(transform.position.x - controller.slotManager.transform.position.x) < 0.5f && Mathf.Abs(transform.position.y - controller.slotManager.transform.position.y) < 2f) /*Vector3.Distance(transform.position, controller.slotManager.transform.position) < 0.8f*//*فاصله اش تا جایگاه استارت کمتر از 0.5 باشد*/)
                 {//اگر گذاشته شود در نقطه استارت
+                    Debug.Log("parking : " + parkingPlace.objBack.activeSelf);
+                    parkingPlace.objBack.SetActive(true);
+                    Debug.Log("parking : " + parkingPlace.objBack.activeSelf);
                     StartDrive();//شروع پرواز
                     //Sound.instance.Play(Sound.Others.Start);
                 }
                 else if (Vector3.Distance(transform.position, controller.deleteBin.transform.position) < 0.5f)
                 {//اگر آن ماشین را حذف کند
+                    parkingPlace.objBack.SetActive(false);
                     DismantleCar();
                 }
                 else
                 {//در مکان اولیه قرار می گیردوهیچ تغییری اعمال نمی شود
+                    parkingPlace.objBack.SetActive(false);
                     transform.position = parkingPlace.transform.position;
                 }
             }
         }
         else//اگر ماشین در حال حرکت بود
         {
+            parkingPlace.objBack.SetActive(false);
             Debug.Log("Not Move" + moveCar.returning);
             if (!moveCar.returning)
             {
@@ -184,6 +190,7 @@ public class Car : MonoBehaviour
     }
     public void StartDrive()//شروع حرکت
     {
+        parkingPlace.objBack.SetActive(true);
         controller.colliderCarHelp = GetComponent<Collider2D>();
         controller.guideManager.StartDrive();
         moving = true;
@@ -221,12 +228,9 @@ public class Car : MonoBehaviour
         audioSource.clip = khatePayan;
         audioSource.Play();
         int index = ObscuredPrefs.GetInt("unlocked_airline", 1) - 1;//لول آخرین ماشین باز شده را می دهد
-        //float ratio = ((Manager.GetCurrentTime() < Manager.GetActionTime("speed_x2")) ? 2 : 1) /** Const.AIRLINE_INCREASE_PERCENT[index]*/;//ریت بدست آوردن سکه
-        float ratio=((Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m")) ? 5 : 1);
-        ratio *= ((Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m_special")) ? 5 : 1);
-        //ratio *= ((Manager.GetCurrentTime() < Manager.GetActionTime("2x_speed_for_150s")) ? 2 : 1);
-        ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) + (double)(earnings * increasePercent * ratio * ObscuredPrefs.GetFloat("incomeLine", 1)));
-        ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 5000) + (double)(earnings * increasePercent * ratio * ObscuredPrefs.GetFloat("incomeLine", 1)));
+        float ratio = controller.EarningRatio();
+        ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) + (double)(earnings * ratio));
+        ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 5000) + (double)(earnings * ratio));
         controller.SetText();
         controller.slotManager.ShowGoalAnimation();//وقتی به نقطه پایان می رسد
     }

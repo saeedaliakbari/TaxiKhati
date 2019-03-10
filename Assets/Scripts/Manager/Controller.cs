@@ -30,9 +30,9 @@ public class Controller : MonoBehaviour
     public SpeedPanel speedPanel;
     public LevelUpBonus levelBonus;
     public GameObject deleteBin, panelMessage, panelShopGem, btnVip, btnGoToVipPanelMessage;
-    public GameObject coinEffectPrefab, panelSplash, panelWait, panelNoGem;
+    public GameObject coinEffectPrefab, panelSplash, panelWait, panelNoGem, objSpeed, objEarning;
     public OfflineEraning offEarning;
-    public Text txtGem;
+    public Text txtGem, txtSpeed, txtEarning;
     public TrimNumberText txtCoin, txtCoinTop;
     public TrimNumberText txtToken, buyPrice;
     public Animator animIncome;
@@ -62,7 +62,7 @@ public class Controller : MonoBehaviour
         ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem", 5));
         ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 21000));
         ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 21000));
-        ObscuredPrefs.SetDouble("token", ObscuredPrefs.GetDouble("token", 0));
+        ObscuredPrefs.SetDouble("token", ObscuredPrefs.GetDouble("token", 0) /*+ 100000000000*/);
         SetText();
 
     }
@@ -72,6 +72,38 @@ public class Controller : MonoBehaviour
         txtCoin.text = txtCoinTop.text = ObscuredPrefs.GetDouble("coin", 5000).ToString("0.##");
         txtGem.text = ObscuredPrefs.GetDouble("gem").ToString();
         videoAds.shopPanel.UpdateCarItems();
+    }
+    public float EarningRatio()
+    {
+        float ratio = ((Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m")) ? 5 : 0);
+        ratio += ((Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m_special")) ? 5 : 0);
+        ratio += ObscuredPrefs.GetFloat("incomeLine", 1);
+        txtEarning.text = ratio + " برابر";
+        if (ratio == 1)
+        {
+            objEarning.SetActive(false);
+        }
+        else
+        {
+            objEarning.SetActive(true);
+        }
+        return ratio;
+    }
+    public float SpeedRatio()
+    {
+        float ratio = Manager.GetCurrentTime() < Manager.GetActionTime("speed_x2") ? 2 : 1;
+        ratio = ratio + (Manager.GetCurrentTime() < Manager.GetActionTime("2x_speed_for_150s") ? 2 : 0);
+        ratio = ratio + (ObscuredPrefs.GetFloat("carsSpeedTycoon", 1) - 1);//carsSpeedBoostsTycoon
+        txtSpeed.text = ratio + " برابر";
+        if (ratio == 1)
+        {
+            objSpeed.SetActive(false);
+        }
+        else
+        {
+            objSpeed.SetActive(true);
+        }
+        return ratio;
     }
     // Use this for initialization
     void Start()
@@ -91,6 +123,8 @@ public class Controller : MonoBehaviour
                     //{
         StartCoroutine(IESliderPanelSplash());
         UpdateTimeSpeed2X();// تایمر سرعت دوبرابر فعال شود
+        SpeedRatio();
+        EarningRatio();
         //}
         //);
     }

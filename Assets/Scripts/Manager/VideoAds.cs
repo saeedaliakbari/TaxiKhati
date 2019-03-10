@@ -153,7 +153,7 @@ public class VideoAds : MonoBehaviour
             Debug.Log("Wait");
             yield return new WaitForSeconds(8f);
             Debug.Log("Wait Done");
-            
+
         }
         if (ObscuredPrefs.GetInt(zoneShopCar.zoneId) == 1)
         {
@@ -207,7 +207,7 @@ public class VideoAds : MonoBehaviour
             Debug.Log("Wait");
             yield return new WaitForSeconds(8f);
             Debug.Log("Wait Done");
-            
+
         }
         if (ObscuredPrefs.GetInt(zoneCarUp.zoneId) == 1)
         {
@@ -277,7 +277,7 @@ public class VideoAds : MonoBehaviour
             Debug.Log("Wait");
             yield return new WaitForSeconds(8f);
             Debug.Log("Wait Done");
-            
+
         }
         if (ObscuredPrefs.GetInt(zoneWheelOfFurtune.zoneId) == 1)
         {
@@ -325,7 +325,7 @@ public class VideoAds : MonoBehaviour
             Debug.Log("Wait");
             yield return new WaitForSeconds(8f);
             Debug.Log("Wait Done");
-            
+
         }
         if (ObscuredPrefs.GetInt(zoneSpeedX2.zoneId) == 1)
         {
@@ -369,6 +369,7 @@ public class VideoAds : MonoBehaviour
         Debug.Log("New Time : " + plusTime);
         Manager.SetActionTime("speed_x2", plusTime);
         controller.UpdateTimeSpeed2X();
+        controller.SpeedRatio();
     }
     #endregion
     #region Close Shop Car

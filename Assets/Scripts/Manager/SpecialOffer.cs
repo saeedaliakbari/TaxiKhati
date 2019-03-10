@@ -7,7 +7,8 @@ public class SpecialOffer : MonoBehaviour
 {
     public SpecialOfferObj prefabSpecialOffer;
     public Controller controller;
-    private SpecialOfferObj specialOfferObj;
+    [HideInInspector]
+    public SpecialOfferObj specialOfferObj;
     public GameObject panelOffer, objIncome, objGoldBox;
     public Button btnVideo, btnGem;
     // Use this for initialization

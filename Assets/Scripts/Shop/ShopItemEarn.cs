@@ -36,11 +36,12 @@ public class ShopItemEarn : MonoBehaviour
     {
         if (ObscuredPrefs.GetDouble("token") >= price)
         {
-           ObscuredPrefs.SetDouble("token",ObscuredPrefs.GetDouble("token") - price);
+            ObscuredPrefs.SetDouble("token", ObscuredPrefs.GetDouble("token") - price);
             ObscuredPrefs.SetInt("upIncomeLevel", ObscuredPrefs.GetInt("upIncomeLevel", 0) + 1);
             int level = ObscuredPrefs.GetInt("upIncomeLevel", 0);
             ObscuredPrefs.SetFloat("incomeLine", upIncome[level - 1]);
             runSlotManager.UpdateEarningSpeedText();
+            controller.EarningRatio();
             OpenPanel();
         }
         else

@@ -58,6 +58,7 @@ public class SpeedPanel : MonoBehaviour
             ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem", 0) - COST);
             controller.SetText();
             controller.UpdateTimeSpeed2X();
+            controller.SpeedRatio();
         }
         else
         {

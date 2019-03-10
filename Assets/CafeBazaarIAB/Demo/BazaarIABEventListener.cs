@@ -99,7 +99,7 @@ public class BazaarIABEventListener : MonoBehaviour
         ObscuredPrefs.SetFloat("offliceEarnVip", 1);
         ObscuredPrefs.SetInt("removeAds", 0);
         ObscuredPrefs.SetInt("gemPerDay", 0);
-        ObscuredPrefs.SetFloat("speedVip", 1);
+        ObscuredPrefs.SetFloat("speedVip", 0);
         Debug.Log(string.Format("queryInventorySucceededEvent. total purchases: {0}, total skus: {1}", purchases.Count, skus.Count));
         for (int i = 0; i < purchases.Count; ++i)
         {
@@ -113,7 +113,7 @@ public class BazaarIABEventListener : MonoBehaviour
                 ObscuredPrefs.SetFloat("offliceEarnVip", 1.2f);//added 20% offline earning
                 ObscuredPrefs.SetInt("removeAds", 1);//remove ads in shop
                 ObscuredPrefs.SetInt("gemPerDay", 1);//10 gem per day
-                ObscuredPrefs.SetFloat("speedVip", 1.5f);//added 50% speed
+                ObscuredPrefs.SetFloat("speedVip", 0.5f);//added 50% speed
                 iapCafeBazar.controller.slotManager.UpdateEarningSpeedText();
                 iapCafeBazar.controller.GiftDaily();
                 iapCafeBazar.controller.btnVip.SetActive(false);
@@ -201,7 +201,7 @@ public class BazaarIABEventListener : MonoBehaviour
                     ObscuredPrefs.SetFloat("offliceEarnVip", 1.2f);//added 20% offline earning
                     ObscuredPrefs.SetInt("removeAds", 1);//remove ads in shop
                     ObscuredPrefs.SetInt("gemPerDay", 1);//10 gem per day
-                    ObscuredPrefs.SetFloat("speedVip", 1.5f);//added 50% speed
+                    ObscuredPrefs.SetFloat("speedVip", 0.5f);//added 50% speed
                     iapCafeBazar.controller.slotManager.UpdateEarningSpeedText();
                     iapCafeBazar.controller.GiftDaily();
                     iapCafeBazar.controller.btnVip.SetActive(false);
