@@ -250,6 +250,9 @@ MonoBehaviour:
   moveCarPrefab: {fileID: 114327174961138546, guid: b299425a5c5991b4e8b9ba674f33c9e2,
     type: 2}
   audioSource: {fileID: 82610405863952152}
+  audioMixerMaster: {fileID: 24300002, guid: 34c8dcf39b89e9540a7ef90f4ecedaac, type: 2}
+  audioMixerKhatePayan: {fileID: 243119522357430868, guid: 34c8dcf39b89e9540a7ef90f4ecedaac,
+    type: 2}
   khatePayan: {fileID: 8300000, guid: b42e091d9ee68134e88614009feb3a55, type: 3}
   trash: {fileID: 8300000, guid: 8ade28a164dd2d94e835dd930e42571e, type: 3}
   carPlacement: {fileID: 8300000, guid: 5dacc272b21ee524d9ebb8e03a79e825, type: 3}
