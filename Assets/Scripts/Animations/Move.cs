@@ -82,6 +82,7 @@ public class Move : MonoBehaviour
 
             float step = speed * Time.deltaTime;
             this.transform.position = Vector3.MoveTowards(this.transform.position, this.target.position, step);
+
             //this.transform.SetParent(target, true);
         }
         else if (this.Arrived())
