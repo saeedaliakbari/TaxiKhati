@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 //کلاس ماشین پارک شده داخل پارکینگ
 public class Car : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class Car : MonoBehaviour
     public Controller controller;
     public MoveCar moveCarPrefab;
     public AudioSource audioSource;
+    public AudioMixerGroup audioMixerMaster,audioMixerKhatePayan;
     public AudioClip khatePayan, trash, carPlacement, combindCar;
     private MoveCar moveCar;
     private const float timeLab = 19.39939f;
@@ -89,6 +91,7 @@ public class Car : MonoBehaviour
                                 controller.UpdatePrice();//برای اینکه باتن کور آپدیت شود
                             }
                             else {//در صورتی که ماشین لول جدید باز نشود با مرج و ماشین های قبلی تولید شود وقت صدای مرج پخش می شود
+                                audioSource.outputAudioMixerGroup = audioMixerMaster;
                                 audioSource.clip = combindCar;
                                 audioSource.Play();
                             }
@@ -101,6 +104,7 @@ public class Car : MonoBehaviour
                         }
                         else
                         {//دوتاماشین با هم جابه جا می شوند
+                            audioSource.outputAudioMixerGroup = audioMixerMaster;
                             audioSource.clip = carPlacement;
                             audioSource.Play();
                             ParkingPlace lastPlace = parkingPlace;//ماشین اول در جایگاه ماشین دوم قرار میگیرد
@@ -118,6 +122,7 @@ public class Car : MonoBehaviour
                 }
                 else//جابجایی به مکان جدید
                 {
+                    audioSource.outputAudioMixerGroup = audioMixerMaster;
                     audioSource.clip = carPlacement;
                     audioSource.Play();
                     transform.position = nearPlace.transform.position;//موقعیت ماشین را به موقعیت نزدیکترین مکان که خالی هم هست تغییر می دهد
@@ -157,6 +162,7 @@ public class Car : MonoBehaviour
     }
     private void DismantleCar()
     {
+        audioSource.outputAudioMixerGroup = audioMixerMaster;
         audioSource.clip = trash;
         audioSource.Play();
         //CurrencyController.CreditBalance(0, Mathf.RoundToInt(Superpow.Utils.GetPrice(level - 1) * 0.5f));
@@ -211,12 +217,14 @@ public class Car : MonoBehaviour
     }
     public void FinishRound()
     {
+        audioSource.outputAudioMixerGroup = audioMixerKhatePayan;
         audioSource.clip = khatePayan;
         audioSource.Play();
         int index = ObscuredPrefs.GetInt("unlocked_airline", 1) - 1;//لول آخرین ماشین باز شده را می دهد
-        float ratio = ((Manager.GetCurrentTime() < Manager.GetActionTime("speed_x2")) ? 2 : 1) /** Const.AIRLINE_INCREASE_PERCENT[index]*/;//ریت بدست آوردن سکه
-        ratio *= ((Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m")) ? 5 : 1);
-        ratio *= ((Manager.GetCurrentTime() < Manager.GetActionTime("2x_speed_for_150s")) ? 2 : 1);
+        //float ratio = ((Manager.GetCurrentTime() < Manager.GetActionTime("speed_x2")) ? 2 : 1) /** Const.AIRLINE_INCREASE_PERCENT[index]*/;//ریت بدست آوردن سکه
+        float ratio=((Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m")) ? 5 : 1);
+        ratio *= ((Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m_special")) ? 5 : 1);
+        //ratio *= ((Manager.GetCurrentTime() < Manager.GetActionTime("2x_speed_for_150s")) ? 2 : 1);
         ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) + (double)(earnings * increasePercent * ratio * ObscuredPrefs.GetFloat("incomeLine", 1)));
         ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 5000) + (double)(earnings * increasePercent * ratio * ObscuredPrefs.GetFloat("incomeLine", 1)));
         controller.SetText();

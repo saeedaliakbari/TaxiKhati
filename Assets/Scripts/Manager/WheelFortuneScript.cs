@@ -228,7 +228,7 @@ public class WheelFortuneScript : MonoBehaviour
     private void ManageGift(int itemNumber)
     {
         audioGift.Play();
-        //itemNumber = 3;
+        //itemNumber = 2;
         videoAds.controller.panelMessage.SetActive(true);
         if (itemNumber == 0)
         {
