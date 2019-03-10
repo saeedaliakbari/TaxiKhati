@@ -41516,7 +41516,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -6.93, y: -5600}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 471, y: 12020}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &894935843
 MonoBehaviour:
@@ -51539,6 +51539,7 @@ MonoBehaviour:
   prefabSpecialOffer: {fileID: 114567771060209172, guid: 63901d7725207ab43938249357b16d8d,
     type: 2}
   controller: {fileID: 1085018823}
+  specialOfferObj: {fileID: 0}
   panelOffer: {fileID: 842083079}
   objIncome: {fileID: 651537526}
   objGoldBox: {fileID: 981288409}
@@ -101940,7 +101941,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2074816521
 RectTransform:
   m_ObjectHideFlags: 0
