@@ -222,7 +222,7 @@ public class WheelFortuneScript : MonoBehaviour
         }
         else
         {
-            Debug.Log("Gem<5");
+            videoAds.controller.panelNoGem.SetActive(true);
         }
     }
     private void ManageGift(int itemNumber)
