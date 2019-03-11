@@ -99,6 +99,7 @@ public class RunSlotManager : MonoBehaviour
     }
     public void UpdatePosition()
     {
+        //LineAnimation();
         for (int i = 0; i < listSlot.Count; i++)
         {//به تعداد لاین هایی که در لیست لاین ها هست
             listSlot[i].transform.localPosition = new Vector3(0, (i - ((listSlot.Count - 1) / 2f)) * 0.09f);//موقعیت ایکس تغییری نمی کند. و موقعیت ایگری به نسبت شماره داخل لیست 
@@ -148,9 +149,54 @@ public class RunSlotManager : MonoBehaviour
         }
     }
 
+
     public void ShowGoalAnimation()
     {
         goal.GetComponent<Animator>().Play("ReachToGoal");
         Controller.instance.ShowCoinEffect(goal.transform.position);
+    }
+
+    public void LineAnimation()
+    {
+        if (true) ///// اگر لاین خالی بود
+        {
+            StartCoroutine(LineAnimator());
+        }
+    }
+
+    public IEnumerator LineAnimator()
+    {
+
+        for (int i = 0; i <= (listSlot.Count+2); i++)
+        {
+            Debug.Log("i for =======>"+i);
+            for (int j = 0; j < listSlot.Count; j++)
+            {
+                listSlot[j].changeSprite(false, false);
+            }
+
+            if (i<=(listSlot.Count-1))
+            {
+                listSlot[i].changeSprite(true, false);
+            }
+            
+            if (i>=1 && i<=listSlot.Count)
+            {
+                listSlot[i - 1].changeSprite(true, true);
+            }
+
+            if (i>=2 && i<=(listSlot.Count+1))
+            {
+                listSlot[i - 2].changeSprite(true, false);
+            }
+            
+            
+            yield return new WaitForSeconds(0.1f);
+        }
+
+       
+        LineAnimation();
+
+
     }
 }
