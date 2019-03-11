@@ -52,6 +52,7 @@ public class Controller : MonoBehaviour
     public float offlineEarningRate;
     public int[] lastSalableLevel;
     public int[] lastSalableCoreLevel;
+    public Transform XpBarTranform;///برای هدف پارتیکل میباشد
     private int def;
     void Awake()
     {

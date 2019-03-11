@@ -5,6 +5,7 @@ public class ParkingPlace : MonoBehaviour
 {
     public Animator animLight;
     public GameObject objBack;
+    public MoveXP XPTrail;
     public Car GetCar()
     {//اگر ماشینی داخل این پارکینگ باشد اونو برمیگردونه
         if (transform.childCount > 0 && transform.GetChild(2).tag == "Car")

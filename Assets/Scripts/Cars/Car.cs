@@ -62,6 +62,7 @@ public class Car : MonoBehaviour
                             //Homecontroller.guideManager.UpdateAfter(1);
                             ObscuredPrefs.SetInt("mergeCarForVideo", ObscuredPrefs.GetInt("mergeCarForVideo", 1) + 1);
                             GetComponent<Animator>().Play("Merge");//انیمیشن مرج اجرا شود
+      
                             GetComponent<SpriteRenderer>().enabled = false;
                             car2.gameObject.SetActive(false);
                             int unlockedLevel = ObscuredPrefs.GetInt("unlocked_car", 1);
@@ -98,6 +99,8 @@ public class Car : MonoBehaviour
                             //باید مقدار افزوده شدن ایکس پی اضافه شود
                             //Debug.Log("XP: " + ObscuredPrefs.GetInt("Xp", 0));
                             ObscuredPrefs.SetInt("Xp", ObscuredPrefs.GetInt("Xp", 0) + xp);
+                            parkingPlace.XPTrail.target = controller.XpBarTranform;
+                            parkingPlace.XPTrail.MyGameObject.SetActive(true);
                             //Debug.Log("XP: " + ObscuredPrefs.GetInt("Xp", 0));
                             controller.playerLevel.UpdateProgress(/*(int)Mathf.Pow(1.5f, level)*/);//مقدار ایکس و لول ست شود
 

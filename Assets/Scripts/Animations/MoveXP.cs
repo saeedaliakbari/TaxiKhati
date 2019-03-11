@@ -2,26 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveXP : MonoBehaviour {
+public class MoveXP : MonoBehaviour
+{
 
     public Transform target;//target hadaf mibashad
-    public GameObject MoveTarget;
+    //public GameObject MoveTarget;
     public float speed;
-    public GameObject TargetObj;
-    [HideInInspector]
-    public int num;
+    //public GameObject TargetObj;
+    public GameObject MyGameObject;
+    public GameObject Trail;
 
     float HypotenuseLength(float sideALength, float sideBLength)
     {
         return Mathf.Sqrt(sideALength * sideALength + sideBLength * sideBLength);
     }
     // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    void Start()
+    {
+
+    }
+    private void OnEnable()
+    {
+        Trail.SetActive(false);
+        this.transform.position = new Vector3(0, 0, 0);
+        Trail.SetActive(true);
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         if (!this.Arrived())
         {
 
@@ -32,7 +42,7 @@ public class MoveXP : MonoBehaviour {
         }
         else if (this.Arrived())
         {
-            speed = 0;
+           
             this.gameObject.SetActive(false);
         }
 

@@ -72,13 +72,14 @@ GameObject:
   - component: {fileID: 4185804809837024}
   - component: {fileID: 198559088536768732}
   - component: {fileID: 199763166570700216}
+  - component: {fileID: 114930908014398178}
   m_Layer: 0
   m_Name: Xp Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4064523726445256
 Transform:
   m_ObjectHideFlags: 1
@@ -99,7 +100,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1971188605549778}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -4.35, y: 0.47, z: -0}
+  m_LocalPosition: {x: 0, y: -0.3, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4064523726445256}
@@ -134,6 +135,20 @@ Transform:
   m_Father: {fileID: 4185804809837024}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114930908014398178
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1971188605549778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07957da43b86e0542a8917f068bcdd92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  speed: 150
+  MyGameObject: {fileID: 1971188605549778}
 --- !u!198 &198157321352989092
 ParticleSystem:
   m_ObjectHideFlags: 1
