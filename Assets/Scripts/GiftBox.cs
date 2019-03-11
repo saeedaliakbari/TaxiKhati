@@ -38,10 +38,15 @@ public class GiftBox : MonoBehaviour
         Debug.Log("Start Anim BOX");
         opened = true;
         animtor.Play("OpenBox");
-        parkPlace.animLight.Play("Merge");
+        Timer.Schedule(this, (25 / 60f), () =>
+          {
+              Debug.Log(" parkPlace.animLight.Pla");
+              parkPlace.animLight.Play("Merge");
+          });
+
         openGiftCar.Play();
     }
-    
+
 
     private void OnMouseUp()//با موس روش کلیک کنی وبرداری
     {

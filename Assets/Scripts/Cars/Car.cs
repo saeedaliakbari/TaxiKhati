@@ -33,7 +33,7 @@ public class Car : MonoBehaviour
             Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10);
             Vector3 objPos = Camera.main.ScreenToWorldPoint(mousePosition);
             transform.position = objPos;
-            GetComponent<SpriteRenderer>().sortingOrder = 10;//برای اینکه روی بقیه آبجکت ها قرار گیرد
+            GetComponent<SpriteRenderer>().sortingOrder = 21;//برای اینکه روی بقیه آبجکت ها قرار گیرد
         }
     }
 
@@ -166,7 +166,7 @@ public class Car : MonoBehaviour
                 controller.slotManager.StopACar(GetEarningPerSecond());
             }
         }
-        GetComponent<SpriteRenderer>().sortingOrder = 2;
+        GetComponent<SpriteRenderer>().sortingOrder = 15;
         ObscuredPrefs.SetInt("checkLevel", 0);
     }
     private void DismantleCar()
