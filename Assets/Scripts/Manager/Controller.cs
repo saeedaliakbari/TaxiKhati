@@ -24,6 +24,7 @@ public class Controller : MonoBehaviour
     public GuideManager guideManager;
     public SettingPanel settingPanel;
     public CafeIntent cafeIntent;
+   
     //public ShopDialog shop;
     //public ExchangeSpeedDialog exchangeDialog;
     public MergeCar mergeCar;
@@ -146,8 +147,15 @@ public class Controller : MonoBehaviour
         panelSplash.SetActive(false);
         if (ObscuredPrefs.GetInt("helpStep", 0) != 22)
         {
-            ObscuredPrefs.SetInt("helpStep", 0);
-            guideManager.panelLockGuide.SetActive(true);
+            //ObscuredPrefs.SetInt("helpStep", 0);
+            //guideManager.panelLockGuide.SetActive(true);
+            //ObscuredPrefs.SetInt("helpStep", 3);
+            int level = ObscuredPrefs.GetInt("helpStep", 0);
+            Debug.Log("level Help: " + level);
+            for (int i = 0; i <= level; i++)
+            {
+                guideManager.Step(i);
+            }
         }
         else
         {

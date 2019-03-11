@@ -31964,7 +31964,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &682656667
 RectTransform:
   m_ObjectHideFlags: 0
@@ -39878,7 +39878,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 8
+  m_SortingOrder: 9
   m_Sprite: {fileID: 21300000, guid: f1d9c9316c0342d49a7b0b7123ed9d9d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -42061,9 +42061,28 @@ MonoBehaviour:
   imgPanelText: {fileID: 638901605}
   txtStep10: {fileID: 1559510730}
   btnStep10: {fileID: 655895937}
+  btnStep: {fileID: 443774110}
+  btnStep2: {fileID: 1859093577}
+  txtStep1: {fileID: 1123382922}
+  txtStep2: {fileID: 1286242033}
+  txtStep11: {fileID: 925629013}
+  btnStep11: {fileID: 737402092}
+  openPanelExChange: {fileID: 1896351565}
+  token: {fileID: 1803094989}
+  btnShop: {fileID: 650701154}
+  openShopGuide: {fileID: 813378286}
+  panelShopCar: {fileID: 2074816520}
+  coin: {fileID: 1619758837}
+  playerLevel: {fileID: 1252540961}
+  btnOther: {fileID: 326846775}
+  otherItemGuide: {fileID: 1357907502}
+  btnBuyShopItem: {fileID: 2094949916}
+  buyItemGuide: {fileID: 1037802893}
+  shopPanel: {fileID: 2074816524}
+  shopItemEarn: {fileID: 2074816525}
+  shopItemOff: {fileID: 2074816526}
   controller: {fileID: 1085018823}
   parkPlace: []
-  enableHelp: 0
 --- !u!1 &907626759
 GameObject:
   m_ObjectHideFlags: 0

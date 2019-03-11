@@ -16,18 +16,21 @@ public class OfflineEraning : MonoBehaviour
     private bool thirdCoin = false;
     public void ShowEarning(int time, float offlineEarningRate)
     {
-        btnDouble.interactable = true;
-        btnThird.interactable = true;
-        if (time > 21600)//تایم بیشتر از 4 روز نباشد
+        if (ObscuredPrefs.GetInt("helpStep", 0) == 22)
         {
-            time = 21600;
-        }
-        value = controller.slotManager.EarningPerSec * time * offlineEarningRate / 100f;
-        value = value * ObscuredPrefs.GetFloat("offlineEarnTycoonBoosts", 1) * ObscuredPrefs.GetFloat("offliceEarnVip", 1);
-        valueTxt.text = value.ToString("0.##");
-        if (value > 0)
-        {
-            gameObject.SetActive(true);//پنل آفلاین بدست آوردن سکه را فعال می کند
+            btnDouble.interactable = true;
+            btnThird.interactable = true;
+            if (time > 21600)//تایم بیشتر از 4 روز نباشد
+            {
+                time = 21600;
+            }
+            value = controller.slotManager.EarningPerSec * time * offlineEarningRate / 100f;
+            value = value * ObscuredPrefs.GetFloat("offlineEarnTycoonBoosts", 1) * ObscuredPrefs.GetFloat("offliceEarnVip", 1);
+            valueTxt.text = value.ToString("0.##");
+            if (value > 0)
+            {
+                gameObject.SetActive(true);//پنل آفلاین بدست آوردن سکه را فعال می کند
+            }
         }
     }
 

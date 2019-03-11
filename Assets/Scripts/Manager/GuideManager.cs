@@ -2,20 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 using CodeStage.AntiCheat.ObscuredTypes;
+using UnityEngine.UI;
+
 public class GuideManager : MonoBehaviour
 {
     public GameObject panelLockGuide, btnBuyCar, buyGuide, mergeGuide, startDriveGuide,
         ClosePanelMergeGuide, btnCloseMerge, returnPanelGuide, openBoxGuide,
-        mergeGuide2, imgDriver, imgPanelText, txtStep10, btnStep10;
+        mergeGuide2, imgDriver, imgPanelText, txtStep10, btnStep10,
+        btnStep, btnStep2, txtStep1, txtStep2,
+        txtStep11, btnStep11,
+        openPanelExChange, token,
+        btnShop, openShopGuide,
+        panelShopCar, coin, playerLevel, btnOther, otherItemGuide,
+        btnBuyShopItem, buyItemGuide;
+    public ShopPanel shopPanel;
+    public ShopItemEarn shopItemEarn;
+    public ShopItemOff shopItemOff;
     public Controller controller;
     [HideInInspector]
     public List<ParkingPlace> parkPlace = new List<ParkingPlace>();
-    public bool enableHelp = true;
-    void Start()
-    {
-        if (!enableHelp)
-            ObscuredPrefs.SetInt("helpStep", 22);
-    }
     public void PlusStep()
     {
         ObscuredPrefs.SetInt("helpStep", ObscuredPrefs.GetInt("helpStep", 0) + 1);
@@ -113,4 +118,135 @@ public class GuideManager : MonoBehaviour
             PlusStep();
         }
     }
+
+    public void Step(int level)
+    {
+        switch (level)
+        {
+            case 0:
+                panelLockGuide.SetActive(true);
+                break;
+            case 1:
+                btnStep.SetActive(false);
+                btnStep2.SetActive(true);
+                txtStep1.SetActive(false);
+                txtStep2.SetActive(true);
+                break;
+            case 2:
+                imgPanelText.SetActive(false);
+                imgDriver.SetActive(false);
+                txtStep2.SetActive(false);
+                txtStep10.SetActive(true);
+                btnStep2.SetActive(false);
+                buyGuide.SetActive(true);
+                btnBuyCar.SetActive(true);
+                break;
+            case 3:
+                controller.parkingManager.DisableCarInPark();
+                break;
+            case 4:
+                btnBuyCar.SetActive(false);
+                buyGuide.SetActive(false);
+                mergeGuide.SetActive(true);
+                controller.parkingManager.EnableCarInPark();
+                break;
+            case 5:
+                mergeGuide.SetActive(false);
+                ObscuredPrefs.SetInt("helpStep", 6);
+                startDriveGuide.SetActive(true);
+                break;
+            case 6:
+                startDriveGuide.SetActive(false);
+                returnPanelGuide.SetActive(true);
+                ObscuredPrefs.SetInt("helpStep", 7);
+                break;
+            case 7:
+                startDriveGuide.SetActive(false);
+                returnPanelGuide.SetActive(true);
+                break;
+            case 8:
+                returnPanelGuide.SetActive(false);
+                ObscuredPrefs.SetInt("helpStep", 9);
+                mergeGuide2.SetActive(true);
+                break;
+            case 9:
+                mergeGuide2.SetActive(true);
+                break;
+            case 10:
+                ObscuredPrefs.SetInt("helpStep", 11);
+                mergeGuide2.SetActive(false);
+                startDriveGuide.SetActive(true);
+                break;
+            case 11:
+                mergeGuide2.SetActive(false);
+                startDriveGuide.SetActive(true);
+                break;
+            case 12:
+                ObscuredPrefs.SetInt("helpStep", 12);
+                startDriveGuide.SetActive(false);
+                imgDriver.SetActive(true);
+                imgPanelText.SetActive(true);
+                txtStep10.SetActive(true);
+                btnStep10.SetActive(true);
+                break;
+            case 13:
+                ObscuredPrefs.SetInt("helpStep", 13);
+                txtStep10.SetActive(false);
+                btnStep10.SetActive(false);
+                txtStep11.SetActive(true);
+                btnStep11.SetActive(true);
+                break;
+            case 14:
+                ObscuredPrefs.SetInt("helpStep", 14);
+                imgPanelText.SetActive(false);
+                imgDriver.SetActive(false);
+                btnStep11.SetActive(false);
+                txtStep11.SetActive(false);
+                gameObject.SetActive(true);
+                openPanelExChange.SetActive(true);
+                token.SetActive(true);
+                break;
+            case 15:
+                ObscuredPrefs.SetInt("helpStep", 14);
+                imgPanelText.SetActive(false);
+                imgDriver.SetActive(false);
+                btnStep11.SetActive(false);
+                txtStep11.SetActive(false);
+                gameObject.SetActive(true);
+                openPanelExChange.SetActive(true);
+                token.SetActive(true);
+                break;
+            case 16:
+                openPanelExChange.SetActive(false);
+                token.SetActive(false);
+                ObscuredPrefs.SetInt("helpStep", 16);
+                btnShop.SetActive(true);
+                openShopGuide.SetActive(true);
+                break;
+            case 17:
+                ObscuredPrefs.SetInt("helpStep", 17);
+                panelShopCar.SetActive(true);
+                shopPanel.UpdateCarItems();
+                coin.SetActive(true);
+                playerLevel.SetActive(false);
+                controller.parkingManager.DisableCarInPark();
+                shopPanel.OpenPanel();
+                btnShop.SetActive(false);
+                openShopGuide.SetActive(false);
+                btnOther.SetActive(true);
+                otherItemGuide.SetActive(true);
+                break;
+            case 18:
+                ObscuredPrefs.SetInt("helpStep", 18);
+                shopPanel.BtnSelect(false);
+                shopItemEarn.OpenPanel();
+                shopItemOff.OpenPanel();
+                otherItemGuide.SetActive(false);
+                btnOther.SetActive(false);
+                btnBuyShopItem.SetActive(true);
+                buyItemGuide.SetActive(true);
+                break;
+        }
+    }
+
 }
