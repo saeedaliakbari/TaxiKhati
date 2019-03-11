@@ -45,7 +45,7 @@ public class Controller : MonoBehaviour
     public string[] carName;
     public Sprite[] activeCar;
     public Sprite[] inActiveCar;
-    public float[] earning;
+    public string[] earning;
     public float[] speed;
     public float[] basePrice; public int[] increaseRate;
     public float[] baseGemPrice;

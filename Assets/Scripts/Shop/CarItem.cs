@@ -6,8 +6,9 @@ using UnityEngine.UI;
 
 public class CarItem : MonoBehaviour
 {
-    public Image car, earnSlider, speedSlider, imgLock, imgOff;
-    public Text txtCoin, txtGem, txtName, txtOff;
+    public Image car, /*earnSlider, speedSlider,*/ imgLock, imgOff;
+    public Text txtCoin, txtGem, txtName, txtOff, txtEarn;
+    public TrimNumberText txtTrimEarn;
     public Button btnBuyCoin, btnBuyGem, btnVideo;
     [HideInInspector]
     public Button btnBuyCore;
@@ -23,8 +24,10 @@ public class CarItem : MonoBehaviour
         bool open = i < ObscuredPrefs.GetInt("unlocked_car", 1);
         txtName.text = open ? controller.carName[index] : "???";
         car.sprite = open ? controller.activeCar[index] : controller.inActiveCar[index];//با توجه به فعال یا غیرفعال بودن اسپرایت فعال یا غیرفعال می شود
-        earnSlider.fillAmount = controller.earning[index]/* / controller.earning[49]*/;
-        speedSlider.fillAmount = controller.speed[index] / controller.speed[49];
+        //earnSlider.fillAmount = controller.earning[index]/* / controller.earning[49]*/;
+        //speedSlider.fillAmount = controller.speed[index] / controller.speed[49];
+        txtTrimEarn.text = (double.Parse(controller.earning[index]) / controller.speed[index]).ToString("0.##");
+        txtEarn.text = "ﻪﯿﻧﺎﺛ / " + txtTrimEarn.text;
         int coinSalable = lastSalableLevel - defrenceLastSalableLevel;
         bool coin = index < coinSalable;
         bool video = false;
