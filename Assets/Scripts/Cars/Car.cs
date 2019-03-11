@@ -14,9 +14,9 @@ public class Car : MonoBehaviour
     public TrimNumberText txtCoin;
     [HideInInspector]
     public bool moving = false;
-    [HideInInspector]
+    //[HideInInspector]
     public ParkingPlace parkingPlace;
-    [HideInInspector]
+    //[HideInInspector]
     public Controller controller;
     public MoveCar moveCarPrefab;
     public AudioSource audioSource;
@@ -36,9 +36,29 @@ public class Car : MonoBehaviour
             GetComponent<SpriteRenderer>().sortingOrder = 21;//برای اینکه روی بقیه آبجکت ها قرار گیرد
         }
     }
+    private void OnMouseDown()
+    {
+        for (int i = 0; i < controller.parkingManager.places.Count; i++)
+        {
+            if (controller.parkingManager.places[i].GetCar() != null)
+            {
+                if (controller.parkingManager.places[i].GetCar().level == level)
+                {
+                    if (controller.parkingManager.places[i] != parkingPlace)
+                    {
+                        controller.parkingManager.places[i].helpPlace.SetActive(true);
+                    }
+                }
+            }
 
+        }
+    }
     private void OnMouseUp()//کشیدن را تمام کرد
     {
+        for (int i = 0; i < controller.parkingManager.places.Count; i++)
+        {
+            controller.parkingManager.places[i].helpPlace.SetActive(false);
+        }
         //Debug.Log("On Mouse Up "+moving+":>>"+ controller.IsDialogShowed());
         if (controller.IsDialogShowed()) return;//اگر پنلی فعال باشد در صفحه امکان درگ کردن نباشد
 
@@ -62,7 +82,7 @@ public class Car : MonoBehaviour
                             //Homecontroller.guideManager.UpdateAfter(1);
                             ObscuredPrefs.SetInt("mergeCarForVideo", ObscuredPrefs.GetInt("mergeCarForVideo", 1) + 1);
                             GetComponent<Animator>().Play("Merge");//انیمیشن مرج اجرا شود
-      
+
                             GetComponent<SpriteRenderer>().enabled = false;
                             car2.gameObject.SetActive(false);
                             int unlockedLevel = ObscuredPrefs.GetInt("unlocked_car", 1);

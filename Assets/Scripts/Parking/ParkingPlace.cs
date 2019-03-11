@@ -6,9 +6,10 @@ public class ParkingPlace : MonoBehaviour
     public Animator animLight;
     public GameObject objBack;
     public MoveXP XPTrail;
+    public GameObject helpPlace;
     public Car GetCar()
     {//اگر ماشینی داخل این پارکینگ باشد اونو برمیگردونه
-        if (transform.childCount > 0 && transform.GetChild(2).tag == "Car")
+        if (transform.childCount > 2 && transform.GetChild(2).tag == "Car")
         {
             return transform.GetChild(2).GetComponent<Car>();
         }
@@ -17,7 +18,7 @@ public class ParkingPlace : MonoBehaviour
 
     public GiftBox GetBox()//اگر باکسی داخل این پارکینگ هست را برمیگردارند
     {
-        if (transform.childCount > 0 && transform.GetChild(2).tag == "Box")
+        if (transform.childCount > 2 && transform.GetChild(2).tag == "Box")
         {
             return transform.GetChild(2).GetComponent<GiftBox>();
         }
@@ -31,7 +32,7 @@ public class ParkingPlace : MonoBehaviour
 
     public void CheckAutoOpenGift()//بصورت اتوماتیک باز شود باکس داخل پارکینگ
     {
-        if (transform.childCount > 0 && transform.GetChild(2).tag == "Box")
+        if (transform.childCount > 2 && transform.GetChild(2).tag == "Box")
         {
             transform.GetChild(2).GetComponent<GiftBox>().StartAutoOpen();
         }
