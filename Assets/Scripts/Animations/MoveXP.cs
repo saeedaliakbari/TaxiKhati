@@ -12,6 +12,9 @@ public class MoveXP : MonoBehaviour
     public GameObject MyGameObject;
     public GameObject Trail;
 
+
+    private bool Imulator = false;
+
     float HypotenuseLength(float sideALength, float sideBLength)
     {
         return Mathf.Sqrt(sideALength * sideALength + sideBLength * sideBLength);
@@ -26,6 +29,7 @@ public class MoveXP : MonoBehaviour
         Trail.SetActive(false);
         this.transform.localPosition = new Vector3(0, -0.3f, 0);
         Trail.SetActive(true);
+        Imulator = false;
         StartCoroutine(waitForMergeAnim());
 
     }
@@ -43,8 +47,12 @@ public class MoveXP : MonoBehaviour
         }
         else if (this.Arrived())
         {
-           
-            this.gameObject.SetActive(false);
+
+            if (!Imulator)
+            {
+                StartCoroutine(WaitForDeactive());
+            }
+            //this.gameObject.SetActive(false);
         }
 
     }
@@ -59,5 +67,13 @@ public class MoveXP : MonoBehaviour
         speed = 0;
         yield return new WaitForSeconds(0.6f);
         speed = 150;
+    }
+
+    public IEnumerator WaitForDeactive()
+    {
+        Imulator = true;
+        yield return new  WaitForSeconds(1f);
+        Imulator = false;
+        this.gameObject.SetActive(false);
     }
 }
