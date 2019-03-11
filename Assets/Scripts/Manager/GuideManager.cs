@@ -13,14 +13,8 @@ public class GuideManager : MonoBehaviour
     public bool enableHelp = true;
     void Start()
     {
-        if (enableHelp)
-        {
-            ObscuredPrefs.SetInt("helpStep", 0);
-        }
-        else
-        {
+        if (!enableHelp)
             ObscuredPrefs.SetInt("helpStep", 22);
-        }
     }
     public void PlusStep()
     {
