@@ -26,6 +26,7 @@ public class MoveXP : MonoBehaviour
         Trail.SetActive(false);
         this.transform.localPosition = new Vector3(0, -0.3f, 0);
         Trail.SetActive(true);
+        StartCoroutine(waitForMergeAnim());
 
     }
 
@@ -52,5 +53,11 @@ public class MoveXP : MonoBehaviour
         if (target.position == transform.position)
             return true;
         return false;
+    }
+    public IEnumerator waitForMergeAnim()
+    {
+        speed = 0;
+        yield return new WaitForSeconds(0.6f);
+        speed = 150;
     }
 }
