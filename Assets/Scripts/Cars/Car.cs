@@ -99,8 +99,8 @@ public class Car : MonoBehaviour
                             //باید مقدار افزوده شدن ایکس پی اضافه شود
                             //Debug.Log("XP: " + ObscuredPrefs.GetInt("Xp", 0));
                             ObscuredPrefs.SetInt("Xp", ObscuredPrefs.GetInt("Xp", 0) + xp);
-                            parkingPlace.XPTrail.target = controller.XpBarTranform;
-                            parkingPlace.XPTrail.MyGameObject.SetActive(true);
+                            nearPlace.XPTrail.target = controller.XpBarTranform;
+                            nearPlace.XPTrail.MyGameObject.SetActive(true);
                             //Debug.Log("XP: " + ObscuredPrefs.GetInt("Xp", 0));
                             controller.playerLevel.UpdateProgress(/*(int)Mathf.Pow(1.5f, level)*/);//مقدار ایکس و لول ست شود
 

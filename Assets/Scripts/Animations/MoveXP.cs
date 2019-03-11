@@ -24,7 +24,7 @@ public class MoveXP : MonoBehaviour
     private void OnEnable()
     {
         Trail.SetActive(false);
-        this.transform.position = new Vector3(0, 0, 0);
+        this.transform.localPosition = new Vector3(0, -0.3f, 0);
         Trail.SetActive(true);
 
     }
