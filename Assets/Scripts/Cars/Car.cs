@@ -61,7 +61,7 @@ public class Car : MonoBehaviour
     private void OnMouseUp()//کشیدن را تمام کرد
     {
         Manager.SetActionTime("helpBuyCar", Manager.GetCurrentTime() + 30);
-        Manager.SetActionTime("helpRunCar", Manager.GetCurrentTime() + 30);
+        Manager.SetActionTime("helpRunCar", Manager.GetCurrentTime() + 40);
         for (int i = 0; i < controller.parkingManager.places.Count; i++)
         {
             controller.parkingManager.places[i].helpPlace.SetActive(false);

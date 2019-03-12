@@ -183,7 +183,6 @@ public class RunSlotManager : MonoBehaviour
 
         for (int i = 0; i <= (listSlot.Count + 2); i++)
         {
-            Debug.Log("i for =======>" + i);
             for (int j = 0; j < listSlot.Count; j++)
             {
                 listSlot[j].changeSprite(false, false);

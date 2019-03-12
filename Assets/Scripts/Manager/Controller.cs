@@ -836,6 +836,7 @@ public class Controller : MonoBehaviour
     {
         while (Manager.GetCurrentTime() < Manager.GetActionTime("helpBuyCar"))
         {
+            //Debug.Log("Help Buy Car timing: " + Manager.GetCurrentTime() + " / " + Manager.GetActionTime("helpBuyCar"));
             yield return new WaitForSeconds(1f);
         }
         for (int i = 0; i < parkingManager.places.Count; i++)
@@ -846,6 +847,7 @@ public class Controller : MonoBehaviour
                 if (ObscuredPrefs.GetDouble("coin", 21000) >= ObscuredPrefs.GetDouble("car_price_" + index, System.Math.Round(basePrice[index])))
                 {
                     hand.SetActive(true);
+                    break;
                 }
             }
         }
