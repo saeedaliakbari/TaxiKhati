@@ -24,13 +24,14 @@ public class Controller : MonoBehaviour
     public SettingPanel settingPanel;
     public CafeIntent cafeIntent;
     public AudioSource audioSourceCore, audioSourceCoreFast;
+    public MoveAnim moveAnimHandRun;
     //public ShopDialog shop;
     //public ExchangeSpeedDialog exchangeDialog;
     public MergeCar mergeCar;
     public SpeedPanel speedPanel;
     public LevelUpBonus levelBonus;
     public GameObject deleteBin, panelMessage, panelShopGem, btnVip, btnGoToVipPanelMessage;
-    public GameObject coinEffectPrefab, panelSplash, panelWait, panelNoGem, objSpeed, objEarning;
+    public GameObject coinEffectPrefab, panelSplash, panelWait, panelNoGem, objSpeed, objEarning, hand, handRun;
     public OfflineEraning offEarning;
     public Text txtGem, txtSpeed, txtEarning;
     public TrimNumberText txtCoin, txtCoinTop;
@@ -66,7 +67,6 @@ public class Controller : MonoBehaviour
         ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 21000));
         ObscuredPrefs.SetDouble("token", ObscuredPrefs.GetDouble("token", 0) /*+ 100000000000*/);
         SetText();
-
     }
     public void SetText()
     {
@@ -147,6 +147,8 @@ public class Controller : MonoBehaviour
         InitGame();
         LoadGame();
         NewCarTimeing();
+        HelpBuyCarTiming();
+        HelpRunCar();
         GiftDaily();//اگر عضو بود بهش الماس روزانه میدهد
                     //Timer.Schedule(this, 5f, () =>
                     //{
@@ -434,7 +436,7 @@ public class Controller : MonoBehaviour
             {
                 Debug.Log("parkPlace Is Empty");
                 SpawnABox(index - 1, parkPlace, 1);
-                NewCarTimeing();
+                //NewCarTimeing();
             }
             else
             {
@@ -476,7 +478,7 @@ public class Controller : MonoBehaviour
             {
                 Debug.Log("parkPlace Is Empty");
                 SpawnABox(index - 1, parkPlace, 1);
-                NewCarTimeing();
+                //NewCarTimeing();
             }
             else
             {
@@ -749,7 +751,7 @@ public class Controller : MonoBehaviour
     {
         int random = UnityEngine.Random.Range(4, 7);
         Debug.Log("Vasiat Tablighat removeAds: " + ObscuredPrefs.GetInt("removeAds", 0));
-        if (ObscuredPrefs.GetInt("removeAds", 0) == 0)//اگر تبلیغات براش فعال بود   
+        if (ObscuredPrefs.GetInt("removeAds", 0) == 0)//اگر تبلیغات براش فعال نبود   
         {
             Debug.Log("Tedad Bastan Shop : " + ObscuredPrefs.GetInt("countCloseShop", 1) + "<adad Random :" + random);
             if (ObscuredPrefs.GetInt("countCloseShop", 1) < random)//اگر کمتر از 3 بار پنل باز شده بود
@@ -823,6 +825,60 @@ public class Controller : MonoBehaviour
         speedPanel.imgProgress.fillAmount = 0;
         speedPanel.txtTimer.text = "00:00";
         yield return 0;
+    }
+    public void HelpBuyCarTiming()
+    {
+        Manager.SetActionTime("helpBuyCar", Manager.GetCurrentTime() + 30);
+        if (ObscuredPrefs.GetInt("helpStep", 0) == 22)
+            StartCoroutine(IEHelpBuyCarTiming());
+    }
+    private IEnumerator IEHelpBuyCarTiming()
+    {
+        while (Manager.GetCurrentTime() < Manager.GetActionTime("helpBuyCar"))
+        {
+            yield return new WaitForSeconds(1f);
+        }
+        for (int i = 0; i < parkingManager.places.Count; i++)
+        {
+            if (parkingManager.places[i].GetCar() == null)
+            {
+                int index = ObscuredPrefs.GetInt("curr_car_index", 0);
+                if (ObscuredPrefs.GetDouble("coin", 21000) >= ObscuredPrefs.GetDouble("car_price_" + index, System.Math.Round(basePrice[index])))
+                {
+                    hand.SetActive(true);
+                }
+            }
+        }
+        HelpBuyCarTiming();
+    }
+    public void HelpRunCar()
+    {
+        Manager.SetActionTime("helpRunCar", Manager.GetCurrentTime() + 40);
+        if (ObscuredPrefs.GetInt("helpStep", 0) == 22)
+            StartCoroutine(IEHelpRunCar());
+    }
+    private IEnumerator IEHelpRunCar()
+    {
+        while (Manager.GetCurrentTime() < Manager.GetActionTime("helpRunCar"))
+        {
+            yield return new WaitForSeconds(1f);
+        }
+        if (!slotManager.IsFull())
+        {
+            for (int i = 0; i < parkingManager.places.Count; i++)
+            {
+                if (parkingManager.places[i].GetCar() != null)
+                {
+                    if (!parkingManager.places[i].GetCar().moving)
+                    {
+                        moveAnimHandRun.startTarget = parkingManager.places[i].transform;
+                        handRun.SetActive(true);
+                        break;
+                    }
+                }
+            }
+        }
+        HelpRunCar();
     }
 }
 [System.Serializable]

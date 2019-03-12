@@ -238,6 +238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e542ee32870efb4e8489794b9bc9628, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transformCar: {fileID: 4318962873595452}
   level: 1
   xp: 11
   earnings: 26

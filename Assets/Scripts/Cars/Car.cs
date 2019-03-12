@@ -60,6 +60,8 @@ public class Car : MonoBehaviour
     }
     private void OnMouseUp()//کشیدن را تمام کرد
     {
+        Manager.SetActionTime("helpBuyCar", Manager.GetCurrentTime() + 30);
+        Manager.SetActionTime("helpRunCar", Manager.GetCurrentTime() + 30);
         for (int i = 0; i < controller.parkingManager.places.Count; i++)
         {
             controller.parkingManager.places[i].helpPlace.SetActive(false);
@@ -69,6 +71,7 @@ public class Car : MonoBehaviour
 
         if (!moving)//اگر ماشین درحال حرکت نبود
         {
+            controller.handRun.SetActive(false);
             ParkingPlace nearPlace = controller.parkingManager.GetNearestPlace(transform.position);//نزدیکترین مکان 
             //Debug.Log("!moving");
             if (nearPlace != null && nearPlace != parkingPlace)//اگر نزدیکترین مکان خالی نبود و با مکان فعلی یکسان نبود
@@ -218,6 +221,8 @@ public class Car : MonoBehaviour
     }
     public void StartDrive()//شروع حرکت
     {
+        
+        controller.handRun.SetActive(false);
         parkingPlace.objBack.SetActive(true);
         controller.colliderCarHelp = GetComponent<Collider2D>();
         controller.guideManager.StartDrive();

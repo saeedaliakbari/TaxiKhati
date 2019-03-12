@@ -189,7 +189,7 @@ public class VideoAds : MonoBehaviour
     private void GiftShopCar(int index)
     {
         controller.SpawnACarWithVideo(index);
-        shopPanel.BuyCarClick(index);
+        //shopPanel.BuyCarClick(index);
     }
     #endregion
     #region Btn Car Up

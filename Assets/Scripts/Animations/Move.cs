@@ -10,7 +10,6 @@ public class Move : MonoBehaviour
     public GameObject MoveTarget;
 
     [HideInInspector]
-
     public float speed;
     public Image MyImage;
     [HideInInspector]
