@@ -247,7 +247,7 @@ public class WheelFortuneScript : MonoBehaviour
             }
             videoAds.controller.txtPanelMessage.text = "به مدت 1 دقیقه در آمد شما 5 برابر شد";
             videoAds.controller.slotManager.UpdateEarningSpeedText();
-            videoAds.controller.EarningRatio();
+            StartCoroutine(videoAds.controller.IEEarningRatio());
         }
         else if (itemNumber == 2)
         {
@@ -260,7 +260,7 @@ public class WheelFortuneScript : MonoBehaviour
             }
             videoAds.controller.txtPanelMessage.text = "به مدت 150 ثانیه سرعت شما 2 برابر شد";
             videoAds.controller.slotManager.UpdateEarningSpeedText();
-            videoAds.controller.SpeedRatio();
+            StartCoroutine(videoAds.controller.IESpeedRatio());
         }
         else if (itemNumber == 3)
         {

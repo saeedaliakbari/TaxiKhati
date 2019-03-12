@@ -28635,7 +28635,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u062A\u0644\u06AF\u0631\u0627\u0645 4(       )"
+  m_Text: "\u062A\u0644\u06AF\u0631\u0627\u0645 4(      )"
 --- !u!222 &625906540
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -42078,6 +42078,8 @@ MonoBehaviour:
   otherItemGuide: {fileID: 1357907502}
   btnBuyShopItem: {fileID: 2094949916}
   buyItemGuide: {fileID: 1037802893}
+  btnStep19: {fileID: 2069203616}
+  txtStep19: {fileID: 1972695238}
   shopPanel: {fileID: 2074816524}
   shopItemEarn: {fileID: 2074816525}
   shopItemOff: {fileID: 2074816526}
@@ -51395,6 +51397,8 @@ MonoBehaviour:
   guideManager: {fileID: 905291734}
   settingPanel: {fileID: 1085018828}
   cafeIntent: {fileID: 987241135}
+  audioSourceCore: {fileID: 762322314}
+  audioSourceCoreFast: {fileID: 1020187694}
   mergeCar: {fileID: 1202044279}
   speedPanel: {fileID: 774480590}
   levelBonus: {fileID: 1066917862}
@@ -60801,7 +60805,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.92022, y: 0.0698}
+  m_AnchoredPosition: {x: -0.9128, y: 0.0698}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1260395146
@@ -76239,7 +76243,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u0627\u064A\u0633\u0646\u062A\u0627\u06AF\u0631\u0627\u0645 6(       )"
+  m_Text: "\u0627\u064A\u0646\u0633\u062A\u0627\u06AF\u0631\u0627\u0645 6(      )"
 --- !u!222 &1614427710
 CanvasRenderer:
   m_ObjectHideFlags: 0

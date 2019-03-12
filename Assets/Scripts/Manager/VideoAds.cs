@@ -369,7 +369,7 @@ public class VideoAds : MonoBehaviour
         Debug.Log("New Time : " + plusTime);
         Manager.SetActionTime("speed_x2", plusTime);
         controller.UpdateTimeSpeed2X();
-        controller.SpeedRatio();
+        StartCoroutine(controller.IESpeedRatio());
     }
     #endregion
     #region Close Shop Car

@@ -38,19 +38,24 @@ public class Car : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        for (int i = 0; i < controller.parkingManager.places.Count; i++)
+        if (!moving)
         {
-            if (controller.parkingManager.places[i].GetCar() != null)
+            for (int i = 0; i < controller.parkingManager.places.Count; i++)
             {
-                if (controller.parkingManager.places[i].GetCar().level == level)
+                if (controller.parkingManager.places[i].GetCar() != null)
                 {
-                    if (controller.parkingManager.places[i] != parkingPlace)
+                    if (controller.parkingManager.places[i].GetCar().level == level)
                     {
-                        controller.parkingManager.places[i].helpPlace.SetActive(true);
+                        if (controller.parkingManager.places[i].GetCar().moving == false)
+                        {
+                            if (controller.parkingManager.places[i] != parkingPlace)
+                            {
+                                controller.parkingManager.places[i].helpPlace.SetActive(true);
+                            }
+                        }
                     }
                 }
             }
-
         }
     }
     private void OnMouseUp()//کشیدن را تمام کرد
@@ -138,7 +143,7 @@ public class Car : MonoBehaviour
                     }
                     else//اگر ماشین داخل پارکینگ نزدیک نباشه یا در حال حرکت باشد
                     {
-                        nearPlace.objBack.SetActive(false);
+                        nearPlace.objBack.SetActive(true);
                         transform.position = parkingPlace.transform.position;//ماشین جابه جا نمی شود و به مکان اولیه برمیگردد
                         //Sound.instance.Play(Sound.Others.Unswap);
                     }
@@ -157,9 +162,9 @@ public class Car : MonoBehaviour
             {//اگر نزدیکترین مکانی تشخیص نداد یا اینکه ان مکان با مکان فعلی یکسان بود
                 if (!controller.slotManager.IsFull() /*جایگاه های استارت پر نباشد*/&& (Mathf.Abs(transform.position.x - controller.slotManager.transform.position.x) < 0.5f && Mathf.Abs(transform.position.y - controller.slotManager.transform.position.y) < 2f) /*Vector3.Distance(transform.position, controller.slotManager.transform.position) < 0.8f*//*فاصله اش تا جایگاه استارت کمتر از 0.5 باشد*/)
                 {//اگر گذاشته شود در نقطه استارت
-                    Debug.Log("parking : " + parkingPlace.objBack.activeSelf);
+                    //Debug.Log("parking : " + parkingPlace.objBack.activeSelf);
                     parkingPlace.objBack.SetActive(true);
-                    Debug.Log("parking : " + parkingPlace.objBack.activeSelf);
+                    //Debug.Log("parking : " + parkingPlace.objBack.activeSelf);
                     StartDrive();//شروع پرواز
                     //Sound.instance.Play(Sound.Others.Start);
                 }

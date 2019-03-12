@@ -27,7 +27,7 @@ public class SpecialOffer : MonoBehaviour
         specialOfferObj.transform.localScale = Vector3.one * 0.4f;//اسکیل ماشین در حال حرکت ایجاد شده
         specialOfferObj.transform.position = controller.slotManager.transform.position;//موقعیت ماشین درحال حرکت در مکان استارت قرار میگیرد
         specialOfferObj.specialOffer = this;
-        specialOfferObj.giftBox = (Random.Range(0, 10000) % 2 == 0);
+        specialOfferObj.giftBox = (Random.Range(0, 100) % 2 == 0);
         objGoldBox.SetActive(specialOfferObj.giftBox);
         objIncome.SetActive(!specialOfferObj.giftBox);
         specialOfferObj.DiverARound();//حرکت ماشین 

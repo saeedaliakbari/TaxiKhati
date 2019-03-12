@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using Batch;
 using CodeStage.AntiCheat.ObscuredTypes;
 using System;
-
 public class Controller : MonoBehaviour
 {
 
@@ -24,7 +23,7 @@ public class Controller : MonoBehaviour
     public GuideManager guideManager;
     public SettingPanel settingPanel;
     public CafeIntent cafeIntent;
-   
+    public AudioSource audioSourceCore, audioSourceCoreFast;
     //public ShopDialog shop;
     //public ExchangeSpeedDialog exchangeDialog;
     public MergeCar mergeCar;
@@ -55,13 +54,14 @@ public class Controller : MonoBehaviour
     public int[] lastSalableCoreLevel;
     public Transform XpBarTranform;///برای هدف پارتیکل میباشد
     private int def;
+    private Coroutine lastRoutineSpecialBox = null, lastRoutineWheelBox = null, lastRoutineTime = null;
     void Awake()
     {
         //Debug.Log(
         instance = this;
         ObscuredPrefs.SetInt("mainAchiv16", ObscuredPrefs.GetInt("mainAchiv16", 0) + 1);
         achivmentManager.OpenPanel();
-        ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem", 5)/*+1000000*/);
+        ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem", 5) /*+ 1000000*/);
         ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 21000));
         ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 21000));
         ObscuredPrefs.SetDouble("token", ObscuredPrefs.GetDouble("token", 0) /*+ 100000000000*/);
@@ -74,6 +74,16 @@ public class Controller : MonoBehaviour
         txtCoin.text = txtCoinTop.text = ObscuredPrefs.GetDouble("coin", 5000).ToString("0.##");
         txtGem.text = ObscuredPrefs.GetDouble("gem").ToString();
         videoAds.shopPanel.UpdateCarItems();
+    }
+    public IEnumerator IEEarningRatio()
+    {
+        while (EarningRatio() > 1)
+        {
+            EarningRatio();
+            yield return new WaitForSeconds(2f);
+        }
+        yield return new WaitForSeconds(2f);
+        EarningRatio();
     }
     public float EarningRatio()
     {
@@ -91,6 +101,21 @@ public class Controller : MonoBehaviour
         }
         return ratio;
     }
+    public IEnumerator IESpeedRatio()
+    {
+        while (SpeedRatio() > 1)
+        {
+            SpeedRatio();
+            audioSourceCore.Stop();
+            audioSourceCoreFast.Play();
+            yield return new WaitForSeconds(8f);
+            Debug.Log("speed2x");
+        }
+        yield return new WaitForSeconds(2f);
+        SpeedRatio();
+
+        Debug.Log("speed normal");
+    }
     public float SpeedRatio()
     {
         float ratio = Manager.GetCurrentTime() < Manager.GetActionTime("speed_x2") ? 2 : 1;
@@ -100,6 +125,8 @@ public class Controller : MonoBehaviour
         if (ratio == 1)
         {
             objSpeed.SetActive(false);
+            audioSourceCore.Play();
+            audioSourceCoreFast.Stop();
         }
         else
         {
@@ -125,8 +152,8 @@ public class Controller : MonoBehaviour
                     //{
         StartCoroutine(IESliderPanelSplash());
         UpdateTimeSpeed2X();// تایمر سرعت دوبرابر فعال شود
-        SpeedRatio();
-        EarningRatio();
+        StartCoroutine(IESpeedRatio());
+        StartCoroutine(IEEarningRatio());
         //}
         //);
     }
@@ -356,7 +383,7 @@ public class Controller : MonoBehaviour
         int taxiLvl = ObscuredPrefs.GetInt("unlocked_car", 1);
         int index = taxiLvl - UnityEngine.Random.Range(taxiDefferenceLvl[taxiLvl - 1].min, taxiDefferenceLvl[taxiLvl - 1].max);
         index = index > 0 ? index : 1;
-        Debug.Log("taxiLvl: " + ObscuredPrefs.GetInt("unlocked_car", 1) + " UNLOCK CAR : " + index);
+        //Debug.Log("taxiLvl: " + ObscuredPrefs.GetInt("unlocked_car", 1) + " UNLOCK CAR : " + index);
         try
         {
             if (parkPlace.IsEmpty())
@@ -368,13 +395,22 @@ public class Controller : MonoBehaviour
             else
             {
                 Debug.Log("Try new Place For Car time");
-                StartCoroutine(IESpawnABoxTime());
+                if (lastRoutineTime != null)
+                {
+                    StopCoroutine(lastRoutineTime);
+                }
+                lastRoutineTime = StartCoroutine(IESpawnABoxTime());
+
             }
         }
         catch (System.Exception)
         {
             Debug.Log("Catch New Spawn");
-            StartCoroutine(IESpawnABoxTime());
+            if (lastRoutineTime != null)
+            {
+                StopCoroutine(lastRoutineTime);
+            }
+            lastRoutineTime = StartCoroutine(IESpawnABoxTime());
         }
 
     }
@@ -403,13 +439,21 @@ public class Controller : MonoBehaviour
             else
             {
                 Debug.Log("Try new Place For Car time");
-                StartCoroutine(IESpawnABoxWheel());
+                if (lastRoutineWheelBox != null)
+                {
+                    StopCoroutine(lastRoutineWheelBox);
+                }
+                lastRoutineWheelBox = StartCoroutine(IESpawnABoxWheel());
             }
         }
         catch (System.Exception)
         {
             Debug.Log("Catch New Spawn");
-            StartCoroutine(IESpawnABoxWheel());
+            if (lastRoutineWheelBox != null)
+            {
+                StopCoroutine(lastRoutineWheelBox);
+            }
+            lastRoutineWheelBox = StartCoroutine(IESpawnABoxWheel());
         }
     }
     IEnumerator IESpawnABoxWheel()
@@ -437,15 +481,21 @@ public class Controller : MonoBehaviour
             else
             {
                 Debug.Log("Try new Place For Car time");
-                StartCoroutine(IESpawnABoxSpecialOffer());
-
+                if (lastRoutineSpecialBox != null)
+                {
+                    StopCoroutine(lastRoutineSpecialBox);
+                }
+                lastRoutineSpecialBox = StartCoroutine(IESpawnABoxSpecialOffer());
             }
         }
         catch (System.Exception)
         {
             Debug.Log("Catch New Spawn");
-            StartCoroutine(IESpawnABoxSpecialOffer());
-
+            if (lastRoutineSpecialBox != null)
+            {
+                StopCoroutine(lastRoutineSpecialBox);
+            }
+            lastRoutineSpecialBox = StartCoroutine(IESpawnABoxSpecialOffer());
         }
     }
     IEnumerator IESpawnABoxSpecialOffer()

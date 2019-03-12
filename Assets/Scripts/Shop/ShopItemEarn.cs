@@ -41,7 +41,7 @@ public class ShopItemEarn : MonoBehaviour
             int level = ObscuredPrefs.GetInt("upIncomeLevel", 0);
             ObscuredPrefs.SetFloat("incomeLine", upIncome[level - 1]);
             runSlotManager.UpdateEarningSpeedText();
-            controller.EarningRatio();
+            StartCoroutine(controller.IEEarningRatio());
             OpenPanel();
         }
         else

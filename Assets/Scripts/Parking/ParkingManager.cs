@@ -138,7 +138,7 @@ public class ParkingManager : MonoBehaviour
         ObscuredPrefs.SetFloat("carsSpeedTycoon", carSpeedTycoonBoosts.incSpeed[ObscuredPrefs.GetInt("carSpeedTycoonLevel", 0)]);
         ObscuredPrefs.SetInt("carSpeedTycoonLevel", ObscuredPrefs.GetInt("carSpeedTycoonLevel", 0) + 1);
         //txtCarSpeed.text = "Level Car Speed " + (ObscuredPrefs.GetInt("carSpeedTycoonLevel", 0) + 1);
-        controller.SpeedRatio();
+        StartCoroutine(controller.IESpeedRatio());
         PrintLevelsCarsInPark();
     }
     private void CheckOfflineEarningTycoon(int[] carsLevel)
