@@ -17,7 +17,7 @@ public class RunSlotManager : MonoBehaviour
 
     public TextMesh txtNum;
     private bool hasSpeedX2 = false;
-
+    private Coroutine lastRoutine = null;
     public double EarningPerSec
     {
         get
@@ -116,6 +116,7 @@ public class RunSlotManager : MonoBehaviour
                 countStartRun += 1;
         }
         txtNum.text = countStartRun + "/" + (ObscuredPrefs.GetInt("num_of_slot", 2) + ObscuredPrefs.GetInt("num_of_slot_vip", 0));
+        LineAnimation();
         //Debug.Log(countStartRun + "/" + (ObscuredPrefs.GetInt("num_of_slot", 2) + ObscuredPrefs.GetInt("num_of_slot_vip", 0)));
     }
     public void UpdateStartGoal()
@@ -128,6 +129,10 @@ public class RunSlotManager : MonoBehaviour
     public bool IsFull()//آیا جایگاه های استارت پر است؟
     {
         return numRun == listSlot.Count;
+    }
+    public bool IsEmpty()
+    {
+        return numRun == 0;
     }
     public void RunACar(double earning)//تابع هنگام حرکت کردن یک ماشین فراخوانی می شود جهت آپدیت شدن بدست آوردن سکه و هچنین ایستگاه های شروع
     {
@@ -158,43 +163,52 @@ public class RunSlotManager : MonoBehaviour
 
     public void LineAnimation()
     {
-        if (true) ///// اگر لاین خالی بود
+        if (IsEmpty()) ///// اگر لاین خالی بود
         {
-            StartCoroutine(LineAnimator());
+            if (lastRoutine != null)
+            {
+                StopCoroutine(lastRoutine);
+            }
+            lastRoutine = StartCoroutine(LineAnimator());
         }
+        else
+        {
+            StopCoroutine(lastRoutine);
+        }
+
     }
 
     public IEnumerator LineAnimator()
     {
 
-        for (int i = 0; i <= (listSlot.Count+2); i++)
+        for (int i = 0; i <= (listSlot.Count + 2); i++)
         {
-            Debug.Log("i for =======>"+i);
+            Debug.Log("i for =======>" + i);
             for (int j = 0; j < listSlot.Count; j++)
             {
                 listSlot[j].changeSprite(false, false);
             }
 
-            if (i<=(listSlot.Count-1))
+            if (i <= (listSlot.Count - 1))
             {
                 listSlot[i].changeSprite(true, false);
             }
-            
-            if (i>=1 && i<=listSlot.Count)
+
+            if (i >= 1 && i <= listSlot.Count)
             {
                 listSlot[i - 1].changeSprite(true, true);
             }
 
-            if (i>=2 && i<=(listSlot.Count+1))
+            if (i >= 2 && i <= (listSlot.Count + 1))
             {
                 listSlot[i - 2].changeSprite(true, false);
             }
-            
-            
+
+
             yield return new WaitForSeconds(0.1f);
         }
 
-       
+
         LineAnimation();
 
 
