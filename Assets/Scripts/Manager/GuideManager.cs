@@ -14,7 +14,7 @@ public class GuideManager : MonoBehaviour
         openPanelExChange, token,
         btnShop, openShopGuide,
         panelShopCar, coin, playerLevel, btnOther, otherItemGuide,
-        btnBuyShopItem, buyItemGuide;
+        btnBuyShopItem, buyItemGuide, btnStep19, txtStep19;
     public ShopPanel shopPanel;
     public ShopItemEarn shopItemEarn;
     public ShopItemOff shopItemOff;
@@ -237,15 +237,43 @@ public class GuideManager : MonoBehaviour
                 otherItemGuide.SetActive(true);
                 break;
             case 18:
-                ObscuredPrefs.SetInt("helpStep", 18);
-                shopPanel.BtnSelect(false);
-                shopItemEarn.OpenPanel();
-                shopItemOff.OpenPanel();
-                otherItemGuide.SetActive(false);
-                btnOther.SetActive(false);
-                btnBuyShopItem.SetActive(true);
-                buyItemGuide.SetActive(true);
+                ObscuredPrefs.SetInt("helpStep", 17);
+                panelShopCar.SetActive(true);
+                shopPanel.UpdateCarItems();
+                coin.SetActive(true);
+                playerLevel.SetActive(false);
+                controller.parkingManager.DisableCarInPark();
+                shopPanel.OpenPanel();
+                btnShop.SetActive(false);
+                openShopGuide.SetActive(false);
+                btnOther.SetActive(true);
+                otherItemGuide.SetActive(true);
                 break;
+            case 19:
+                ObscuredPrefs.SetInt("helpStep", 20);
+                panelShopCar.SetActive(false);
+                coin.SetActive(false);
+                playerLevel.SetActive(true);
+                btnStep19.SetActive(true);
+                imgDriver.SetActive(true);
+                txtStep19.SetActive(true);
+                btnOther.SetActive(false);
+                otherItemGuide.SetActive(false);
+                break;
+            case 20:
+                ObscuredPrefs.SetInt("helpStep", 21);
+                panelShopCar.SetActive(false);
+                coin.SetActive(false);
+                playerLevel.SetActive(true);
+                imgPanelText.SetActive(true);
+                btnStep19.SetActive(true);
+                imgDriver.SetActive(true);
+                txtStep19.SetActive(true);
+                btnOther.SetActive(false);
+                otherItemGuide.SetActive(false);
+                controller.parkingManager.EnableCarInPark();
+                break;
+
         }
     }
 
