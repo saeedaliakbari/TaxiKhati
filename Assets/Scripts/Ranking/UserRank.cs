@@ -8,4 +8,5 @@ public class UserRank : MonoBehaviour
     public Text txtName;
     public Text txtCoin;
     public Image imgMedal;
+    public GameObject objRename;
 }

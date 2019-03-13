@@ -26,7 +26,9 @@ public class AchivmentManager : MonoBehaviour
         lblNew.SetActive(false);
         for (int i = 0; i < achivments.Length; i++)
         {
-            if (ObscuredPrefs.GetInt(achivmentPrefs + i, 0) >= achivments[i].max)//unlock
+            if (ObscuredPrefs.GetInt(achivmentPrefs + "Get" + i, 0) == 1)//geted
+            { }
+            else if (ObscuredPrefs.GetInt(achivmentPrefs + i, 0) >= achivments[i].max)//unlock
             {
                 lblNew.SetActive(true);
             }

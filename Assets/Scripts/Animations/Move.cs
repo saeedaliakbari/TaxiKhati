@@ -34,7 +34,7 @@ public class Move : MonoBehaviour
             MyImage.sprite = cup.sprite;
 
             //cup.color = new Color(1, 1, 1, 0);
-            NewIteamText.text = "رتبه بندی";
+            NewIteamText.text = "رتبه بندي";
 
 
         }
