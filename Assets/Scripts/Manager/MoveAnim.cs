@@ -16,11 +16,11 @@ public class MoveAnim : MonoBehaviour
         if (!Arrived())
         {
             transform.position = Vector2.MoveTowards(new Vector2(transform.position.x, transform.position.y), MoveTarget.transform.position, 5 * Time.deltaTime);
-            Debug.Log(transform.position + "/ " + MoveTarget.transform.position);
+            //Debug.Log(transform.position + "/ " + MoveTarget.transform.position);
         }
         else
         {
-            Debug.Log("arrived");
+            //Debug.Log("arrived");
             StartCoroutine(IEwait());
         }
     }
@@ -34,7 +34,7 @@ public class MoveAnim : MonoBehaviour
     {
         yield return new WaitForSeconds(0.7f);
         transform.position = new Vector2(startTarget.position.x + 0.3f, startTarget.position.y - 0.3f);
-        Debug.Log("Done Wait :" + transform.position);
+        //Debug.Log("Done Wait :" + transform.position);
     }
 
 }

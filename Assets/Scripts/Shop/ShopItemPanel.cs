@@ -12,7 +12,7 @@ public class ShopItemPanel : MonoBehaviour
     public void OpenPanel()
     {
         earnPerSec = controller.slotManager.earnPerSec;
-        Debug.Log("earnPerSec: " + earnPerSec);
+        //Debug.Log("earnPerSec: " + earnPerSec);
         txtPack1.text = (earnPerSec * 4 * 60 * 60).ToString("0.##");
         txtPack2.text = (earnPerSec * 24 * 60 * 60).ToString("0.##");
         txtPack3.text = (earnPerSec * 24 * 4 * 60 * 60).ToString("0.##");
@@ -21,7 +21,7 @@ public class ShopItemPanel : MonoBehaviour
     {
         if (ObscuredPrefs.GetDouble("gem") >= Gem)
         {
-            Debug.Log("Buy Time");
+            //Debug.Log("Buy Time");
             int houers = 4;
             if (Gem == 225)
             {
@@ -31,7 +31,7 @@ public class ShopItemPanel : MonoBehaviour
             {
                 houers = 48;
             }
-            //Debug.Log("Plus Coin : " + runSlotManager.earnPerSec * houers * 60 * 60 + ">>" + controller.txtCoin.text);
+            ////Debug.Log("Plus Coin : " + runSlotManager.earnPerSec * houers * 60 * 60 + ">>" + controller.txtCoin.text);
             ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) + (earnPerSec * houers * 60 * 60));
             ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 0) + (earnPerSec * houers * 60 * 60));
             ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem") - Gem);

@@ -186,7 +186,7 @@ public class Car : MonoBehaviour
         else//اگر ماشین در حال حرکت بود
         {
             parkingPlace.objBack.SetActive(false);
-            Debug.Log("Not Move" + moveCar.returning);
+            //Debug.Log("Not Move" + moveCar.returning);
             if (!moveCar.returning)
             {
                 controller.guideManager.ReturnCar();
@@ -203,7 +203,7 @@ public class Car : MonoBehaviour
         audioSource.clip = trash;
         audioSource.Play();
         //CurrencyController.CreditBalance(0, Mathf.RoundToInt(Superpow.Utils.GetPrice(level - 1) * 0.5f));
-        Debug.Log("base{rice : " + controller.basePrice[level - 1]);
+        //Debug.Log("base{rice : " + controller.basePrice[level - 1]);
         ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) + controller.basePrice[level - 1]);
         controller.SetText();
         controller.ShowCoinEffect(controller.deleteBin.transform.position);//در موقعیت سطل آشغال یک افکت سکه ایجاد می کند

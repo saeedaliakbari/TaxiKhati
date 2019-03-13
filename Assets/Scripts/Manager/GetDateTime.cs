@@ -12,12 +12,12 @@ public class GetDateTime : MonoBehaviour
     {
         if (Application.internetReachability == NetworkReachability.NotReachable)
         {
-            Debug.Log("net is not reachable");
+            //Debug.Log("net is not reachable");
             nowTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
             callback(nowTime);
         }
         else {
-            Debug.Log("internet is reachable");
+            //Debug.Log("internet is reachable");
             WWW www = new WWW(urlTime);
             yield return www;
             if (string.IsNullOrEmpty(www.error))

@@ -46,9 +46,9 @@ public class VideoAds : MonoBehaviour
             LoadAd(zoneOfflineEarning, true);
             controller.parkingManager.DisableCarInPark();
             controller.panelWait.SetActive(true);
-            Debug.Log("Wait");
+            //Debug.Log("Wait");
             yield return new WaitForSeconds(8f);
-            Debug.Log("Wait Done");
+            //Debug.Log("Wait Done");
             controller.panelWait.SetActive(false);
             controller.parkingManager.EnableCarInPark();
         }
@@ -70,13 +70,13 @@ public class VideoAds : MonoBehaviour
                 }
             );
         }
-        else
-        {
+        //else
+        //{
 
-            Debug.Log("Error");
-            //panelError.SetActive(true);
-            //txtPanelError.text = "خطا در لود ویدئو";
-        }
+        //    //Debug.Log("Error");
+        //    //panelError.SetActive(true);
+        //    //txtPanelError.text = "خطا در لود ویدئو";
+        //}
     }
     private void GiftDoubleOfflineEarn()
     {
@@ -101,9 +101,9 @@ public class VideoAds : MonoBehaviour
             LoadAd(zoneGiftPanel, true);
             controller.parkingManager.DisableCarInPark();
             controller.panelWait.SetActive(true);
-            Debug.Log("Wait");
+            //Debug.Log("Wait");
             yield return new WaitForSeconds(8f);
-            Debug.Log("Wait Done");
+            //Debug.Log("Wait Done");
             controller.panelWait.SetActive(false);
             controller.parkingManager.EnableCarInPark();
         }
@@ -150,9 +150,9 @@ public class VideoAds : MonoBehaviour
             LoadAd(zoneShopCar, true);
             controller.parkingManager.DisableCarInPark();
             controller.panelWait.SetActive(true);
-            Debug.Log("Wait");
+            //Debug.Log("Wait");
             yield return new WaitForSeconds(8f);
-            Debug.Log("Wait Done");
+            //Debug.Log("Wait Done");
 
         }
         if (ObscuredPrefs.GetInt(zoneShopCar.zoneId) == 1)
@@ -204,9 +204,9 @@ public class VideoAds : MonoBehaviour
             LoadAd(zoneCarUp, true);
             controller.parkingManager.DisableCarInPark();
             controller.panelWait.SetActive(true);
-            Debug.Log("Wait");
+            //Debug.Log("Wait");
             yield return new WaitForSeconds(8f);
-            Debug.Log("Wait Done");
+            //Debug.Log("Wait Done");
 
         }
         if (ObscuredPrefs.GetInt(zoneCarUp.zoneId) == 1)
@@ -263,7 +263,7 @@ public class VideoAds : MonoBehaviour
         {
             controller.txtPanelMessage.text = "فرصت ویدئویي رایگان وجود ندارد";
             controller.panelMessage.SetActive(true);
-            Debug.Log("Bayad Ta Zaman Baz Shodan Video Sabr Konid");
+            //Debug.Log("Bayad Ta Zaman Baz Shodan Video Sabr Konid");
         }
 
     }
@@ -274,9 +274,9 @@ public class VideoAds : MonoBehaviour
             controller.parkingManager.DisableCarInPark();
             LoadAd(zoneWheelOfFurtune, true);
             controller.panelWait.SetActive(true);
-            Debug.Log("Wait");
+            //Debug.Log("Wait");
             yield return new WaitForSeconds(8f);
-            Debug.Log("Wait Done");
+            //Debug.Log("Wait Done");
 
         }
         if (ObscuredPrefs.GetInt(zoneWheelOfFurtune.zoneId) == 1)
@@ -322,9 +322,9 @@ public class VideoAds : MonoBehaviour
             LoadAd(zoneSpeedX2, true);
             controller.parkingManager.DisableCarInPark();
             controller.panelWait.SetActive(true);
-            Debug.Log("Wait");
+            //Debug.Log("Wait");
             yield return new WaitForSeconds(8f);
-            Debug.Log("Wait Done");
+            //Debug.Log("Wait Done");
 
         }
         if (ObscuredPrefs.GetInt(zoneSpeedX2.zoneId) == 1)
@@ -363,10 +363,10 @@ public class VideoAds : MonoBehaviour
         {
             plus = 1800 - timeValue;
         }
-        Debug.Log("plus: " + plus + " time: " + timeValue);
+        //Debug.Log("plus: " + plus + " time: " + timeValue);
         double nowtime = Math.Round(Manager.GetCurrentTime());
         double plusTime = Math.Round(plus + timeValue + Manager.GetCurrentTime());
-        Debug.Log("New Time : " + plusTime);
+        //Debug.Log("New Time : " + plusTime);
         Manager.SetActionTime("speed_x2", plusTime);
         controller.UpdateTimeSpeed2X();
         StartCoroutine(controller.IESpeedRatio());
@@ -379,20 +379,20 @@ public class VideoAds : MonoBehaviour
     }
     IEnumerator IEBtnCloseShopCar()
     {
-        Debug.Log("Start Ejra Tabligh");
+        //Debug.Log("Start Ejra Tabligh");
         if (ObscuredPrefs.GetInt(zoneShopClose.zoneId) == 0)
         {
-            Debug.Log("Load Tablogh");
+            //Debug.Log("Load Tablogh");
             LoadAd(zoneShopClose, false);
             controller.parkingManager.DisableCarInPark();
-            controller.panelWait.SetActive(true);
-            Debug.Log("Wait");
+            //controller.panelWait.SetActive(true);
+            //Debug.Log("Wait");
             yield return new WaitForSeconds(8f);
-            Debug.Log("Wait Done");
+            //Debug.Log("Wait Done");
         }
         if (ObscuredPrefs.GetInt(zoneShopClose.zoneId) == 1)
         {
-            Debug.Log("Ejra Tabligh");
+            //Debug.Log("Ejra Tabligh");
             ObscuredPrefs.SetInt(zoneShopClose.zoneId, 0);
             ShowAd(zoneShopClose);
             Tapsell.setRewardListener(
@@ -415,10 +415,10 @@ public class VideoAds : MonoBehaviour
     }
     private void GiftBtnCloseShopCar()
     {
-        Debug.Log("Gift" + ObscuredPrefs.GetInt("countCloseShop", 1));
+        //Debug.Log("Gift" + ObscuredPrefs.GetInt("countCloseShop", 1));
         //ObscuredPrefs.SetInt("countCloseShop", 1);
         ObscuredPrefs.SetInt("countShowAd", ObscuredPrefs.GetInt("countShowAd", 1) + 1);
-        Debug.Log("Gift End" + ObscuredPrefs.GetInt("countCloseShop", 1));
+        //Debug.Log("Gift End" + ObscuredPrefs.GetInt("countCloseShop", 1));
         if (ObscuredPrefs.GetInt("countShowAd", 1) > 5)
         {
             panelNoAds.SetActive(true);
@@ -441,20 +441,20 @@ public class VideoAds : MonoBehaviour
             (TapsellAd result) =>
             {
                 // onAdAvailable
-                Debug.Log("Action: onAdAvailable");
+                //Debug.Log("Action: onAdAvailable");
                 ObscuredPrefs.SetInt(zone.zoneId, 1);
                 zone.ad = result;
-                Debug.Log("End Load ad : " + zone.ad == null ? "NULL" : "id :" + zone.ad.adId);
-                Debug.Log(zone.zoneName + ": " + ObscuredPrefs.GetInt(zone.zoneId));
+                //Debug.Log("End Load ad : " + zone.ad == null ? "NULL" : "id :" + zone.ad.adId);
+                //Debug.Log(zone.zoneName + ": " + ObscuredPrefs.GetInt(zone.zoneId));
             },
 
             (string zoneId) =>
             {
                 // onNoAdAvailable
                 ObscuredPrefs.SetInt(zone.zoneId, 0);
-                Debug.Log("No Ad Available");
-                Debug.Log("End Load ad : " + zone.ad == null ? "NULL" : "id:" + zone.ad.adId);
-                Debug.Log(zone.zoneName + ": " + ObscuredPrefs.GetInt(zone.zoneId));
+                //Debug.Log("No Ad Available");
+                //Debug.Log("End Load ad : " + zone.ad == null ? "NULL" : "id:" + zone.ad.adId);
+                //Debug.Log(zone.zoneName + ": " + ObscuredPrefs.GetInt(zone.zoneId));
                 if (ErrorHandling)
                 {
                     controller.panelMessage.SetActive(true);
@@ -470,9 +470,9 @@ public class VideoAds : MonoBehaviour
             {
                 // onError
                 ObscuredPrefs.SetInt(zone.zoneId, 0);
-                Debug.Log(error.error);
-                Debug.Log("End Load ad : " + zone.ad == null ? "NULL" : "id:" + zone.ad.adId);
-                Debug.Log(zone.zoneName + ": " + ObscuredPrefs.GetInt(zone.zoneId));
+                //Debug.Log(error.error);
+                //Debug.Log("End Load ad : " + zone.ad == null ? "NULL" : "id:" + zone.ad.adId);
+                //Debug.Log(zone.zoneName + ": " + ObscuredPrefs.GetInt(zone.zoneId));
                 if (ErrorHandling)
                 {
                     controller.panelMessage.SetActive(true);
@@ -487,9 +487,9 @@ public class VideoAds : MonoBehaviour
             {
                 // onNoNetwork
                 ObscuredPrefs.SetInt(zone.zoneId, 0);
-                Debug.Log("No Network: " + zoneId);
-                Debug.Log("End Load ad : " + zone.ad == null ? "NULL" : "id:" + zone.ad.adId);
-                Debug.Log(zone.zoneName + ": " + ObscuredPrefs.GetInt(zone.zoneId));
+                //Debug.Log("No Network: " + zoneId);
+                //Debug.Log("End Load ad : " + zone.ad == null ? "NULL" : "id:" + zone.ad.adId);
+                //Debug.Log(zone.zoneName + ": " + ObscuredPrefs.GetInt(zone.zoneId));
                 if (ErrorHandling)
                 {
                     controller.panelMessage.SetActive(true);
@@ -503,10 +503,10 @@ public class VideoAds : MonoBehaviour
             (TapsellAd result) =>
             {
                 //onExpiring
-                Debug.Log("Expiring");
+                //Debug.Log("Expiring");
                 ObscuredPrefs.SetInt(zone.zoneId, 0);
                 zone.ad = null;
-                Debug.Log("End Load ad : " + zone.ad == null ? "NULL" : "id:" + zone.ad.adId);
+                //Debug.Log("End Load ad : " + zone.ad == null ? "NULL" : "id:" + zone.ad.adId);
                 LoadAd(zone, false);
                 controller.panelWait.SetActive(false);
                 controller.parkingManager.EnableCarInPark();
@@ -518,7 +518,7 @@ public class VideoAds : MonoBehaviour
 
     public void ShowAd(ZoneVideo zone)
     {
-        Debug.Log("panel Error false");
+        //Debug.Log("panel Error false");
         //panelError.SetActive(false);
         TapsellShowOptions options = new TapsellShowOptions();
         options.backDisabled = false;

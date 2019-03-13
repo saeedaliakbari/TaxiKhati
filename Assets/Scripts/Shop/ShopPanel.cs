@@ -24,15 +24,15 @@ public class ShopPanel : MonoBehaviour
     public void OpenPanel()
     {
         int unloacked = ObscuredPrefs.GetInt("unlocked_car", 1);
-        Debug.Log("unload Car : " + unloacked);
+        //Debug.Log("unload Car : " + unloacked);
         scrCar.verticalNormalizedPosition = 1;
         //sbrCar.value = scrCar.verticalNormalizedPosition;
         //if (unloacked > 22)
         //{
-        //Debug.Log(unloacked + "> " + scrCar.verticalNormalizedPosition);
+        ////Debug.Log(unloacked + "> " + scrCar.verticalNormalizedPosition);
         //    scrCar.verticalNormalizedPosition = 1 - ((unloacked - 7) * 0.0215f);
         //    sbrCar.value = scrCar.verticalNormalizedPosition;
-        //    Debug.Log("def=2>" + scrCar.verticalNormalizedPosition + ">" + sbrCar.value);
+        //    //Debug.Log("def=2>" + scrCar.verticalNormalizedPosition + ">" + sbrCar.value);
         //}
         //else 
         if (unloacked >6)
@@ -45,7 +45,7 @@ public class ShopPanel : MonoBehaviour
         //    scrCar.verticalNormalizedPosition = 1 - ((unloacked - 5) * 0.0215f);
         //    //sbrCar.value = scrCar.verticalNormalizedPosition;
         //}
-        //Debug.Log(unloacked + "> " + scrCar.verticalNormalizedPosition);
+        ////Debug.Log(unloacked + "> " + scrCar.verticalNormalizedPosition);
     }
     public void UpdateCarItems()
     {
@@ -55,7 +55,7 @@ public class ShopPanel : MonoBehaviour
             carItems[i].btnBuyCore = btnBuyCore;
         }
         int unloacked = ObscuredPrefs.GetInt("unlocked_car", 1);
-        //Debug.Log("unloacked" + unloacked + "lastSalableLevel>" + controller.lastSalableLevel[unloacked - 1]);
+        ////Debug.Log("unloacked" + unloacked + "lastSalableLevel>" + controller.lastSalableLevel[unloacked - 1]);
         carItems[0].UpdateCarItem(0, controller.lastSalableLevel[unloacked - 1], 0);
 
         for (int i = 1; i < carItems.Length; i++)

@@ -25,22 +25,22 @@ public class GiftBox : MonoBehaviour
     }
     public void StartAutoOpen()//بعد از 3 ثانیه باکس خودش باز شود
     {
-        Debug.Log("12");
+        //Debug.Log("12");
         Timer.Schedule(this, 3f, () =>
         {
-            Debug.Log("13");
+            //Debug.Log("13");
             OnMouseUp();
         });
     }
 
     public void OpenBox()//باز شدن باکس 
     {
-        Debug.Log("Start Anim BOX");
+        //Debug.Log("Start Anim BOX");
         opened = true;
         animtor.Play("OpenBox");
         Timer.Schedule(this, (25 / 60f), () =>
           {
-              Debug.Log(" parkPlace.animLight.Pla");
+              //Debug.Log(" parkPlace.animLight.Pla");
               parkPlace.animLight.Play("Merge");
           });
 

@@ -64,7 +64,7 @@ public class PlayerLevel : MonoBehaviour
             txtLevel.text = ObscuredPrefs.GetInt("Level", 1).ToString();
             float slider = (nowXp + xptrailer) / float.Parse(levelsInfo[ObscuredPrefs.GetInt("Level", 1) - 1].maxXp.ToString());
             imgProgress.fillAmount = slider;
-            Debug.Log("now xp : " + (nowXp + xptrailer));
+            //Debug.Log("now xp : " + (nowXp + xptrailer));
             yield return new WaitForSeconds(0.05f);
             xptrailer++;
         }
@@ -74,7 +74,7 @@ public class PlayerLevel : MonoBehaviour
     {
         txtLevel.text = ObscuredPrefs.GetInt("Level", 1).ToString();
         float slider = float.Parse(ObscuredPrefs.GetInt("Xp", 0).ToString()) / float.Parse(levelsInfo[ObscuredPrefs.GetInt("Level", 1) - 1].maxXp.ToString());
-        //Debug.Log("XP: " + ObscuredPrefs.GetInt("Xp", 0) + "MaxXP:" + levelsInfo[ObscuredPrefs.GetInt("Level", 1) - 1].maxXp + ">>" + slider);
+        ////Debug.Log("XP: " + ObscuredPrefs.GetInt("Xp", 0) + "MaxXP:" + levelsInfo[ObscuredPrefs.GetInt("Level", 1) - 1].maxXp + ">>" + slider);
         imgProgress.fillAmount = slider;
     }
     private void CheckLevel(int level, bool first)

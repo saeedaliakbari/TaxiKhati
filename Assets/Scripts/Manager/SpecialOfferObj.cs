@@ -14,7 +14,7 @@ public class SpecialOfferObj : MonoBehaviour
     public void DiverARound()
     {
         i++;
-        Debug.Log("i>>" + i);
+        //Debug.Log("i>>" + i);
         if (i < 5)
         {
             Hashtable hash = iTween.Hash("path", iTweenPath.GetPath("Road"), "orienttopath", true, "speed", speed, "easetype", iTween.EaseType.linear, "oncomplete", "CompleteCycle");

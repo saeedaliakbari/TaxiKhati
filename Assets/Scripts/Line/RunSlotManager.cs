@@ -73,7 +73,7 @@ public class RunSlotManager : MonoBehaviour
     {
         int num = ObscuredPrefs.GetInt("num_of_slot", 2);//تعداد لاین های شروع 
         num += ObscuredPrefs.GetInt("num_of_slot_vip", 0);
-        Debug.Log("SLOT :num: " + ObscuredPrefs.GetInt("num_of_slot", 2) + " numVIP: " + ObscuredPrefs.GetInt("num_of_slot_vip", 0) + " TOTAL: " + ObscuredPrefs.GetInt("num_total_slot"));
+        //Debug.Log("SLOT :num: " + ObscuredPrefs.GetInt("num_of_slot", 2) + " numVIP: " + ObscuredPrefs.GetInt("num_of_slot_vip", 0) + " TOTAL: " + ObscuredPrefs.GetInt("num_total_slot"));
         if (num > ObscuredPrefs.GetInt("num_total_slot") && ObscuredPrefs.GetInt("num_total_slot") < 13)
         {
             int newSlot = num - ObscuredPrefs.GetInt("num_of_slot", 2);

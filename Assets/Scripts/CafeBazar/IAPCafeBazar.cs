@@ -38,7 +38,7 @@ public class IAPCafeBazar : MonoBehaviour
     }
     public void BtnPurchase(string sku)
     {
-        Debug.Log("btn Purchase: " + sku);
+        //Debug.Log("btn Purchase: " + sku);
         ObscuredPrefs.SetString("developerPayload", Random.Range(10000, 99999).ToString() + Random.Range(10000, 99999).ToString());
         BazaarIAB.purchaseProduct(sku, ObscuredPrefs.GetString("developerPayload"));
         //purchaseSucceededEvent

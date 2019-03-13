@@ -34,7 +34,7 @@ public class MoveCar : MonoBehaviour
     }
     public void Return()
     {
-        Debug.Log("Return");
+        //Debug.Log("Return");
         returning = true;
         //Sound.instance.Play(Sound.Others.Return);
         iTween.Stop(gameObject);

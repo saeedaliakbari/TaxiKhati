@@ -38,10 +38,10 @@ public class ParkingManager : MonoBehaviour
     {
         int num = ObscuredPrefs.GetInt("num_of_places", 4);//تعداد لاین های شروع 
         num += ObscuredPrefs.GetInt("num_of_places_vip", 0);
-        Debug.Log("Place>>>num: " + ObscuredPrefs.GetInt("num_of_places", 4) + " numVIP: " + ObscuredPrefs.GetInt("num_of_places_vip", 0) + " TOTAL: " + ObscuredPrefs.GetInt("num_total_places"));
+        //Debug.Log("Place>>>num: " + ObscuredPrefs.GetInt("num_of_places", 4) + " numVIP: " + ObscuredPrefs.GetInt("num_of_places_vip", 0) + " TOTAL: " + ObscuredPrefs.GetInt("num_total_places"));
         if (num > ObscuredPrefs.GetInt("num_total_places") && ObscuredPrefs.GetInt("num_total_places") < 16)
         {
-            Debug.Log("num > num_total_places");
+            //Debug.Log("num > num_total_places");
             int newPlace = num - ObscuredPrefs.GetInt("num_total_places");
             for (int i = 0; i < newPlace; i++)
             {
@@ -76,7 +76,7 @@ public class ParkingManager : MonoBehaviour
             }
             //for (int i = 0; i < carsLevel.Length; i++)
             //{
-            //    Debug.Log(i + ">" + carsLevel[i]);
+            //    //Debug.Log(i + ">" + carsLevel[i]);
             //}
             ObscuredPrefs.SetInt("mainAchiv1", carsLevel[4]);
             ObscuredPrefs.SetInt("mainAchiv2", carsLevel[6]);
@@ -121,12 +121,12 @@ public class ParkingManager : MonoBehaviour
             imgPeykanSpeed.gameObject.SetActive(false);
             btnCarSpeed.gameObject.SetActive(false);
             lblNewSpeed.SetActive(false);
-            //Debug.Log("FULL ");
+            ////Debug.Log("FULL ");
         }
         else {
             if (carsLevel[carSpeedTycoonBoosts.level[levelSpeed] - 1] >= 3)
             {
-                //Debug.Log("Get Gift" + earningOfflineTycoonBoosts.level[ObscuredPrefs.GetInt("offlineEarnTycoonLevel", 0)]);
+                ////Debug.Log("Get Gift" + earningOfflineTycoonBoosts.level[ObscuredPrefs.GetInt("offlineEarnTycoonLevel", 0)]);
                 btnCarSpeed.interactable = true;
                 lblNewSpeed.SetActive(true);
             }
@@ -146,7 +146,7 @@ public class ParkingManager : MonoBehaviour
         lblNewOffline.SetActive(false);
         int levelOfflineEarning = ObscuredPrefs.GetInt("offlineEarnTycoonLevel", 0);
         txtOfflineEarning.text = "سطح " + (levelOfflineEarning + 1);
-        //Debug.Log("CheckOfflineEarningTycoon LEVEL CAR :" + earningOfflineTycoonBoosts.level[levelOfflineEarning]);
+        ////Debug.Log("CheckOfflineEarningTycoon LEVEL CAR :" + earningOfflineTycoonBoosts.level[levelOfflineEarning]);
         imgCarOfflienEarn.sprite = controller.activeCar[earningOfflineTycoonBoosts.level[levelOfflineEarning] - 1];
         txtLevelOfflineEarn.text = (carsLevel[earningOfflineTycoonBoosts.level[levelOfflineEarning] - 1] >= 3 ? "3" :
             carsLevel[earningOfflineTycoonBoosts.level[levelOfflineEarning] - 1].ToString()) + "/3";
@@ -159,12 +159,12 @@ public class ParkingManager : MonoBehaviour
             imgPeykanOfflineEarn.gameObject.SetActive(false);
             btnOfflineEarning.gameObject.SetActive(false);
             lblNewOffline.SetActive(false);
-            //Debug.Log("FULL ");
+            ////Debug.Log("FULL ");
         }
         else {
             if (carsLevel[earningOfflineTycoonBoosts.level[levelOfflineEarning] - 1] >= 3)
             {
-                //Debug.Log("Get Gift" + earningOfflineTycoonBoosts.level[ObscuredPrefs.GetInt("offlineEarnTycoonLevel", 0)]);
+                ////Debug.Log("Get Gift" + earningOfflineTycoonBoosts.level[ObscuredPrefs.GetInt("offlineEarnTycoonLevel", 0)]);
                 btnOfflineEarning.interactable = true;
                 lblNewOffline.SetActive(true);
             }
@@ -183,7 +183,7 @@ public class ParkingManager : MonoBehaviour
         lblNewExchangeDecline.SetActive(false);
         int levelExchangeDecline = ObscuredPrefs.GetInt("exchangeDeclineTycoonLevel", 0);
         txtExchangeDecline.text = "سطح " + (levelExchangeDecline + 1);
-        //Debug.Log("CheckExchangeRateDecline LEVEL CAR :" + exchangeDeclineTycoonBoosts.level[levelExchangeDecline]);
+        ////Debug.Log("CheckExchangeRateDecline LEVEL CAR :" + exchangeDeclineTycoonBoosts.level[levelExchangeDecline]);
         imgCarExchangeDecline.sprite = controller.activeCar[exchangeDeclineTycoonBoosts.level[levelExchangeDecline] - 1];
         txtLevelExchangeDecline.text = (carsLevel[exchangeDeclineTycoonBoosts.level[levelExchangeDecline] - 1] >= 3 ? "3" :
             carsLevel[exchangeDeclineTycoonBoosts.level[levelExchangeDecline] - 1].ToString()) + "/3";
@@ -195,13 +195,13 @@ public class ParkingManager : MonoBehaviour
             txtExchangeDeclineNew.gameObject.SetActive(false);
             imgPeykanExchangeDecline.gameObject.SetActive(false);
             btnExchangeDecline.gameObject.SetActive(false);
-            //Debug.Log("FULL ");
+            ////Debug.Log("FULL ");
             lblNewExchangeDecline.SetActive(false);
         }
         else {
             if (carsLevel[exchangeDeclineTycoonBoosts.level[levelExchangeDecline] - 1] >= 3)
             {
-                //Debug.Log("Get Gift" + earningOfflineTycoonBoosts.level[ObscuredPrefs.GetInt("offlineEarnTycoonLevel", 0)]);
+                ////Debug.Log("Get Gift" + earningOfflineTycoonBoosts.level[ObscuredPrefs.GetInt("offlineEarnTycoonLevel", 0)]);
                 btnExchangeDecline.interactable = true;
                 lblNewExchangeDecline.SetActive(true);
             }
@@ -229,7 +229,7 @@ public class ParkingManager : MonoBehaviour
     {
         if (VipPlace == true)
         {
-            //Debug.Log("delete Vip Place");
+            ////Debug.Log("delete Vip Place");
             Destroy(placesPosition[placesPosition.Count - 1]);
             placesPosition.RemoveAt(placesPosition.Count - 1);
             VipPlace = false;
@@ -251,7 +251,7 @@ public class ParkingManager : MonoBehaviour
         int numPlacesVIP = ObscuredPrefs.GetInt("num_of_places_vip", 0);
         if (numPlacesVIP == 0 && places.Count > 4 && VipPlace == false)
         {
-            //Debug.Log("Spawn New PlaceVIP>>" + numPlacesVIP);
+            ////Debug.Log("Spawn New PlaceVIP>>" + numPlacesVIP);
             SpawnNewPlaceVIP();
         }
     }
@@ -265,7 +265,7 @@ public class ParkingManager : MonoBehaviour
     public void UpdatePlacePosition()
     {//موقعیت پارکینگ ها را تعیین می کند
         int num = placesPosition.Count;
-        //Debug.Log("Tedad Parkings : " + placesPosition.Count);
+        ////Debug.Log("Tedad Parkings : " + placesPosition.Count);
         int count = 0;
         for (int i = 0; i < parkPosManage.Length; i++)
         {
@@ -295,13 +295,13 @@ public class ParkingManager : MonoBehaviour
         //    for (int c = 0; c < cols; c++)
         //    {//ستون به ستون جلو می رود
         //        Vector3 pos = new Vector3(c - (column - 1f) / 2, -(r - (rows - 1f) / 2));
-        //        Debug.Log("pos: " + pos + " r: " + r + " c: " + c);
+        //        //Debug.Log("pos: " + pos + " r: " + r + " c: " + c);
         //        if (count == num)
         //        {
         //            break;
         //        }
         //        placesPosition[count].transform.localPosition = pos * 1.3f;
-        //        Debug.Log("placesPosition>: " + placesPosition[count].transform.localPosition);
+        //        //Debug.Log("placesPosition>: " + placesPosition[count].transform.localPosition);
         //        count++;
         //    }
         //}

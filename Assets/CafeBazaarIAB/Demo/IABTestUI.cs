@@ -19,7 +19,7 @@ public class IABTestUI : MonoBehaviour
         if (Button("Initialize IAB"))
         {
             ObscuredString key = "MIHNMA0GCSqGSIb3DQEBAQUAA4G7ADCBtwKBrwC/9PLsRWemh41DzeBh+X1yfm5jGymrJaN9MBwExLaUSMoE6VHmLd9+h4xWyUl7ghLHj1OD3Cw7WHwJBL7/n4/oIaHxZ7OHko7Q7d/wVY2LMmADHV7Ekj0QAwJWblT9bxA7gtvH+Mt+V9U6R9fSxRYR1FF076Q7bWdmbyhzLPaQDkLPv2JE5NTnuBUHtCydkjK3BI4Kb30JTs9nA1vjbQ6vMzPbxOyRmdtd9wtVWGECAwEAAQ==";
-            Debug.Log("key : " + key);
+            //Debug.Log("key : " + key);
             BazaarIAB.init(key);
         }
 
@@ -40,7 +40,7 @@ public class IABTestUI : MonoBehaviour
 
         if (Button("Are subscriptions supported?"))
         {
-            Debug.Log("subscriptions supported: " + BazaarIAB.areSubscriptionsSupported());
+            //Debug.Log("subscriptions supported: " + BazaarIAB.areSubscriptionsSupported());
         }
 
         if (Button("Purchase Product Test1"))

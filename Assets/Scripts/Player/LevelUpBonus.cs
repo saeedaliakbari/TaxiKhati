@@ -220,7 +220,7 @@ public class LevelUpBonus : MonoBehaviour
 
     private void SetSliderLevel()
     {
-        Debug.Log("New Level: " + newLevel);
+        //Debug..Log("New Level: " + newLevel);
         objLevelLeft.SetActive(true);
         if (newLevel <= 3)
         {

@@ -60,7 +60,7 @@ public class Controller : MonoBehaviour
         //Debug.Log(
         instance = this;
         ObscuredPrefs.SetInt("mainAchiv16", ObscuredPrefs.GetInt("mainAchiv16", 0) + 1);
-        ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem", 5) + 1000000);
+        ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem", 5)/* + 1000000*/);
         ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 21000));
         ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 21000));
         ObscuredPrefs.SetDouble("token", ObscuredPrefs.GetDouble("token", 0) /*+ 100000000000*/);
@@ -104,15 +104,17 @@ public class Controller : MonoBehaviour
         while (SpeedRatio() > 1)
         {
             SpeedRatio();
-            audioSourceCore.Stop();
-            audioSourceCoreFast.Play();
+            if (!audioSourceCoreFast.isPlaying)
+            {
+                audioSourceCore.Stop();
+                audioSourceCoreFast.Play();
+            }
             yield return new WaitForSeconds(8f);
-            Debug.Log("speed2x");
         }
-        yield return new WaitForSeconds(2f);
+
         SpeedRatio();
 
-        Debug.Log("speed normal");
+        //Debug.Log("speed normal");
     }
     public float SpeedRatio()
     {
@@ -123,7 +125,10 @@ public class Controller : MonoBehaviour
         if (ratio == 1)
         {
             objSpeed.SetActive(false);
-            audioSourceCore.Play();
+            if (!audioSourceCore.isPlaying)
+            {
+                audioSourceCore.Play();
+            }
             audioSourceCoreFast.Stop();
         }
         else
@@ -178,7 +183,7 @@ public class Controller : MonoBehaviour
             //guideManager.panelLockGuide.SetActive(true);
             //ObscuredPrefs.SetInt("helpStep", 3);
             int level = ObscuredPrefs.GetInt("helpStep", 0);
-            Debug.Log("level Help: " + level);
+            //Debug.Log("level Help: " + level);
             for (int i = 0; i <= level; i++)
             {
                 guideManager.Step(i);
@@ -372,7 +377,7 @@ public class Controller : MonoBehaviour
         float randomDelay = UnityEngine.Random.Range(20, 31);
         Timer.Schedule(this, randomDelay, () =>
          {
-             Debug.Log("NewCarTimeing");
+             //Debug.Log("NewCarTimeing");
              if (ObscuredPrefs.GetInt("helpStep", 0) == 22)
                  SpawnABoxTime();
          });
@@ -388,13 +393,13 @@ public class Controller : MonoBehaviour
         {
             if (parkPlace.IsEmpty())
             {
-                Debug.Log("parkPlace Is Empty");
+                //Debug.Log("parkPlace Is Empty");
                 SpawnABox(index - 1, parkPlace, 0);
                 NewCarTimeing();
             }
             else
             {
-                Debug.Log("Try new Place For Car time");
+                //Debug.Log("Try new Place For Car time");
                 if (lastRoutineTime != null)
                 {
                     StopCoroutine(lastRoutineTime);
@@ -405,7 +410,7 @@ public class Controller : MonoBehaviour
         }
         catch (System.Exception)
         {
-            Debug.Log("Catch New Spawn");
+            //Debug.Log("Catch New Spawn");
             if (lastRoutineTime != null)
             {
                 StopCoroutine(lastRoutineTime);
@@ -427,18 +432,18 @@ public class Controller : MonoBehaviour
         int taxiLvl = ObscuredPrefs.GetInt("unlocked_car", 1);
         int index = taxiLvl - 4;
         index = index > 0 ? index : 1;
-        Debug.Log("taxiLvl: " + ObscuredPrefs.GetInt("unlocked_car", 1) + " UNLOCK CAR : " + index);
+        //Debug.Log("taxiLvl: " + ObscuredPrefs.GetInt("unlocked_car", 1) + " UNLOCK CAR : " + index);
         try
         {
             if (parkPlace.IsEmpty())
             {
-                Debug.Log("parkPlace Is Empty");
+                //Debug.Log("parkPlace Is Empty");
                 SpawnABox(index - 1, parkPlace, 1);
                 //NewCarTimeing();
             }
             else
             {
-                Debug.Log("Try new Place For Car time");
+                //Debug.Log("Try new Place For Car time");
                 if (lastRoutineWheelBox != null)
                 {
                     StopCoroutine(lastRoutineWheelBox);
@@ -448,7 +453,7 @@ public class Controller : MonoBehaviour
         }
         catch (System.Exception)
         {
-            Debug.Log("Catch New Spawn");
+            //Debug.Log("Catch New Spawn");
             if (lastRoutineWheelBox != null)
             {
                 StopCoroutine(lastRoutineWheelBox);
@@ -469,18 +474,18 @@ public class Controller : MonoBehaviour
         int taxiLvl = ObscuredPrefs.GetInt("unlocked_car", 1);
         int index = taxiLvl - 5;
         index = index > 0 ? index : 1;
-        Debug.Log("taxiLvl: " + ObscuredPrefs.GetInt("unlocked_car", 1) + " UNLOCK CAR : " + index);
+        //Debug.Log("taxiLvl: " + ObscuredPrefs.GetInt("unlocked_car", 1) + " UNLOCK CAR : " + index);
         try
         {
             if (parkPlace.IsEmpty())
             {
-                Debug.Log("parkPlace Is Empty");
+                //Debug.Log("parkPlace Is Empty");
                 SpawnABox(index - 1, parkPlace, 1);
                 //NewCarTimeing();
             }
             else
             {
-                Debug.Log("Try new Place For Car time");
+                //Debug.Log("Try new Place For Car time");
                 if (lastRoutineSpecialBox != null)
                 {
                     StopCoroutine(lastRoutineSpecialBox);
@@ -490,7 +495,7 @@ public class Controller : MonoBehaviour
         }
         catch (System.Exception)
         {
-            Debug.Log("Catch New Spawn");
+            //Debug.Log("Catch New Spawn");
             if (lastRoutineSpecialBox != null)
             {
                 StopCoroutine(lastRoutineSpecialBox);
@@ -753,10 +758,10 @@ public class Controller : MonoBehaviour
     public void ClosePanelShopCar()
     {
         int random = UnityEngine.Random.Range(4, 7);
-        Debug.Log("Vasiat Tablighat removeAds: " + ObscuredPrefs.GetInt("removeAds", 0));
+        //Debug.Log("Vasiat Tablighat removeAds: " + ObscuredPrefs.GetInt("removeAds", 0));
         if (ObscuredPrefs.GetInt("removeAds", 0) == 0)//اگر تبلیغات براش فعال نبود   
         {
-            Debug.Log("Tedad Bastan Shop : " + ObscuredPrefs.GetInt("countCloseShop", 1) + "<adad Random :" + random);
+            //Debug.Log("Tedad Bastan Shop : " + ObscuredPrefs.GetInt("countCloseShop", 1) + "<adad Random :" + random);
             if (ObscuredPrefs.GetInt("countCloseShop", 1) < random)//اگر کمتر از 3 بار پنل باز شده بود
             {
                 ObscuredPrefs.SetInt("countCloseShop", ObscuredPrefs.GetInt("countCloseShop", 1) + 1);

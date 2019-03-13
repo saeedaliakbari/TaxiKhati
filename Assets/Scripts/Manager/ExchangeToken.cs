@@ -53,7 +53,7 @@ public class ExchangeToken : MonoBehaviour
             //if (coin <= ObscuredPrefs.GetDouble("coin", 5000))
             //{
             double token = double.Parse(inputTokenValue.text);
-            Debug.Log("token: " + (token + 1));
+            //Debug.Log("token: " + (token + 1));
             if (token + i > 1)
             {
                 inputTokenValue.text = (token + i).ToString();
@@ -73,11 +73,11 @@ public class ExchangeToken : MonoBehaviour
     public void MaxValue()
     {
         double token = System.Math.Floor(ObscuredPrefs.GetDouble("coin", 5000) / rate);
-        Debug.Log("Token : " + token);
+        //Debug.Log("Token : " + token);
         inputTokenValue.text = token.ToString();
-        Debug.Log("Token : " + inputTokenValue.text);
+        //Debug.Log("Token : " + inputTokenValue.text);
         txtCoinValue.text = (token * rate).ToString("0.##");
-        Debug.Log(token * rate);
+        //Debug.Log(token * rate);
 
     }
     public void MinValue()

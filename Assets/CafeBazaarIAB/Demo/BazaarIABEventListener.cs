@@ -68,7 +68,7 @@ public class BazaarIABEventListener : MonoBehaviour
     void billingSupportedEvent()
     {
         BazaarIAB.enableLogging(false);//فعال سازی اطلاعات فراخوانی توابع در زمان اشکال زدایی
-        Debug.Log("billingSupportedEvent");
+        //Debug.Log("billingSupportedEvent");
         str = new string[iapCafeBazar.skus.Length];
         for (int i = 0; i < iapCafeBazar.skus.Length; i++)
         {
@@ -92,7 +92,7 @@ public class BazaarIABEventListener : MonoBehaviour
     }
     void billingNotSupportedEvent(string error)
     {
-        Debug.Log("billingNotSupportedEvent: " + error);
+        //Debug.Log("billingNotSupportedEvent: " + error);
         BazaarIAB.init(iapCafeBazar.RSA);
     }
     #endregion
@@ -105,7 +105,7 @@ public class BazaarIABEventListener : MonoBehaviour
         ObscuredPrefs.SetInt("removeAds", 0);
         ObscuredPrefs.SetInt("gemPerDay", 0);
         ObscuredPrefs.SetFloat("speedVip", 0);
-        Debug.Log(string.Format("queryInventorySucceededEvent. total purchases: {0}, total skus: {1}", purchases.Count, skus.Count));
+        //Debug.Log(string.Format("queryInventorySucceededEvent. total purchases: {0}, total skus: {1}", purchases.Count, skus.Count));
         for (int i = 0; i < purchases.Count; ++i)
         {
             if (purchases[i].ProductId == iapCafeBazar.skus[6])
@@ -144,51 +144,51 @@ public class BazaarIABEventListener : MonoBehaviour
     private void querySkuDetailsSucceededEvent(List<BazaarSkuInfo> skus)
     {
         //Debug.Log(string.Format("querySkuDetailsSucceededEvent. total skus: {0}", skus.Count));
-        for (int i = 0; i < skus.Count - 2; ++i)
-        {
-            //txtTitle[i].text = skus[i].Title;
-            //txtPrice[i].text = skus[i].Price;
-            Debug.Log("i>" + i + ":" + skus[i].Title + ">" + skus[i].Price);
-        }
+        //for (int i = 0; i < skus.Count - 2; ++i)
+        //{
+        //    //txtTitle[i].text = skus[i].Title;
+        //    //txtPrice[i].text = skus[i].Price;
+        //    Debug.Log("i>" + i + ":" + skus[i].Title + ">" + skus[i].Price);
+        //}
 
     }
 
     private void querySkuDetailsFailedEvent(string error)
     {
-        Debug.Log("querySkuDetailsFailedEvent: " + error);
+        //Debug.Log("querySkuDetailsFailedEvent: " + error);
         BazaarIAB.querySkuDetails(str);
     }
     #endregion
     #region Baray Chand Kharid
     private void queryPurchasesSucceededEvent(List<BazaarPurchase> purchases)
     {
-        Debug.Log(string.Format("queryPurchasesSucceededEvent. total purchases: {0}", purchases.Count));
+        //Debug.Log(string.Format("queryPurchasesSucceededEvent. total purchases: {0}", purchases.Count));
 
-        for (int i = 0; i < purchases.Count; ++i)
-        {
-            Debug.Log(purchases[i].ToString());
-        }
+        //for (int i = 0; i < purchases.Count; ++i)
+        //{
+        //    Debug.Log(purchases[i].ToString());
+        //}
     }
 
     private void queryPurchasesFailedEvent(string error)
     {
-        Debug.Log("queryPurchasesFailedEvent: " + error);
+        //Debug.Log("queryPurchasesFailedEvent: " + error);
     }
     #endregion
     #region Purchase
     void purchaseSucceededEvent(BazaarPurchase purchase)
     {
-        Debug.Log("purchaseSucceededEvent: "/* + purchase*/);
-        Debug.Log("developerPayload" + purchase.DeveloperPayload);
-        Debug.Log("Order ID: " + purchase.OrderId);
-        Debug.Log("Time Kharid : " + purchase.PurchaseTime);
-        Debug.Log("Token Yekta Kharid: " + purchase.PurchaseToken);
-        Debug.Log("Type; " + purchase.Type);
-        Debug.Log("PurchaseState; " + purchase.PurchaseState);
+        //Debug.Log("purchaseSucceededEvent: "/* + purchase*/);
+        //Debug.Log("developerPayload" + purchase.DeveloperPayload);
+        //Debug.Log("Order ID: " + purchase.OrderId);
+        //Debug.Log("Time Kharid : " + purchase.PurchaseTime);
+        //Debug.Log("Token Yekta Kharid: " + purchase.PurchaseToken);
+        //Debug.Log("Type; " + purchase.Type);
+        //Debug.Log("PurchaseState; " + purchase.PurchaseState);
         if (purchase.DeveloperPayload == ObscuredPrefs.GetString("developerPayload"))
         {
             ObscuredPrefs.SetString("developerPayload", "");
-            Debug.Log("developerPayload is Ok");
+            //Debug.Log("developerPayload is Ok");
             if (purchase.PurchaseState == BazaarPurchase.BazaarPurchaseState.Purchased)
             {
                 if (purchase.ProductId == iapCafeBazar.skus[6])
@@ -227,13 +227,13 @@ public class BazaarIABEventListener : MonoBehaviour
             }
             else if (purchase.PurchaseState == BazaarPurchase.BazaarPurchaseState.Canceled)
             {
-                Debug.Log("purchase is Canceled");
+                //Debug.Log("purchase is Canceled");
                 iapCafeBazar.controller.panelMessage.SetActive(true);
                 iapCafeBazar.controller.txtPanelMessage.text = "عملیات توسط شما لغو شد";
             }
             else
             {
-                Debug.Log("purchase is 2 Refunded");
+                //Debug.Log("purchase is 2 Refunded");
                 iapCafeBazar.controller.panelMessage.SetActive(true);
                 iapCafeBazar.controller.txtPanelMessage.text = "خطا در عملیات پرداخت";
             }
@@ -242,7 +242,7 @@ public class BazaarIABEventListener : MonoBehaviour
 
     void purchaseFailedEvent(string error)
     {
-        Debug.Log("purchaseFailedEvent: " + error);
+        //Debug.Log("purchaseFailedEvent: " + error);
         iapCafeBazar.controller.txtPanelMessage.text = "خطا در پرداخت ";
         iapCafeBazar.controller.panelMessage.SetActive(true);
     }
@@ -250,7 +250,7 @@ public class BazaarIABEventListener : MonoBehaviour
     #region Consume Purchase
     void consumePurchaseSucceededEvent(BazaarPurchase purchase)
     {
-        Debug.Log("consumePurchaseSucceededEvent: " + purchase);
+        //Debug.Log("consumePurchaseSucceededEvent: " + purchase);
         for (int i = 0; i < iapCafeBazar.skus.Length; i++)
         {
             if (i < 6)//Eshteraki nemitavanim masraf konim
@@ -269,7 +269,7 @@ public class BazaarIABEventListener : MonoBehaviour
 
     void consumePurchaseFailedEvent(string error)
     {
-        Debug.Log("consumePurchaseFailedEvent: " + error);
+        //Debug.Log("consumePurchaseFailedEvent: " + error);
         BazaarIAB.queryInventory(str);
     }
     #endregion

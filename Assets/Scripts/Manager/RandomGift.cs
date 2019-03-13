@@ -10,10 +10,10 @@ public class RandomGift : MonoBehaviour
     void Start()
     {
         //Debug.Log("LeveL: " + ObscuredPrefs.GetInt("Level", 1));
-        if (ObscuredPrefs.GetInt("Level", 1) >= 6)
-        {
-            Debug.Log("Panel Random Gift Active");
-            //    panelRandomGift.SetActive(true);
-        }
+        //if (ObscuredPrefs.GetInt("Level", 1) >= 6)
+        //{
+        //    Debug.Log("Panel Random Gift Active");
+        //    //    panelRandomGift.SetActive(true);
+        //}
     }
 }

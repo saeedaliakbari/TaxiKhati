@@ -52,9 +52,9 @@ public class AchivmentPrefab : MonoBehaviour
     {
         imgBack.color = inActvie;
         imgTik.gameObject.SetActive(true);
-        Debug.Log("GEM> " + ObscuredPrefs.GetDouble("gem", 0));
+        //Debug.Log("GEM> " + ObscuredPrefs.GetDouble("gem", 0));
         ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem", 0) + gem);
-        Debug.Log("GEM> " + ObscuredPrefs.GetDouble("gem", 0));
+        //Debug.Log("GEM> " + ObscuredPrefs.GetDouble("gem", 0));
         ObscuredPrefs.SetInt(stringPrefs + "Get" + id, 1);
         //txtGem.text = ObscuredPrefs.GetDouble("gem", 0).ToString();
         controller.SetText();

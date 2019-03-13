@@ -24,7 +24,7 @@ public class GuideManager : MonoBehaviour
     public void PlusStep()
     {
         ObscuredPrefs.SetInt("helpStep", ObscuredPrefs.GetInt("helpStep", 0) + 1);
-        Debug.Log("Help Step: " + ObscuredPrefs.GetInt("helpStep", 0));
+        //Debug.Log("Help Step: " + ObscuredPrefs.GetInt("helpStep", 0));
         if (true)
         {
 

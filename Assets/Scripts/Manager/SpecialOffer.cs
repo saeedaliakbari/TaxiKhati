@@ -22,7 +22,7 @@ public class SpecialOffer : MonoBehaviour
     }
     private void NewOffer()
     {
-        Debug.Log("New Offer");
+        //Debug.Log("New Offer");
         specialOfferObj = (SpecialOfferObj)Instantiate(prefabSpecialOffer, Vector3.zero, Quaternion.EulerAngles(0f, 0f, 0f)/*, Quaternion.identity*/);
         specialOfferObj.transform.localScale = Vector3.one * 0.4f;//اسکیل ماشین در حال حرکت ایجاد شده
         specialOfferObj.transform.position = controller.slotManager.transform.position;//موقعیت ماشین درحال حرکت در مکان استارت قرار میگیرد
@@ -80,7 +80,7 @@ public class SpecialOffer : MonoBehaviour
         {
             controller.panelNoGem.SetActive(true);
             controller.parkingManager.DisableCarInPark();
-            Debug.Log("Gem<5");
+            //Debug.Log("Gem<5");
         }
     }
 }
