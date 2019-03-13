@@ -14,6 +14,7 @@ public class PlayerLevel : MonoBehaviour
     public Move myMove;
 
     public GameObject moveObj, NewIteamPanel;
+    private Coroutine lastRoutine = null;
     // Use this for initialization
     void Start()
     {
@@ -22,7 +23,11 @@ public class PlayerLevel : MonoBehaviour
     }
     public void UpdateProgress(int xp)
     {
-        StartCoroutine(IEUpdateProgress(xp));
+        if (lastRoutine != null)
+        {
+            StopCoroutine(lastRoutine);
+        }
+        lastRoutine = StartCoroutine(IEUpdateProgress(xp));
         //if (ObscuredPrefs.GetInt("Xp", 0) > levelsInfo[ObscuredPrefs.GetInt("Level", 1) - 1].maxXp)
         //{
         //    controller.ShowLevelBonus(ObscuredPrefs.GetInt("Level", 1) + 1);
@@ -39,7 +44,6 @@ public class PlayerLevel : MonoBehaviour
     IEnumerator IEUpdateProgress(int xp)
     {
         yield return new WaitForSeconds(1.1f);
-        animPlayerLevel.SetBool("endXp", false);
         animPlayerLevel.Play("XPGain");
         int nowXp = ObscuredPrefs.GetInt("Xp", 0) - xp;
         int xptrailer = 0;
@@ -61,11 +65,9 @@ public class PlayerLevel : MonoBehaviour
             float slider = (nowXp + xptrailer) / float.Parse(levelsInfo[ObscuredPrefs.GetInt("Level", 1) - 1].maxXp.ToString());
             imgProgress.fillAmount = slider;
             Debug.Log("now xp : " + (nowXp + xptrailer));
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.05f);
             xptrailer++;
         }
-        animPlayerLevel.SetBool("endXp", true);
-        animPlayerLevel.Play("BackToNormal");
         SetEleman();
     }
     private void SetEleman()
