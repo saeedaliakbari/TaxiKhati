@@ -5,9 +5,9 @@ using UnityEngine.UI;
 using Batch;
 using CodeStage.AntiCheat.ObscuredTypes;
 using System;
+
 public class Controller : MonoBehaviour
 {
-
     public Car[] carPrefabs;//ماشین ها
     public RangeLevel[] taxiDefferenceLvl;
     public GiftBox boxPrefab;
@@ -50,7 +50,6 @@ public class Controller : MonoBehaviour
     public float[] speed;
     public float[] basePrice; public int[] increaseRate;
     public float[] baseGemPrice;
-    public float offlineEarningRate;
     public int[] lastSalableLevel;
     public int[] lastSalableCoreLevel;
     public Transform XpBarTranform;///برای هدف پارتیکل میباشد
@@ -206,7 +205,7 @@ public class Controller : MonoBehaviour
     {
         parkingManager.SpawnPlaces();//پارکینگ ها را می سازد
         slotManager.InitSlots();//لاین های شروع را ایجاد می کند
-        //CurrencyController.onBalanceChanged();
+                                //CurrencyController.onBalanceChanged();
         UpdatePrice();
     }
     public void UpdatePrice()
@@ -286,7 +285,7 @@ public class Controller : MonoBehaviour
                 //}
                 //Debug.Log(price + "*((100+" + increaseRate[index] + ")/" + 100 + ")====>>>" + (price * ((100f + increaseRate[index]) / 100)) + ">>>>" + (System.Math.Round(price * ((100 + increaseRate[index]) / 100))));
                 double newPrice = System.Math.Round(price * ((100f + increaseRate[index]) / 100));//قیمت جدید را بدست می آورد
-                //Debug.Log("newPrice : " + newPrice);
+                                                                                                  //Debug.Log("newPrice : " + newPrice);
                 if (!useGem)
                     ObscuredPrefs.SetDouble("car_price_" + index, newPrice);
 
@@ -563,8 +562,8 @@ public class Controller : MonoBehaviour
     }
     public void CloseOffEarning()
     {//بستن پنل بدست آوردن سکه
-        //Sound.instance.PlayButton();
-        //offEarning.gameObject.SetActive(false);
+     //Sound.instance.PlayButton();
+     //offEarning.gameObject.SetActive(false);
         Close(offEarning.gameObject);
     }
     public void CloseSetting()
@@ -641,8 +640,10 @@ public class Controller : MonoBehaviour
 
         if (pause)
         {
+            ObscuredPrefs.SetDouble("earnpersec", slotManager.EarningPerSec);
             SaveGame();
             Manager.SetActionTime("offline_earning", Manager.GetCurrentTime());
+
         }
         else
         {
@@ -651,12 +652,15 @@ public class Controller : MonoBehaviour
     }
     private void OnApplicationQuit()
     {
+        ObscuredPrefs.SetDouble("earnpersec", slotManager.EarningPerSec);
         SaveGame();
         Manager.SetActionTime("offline_earning", Manager.GetCurrentTime());
+        //start local notification
+
     }
     public void LoadGame()
     {//اطلاعات بازی را لود می کند
-        //Debug.Log("Load Game");
+     //Debug.Log("Load Game");
         string json = ObscuredPrefs.GetString("saved_list_cars", "{\"listCars\":[],\"listBoxes\":[]}");//لیست ماشین ها و باکس ها داخل پارکینگ ها ذخیره شده را لود می کند
         SaveObject saveObj = JsonUtility.FromJson<SaveObject>(json);//رشته جیسون را بصورت کلاس ذخیره سازی تبدیل می کند
         if (saveObj.listCars.Count == 0)
@@ -715,7 +719,7 @@ public class Controller : MonoBehaviour
         {
 
             offEarning.txtCoin = txtCoin;
-            offEarning.ShowEarning(time, offlineEarningRate);//با توجه به نرخی که می ذاریم مقدار سکه را زیاد می کنیم
+            offEarning.ShowEarning(time);//با توجه به نرخی که می ذاریم مقدار سکه را زیاد می کنیم
         }
     }
     public void ShowCoinEffect(Vector3 position)
@@ -883,6 +887,7 @@ public class Controller : MonoBehaviour
         HelpRunCar();
     }
 }
+
 [System.Serializable]
 public class RangeLevel
 {

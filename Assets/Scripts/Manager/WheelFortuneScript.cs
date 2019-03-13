@@ -24,7 +24,6 @@ public class WheelFortuneScript : MonoBehaviour
     private Coroutine lastRoutine = null;
     void Start()
     {
-
         CheckVideoTime();
     }
     private void CheckVideoTime()//این تابع در ابتدا مقادیر را داخل تکست باکس ها ست می کند و سپس با توجه به زمان فعلی و اینکه تعداد شانس ها کمتر از 3 باشد زمان شانس بعدی را می سنجد تا اضافه شود
@@ -36,30 +35,31 @@ public class WheelFortuneScript : MonoBehaviour
         DateTime wheelTime = new DateTime(Int32.Parse(arr[0]), Int32.Parse(arr[1]), Int32.Parse(arr[2]), Int32.Parse(arr[3]), Int32.Parse(arr[4]), Int32.Parse(arr[5]));
         if (ObscuredPrefs.GetInt("VideoWheel", 3) < 3)
         {
-            Debug.Log("VideoWheel< 3 ");
+
+            //Debug.Log("VideoWheel< 3 ");
             StartCoroutine(GetDateTime.IEGetDateTime((status) =>
             {
-                Debug.Log("status" + status + " WHeelTIME: " + wheelTime);
+                //Debug.Log("status" + status + " WHeelTIME: " + wheelTime);
                 TimeSpan remain = wheelTime.Subtract(status);
-                Debug.Log("remain: " + remain.ToString());
+                //Debug.Log("remain: " + remain.ToString());
                 double reamainSec = remain.TotalSeconds;
-                Debug.Log("reamainSec >" + reamainSec);
+                //Debug.Log("reamainSec >" + reamainSec);
                 if (wheelTime <= status)
                 {
                     Debug.Log("wheelTime <= status");
                     while ((-reamainSec) - 28800 >= 0 && ObscuredPrefs.GetInt("VideoWheel", 3) <= 3)
                     {
-                        Debug.Log("Up +1");
+                        //Debug.Log("Up +1");
                         ObscuredPrefs.SetInt("VideoWheel", ObscuredPrefs.GetInt("VideoWheel", 3) + 1);
                         txtNumVideoWheel.text = ObscuredPrefs.GetInt("VideoWheel", 3).ToString() + "/3";
                         objTimeVideo.SetActive(false);
                         reamainSec += 28800;
-                        Debug.Log("Wheel: " + wheelTime);
+                        //Debug.Log("Wheel: " + wheelTime);
                         wheelTime = wheelTime.AddHours(8);
-                        Debug.Log("Wheel: " + wheelTime);
-                        Debug.Log("Old Wheel Time : " + ObscuredPrefs.GetString("TimeVideoWheel", "1992,11,30,00,00,00"));
+                        //Debug.Log("Wheel: " + wheelTime);
+                        //Debug.Log("Old Wheel Time : " + ObscuredPrefs.GetString("TimeVideoWheel", "1992,11,30,00,00,00"));
                         ObscuredPrefs.SetString("TimeVideoWheel", wheelTime.Year.ToString() + "," + DateTime.Now.Month.ToString() + "," + wheelTime.Day.ToString() + "," + wheelTime.Hour.ToString() + "," + wheelTime.Minute.ToString() + "," + wheelTime.Second.ToString());
-                        Debug.Log("New Wheel Time : " + ObscuredPrefs.GetString("TimeVideoWheel", "1992,11,30,00,00,00"));
+                        //Debug.Log("New Wheel Time : " + ObscuredPrefs.GetString("TimeVideoWheel", "1992,11,30,00,00,00"));
                     }
                     if (ObscuredPrefs.GetInt("VideoWheel", 3) <= 3)
                     {

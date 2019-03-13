@@ -14,18 +14,19 @@ public class OfflineEraning : MonoBehaviour
     [HideInInspector]
     public bool doubleCoin = false;
     private bool thirdCoin = false;
-    public void ShowEarning(int time, float offlineEarningRate)
+    public void ShowEarning(int time)
     {
         if (ObscuredPrefs.GetInt("helpStep", 0) == 22)
         {
             btnDouble.interactable = true;
             btnThird.interactable = true;
-            if (time > 21600)//تایم بیشتر از 4 روز نباشد
+            if (time > 21600)//تایم بیشتر از 6 ساعت نباشد
             {
                 time = 21600;
             }
-            value = controller.slotManager.EarningPerSec * time * offlineEarningRate / 100f;
-            value = value * ObscuredPrefs.GetFloat("offlineEarnTycoonBoosts", 1) * ObscuredPrefs.GetFloat("offliceEarnVip", 1);
+            float rate = ObscuredPrefs.GetFloat("offlineEarnTycoonBoosts", 1) + ObscuredPrefs.GetFloat("offliceEarnVip", 1);
+            value = controller.slotManager.EarningPerSec * time;
+            value = value * rate;
             valueTxt.text = value.ToString("0.##");
             if (value > 0)
             {

@@ -11,6 +11,11 @@ public class BazaarIABEventListener : MonoBehaviour
     //public Text[] txtPrice, txtTitle;
     public IAPCafeBazar iapCafeBazar;
     private string[] str;
+    private string strInsertBuy = "https://balootvas.ir/balootvas/TaxiKhati/insertBuy.php";
+    //void Start()
+    //{
+    //    StartCoroutine(IEBuyDate(iapCafeBazar.skus[1]));
+    //}
 #if UNITY_ANDROID
 
     void OnEnable()
@@ -218,6 +223,7 @@ public class BazaarIABEventListener : MonoBehaviour
                     iapCafeBazar.controller.panelWait.SetActive(true);
                     BazaarIAB.queryInventory(new string[] { purchase.ProductId });
                 }
+                StartCoroutine(IEBuyDate(purchase.ProductId));
             }
             else if (purchase.PurchaseState == BazaarPurchase.BazaarPurchaseState.Canceled)
             {
@@ -268,7 +274,23 @@ public class BazaarIABEventListener : MonoBehaviour
     }
     #endregion
 #endif
-
+    #region Insert Purchase In DataBase
+    IEnumerator IEBuyDate(string packName)
+    {
+        //Debug.Log("start" + PersianDate(new DateTime(2019, 11, 30)));
+        WWWForm wwwForm = new WWWForm();
+        wwwForm.AddField("date", PersianDate(DateTime.Now));
+        wwwForm.AddField("packNo", packName);
+        WWW www = new WWW(strInsertBuy, wwwForm);
+        yield return www;
+        //Debug.Log("END INSRT");
+    }
+    string PersianDate(DateTime DateTime1)
+    {
+        System.Globalization.PersianCalendar PersianCalendar1 = new System.Globalization.PersianCalendar();
+        return (PersianCalendar1.GetYear(DateTime1).ToString("0000") + "/" + PersianCalendar1.GetMonth(DateTime1).ToString("00") + "/" + PersianCalendar1.GetDayOfMonth(DateTime1).ToString("00"));
+    }
+    #endregion
 }
 
 
