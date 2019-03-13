@@ -7,15 +7,14 @@ public class Move : MonoBehaviour
     [HideInInspector]
     public Transform target;//target hadaf mibashad
 
-    public GameObject MoveTarget;
 
-    [HideInInspector]
-    public float speed;
-    public Image MyImage;
-    [HideInInspector]
-    public GameObject TargetObj;
+
+
+    public GameObject MoveTarget; //target farzi baraye inke gameobject deactive darim  
+    public float speed;  //سرعت حرکت به سمت ابچکت 
+    public Image MyImage; 
+    public GameObject TargetObj;   //ابجکتی که میخوایم به سمتش برویم ولی دی اکتیو است
     public Image cup, quest, whell, time, tycoon;
-    [HideInInspector]
     public int num;
     public Text NewIteamText;
 
@@ -36,9 +35,6 @@ public class Move : MonoBehaviour
 
             //cup.color = new Color(1, 1, 1, 0);
             NewIteamText.text = "رتبه بندی";
-
-            cup.color = new Color(1, 1, 1, 0);
-            NewIteamText.text = "رتبه بندي";
 
 
         }
@@ -70,7 +66,9 @@ public class Move : MonoBehaviour
 
         TargetObj.SetActive(false);
         MyImage.SetNativeSize();
+        MyImage.transform.localScale=new Vector3(1,1,1);
         this.transform.position = new Vector3(0, 0, 0);
+        
         //MyImage.transform.localScale=new Vector3();
     }
 
@@ -88,26 +86,26 @@ public class Move : MonoBehaviour
         {
             TargetObj.SetActive(true);
             //this.transform.SetParent(target, true);
-            if (num == 0)
-            {
-                cup.color = new Color(1, 1, 1, 1);
-            }
-            else if (num == 1)
-            {
-                quest.color = new Color(1, 1, 1, 1);
-            }
-            else if (num == 2)
-            {
-                whell.color = new Color(1, 1, 1, 1);
-            }
-            else if (num == 3)
-            {
-                time.color = new Color(1, 1, 1, 1);
-            }
-            else
-            {
-                tycoon.color = new Color(1, 1, 1, 1);
-            }
+            //if (num == 0)
+            //{
+            //    cup.color = new Color(1, 1, 1, 1);
+            //}
+            //else if (num == 1)
+            //{
+            //    quest.color = new Color(1, 1, 1, 1);
+            //}
+            //else if (num == 2)
+            //{
+            //    whell.color = new Color(1, 1, 1, 1);
+            //}
+            //else if (num == 3)
+            //{
+            //    time.color = new Color(1, 1, 1, 1);
+            //}
+            //else
+            //{
+            //    tycoon.color = new Color(1, 1, 1, 1);
+            //}
 
             speed = 0;
             this.gameObject.SetActive(false);
@@ -124,7 +122,19 @@ public class Move : MonoBehaviour
     public void StartMove()
     {
         speed = 150;
+        StartCoroutine(ChangeSizeOvertime());
     }
+
+    public IEnumerator ChangeSizeOvertime()
+    {
+        for (int i = 0; i < 20; i++)
+        {
+            yield return new WaitForSeconds(0.015f);
+            MyImage.transform.localScale=new Vector3(MyImage.transform.localScale.x-0.0175f, MyImage.transform.localScale.y - 0.0175f,1);
+        }
+    }
+
+    
 
 
 }
