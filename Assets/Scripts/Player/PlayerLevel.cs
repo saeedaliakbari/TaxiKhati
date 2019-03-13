@@ -130,9 +130,11 @@ public class PlayerLevel : MonoBehaviour
                 myMove.num = 2;
                 //myMove.target = btnWheel.transform;
                 myMove.TargetObj = btnWheel;
-                btnWheel.SetActive(true);
                 NewIteamPanel.SetActive(true);
-                //moveObj.SetActive(true);
+
+                moveObj.SetActive(true);
+                //btnWheel.SetActive(true);
+                //
             }
             if (level == 10)
             {

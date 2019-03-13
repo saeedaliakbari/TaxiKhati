@@ -25,6 +25,7 @@ public class Move : MonoBehaviour
 
     private void OnEnable()
     {
+        MoveTarget.SetActive(true);
         MoveTarget.transform.position=new Vector3(TargetObj.transform.position.x,TargetObj.transform.position.y,TargetObj.transform.position.z);
         target = MoveTarget.transform;
        
