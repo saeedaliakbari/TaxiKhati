@@ -149,6 +149,7 @@ MonoBehaviour:
   target: {fileID: 0}
   speed: 150
   MyGameObject: {fileID: 1971188605549778}
+  Trail: {fileID: 0}
 --- !u!198 &198157321352989092
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -569,7 +570,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 0
     randomizeRotationDirection: 0
-    maxNumParticles: 1000
+    maxNumParticles: 60
     size3D: 0
     rotation3D: 0
     gravityModifier:
@@ -7222,7 +7223,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 0
     randomizeRotationDirection: 0
-    maxNumParticles: 1000
+    maxNumParticles: 50
     size3D: 0
     rotation3D: 0
     gravityModifier:
@@ -10547,7 +10548,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 1000
+    maxNumParticles: 40
     size3D: 0
     rotation3D: 0
     gravityModifier:
