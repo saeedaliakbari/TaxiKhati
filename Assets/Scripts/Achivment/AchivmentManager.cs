@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using CodeStage.AntiCheat.ObscuredTypes;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,7 +19,18 @@ public class AchivmentManager : MonoBehaviour
     public List<AchivmentPrefab> listAchivmentScripts;
     void Start()
     {
-        OpenPanel();
+        CheckAchivments();
+    }
+    public void CheckAchivments()
+    {
+        lblNew.SetActive(false);
+        for (int i = 0; i < achivments.Length; i++)
+        {
+            if (ObscuredPrefs.GetInt(achivmentPrefs + i, 0) >= achivments[i].max)//unlock
+            {
+                lblNew.SetActive(true);
+            }
+        }
     }
     public void OpenPanel()
     {

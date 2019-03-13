@@ -58,7 +58,7 @@ public class PlayerLevel : MonoBehaviour
                 ObscuredPrefs.SetInt("mainAchiv11", ObscuredPrefs.GetInt("Level", 1));
                 ObscuredPrefs.SetInt("mainAchiv12", ObscuredPrefs.GetInt("Level", 1));
                 ObscuredPrefs.SetInt("mainAchiv13", ObscuredPrefs.GetInt("Level", 1));
-                controller.achivmentManager.OpenPanel();
+                controller.achivmentManager.CheckAchivments();
                 CheckLevel(ObscuredPrefs.GetInt("Level", 1), true);
             }
             txtLevel.text = ObscuredPrefs.GetInt("Level", 1).ToString();
@@ -72,7 +72,6 @@ public class PlayerLevel : MonoBehaviour
     }
     private void SetEleman()
     {
-
         txtLevel.text = ObscuredPrefs.GetInt("Level", 1).ToString();
         float slider = float.Parse(ObscuredPrefs.GetInt("Xp", 0).ToString()) / float.Parse(levelsInfo[ObscuredPrefs.GetInt("Level", 1) - 1].maxXp.ToString());
         //Debug.Log("XP: " + ObscuredPrefs.GetInt("Xp", 0) + "MaxXP:" + levelsInfo[ObscuredPrefs.GetInt("Level", 1) - 1].maxXp + ">>" + slider);
@@ -105,7 +104,6 @@ public class PlayerLevel : MonoBehaviour
                 btnBoosters.SetActive(true);
             }
         }
-
         else
         {
 

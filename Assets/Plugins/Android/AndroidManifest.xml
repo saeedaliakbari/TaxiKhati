@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="ir.balootgames.taxi"
           xmlns:tools="http://schemas.android.com/tools"
@@ -27,6 +27,14 @@
           android:allowBackup="false"
           android:fullBackupOnly="false"
           android:theme="@style/UnityThemeSelector">
+    <!--local notification--><!--
+    <receiver android:name="ir.balootgames.taxi.Controller" />
+    <receiver android:name="ir.balootgames.taxi.RebootManager" >
+        <intent-filter>
+          <action android:name="android.intent.action.BOOT_COMPLETED" />
+        </intent-filter>
+    </receiver>
+    --><!--end local notificaiton-->
     <activity android:name="ir.unity3d.cafebazarplugin.GateWay" android:theme="@android:style/Theme.NoDisplay"></activity>
 
     <activity android:name="ir.tapsell.sdk.TapsellAdActivity" android:configChanges="keyboardHidden|orientation|screenSize" />
