@@ -60166,6 +60166,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1252540962}
   - component: {fileID: 1252540963}
+  - component: {fileID: 1252540964}
   m_Layer: 5
   m_Name: PlayerLevel
   m_TagString: Untagged
@@ -60530,6 +60531,23 @@ MonoBehaviour:
   myMove: {fileID: 56337132}
   moveObj: {fileID: 56337128}
   NewIteamPanel: {fileID: 1010971739}
+--- !u!95 &1252540964
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1252540961}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 910711ff5533a874c9e71f8cb661eda4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &1254539233
 GameObject:
   m_ObjectHideFlags: 0
