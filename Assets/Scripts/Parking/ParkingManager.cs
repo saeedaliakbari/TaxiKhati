@@ -83,7 +83,7 @@ public class ParkingManager : MonoBehaviour
             ObscuredPrefs.SetInt("mainAchiv3", carsLevel[10]);
             ObscuredPrefs.SetInt("mainAchiv6", carsLevel[14]);
             ObscuredPrefs.SetInt("mainAchiv7", carsLevel[24]);
-            controller.achivmentManager.OpenPanel();
+            controller.achivmentManager.CheckAchivments();
             CheckCarSpeedTycoon(carsLevel);
             CheckOfflineEarningTycoon(carsLevel);
             CheckExchangeRateDecline(carsLevel);

@@ -19,7 +19,7 @@ namespace Assets.SimpleAndroidNotifications
                 delay = wheelTime.Subtract(DateTime.Now);
                 NotificationWheel(delay);
             }
-            NotificationWheel(new TimeSpan(0, 0, 1));
+            //NotificationWheel(new TimeSpan(0, 0, 1));
         }
         public void OnApplicationPause(bool pause)
         {
@@ -33,7 +33,13 @@ namespace Assets.SimpleAndroidNotifications
                 float rate = ObscuredPrefs.GetFloat("offlineEarnTycoonBoosts", 1) + ObscuredPrefs.GetFloat("offliceEarnVip", 1);
                 value = ObscuredPrefs.GetDouble("earnpersec") * 21600;
                 value = value * rate;
-                NotificationOfflineEarn(value.ToString("0.##"));
+                if (value == 0)
+                {
+                    NotificationOfflineEarnZero();
+                }
+                else {
+                    NotificationOfflineEarn(value.ToString("0.##"));
+                }
             }
         }
         private void OnApplicationQuit()
@@ -41,7 +47,13 @@ namespace Assets.SimpleAndroidNotifications
             float rate = ObscuredPrefs.GetFloat("offlineEarnTycoonBoosts", 1) + ObscuredPrefs.GetFloat("offliceEarnVip", 1);
             value = ObscuredPrefs.GetDouble("earnpersec") * 21600;
             value = value * rate;
-            NotificationOfflineEarn(value.ToString("0.##"));
+            if (value == 0)
+            {
+                NotificationOfflineEarnZero();
+            }
+            else {
+                NotificationOfflineEarn(value.ToString("0.##"));
+            }
         }
         public void NotificationOfflineEarn(string value)
         {
@@ -49,10 +61,29 @@ namespace Assets.SimpleAndroidNotifications
             var notificationParams = new NotificationParams
             {
                 Id = 1,
-                Delay = TimeSpan.FromMinutes(1),
+                Delay = TimeSpan.FromHours(6),
                 Title = "وقشته تاکسی جدید بخری",
                 Message = "تاکسی های شیفت " + value + " درآمد کسب کردند",
                 Ticker = "وقتشه تاکسی جدید بخری",
+                Sound = true,
+                Vibrate = true,
+                Light = true,
+                SmallIcon = NotificationIcon.Message,
+                SmallIconColor = new Color(0, 0.6f, 1),
+                LargeIcon = "app_icon"
+            };
+            NotificationManager.SendCustom(notificationParams);//نوتیفیکیشن جدید ساخته می شود
+        }
+        public void NotificationOfflineEarnZero()
+        {
+            NotificationManager.Cancel(3);//با وارد شدن داخل بازی باید زمان دی لی غیرفعال شود و زمان جدیدی ثبت شود
+            var notificationParams = new NotificationParams
+            {
+                Id = 3,
+                Delay = TimeSpan.FromHours(6),
+                Title = "راننده ها حوصله شون توی پارکینگ سررفته",
+                Message = "بیا تو بازی بفرستشون مسافرکشی",
+                Ticker = "راننده ها حوصله شون توی پارکینگ سررفته",
                 Sound = true,
                 Vibrate = true,
                 Light = true,

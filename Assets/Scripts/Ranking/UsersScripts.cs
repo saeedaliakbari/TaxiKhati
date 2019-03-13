@@ -90,7 +90,7 @@ public class UsersScripts : MonoBehaviour
                 {
                     ObscuredPrefs.SetInt("mainAchiv4", 1);
                 }
-                controller.achivmentManager.OpenPanel();
+                controller.achivmentManager.CheckAchivments();
                 Debug.Log(rankUser.ToString());
                 myRank.txtRank.text = rankUser.ToString();
                 myRank.txtCoin.text = jsonBooks[0]["coin"].ToString();

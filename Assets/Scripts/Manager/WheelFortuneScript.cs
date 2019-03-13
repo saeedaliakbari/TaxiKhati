@@ -154,7 +154,7 @@ public class WheelFortuneScript : MonoBehaviour
     public void WheelStart(bool video)
     {
         ObscuredPrefs.SetInt("mainAchiv9", ObscuredPrefs.GetInt("mainAchiv9", 0) + 1);
-        videoAds.controller.achivmentManager.OpenPanel();
+        videoAds.controller.achivmentManager.CheckAchivments();
         btnWheelVideo.interactable = false;
         btnWheelGem.interactable = false;
         anglePerItem = 360 / maxRotaiton.Length;

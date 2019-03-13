@@ -60,7 +60,6 @@ public class Controller : MonoBehaviour
         //Debug.Log(
         instance = this;
         ObscuredPrefs.SetInt("mainAchiv16", ObscuredPrefs.GetInt("mainAchiv16", 0) + 1);
-        achivmentManager.OpenPanel();
         ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem", 5) + 1000000);
         ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 21000));
         ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 21000));
@@ -255,7 +254,7 @@ public class Controller : MonoBehaviour
         {
             ObscuredPrefs.SetInt("mainAchiv8", ObscuredPrefs.GetInt("mainAchiv8", 0) + 1);
             ObscuredPrefs.SetInt("mainAchiv14", ObscuredPrefs.GetInt("mainAchiv14", 0) + 1);
-            achivmentManager.OpenPanel();
+            achivmentManager.CheckAchivments();
             ParkingPlace parkPlace = parkingManager.GetEmptyPlace();
             if (parkPlace != null)
             {
@@ -355,7 +354,7 @@ public class Controller : MonoBehaviour
     public GiftBox SpawnABox(int carIndex, ParkingPlace parkPlace, int modelBox)
     {
         ObscuredPrefs.SetInt("mainAchiv15", ObscuredPrefs.GetInt("mainAchiv15", 0) + 1);
-        achivmentManager.OpenPanel();
+        achivmentManager.CheckAchivments();
         GiftBox box = Instantiate(boxPrefab, Vector3.zero, Quaternion.identity);//ایجاد کرد یک باکس
         box.controller = this;
         box.transform.SetParent(parkPlace.transform);//پرنت در هایرارکی مکان پارکینگ تعیین می شود
@@ -423,7 +422,7 @@ public class Controller : MonoBehaviour
     public void SpawnABoxWheel()
     {
         ObscuredPrefs.SetInt("mainAchiv10", ObscuredPrefs.GetInt("mainAchiv10", 0) + 1);
-        achivmentManager.OpenPanel();
+        achivmentManager.CheckAchivments();
         ParkingPlace parkPlace = parkingManager.GetEmptyPlace();
         int taxiLvl = ObscuredPrefs.GetInt("unlocked_car", 1);
         int index = taxiLvl - 4;
@@ -465,7 +464,7 @@ public class Controller : MonoBehaviour
     public void SpawnABoxSpecialOffer()
     {
         ObscuredPrefs.SetInt("mainAchiv10", ObscuredPrefs.GetInt("mainAchiv10", 0) + 1);
-        achivmentManager.OpenPanel();
+        achivmentManager.CheckAchivments();
         ParkingPlace parkPlace = parkingManager.GetEmptyPlace();
         int taxiLvl = ObscuredPrefs.GetInt("unlocked_car", 1);
         int index = taxiLvl - 5;
