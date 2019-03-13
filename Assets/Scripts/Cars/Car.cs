@@ -130,7 +130,7 @@ public class Car : MonoBehaviour
                             nearPlace.XPTrail.target = controller.XpBarTranform;
                             nearPlace.XPTrail.MyGameObject.SetActive(true);
                             //Debug.Log("XP: " + ObscuredPrefs.GetInt("Xp", 0));
-                            controller.playerLevel.UpdateProgress(/*(int)Mathf.Pow(1.5f, level)*/);//مقدار ایکس و لول ست شود
+                            controller.playerLevel.UpdateProgress(xp);//مقدار ایکس و لول ست شود
 
                         }
                         else

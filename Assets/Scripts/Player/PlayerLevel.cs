@@ -10,7 +10,7 @@ public class PlayerLevel : MonoBehaviour
     public Levels[] levelsInfo;
     public GameObject btnRank, btnQuest, btnWheel, btnTimeBoost, btnBoosters;
     public Controller controller;
-
+    public Animator animPlayerLevel;
     public Move myMove;
 
     public GameObject moveObj, NewIteamPanel;
@@ -20,19 +20,52 @@ public class PlayerLevel : MonoBehaviour
         SetEleman();
         CheckLevel(ObscuredPrefs.GetInt("Level", 1), false);
     }
-    public void UpdateProgress()
+    public void UpdateProgress(int xp)
     {
-        if (ObscuredPrefs.GetInt("Xp", 0) > levelsInfo[ObscuredPrefs.GetInt("Level", 1) - 1].maxXp)
+        StartCoroutine(IEUpdateProgress(xp));
+        //if (ObscuredPrefs.GetInt("Xp", 0) > levelsInfo[ObscuredPrefs.GetInt("Level", 1) - 1].maxXp)
+        //{
+        //    controller.ShowLevelBonus(ObscuredPrefs.GetInt("Level", 1) + 1);
+        //    ObscuredPrefs.SetInt("Xp", ObscuredPrefs.GetInt("Xp", 0) - levelsInfo[ObscuredPrefs.GetInt("Level", 1) - 1].maxXp);
+        //    ObscuredPrefs.SetInt("Level", ObscuredPrefs.GetInt("Level", 1) + 1);
+        //    ObscuredPrefs.SetInt("mainAchiv11", ObscuredPrefs.GetInt("Level", 1));
+        //    ObscuredPrefs.SetInt("mainAchiv12", ObscuredPrefs.GetInt("Level", 1));
+        //    ObscuredPrefs.SetInt("mainAchiv13", ObscuredPrefs.GetInt("Level", 1));
+        //    controller.achivmentManager.OpenPanel();
+        //    CheckLevel(ObscuredPrefs.GetInt("Level", 1), true);
+        //}
+        //SetEleman();
+    }
+    IEnumerator IEUpdateProgress(int xp)
+    {
+        yield return new WaitForSeconds(1.1f);
+        animPlayerLevel.SetBool("endXp", false);
+        animPlayerLevel.Play("XPGain");
+        int nowXp = ObscuredPrefs.GetInt("Xp", 0) - xp;
+        int xptrailer = 0;
+        while (xptrailer <= xp)
         {
-            controller.ShowLevelBonus(ObscuredPrefs.GetInt("Level", 1) + 1);
-            ObscuredPrefs.SetInt("Xp", ObscuredPrefs.GetInt("Xp", 0) - levelsInfo[ObscuredPrefs.GetInt("Level", 1) - 1].maxXp);
-            ObscuredPrefs.SetInt("Level", ObscuredPrefs.GetInt("Level", 1) + 1);
-            ObscuredPrefs.SetInt("mainAchiv11", ObscuredPrefs.GetInt("Level", 1));
-            ObscuredPrefs.SetInt("mainAchiv12", ObscuredPrefs.GetInt("Level", 1));
-            ObscuredPrefs.SetInt("mainAchiv13", ObscuredPrefs.GetInt("Level", 1));
-            controller.achivmentManager.OpenPanel();
-            CheckLevel(ObscuredPrefs.GetInt("Level", 1), true);
+            if ((nowXp + xptrailer) > levelsInfo[ObscuredPrefs.GetInt("Level", 1) - 1].maxXp)
+            {
+                controller.ShowLevelBonus(ObscuredPrefs.GetInt("Level", 1) + 1);
+                ObscuredPrefs.SetInt("Xp", ObscuredPrefs.GetInt("Xp", 0) - levelsInfo[ObscuredPrefs.GetInt("Level", 1) - 1].maxXp);
+                nowXp = 0;
+                ObscuredPrefs.SetInt("Level", ObscuredPrefs.GetInt("Level", 1) + 1);
+                ObscuredPrefs.SetInt("mainAchiv11", ObscuredPrefs.GetInt("Level", 1));
+                ObscuredPrefs.SetInt("mainAchiv12", ObscuredPrefs.GetInt("Level", 1));
+                ObscuredPrefs.SetInt("mainAchiv13", ObscuredPrefs.GetInt("Level", 1));
+                controller.achivmentManager.OpenPanel();
+                CheckLevel(ObscuredPrefs.GetInt("Level", 1), true);
+            }
+            txtLevel.text = ObscuredPrefs.GetInt("Level", 1).ToString();
+            float slider = (nowXp + xptrailer) / float.Parse(levelsInfo[ObscuredPrefs.GetInt("Level", 1) - 1].maxXp.ToString());
+            imgProgress.fillAmount = slider;
+            Debug.Log("now xp : " + (nowXp + xptrailer));
+            yield return new WaitForSeconds(0.1f);
+            xptrailer++;
         }
+        animPlayerLevel.SetBool("endXp", true);
+        animPlayerLevel.Play("BackToNormal");
         SetEleman();
     }
     private void SetEleman()

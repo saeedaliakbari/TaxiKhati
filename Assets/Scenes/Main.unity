@@ -60528,6 +60528,7 @@ MonoBehaviour:
   btnTimeBoost: {fileID: 188366903}
   btnBoosters: {fileID: 397907959}
   controller: {fileID: 1085018823}
+  animPlayerLevel: {fileID: 1252540964}
   myMove: {fileID: 56337132}
   moveObj: {fileID: 56337128}
   NewIteamPanel: {fileID: 1010971739}
