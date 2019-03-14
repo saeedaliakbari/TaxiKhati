@@ -349,6 +349,7 @@ public class LevelUpBonus : MonoBehaviour
             imgSlider.fillAmount = (((newLevel - 50) / 3f) * 0.5f) + 0.5f;
         }
 
+
     }
 }
 

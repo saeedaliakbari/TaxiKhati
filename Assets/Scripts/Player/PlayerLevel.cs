@@ -7,7 +7,7 @@ public class PlayerLevel : MonoBehaviour
 {
     public Text txtLevel;
     public Image imgProgress;
-    public Levels[] levelsInfo;
+    public List<Levels> levelsInfo;
     public GameObject btnRank, btnQuest, btnWheel, btnTimeBoost, btnBoosters;
     public Controller controller;
     public Animator animPlayerLevel;
@@ -43,6 +43,7 @@ public class PlayerLevel : MonoBehaviour
     }
     IEnumerator IEUpdateProgress(int xp)
     {
+
         yield return new WaitForSeconds(1.1f);
         animPlayerLevel.Play("XPGain");
         int nowXp = ObscuredPrefs.GetInt("Xp", 0) - xp;
@@ -51,20 +52,46 @@ public class PlayerLevel : MonoBehaviour
         {
             if ((nowXp + xptrailer) > levelsInfo[ObscuredPrefs.GetInt("Level", 1) - 1].maxXp)
             {
-                controller.ShowLevelBonus(ObscuredPrefs.GetInt("Level", 1) + 1);
                 ObscuredPrefs.SetInt("Xp", ObscuredPrefs.GetInt("Xp", 0) - levelsInfo[ObscuredPrefs.GetInt("Level", 1) - 1].maxXp);
                 nowXp = 0;
                 ObscuredPrefs.SetInt("Level", ObscuredPrefs.GetInt("Level", 1) + 1);
-                ObscuredPrefs.SetInt("mainAchiv11", ObscuredPrefs.GetInt("Level", 1));
-                ObscuredPrefs.SetInt("mainAchiv12", ObscuredPrefs.GetInt("Level", 1));
-                ObscuredPrefs.SetInt("mainAchiv13", ObscuredPrefs.GetInt("Level", 1));
-                controller.achivmentManager.CheckAchivments();
-                CheckLevel(ObscuredPrefs.GetInt("Level", 1), true);
+                if (levelsInfo.Count >= ObscuredPrefs.GetInt("Level", 1) - 1)
+                {
+                    controller.ShowLevelBonus(ObscuredPrefs.GetInt("Level", 1));
+                    ObscuredPrefs.SetInt("mainAchiv11", ObscuredPrefs.GetInt("Level", 1));
+                    ObscuredPrefs.SetInt("mainAchiv12", ObscuredPrefs.GetInt("Level", 1));
+                    ObscuredPrefs.SetInt("mainAchiv13", ObscuredPrefs.GetInt("Level", 1));
+                    controller.achivmentManager.CheckAchivments();
+                    CheckLevel(ObscuredPrefs.GetInt("Level", 1), true);
+                }
+                else
+                {
+                    Levels newlevel = new Levels();
+                    newlevel.level = ObscuredPrefs.GetInt("Level", 1) + 1;
+                    newlevel.maxXp = levelsInfo[ObscuredPrefs.GetInt("Level", 1) - 3].maxXp + 3000;
+                    newlevel.parkingPlus = 0;
+                    newlevel.linePlus = 0;
+                    newlevel.coin = "0";
+                    if ((newlevel.level - 50) % 3 == 0)
+                    {
+                        if ((newlevel.level - 50) % 9 == 0)
+                        {
+                            newlevel.gem = levelsInfo[newlevel.level - 4].gem + 5;
+                        }
+                        else
+                        {
+                            newlevel.gem = levelsInfo[newlevel.level - 4].gem;
+                        }
+                    }
+                    else {
+                        newlevel.gem = 0;
+                    }
+                    levelsInfo.Add(newlevel);
+                }
             }
-            txtLevel.text = ObscuredPrefs.GetInt("Level", 1).ToString();
             float slider = (nowXp + xptrailer) / float.Parse(levelsInfo[ObscuredPrefs.GetInt("Level", 1) - 1].maxXp.ToString());
             imgProgress.fillAmount = slider;
-            //Debug.Log("now xp : " + (nowXp + xptrailer));
+            txtLevel.text = ObscuredPrefs.GetInt("Level", 1).ToString();
             yield return new WaitForSeconds(0.05f);
             xptrailer++;
         }
@@ -73,7 +100,7 @@ public class PlayerLevel : MonoBehaviour
     private void SetEleman()
     {
         txtLevel.text = ObscuredPrefs.GetInt("Level", 1).ToString();
-        float slider = float.Parse(ObscuredPrefs.GetInt("Xp", 0).ToString()) / float.Parse(levelsInfo[ObscuredPrefs.GetInt("Level", 1) - 1].maxXp.ToString());
+        float slider = float.Parse(ObscuredPrefs.GetInt("Xp", 0).ToString()) / float.Parse(levelsInfo[ObscuredPrefs.GetInt("Level", 1) - 2].maxXp.ToString());
         ////Debug.Log("XP: " + ObscuredPrefs.GetInt("Xp", 0) + "MaxXP:" + levelsInfo[ObscuredPrefs.GetInt("Level", 1) - 1].maxXp + ">>" + slider);
         imgProgress.fillAmount = slider;
     }
