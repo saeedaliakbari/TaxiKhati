@@ -23,12 +23,22 @@ public class AchivmentManager : MonoBehaviour
     }
     public void CheckAchivments()
     {
+        bool[] status = new bool[achivments.Length];
         lblNew.SetActive(false);
-        for (int i = 0; i < achivments.Length; i++)
+        for (int i = 1; i <= achivments.Length; i++)
         {
             if (ObscuredPrefs.GetInt(achivmentPrefs + "Get" + i, 0) == 1)//geted
-            { }
-            else if (ObscuredPrefs.GetInt(achivmentPrefs + i, 0) >= achivments[i].max)//unlock
+            {
+                status[i - 1] = false;
+            }
+            else if (ObscuredPrefs.GetInt(achivmentPrefs + i, 0) >= achivments[i - 1].max)//unlock
+            {
+                status[i - 1] = true;
+            }
+        }
+        for (int i = 0; i < status.Length; i++)
+        {
+            if (status[i] == true)
             {
                 lblNew.SetActive(true);
             }

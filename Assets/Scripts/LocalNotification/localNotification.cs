@@ -8,6 +8,7 @@ namespace Assets.SimpleAndroidNotifications
 {
     public class localNotification : MonoBehaviour
     {
+        public TrimNumberText txtValue;
         private double value = 0;
         void Start()
         {
@@ -33,12 +34,13 @@ namespace Assets.SimpleAndroidNotifications
                 float rate = ObscuredPrefs.GetFloat("offlineEarnTycoonBoosts", 1) + ObscuredPrefs.GetFloat("offliceEarnVip", 1);
                 value = ObscuredPrefs.GetDouble("earnpersec") * 21600;
                 value = value * rate;
+                txtValue.text = value.ToString("0.##");
                 if (value == 0)
                 {
                     NotificationOfflineEarnZero();
                 }
                 else {
-                    NotificationOfflineEarn(value.ToString("0.##"));
+                    NotificationOfflineEarn(txtValue.text);
                 }
             }
         }
@@ -47,6 +49,7 @@ namespace Assets.SimpleAndroidNotifications
             float rate = ObscuredPrefs.GetFloat("offlineEarnTycoonBoosts", 1) + ObscuredPrefs.GetFloat("offliceEarnVip", 1);
             value = ObscuredPrefs.GetDouble("earnpersec") * 21600;
             value = value * rate;
+
             if (value == 0)
             {
                 NotificationOfflineEarnZero();
