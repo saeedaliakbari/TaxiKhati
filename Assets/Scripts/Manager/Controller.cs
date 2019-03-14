@@ -150,7 +150,7 @@ public class Controller : MonoBehaviour
         InitGame();
         LoadGame();
         NewCarTimeing();
-        //HelpBuyCarTiming();    ///commended for build
+        HelpBuyCarTiming();
         HelpRunCar();
         GiftDaily();//اگر عضو بود بهش الماس روزانه میدهد
                     //Timer.Schedule(this, 5f, () =>
@@ -834,36 +834,33 @@ public class Controller : MonoBehaviour
         speedPanel.txtTimer.text = "00:00";
         yield return 0;
     }
-    //public void HelpBuyCarTiming()
-    //{
-        //Manager.SetActionTime("helpBuyCar", Manager.GetCurrentTime() + 30);
-        //if (ObscuredPrefs.GetInt("helpStep", 0) == 22)
-        //    StartCoroutine(IEHelpBuyCarTiming());
-        ///commended for build
-    //}
-    //private IEnumerator IEHelpBuyCarTiming()
-    //{
-        //while (Manager.GetCurrentTime() < Manager.GetActionTime("helpBuyCar"))
-        //{
-        //    //Debug.Log("Help Buy Car timing: " + Manager.GetCurrentTime() + " / " + Manager.GetActionTime("helpBuyCar"));
-        //    yield return new WaitForSeconds(1f);
-        //}
-        //for (int i = 0; i < parkingManager.places.Count; i++)
-        //{
-        //    if (parkingManager.places[i].GetCar() == null)
-        //    {
-        //        int index = ObscuredPrefs.GetInt("curr_car_index", 0);
-        //        if (ObscuredPrefs.GetDouble("coin", 21000) >= ObscuredPrefs.GetDouble("car_price_" + index, System.Math.Round(basePrice[index])))
-        //        {
-        //            hand.SetActive(true);
-        //            break;
-        //        }
-        //    }
-        //}
-        //HelpBuyCarTiming();
-
-        ///commended for build
-    //}
+    public void HelpBuyCarTiming()
+    {
+        Manager.SetActionTime("helpBuyCar", Manager.GetCurrentTime() + 30);
+        if (ObscuredPrefs.GetInt("helpStep", 0) == 22)
+            StartCoroutine(IEHelpBuyCarTiming());
+    }
+    private IEnumerator IEHelpBuyCarTiming()
+    {
+        while (Manager.GetCurrentTime() < Manager.GetActionTime("helpBuyCar"))
+        {
+            //Debug.Log("Help Buy Car timing: " + Manager.GetCurrentTime() + " / " + Manager.GetActionTime("helpBuyCar"));
+            yield return new WaitForSeconds(1f);
+        }
+        for (int i = 0; i < parkingManager.places.Count; i++)
+        {
+            if (parkingManager.places[i].GetCar() == null)
+            {
+                int index = ObscuredPrefs.GetInt("curr_car_index", 0);
+                if (ObscuredPrefs.GetDouble("coin", 21000) >= ObscuredPrefs.GetDouble("car_price_" + index, System.Math.Round(basePrice[index])))
+                {
+                    hand.SetActive(true);
+                    break;
+                }
+            }
+        }
+        HelpBuyCarTiming();
+    }
     public void HelpRunCar()
     {
         Manager.SetActionTime("helpRunCar", Manager.GetCurrentTime() + 40);
@@ -892,6 +889,13 @@ public class Controller : MonoBehaviour
             }
         }
         HelpRunCar();
+    }
+    public void PlusTimeHelp()
+    {
+        Manager.SetActionTime("helpRunCar", Manager.GetCurrentTime() + 40);
+        Manager.SetActionTime("helpBuyCar", Manager.GetCurrentTime() + 30);
+        handRun.SetActive(false);
+        hand.SetActive(false);
     }
 }
 

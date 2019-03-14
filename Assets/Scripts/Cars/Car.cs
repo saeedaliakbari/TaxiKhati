@@ -72,6 +72,7 @@ public class Car : MonoBehaviour
         if (!moving)//اگر ماشین درحال حرکت نبود
         {
             controller.handRun.SetActive(false);
+            controller.hand.SetActive(false);
             ParkingPlace nearPlace = controller.parkingManager.GetNearestPlace(transform.position);//نزدیکترین مکان 
             //Debug.Log("!moving");
             if (nearPlace != null && nearPlace != parkingPlace)//اگر نزدیکترین مکان خالی نبود و با مکان فعلی یکسان نبود
@@ -221,7 +222,7 @@ public class Car : MonoBehaviour
     }
     public void StartDrive()//شروع حرکت
     {
-        
+        controller.hand.SetActive(false);
         controller.handRun.SetActive(false);
         parkingPlace.objBack.SetActive(true);
         controller.colliderCarHelp = GetComponent<Collider2D>();
