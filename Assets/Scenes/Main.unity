@@ -20780,7 +20780,7 @@ GameObject:
   - component: {fileID: 442498654}
   - component: {fileID: 442498653}
   m_Layer: 5
-  m_Name: 20X Earning (1)
+  m_Name: 20X Gem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32713,7 +32713,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &682656667
 RectTransform:
   m_ObjectHideFlags: 0
@@ -84256,6 +84256,7 @@ GameObject:
   - component: {fileID: 1757146668}
   - component: {fileID: 1757146667}
   - component: {fileID: 1757146669}
+  - component: {fileID: 1757146670}
   m_Layer: 5
   m_Name: PanelNewGift
   m_TagString: Untagged
@@ -84337,6 +84338,24 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &1757146670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1757146665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b6c67db77df4c54cb914527396d1474, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  num: 0
+  giftBoxes:
+  - {fileID: 1989458160}
+  - {fileID: 1475314594}
+  - {fileID: 752016389}
+  - {fileID: 1125503586}
+  - {fileID: 442498651}
 --- !u!1 &1758450652
 GameObject:
   m_ObjectHideFlags: 0
