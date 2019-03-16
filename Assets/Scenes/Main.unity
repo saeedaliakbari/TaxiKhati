@@ -62642,7 +62642,7 @@ MonoBehaviour:
     maxXp: 118000
     parkingPlus: 0
     linePlus: 0
-    gem: 0
+    gem: 18
     coin: 230146000000000000000000000000
   btnRank: {fileID: 501495833}
   btnQuest: {fileID: 734584882}
