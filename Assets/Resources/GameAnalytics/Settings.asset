@@ -29,7 +29,7 @@ MonoBehaviour:
   secretKey:
   - d416490f1df1e164081ab70978d4d42e7527b0f6
   Build:
-  - 1.0.0
+  - 1.0.1
   SelectedPlatformStudio:
   - baloot
   SelectedPlatformGame:
