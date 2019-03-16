@@ -31,7 +31,8 @@ public class Controller : MonoBehaviour
     public SpeedPanel speedPanel;
     public LevelUpBonus levelBonus;
     public GameObject deleteBin, panelMessage, panelShopGem, btnVip, btnGoToVipPanelMessage;
-    public GameObject coinEffectPrefab, panelSplash, panelWait, panelNoGem, objSpeed, objEarning, hand, handRun;
+    public GameObject /*coinEffectPrefab,*/ panelSplash, panelWait, panelNoGem, objSpeed, objEarning, hand, handRun;
+    public List<GameObject> coinEffect;
     public OfflineEraning offEarning;
     public Text txtGem, txtSpeed, txtEarning;
     public TrimNumberText txtCoin, txtCoinTop;
@@ -730,13 +731,19 @@ public class Controller : MonoBehaviour
     public void ShowCoinEffect(Vector3 position)
     {
         animIncome.Play("IncomeCoin");
-        GameObject eff = Instantiate(coinEffectPrefab, Vector3.zero, Quaternion.identity);
-        eff.transform.localScale = Vector3.one;
-        eff.transform.position = position;
-        Timer.Schedule(this, 1f, () =>
+
+        for (int i = 0; i < 15; i++)
         {
-            Destroy(eff);
-        });
+            if (!coinEffect[i].activeSelf)
+            {
+                coinEffect[i].SetActive(true);
+                Timer.Schedule(this, 1f, () =>
+                {
+                    coinEffect[i].SetActive(false);
+                });
+                break;
+            }
+        }
     }
     public void GiftDaily()
     {

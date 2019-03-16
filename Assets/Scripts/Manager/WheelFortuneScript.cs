@@ -82,49 +82,50 @@ public class WheelFortuneScript : MonoBehaviour
         anglePerItem = 360 / maxRotaiton.Length;
         txtNumVideoWheel.text = ObscuredPrefs.GetInt("VideoWheel", 3).ToString() + "/3";
         randomTime = UnityEngine.Random.Range(3, 6);
-        int iPercent = UnityEngine.Random.Range(0, 100);
+        int iPercent = UnityEngine.Random.Range(10000, 10000000);
+        iPercent = iPercent % 100;
         //Debug.Log("darsad>>" + iPercent);
         if (video)
         {
-            if (iPercent < 30)//5x Earning for 1m
+            if (iPercent < 3)//20 gem
             {
                 itemNumber = 0;
             }
-            else if (iPercent < 70)//2x Speed For 150s
+            else if (iPercent < 35)//1 min 5x
             {
                 itemNumber = 1;
             }
-            else if (iPercent < 90)//4 Golden Box
+            else if (iPercent <75)//150 s speed
             {
                 itemNumber = 2;
             }
-            else if (iPercent < 95)//4h time boost
+            else if (iPercent < 95)//4 box
             {
                 itemNumber = 3;
             }
-            else if (iPercent < 100)//20 Gem
+            else if (iPercent < 100)//4 h
             {
                 itemNumber = 4;
             }
         }
         else {
-            if (iPercent < 30)//5x Earning for 1m
+            if (iPercent < 5)//20 gem
             {
                 itemNumber = 0;
             }
-            else if (iPercent < 50)//2x Speed For 150s
+            else if (iPercent < 35)//1 min
             {
                 itemNumber = 1;
             }
-            else if (iPercent < 70)//4 Golden Box
+            else if (iPercent < 65)//150 s
             {
                 itemNumber = 2;
             }
-            else if (iPercent < 80)//4h time boost
+            else if (iPercent < 85)//4box
             {
                 itemNumber = 3;
             }
-            else if (iPercent < 100)//20 Gem
+            else if (iPercent < 100)//4h
             {
                 itemNumber = 4;
             }
