@@ -72,7 +72,7 @@ public class SpecialOffer : MonoBehaviour
         {
             btnGem.interactable = false;
             btnVideo.interactable = false;
-            ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem") - 5);
+            ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem") - 3);
             controller.SetText();
             ManageGift();
         }

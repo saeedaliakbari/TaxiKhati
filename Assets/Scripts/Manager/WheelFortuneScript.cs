@@ -35,7 +35,6 @@ public class WheelFortuneScript : MonoBehaviour
         DateTime wheelTime = new DateTime(Int32.Parse(arr[0]), Int32.Parse(arr[1]), Int32.Parse(arr[2]), Int32.Parse(arr[3]), Int32.Parse(arr[4]), Int32.Parse(arr[5]));
         if (ObscuredPrefs.GetInt("VideoWheel", 3) < 3)
         {
-
             ////Debug.Log("VideoWheel< 3 ");
             StartCoroutine(GetDateTime.IEGetDateTime((status) =>
             {
@@ -90,8 +89,8 @@ public class WheelFortuneScript : MonoBehaviour
         if (ObscuredPrefs.GetString("TimeVideoWheel", "1992,11,30,00,00,00") == "1992,11,30,00,00,00")
         {
             TimeSpan nowTimeSpan = new TimeSpan(DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
-            TimeSpan plusTimeSpan = new TimeSpan(0, 8, 0, 0);
-            //TimeSpan plusTimeSpan = new TimeSpan(0, 0, 2, 0);
+            //TimeSpan plusTimeSpan = new TimeSpan(0, 8, 0, 0);
+            TimeSpan plusTimeSpan = new TimeSpan(0, 0, 2, 0);
             TimeSpan result = plusTimeSpan + nowTimeSpan;
             ObscuredPrefs.SetString("TimeVideoWheel", DateTime.Now.Year.ToString() + "," + DateTime.Now.Month.ToString() + "," + result.Days.ToString() + "," + result.Hours.ToString() + "," + result.Minutes.ToString() + "," + result.Seconds.ToString());
             ////Debug.Log("NOT SET >>" + ObscuredPrefs.GetString("TimeVideoWheel"));

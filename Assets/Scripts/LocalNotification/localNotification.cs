@@ -31,7 +31,7 @@ namespace Assets.SimpleAndroidNotifications
 
             if (pause)
             {
-                float rate = ObscuredPrefs.GetFloat("offlineEarnTycoonBoosts", 1) + ObscuredPrefs.GetFloat("offliceEarnVip", 1);
+                float rate = ObscuredPrefs.GetFloat("offlineEarnTycoonBoosts", 1) + ObscuredPrefs.GetFloat("offliceEarnVip", 0);
                 value = ObscuredPrefs.GetDouble("earnpersec") * 21600;
                 value = value * rate;
                 txtValue.text = value.ToString("0.##");
@@ -46,16 +46,16 @@ namespace Assets.SimpleAndroidNotifications
         }
         private void OnApplicationQuit()
         {
-            float rate = ObscuredPrefs.GetFloat("offlineEarnTycoonBoosts", 1) + ObscuredPrefs.GetFloat("offliceEarnVip", 1);
+            float rate = ObscuredPrefs.GetFloat("offlineEarnTycoonBoosts", 1) + ObscuredPrefs.GetFloat("offliceEarnVip", 0);
             value = ObscuredPrefs.GetDouble("earnpersec") * 21600;
             value = value * rate;
-
+            txtValue.text = value.ToString("0.##");
             if (value == 0)
             {
                 NotificationOfflineEarnZero();
             }
             else {
-                NotificationOfflineEarn(value.ToString("0.##"));
+                NotificationOfflineEarn(txtValue.text);
             }
         }
         public void NotificationOfflineEarn(string value)

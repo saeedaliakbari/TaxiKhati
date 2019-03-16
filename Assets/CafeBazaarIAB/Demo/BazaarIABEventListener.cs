@@ -101,7 +101,7 @@ public class BazaarIABEventListener : MonoBehaviour
     {
         ObscuredPrefs.SetInt("num_of_places_vip", 0);
         ObscuredPrefs.SetInt("num_of_slot_vip", 0);
-        ObscuredPrefs.SetFloat("offliceEarnVip", 1);
+        ObscuredPrefs.SetFloat("offliceEarnVip", 0);
         ObscuredPrefs.SetInt("removeAds", 0);
         ObscuredPrefs.SetInt("gemPerDay", 0);
         ObscuredPrefs.SetFloat("speedVip", 0);
@@ -115,7 +115,7 @@ public class BazaarIABEventListener : MonoBehaviour
                 ObscuredPrefs.SetInt("num_of_slot_vip", 2);//added 2 line
                 iapCafeBazar.controller.parkingManager.SpawnPlacesVIP();
                 iapCafeBazar.controller.slotManager.InitSlotsVIP();
-                ObscuredPrefs.SetFloat("offliceEarnVip", 1.2f);//added 20% offline earning
+                ObscuredPrefs.SetFloat("offliceEarnVip", 0.2f);//added 20% offline earning
                 ObscuredPrefs.SetInt("removeAds", 1);//remove ads in shop
                 ObscuredPrefs.SetInt("gemPerDay", 1);//10 gem per day
                 ObscuredPrefs.SetFloat("speedVip", 0.5f);//added 50% speed
@@ -203,7 +203,7 @@ public class BazaarIABEventListener : MonoBehaviour
                     iapCafeBazar.controller.slotManager.SpawnASlot();
                     iapCafeBazar.controller.slotManager.SpawnASlot();
                     iapCafeBazar.controller.slotManager.UpdatePosition();
-                    ObscuredPrefs.SetFloat("offliceEarnVip", 1.2f);//added 20% offline earning
+                    ObscuredPrefs.SetFloat("offliceEarnVip", 0.2f);//added 20% offline earning
                     ObscuredPrefs.SetInt("removeAds", 1);//remove ads in shop
                     ObscuredPrefs.SetInt("gemPerDay", 1);//10 gem per day
                     ObscuredPrefs.SetFloat("speedVip", 0.5f);//added 50% speed

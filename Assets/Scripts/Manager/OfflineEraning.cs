@@ -11,9 +11,6 @@ public class OfflineEraning : MonoBehaviour
     public TrimNumberText txtCoin;
     public Button btnDouble, btnThird;
     private double value;
-    [HideInInspector]
-    public bool doubleCoin = false;
-    private bool thirdCoin = false;
     public void ShowEarning(int time)
     {
         if (ObscuredPrefs.GetInt("helpStep", 0) == 22)
@@ -24,7 +21,7 @@ public class OfflineEraning : MonoBehaviour
             {
                 time = 21600;
             }
-            float rate = ObscuredPrefs.GetFloat("offlineEarnTycoonBoosts", 1) + ObscuredPrefs.GetFloat("offliceEarnVip", 1);
+            float rate = ObscuredPrefs.GetFloat("offlineEarnTycoonBoosts", 1) + ObscuredPrefs.GetFloat("offliceEarnVip", 0);
             value = controller.slotManager.EarningPerSec * time;
             value = value * rate;
             valueTxt.text = value.ToString("0.##");
@@ -50,24 +47,22 @@ public class OfflineEraning : MonoBehaviour
             btnDouble.interactable = false;
             btnThird.interactable = false;
             ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem") - 5);
-            thirdCoin = true;
             controller.SetText();
-            AnimValueChange();
+            AnimValueChange(false);
         }
     }
-    public void AnimValueChange()
+    public void AnimValueChange(bool doubleCoin)
     {
         if (doubleCoin)
         {
             value *= 2;
             valueTxt.text = value.ToString("0.##");
-            doubleCoin = false;
         }
-        else if (thirdCoin)
+        else
         {
             value *= 3;
             valueTxt.text = value.ToString("0.##");
-            thirdCoin = false;
         }
+        ClaimClick();
     }
 }
