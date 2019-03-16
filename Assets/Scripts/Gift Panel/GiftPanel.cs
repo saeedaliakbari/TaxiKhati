@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class GiftPanel : MonoBehaviour
 {
+    public GameObject myGameObject;
     public int num;
     public GameObject [] giftBoxes=new GameObject[5];
 	// Use this for initialization
