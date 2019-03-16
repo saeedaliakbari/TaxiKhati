@@ -58,6 +58,7 @@ public class Controller : MonoBehaviour
     private Coroutine lastRoutineSpecialBox = null, lastRoutineWheelBox = null, lastRoutineTime = null;
     void Awake()
     {
+      
         instance = this;
         ObscuredPrefs.SetInt("mainAchiv16", ObscuredPrefs.GetInt("mainAchiv16", 0) + 1);
         ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem", 5) /*+ 1000000*/);
@@ -140,6 +141,7 @@ public class Controller : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
         ObscuredPrefs.SetInt("countCloseShop", 1);
         ConfigBatch();
         iTween.dimensionMode = iTween.DimensionMode.mode2D;//دوبعدی کردن حرکت ماشین

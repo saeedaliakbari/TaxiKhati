@@ -105,7 +105,7 @@ public class PlayerLevel : MonoBehaviour
     private void SetEleman()
     {
         txtLevel.text = ObscuredPrefs.GetInt("Level", 1).ToString();
-        float slider = float.Parse(ObscuredPrefs.GetInt("Xp", 0).ToString()) / float.Parse(levelsInfo[ObscuredPrefs.GetInt("Level", 1) - 2].maxXp.ToString());
+        float slider = float.Parse(ObscuredPrefs.GetInt("Xp", 0).ToString()) / float.Parse(levelsInfo[ObscuredPrefs.GetInt("Level", 1) - 1].maxXp.ToString());
         ////Debug.Log("XP: " + ObscuredPrefs.GetInt("Xp", 0) + "MaxXP:" + levelsInfo[ObscuredPrefs.GetInt("Level", 1) - 1].maxXp + ">>" + slider);
         imgProgress.fillAmount = slider;
     }
