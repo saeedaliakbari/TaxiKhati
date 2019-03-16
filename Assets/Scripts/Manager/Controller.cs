@@ -161,9 +161,18 @@ public class Controller : MonoBehaviour
         UpdateTimeSpeed2X();// تایمر سرعت دوبرابر فعال شود
         StartCoroutine(IESpeedRatio());
         StartCoroutine(IEEarningRatio());
+        GlimGames.Phone.OnCollected += Gifts_Collected;
         //}
         //);
     }
+
+    void Gifts_Collected(int categoryIndex, int item)
+    {
+        //Debug.Log("category " + categoryIndex + ", item " + item);
+        ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem", 5) + item);
+        SetText();
+    }
+
     IEnumerator IESliderPanelSplash()
     {
 
