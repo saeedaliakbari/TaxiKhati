@@ -172,7 +172,14 @@ public class Controller : MonoBehaviour
         ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem", 5) + item);
         SetText();
     }
+    public void OpenPanelPhone()
+    {
+        GlimGames.Phone.Activate();
+    }
+    public void ClosePanelPhone()
+    {
 
+    }
     IEnumerator IESliderPanelSplash()
     {
 
