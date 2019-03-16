@@ -233,7 +233,7 @@ public class Controller : MonoBehaviour
     public void UpdatePrice()
     {//قیمت ماشین ها را می گذارد
         int index = ObscuredPrefs.GetInt("curr_car_index", 0);//az 0 shoro mishavad
-        buyPrice.text = (ObscuredPrefs.GetDouble("car_price_" + index, System.Math.Round(basePrice[index])) * (1 - ObscuredPrefs.GetFloat("offCar", 0))).ToString("0.##");
+        buyPrice.text = (ObscuredPrefs.GetDouble("car_price_" + index, System.Math.Round(basePrice[index]))* (1 - ObscuredPrefs.GetFloat("offCar", 0))).ToString("0.##");
         //txtLevelBuyCar.text = "خرید ماشین سطح " + (index + 1);
         //Debug.Log("index Car : " + index + " sprite Name :" + activeCar[index].name);
         imgBuyCar.sprite = activeCar[index];
@@ -271,7 +271,7 @@ public class Controller : MonoBehaviour
         }
         bool useGem = index >= (lastSalableTaxiLevel - def);//اگر عدد آیتمی که میخواد ساخته بشه بیشتر از یک مقداری بود نیاز به روبی دارد
 
-        double price = useGem ? baseGemPrice[index] : ObscuredPrefs.GetDouble("car_price_" + index, System.Math.Round(basePrice[index]));
+        double price = useGem ? baseGemPrice[index] : ObscuredPrefs.GetDouble("car_price_" + index, System.Math.Round(basePrice[index])) * (1 - ObscuredPrefs.GetFloat("offCar", 0));
         //Debug.Log("Price Car: " + price);
         if ((useGem ? ObscuredPrefs.GetDouble("gem", 0) : ObscuredPrefs.GetDouble("coin", 5000)) >= price)//روی سکه و روبی که اینجا نوشته شده است دقت شود که چه مقداری باید باشد
         {
@@ -306,7 +306,7 @@ public class Controller : MonoBehaviour
                     SpawnACar(index, parkPlace);
                 //}
                 //Debug.Log(price + "*((100+" + increaseRate[index] + ")/" + 100 + ")====>>>" + (price * ((100f + increaseRate[index]) / 100)) + ">>>>" + (System.Math.Round(price * ((100 + increaseRate[index]) / 100))));
-                double newPrice = System.Math.Round(price * ((100f + increaseRate[index]) / 100));//قیمت جدید را بدست می آورد
+                double newPrice = System.Math.Round(ObscuredPrefs.GetDouble("car_price_" + index, System.Math.Round(basePrice[index])) * ((100f + increaseRate[index]) / 100) );//قیمت جدید را بدست می آورد
                                                                                                   //Debug.Log("newPrice : " + newPrice);
                 if (!useGem)
                     ObscuredPrefs.SetDouble("car_price_" + index, newPrice);

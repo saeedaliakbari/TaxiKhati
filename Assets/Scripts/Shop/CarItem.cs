@@ -52,9 +52,9 @@ public class CarItem : MonoBehaviour
             btnBuyGem.gameObject.SetActive(!coin && visible);
             if (coin)
             {
-                double coinPrice = ObscuredPrefs.GetDouble("car_price_" + index, System.Math.Round(controller.basePrice[index]));
+                double coinPrice = ObscuredPrefs.GetDouble("car_price_" + index, System.Math.Round(controller.basePrice[index])) * (1 - ObscuredPrefs.GetFloat("offCar", 0));
                 //Debug.Log(index+">coinPrice : " + coinPrice);
-                coinPrice = coinPrice * (1 - ObscuredPrefs.GetFloat("offCar", 0));
+                //coinPrice = coinPrice * (1 - ObscuredPrefs.GetFloat("offCar", 0));
                 txtCoin.text = coinPrice.ToString("0.##");
                 balance = ObscuredPrefs.GetDouble("coin", 5000);
                 btnBuyCoin.interactable = visible && balance >= coinPrice;
