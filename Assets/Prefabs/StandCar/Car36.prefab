@@ -240,8 +240,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 36
   xp: 715
-  earnings: 3173000000000
-  speed: 19.5051
+  earnings: 1564000000000
+  speed: 19.5
   txtCoin: {fileID: 0}
   moving: 0
   parkingPlace: {fileID: 0}

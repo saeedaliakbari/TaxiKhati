@@ -58,8 +58,6 @@ public class Controller : MonoBehaviour
     private Coroutine lastRoutineSpecialBox = null, lastRoutineWheelBox = null, lastRoutineTime = null;
     void Awake()
     {
-        ObscuredPrefs.SetInt("Level", 53);
-        ObscuredPrefs.SetInt("Xp", 117900);
         instance = this;
         ObscuredPrefs.SetInt("mainAchiv16", ObscuredPrefs.GetInt("mainAchiv16", 0) + 1);
         ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem", 5) /*+ 1000000*/);

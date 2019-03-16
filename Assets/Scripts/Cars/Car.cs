@@ -14,9 +14,9 @@ public class Car : MonoBehaviour
     public TrimNumberText txtCoin;
     [HideInInspector]
     public bool moving = false;
-    //[HideInInspector]
+    [HideInInspector]
     public ParkingPlace parkingPlace;
-    //[HideInInspector]
+    [HideInInspector]
     public Controller controller;
     public MoveCar moveCarPrefab;
     public AudioSource audioSource;
