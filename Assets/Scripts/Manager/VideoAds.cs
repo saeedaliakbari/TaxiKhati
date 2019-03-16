@@ -80,10 +80,9 @@ public class VideoAds : MonoBehaviour
     }
     private void GiftDoubleOfflineEarn()
     {
-        offlineEarning.doubleCoin = true;
-        offlineEarning.AnimValueChange();
         offlineEarning.btnDouble.interactable = false;
         offlineEarning.btnThird.interactable = false;
+        offlineEarning.AnimValueChange(true);
     }
     #endregion
     #region Btn SpecialOffer
