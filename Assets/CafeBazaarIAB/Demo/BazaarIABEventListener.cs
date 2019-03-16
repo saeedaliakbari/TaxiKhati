@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using BazaarPlugin;
 using UnityEngine.UI;
 using CodeStage.AntiCheat.ObscuredTypes;
+using GameAnalyticsSDK;
 
 public class BazaarIABEventListener : MonoBehaviour
 {
@@ -193,6 +194,7 @@ public class BazaarIABEventListener : MonoBehaviour
             {
                 if (purchase.ProductId == iapCafeBazar.skus[6])
                 {
+                    GameAnalytics.NewBusinessEvent("IRR", 15000000, "VIP", purchase.ProductId, "Store");
                     ObscuredPrefs.SetInt("num_of_places_vip", 2);
                     iapCafeBazar.controller.panelMessage.SetActive(true);
                     iapCafeBazar.controller.txtPanelMessage.text = "پارکینگ به خطوط شما اضافه شد";
@@ -213,6 +215,7 @@ public class BazaarIABEventListener : MonoBehaviour
                 }
                 else if (purchase.ProductId == iapCafeBazar.skus[7])
                 {
+                    GameAnalytics.NewBusinessEvent("IRR", 2000000, "No Ads", purchase.ProductId, "Store");
                     ObscuredPrefs.SetInt("removeAds", 1);//remove ads in shop
                     iapCafeBazar.controller.panelMessage.SetActive(true);
                     iapCafeBazar.controller.txtPanelMessage.text = "تبلیغات بنري بازي حذف شد";
@@ -221,6 +224,14 @@ public class BazaarIABEventListener : MonoBehaviour
                 }
                 else {
                     iapCafeBazar.controller.panelWait.SetActive(true);
+                    for (int i = 0; i < iapCafeBazar.skus.Length; i++)
+                    {
+                        if (purchase.ProductId == iapCafeBazar.skus[i])
+                        {
+                            GameAnalytics.NewBusinessEvent("IRR", iapCafeBazar.amount[i] * 100, "GemPack", purchase.ProductId, "Store");
+                        }
+                    }
+
                     BazaarIAB.queryInventory(new string[] { purchase.ProductId });
                 }
                 StartCoroutine(IEBuyDate(purchase.ProductId));

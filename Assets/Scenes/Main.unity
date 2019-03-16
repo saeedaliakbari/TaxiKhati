@@ -48537,6 +48537,7 @@ MonoBehaviour:
     fakeValue: NoAds
     fakeValueActive: 1
   gem: 1e000000b4000000a4010000c0030000ca08000044160000
+  amount: ac260000ecc200003c860100dc0c03005c270900dc410f00
   controller: {fileID: 1085018823}
 --- !u!4 &987241133
 Transform:
@@ -53264,8 +53265,6 @@ MonoBehaviour:
   panelShopGem: {fileID: 1831901871}
   btnVip: {fileID: 1841788387}
   btnGoToVipPanelMessage: {fileID: 1502681498}
-  coinEffectPrefab: {fileID: 1461646924331778, guid: b189ebab47108f64db5ae0bc37e288d1,
-    type: 2}
   panelSplash: {fileID: 682656666}
   panelWait: {fileID: 845138326}
   panelNoGem: {fileID: 1158770786}
