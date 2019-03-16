@@ -287,7 +287,7 @@ public class VideoAds : MonoBehaviour
                 {
                     if (result.completed && result.rewarded)
                     {
-                        wheelFortuneScript.GiftWheelWithVideo();
+                        wheelFortuneScript.giftWheelVideo();
                     }
                     else
                     {

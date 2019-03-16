@@ -13,7 +13,7 @@ namespace Assets.SimpleAndroidNotifications
         void Start()
         {
             TimeSpan delay;
-            string[] arr = ObscuredPrefs.GetString("TimeVideoWheel", "1992,11,30,00,00,00").Split(',');
+            string[] arr = PlayerPrefs.GetString("TimeVideoWheel", "1992,11,30,00,00,00").Split(',');
             DateTime wheelTime = new DateTime(Int32.Parse(arr[0]), Int32.Parse(arr[1]), Int32.Parse(arr[2]), Int32.Parse(arr[3]), Int32.Parse(arr[4]), Int32.Parse(arr[5]));
             if (wheelTime > DateTime.Now)
             {

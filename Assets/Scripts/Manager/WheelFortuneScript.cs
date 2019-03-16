@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 using CodeStage.AntiCheat.ObscuredTypes;
+using System.Linq;
 
 public class WheelFortuneScript : MonoBehaviour
 {
@@ -24,83 +25,10 @@ public class WheelFortuneScript : MonoBehaviour
     private Coroutine lastRoutine = null;
     void Start()
     {
-        CheckVideoTime();
-    }
-    private void CheckVideoTime()//این تابع در ابتدا مقادیر را داخل تکست باکس ها ست می کند و سپس با توجه به زمان فعلی و اینکه تعداد شانس ها کمتر از 3 باشد زمان شانس بعدی را می سنجد تا اضافه شود
-    {
-        CheckLblFree();
-        ////Debug.Log("CheckVideoTime >" + ObscuredPrefs.GetInt("VideoWheel", 3));
-        txtNumVideoWheel.text = ObscuredPrefs.GetInt("VideoWheel", 3).ToString() + "/3";
-        string[] arr = ObscuredPrefs.GetString("TimeVideoWheel", "1992,11,30,00,00,00").Split(',');
-        DateTime wheelTime = new DateTime(Int32.Parse(arr[0]), Int32.Parse(arr[1]), Int32.Parse(arr[2]), Int32.Parse(arr[3]), Int32.Parse(arr[4]), Int32.Parse(arr[5]));
-        if (ObscuredPrefs.GetInt("VideoWheel", 3) < 3)
-        {
-            ////Debug.Log("VideoWheel< 3 ");
-            StartCoroutine(GetDateTime.IEGetDateTime((status) =>
-            {
-                ////Debug.Log("status" + status + " WHeelTIME: " + wheelTime);
-                TimeSpan remain = wheelTime.Subtract(status);
-                ////Debug.Log("remain: " + remain.ToString());
-                double reamainSec = remain.TotalSeconds;
-                ////Debug.Log("reamainSec >" + reamainSec);
-                if (wheelTime <= status)
-                {
-                    ////Debug.Log("wheelTime <= status");
-                    while ((-reamainSec) - 28800 >= 0 && ObscuredPrefs.GetInt("VideoWheel", 3) <= 3)
-                    {
-                        ////Debug.Log("Up +1");
-                        ObscuredPrefs.SetInt("VideoWheel", ObscuredPrefs.GetInt("VideoWheel", 3) + 1);
-                        txtNumVideoWheel.text = ObscuredPrefs.GetInt("VideoWheel", 3).ToString() + "/3";
-                        objTimeVideo.SetActive(false);
-                        reamainSec += 28800;
-                        ////Debug.Log("Wheel: " + wheelTime);
-                        wheelTime = wheelTime.AddHours(8);
-                        ////Debug.Log("Wheel: " + wheelTime);
-                        ////Debug.Log("Old Wheel Time : " + ObscuredPrefs.GetString("TimeVideoWheel", "1992,11,30,00,00,00"));
-                        ObscuredPrefs.SetString("TimeVideoWheel", wheelTime.Year.ToString() + "," + DateTime.Now.Month.ToString() + "," + wheelTime.Day.ToString() + "," + wheelTime.Hour.ToString() + "," + wheelTime.Minute.ToString() + "," + wheelTime.Second.ToString());
-                        ////Debug.Log("New Wheel Time : " + ObscuredPrefs.GetString("TimeVideoWheel", "1992,11,30,00,00,00"));
-                    }
-                    if (ObscuredPrefs.GetInt("VideoWheel", 3) <= 3)
-                    {
-                        CheckVideoTime();
-                    }
-                }
-                else
-                {
-                    if (lastRoutine != null)
-                    {
-                        StopCoroutine(lastRoutine);
-                    }
-                    lastRoutine = StartCoroutine(IETimerVideoWheel(reamainSec));
-                }
-            }));
-        }
-        else
-        {
-            objTimeVideo.SetActive(false);
-        }
-    }
-    public void GiftWheelWithVideo()//وقتی که یک بار از ویدئو استفاده کرد برای چرخاندن گردونه شانس باید این تابع فراخوانی شود
-    {
-        ////Debug.Log("GiftWheelWithVideo");
-        ObscuredPrefs.SetInt("VideoWheel", ObscuredPrefs.GetInt("VideoWheel", 3) - 1);
-        CheckLblFree();
-        ////Debug.Log("GiftWheelWithVideo" + ObscuredPrefs.GetInt("VideoWheel", 3));
-        if (ObscuredPrefs.GetString("TimeVideoWheel", "1992,11,30,00,00,00") == "1992,11,30,00,00,00")
-        {
-            TimeSpan nowTimeSpan = new TimeSpan(DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
-            //TimeSpan plusTimeSpan = new TimeSpan(0, 8, 0, 0);
-            TimeSpan plusTimeSpan = new TimeSpan(0, 0, 2, 0);
-            TimeSpan result = plusTimeSpan + nowTimeSpan;
-            ObscuredPrefs.SetString("TimeVideoWheel", DateTime.Now.Year.ToString() + "," + DateTime.Now.Month.ToString() + "," + result.Days.ToString() + "," + result.Hours.ToString() + "," + result.Minutes.ToString() + "," + result.Seconds.ToString());
-            ////Debug.Log("NOT SET >>" + ObscuredPrefs.GetString("TimeVideoWheel"));
-        }
-        CheckVideoTime();
-        WheelStart(true);
+        checkTimeWheel();
     }
     IEnumerator IETimerVideoWheel(double deltaTime)//تابع تایمر ویدئو
     {
-        //Debug.Log("Start Remain  Video :" + deltaTime);
         objTimeVideo.SetActive(true);
         for (; deltaTime > 0; deltaTime -= 1f)
         {
@@ -109,22 +37,17 @@ public class WheelFortuneScript : MonoBehaviour
             int m = (int)((deltaTime % 3600) / 60);
             int h = (int)(deltaTime / 3600);
             txtTimeRemain.text = "" + h.ToString("D1") + ":" + m.ToString("D2") + ":" + s.ToString("D2");
-            ////Debug.Log("txtTimeRemain: " + txtTimeRemain.text);
             if (m == 0 && s == 1)
             {
                 txtTimeRemain.text = "0:00:00";
             }
             yield return new WaitForSeconds(1f);
         }
-        if (deltaTime == 0)
+        if (deltaTime <= 0)
         {
             txtTimeRemain.text = "0:00:00";
             objTimeVideo.SetActive(false);
-            if (ObscuredPrefs.GetInt("VideoWheel", 3) < 3)
-            {
-                ObscuredPrefs.SetInt("VideoWheel", ObscuredPrefs.GetInt("VideoWheel", 1) + 1);
-            }
-            CheckVideoTime();
+            checkTimeWheel();
         }
         yield return new WaitForSeconds(0f);
     }
@@ -287,5 +210,215 @@ public class WheelFortuneScript : MonoBehaviour
         {
             lblFree.SetActive(false);
         }
+    }
+    public void checkTimeWheel()
+    {
+        string[] arr = ObscuredPrefs.GetString("TimeVideoWheel1", "1992,11,30,00,00,00").Split(',');
+        DateTime wheelTime1 = new DateTime(Int32.Parse(arr[0]), Int32.Parse(arr[1]), Int32.Parse(arr[2]), Int32.Parse(arr[3]), Int32.Parse(arr[4]), Int32.Parse(arr[5]));
+        arr = ObscuredPrefs.GetString("TimeVideoWheel2", "1992,11,30,00,00,00").Split(',');
+        DateTime wheelTime2 = new DateTime(Int32.Parse(arr[0]), Int32.Parse(arr[1]), Int32.Parse(arr[2]), Int32.Parse(arr[3]), Int32.Parse(arr[4]), Int32.Parse(arr[5]));
+        arr = ObscuredPrefs.GetString("TimeVideoWheel3", "1992,11,30,00,00,00").Split(',');
+        DateTime wheelTime3 = new DateTime(Int32.Parse(arr[0]), Int32.Parse(arr[1]), Int32.Parse(arr[2]), Int32.Parse(arr[3]), Int32.Parse(arr[4]), Int32.Parse(arr[5]));
+        if (ObscuredPrefs.GetInt("VideoWheel", 3) < 3)//اگر تعداد شانس های گردونه شانس کمتر از 3 تا بود
+        {
+            StartCoroutine(GetDateTime.IEGetDateTime((status) =>
+            {
+                TimeSpan remain1 = wheelTime1.Subtract(status);
+                TimeSpan remain2 = wheelTime2.Subtract(status);
+                TimeSpan remain3 = wheelTime3.Subtract(status);
+                double[] remainSec = new double[3];
+                remainSec[0] = remain1.TotalSeconds;
+                remainSec[1] = remain2.TotalSeconds;
+                remainSec[2] = remain3.TotalSeconds;
+                if (remainSec[0] >= 0)
+                {
+                    if (remainSec[1] >= 0)
+                    {
+                        if (remainSec[2] >= 0)
+                        {
+                            if (lastRoutine != null)
+                            {
+                                StopCoroutine(lastRoutine);
+                            }
+                            lastRoutine = StartCoroutine(IETimerVideoWheel(Min(remainSec)));
+                            ObscuredPrefs.SetInt("VideoWheel", 0);
+                        }
+                        else
+                        {
+                            Debug.Log(Math.Min(remainSec[0], remainSec[1]));
+                            if (lastRoutine != null)
+                            {
+                                StopCoroutine(lastRoutine);
+                            }
+                            lastRoutine = StartCoroutine(IETimerVideoWheel(Math.Min(remainSec[0], remainSec[1])));
+                            ObscuredPrefs.SetInt("VideoWheel", 1);
+                        }
+                    }
+                    else
+                    {
+                        if (remainSec[2] >= 0)
+                        {
+                            if (lastRoutine != null)
+                            {
+                                StopCoroutine(lastRoutine);
+                            }
+                            lastRoutine = StartCoroutine(IETimerVideoWheel(Math.Min(remainSec[0], remainSec[2])));
+                            ObscuredPrefs.SetInt("VideoWheel", 1);
+                        }
+                        else
+                        {
+                            if (lastRoutine != null)
+                            {
+                                StopCoroutine(lastRoutine);
+                            }
+                            lastRoutine = StartCoroutine(IETimerVideoWheel(remainSec[0]));
+                            ObscuredPrefs.SetInt("VideoWheel", 2);
+                        }
+                    }
+                }
+                else
+                {
+                    if (remainSec[1] >= 0)
+                    {
+                        if (remainSec[2] >= 0)
+                        {
+                            if (lastRoutine != null)
+                            {
+                                StopCoroutine(lastRoutine);
+                            }
+                            lastRoutine = StartCoroutine(IETimerVideoWheel(Math.Min(remainSec[1], remainSec[2])));
+                            ObscuredPrefs.SetInt("VideoWheel", 1);
+                        }
+                        else
+                        {
+                            if (lastRoutine != null)
+                            {
+                                StopCoroutine(lastRoutine);
+                            }
+                            lastRoutine = StartCoroutine(IETimerVideoWheel(remainSec[1]));
+                            ObscuredPrefs.SetInt("VideoWheel", 2);
+                        }
+                    }
+                    else
+                    {
+                        if (remainSec[2] >= 0)
+                        {
+                            if (lastRoutine != null)
+                            {
+                                StopCoroutine(lastRoutine);
+                            }
+                            lastRoutine = StartCoroutine(IETimerVideoWheel(remainSec[2]));
+                            ObscuredPrefs.SetInt("VideoWheel", 2);
+                        }
+                        else
+                        {
+                            ObscuredPrefs.SetInt("VideoWheel", 3);
+                            btnWheelVideo.interactable = true;
+                            objTimeVideo.SetActive(false);
+                        }
+                    }
+                }
+                txtNumVideoWheel.text = ObscuredPrefs.GetInt("VideoWheel", 3).ToString() + "/3";
+            }));
+        }
+        else//اگر تعداد شانس های گردونه شانس کامل بود
+        {
+            btnWheelVideo.interactable = true;
+            objTimeVideo.SetActive(false);
+        }
+    }
+    public void giftWheelVideo()
+    {
+        ObscuredPrefs.SetInt("VideoWheel", ObscuredPrefs.GetInt("VideoWheel", 3) - 1);
+        CheckLblFree();
+        WheelStart(true);
+        string[] arr = ObscuredPrefs.GetString("TimeVideoWheel1", "1992,11,30,00,00,00").Split(',');
+        DateTime wheelTime1 = new DateTime(Int32.Parse(arr[0]), Int32.Parse(arr[1]), Int32.Parse(arr[2]), Int32.Parse(arr[3]), Int32.Parse(arr[4]), Int32.Parse(arr[5]));
+        arr = ObscuredPrefs.GetString("TimeVideoWheel2", "1992,11,30,00,00,00").Split(',');
+        DateTime wheelTime2 = new DateTime(Int32.Parse(arr[0]), Int32.Parse(arr[1]), Int32.Parse(arr[2]), Int32.Parse(arr[3]), Int32.Parse(arr[4]), Int32.Parse(arr[5]));
+        arr = ObscuredPrefs.GetString("TimeVideoWheel3", "1992,11,30,00,00,00").Split(',');
+        DateTime wheelTime3 = new DateTime(Int32.Parse(arr[0]), Int32.Parse(arr[1]), Int32.Parse(arr[2]), Int32.Parse(arr[3]), Int32.Parse(arr[4]), Int32.Parse(arr[5]));
+        StartCoroutine(GetDateTime.IEGetDateTime((status) =>
+        {
+            TimeSpan remain1 = wheelTime1.Subtract(status);
+            TimeSpan remain2 = wheelTime2.Subtract(status);
+            TimeSpan remain3 = wheelTime3.Subtract(status);
+            double[] remainSec = new double[3];
+            remainSec[0] = remain1.TotalSeconds;
+            remainSec[1] = remain2.TotalSeconds;
+            remainSec[2] = remain3.TotalSeconds;
+            TimeSpan max = TimeSpan.FromSeconds(Max(remainSec));
+            TimeSpan min = TimeSpan.FromSeconds(Min(remainSec));
+            DateTime newwheeltime = new DateTime();
+            if (max == remain1)
+            {
+                if (max.TotalSeconds > 0)
+                {
+                    newwheeltime = wheelTime1.AddHours(8);
+                }
+                else
+                {
+                    newwheeltime = status.AddHours(8);
+                }
+
+            }
+            else if (max == remain2)
+            {
+                if (max.TotalSeconds > 0)
+                {
+                    newwheeltime = wheelTime2.AddHours(8);
+                }
+                else
+                {
+                    newwheeltime = status.AddHours(8);
+                }
+            }
+            else if (max == remain3)
+            {
+                if (max.TotalSeconds > 0)
+                {
+                    newwheeltime = wheelTime3.AddHours(8);
+                }
+                else
+                {
+                    newwheeltime = status.AddHours(8);
+                }
+            }
+            if (min == remain1)
+            {
+                ObscuredPrefs.SetString("TimeVideoWheel1", newwheeltime.Year.ToString() + "," + newwheeltime.Month.ToString() + "," + newwheeltime.Day.ToString() + "," + newwheeltime.Hour.ToString() + "," + newwheeltime.Minute.ToString() + "," + newwheeltime.Second.ToString());
+            }
+            else if (min == remain2)
+            {
+                ObscuredPrefs.SetString("TimeVideoWheel2", newwheeltime.Year.ToString() + "," + newwheeltime.Month.ToString() + "," + newwheeltime.Day.ToString() + "," + newwheeltime.Hour.ToString() + "," + newwheeltime.Minute.ToString() + "," + newwheeltime.Second.ToString());
+            }
+            else if (min == remain3)
+            {
+                ObscuredPrefs.SetString("TimeVideoWheel3", newwheeltime.Year.ToString() + "," + newwheeltime.Month.ToString() + "," + newwheeltime.Day.ToString() + "," + newwheeltime.Hour.ToString() + "," + newwheeltime.Minute.ToString() + "," + newwheeltime.Second.ToString());
+            }
+            checkTimeWheel();
+        }));
+
+    }
+    public void TestVideo()
+    {
+        if (ObscuredPrefs.GetInt("VideoWheel", 3) > 0)
+        {
+            giftWheelVideo();
+        }
+        else
+        {
+            videoAds.controller.txtPanelMessage.text = "فرصت ویدئویي رایگان وجود ندارد";
+            videoAds.controller.panelMessage.SetActive(true);
+            //Debug.Log("Bayad Ta Zaman Baz Shodan Video Sabr Konid");
+        }
+    }
+    public double Max(params double[] values)
+    {
+        return Enumerable.Max(values);
+    }
+    public double Min(params double[] values)
+    {
+        return Enumerable.Min(values);
     }
 }
