@@ -49,6 +49,7 @@ public class SpecialOffer : MonoBehaviour
                 controller.SpawnABoxSpecialOffer();
             }
             //controller.txtPanelMessage.text = "4 جعبه طلایی به پارکینگ شما اضافه شد";
+            controller.myGiftPanel.changeNum(1);
         }
         else//درآمد 5 برابر برای یک دقیقه
         {
@@ -61,8 +62,10 @@ public class SpecialOffer : MonoBehaviour
             }
             //controller.txtPanelMessage.text = "به مدت 1 دقیقه در آمد شما 5 برابر شد";
             controller.slotManager.UpdateEarningSpeedText();
+            controller.myGiftPanel.changeNum(3);
         }
         panelOffer.SetActive(false);
+        controller.myGiftPanel.openPanel();
         Destroy(specialOfferObj.gameObject);
         //controller.panelMessage.SetActive(true);
     }

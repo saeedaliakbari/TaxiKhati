@@ -158,6 +158,7 @@ public class WheelFortuneScript : MonoBehaviour
             ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem") + 20);
             videoAds.controller.SetText();
             videoAds.controller.txtPanelMessage.text = "20 الماس اضافه شد";
+            videoAds.controller.myGiftPanel.changeNum(4);
         }
         else if (itemNumber == 1)
         {
@@ -171,6 +172,7 @@ public class WheelFortuneScript : MonoBehaviour
             videoAds.controller.txtPanelMessage.text = "به مدت 1 دقیقه در آمد شما 5 برابر شد";
             videoAds.controller.slotManager.UpdateEarningSpeedText();
             StartCoroutine(videoAds.controller.IEEarningRatio());
+            videoAds.controller.myGiftPanel.changeNum(3);
         }
         else if (itemNumber == 2)
         {
@@ -184,6 +186,7 @@ public class WheelFortuneScript : MonoBehaviour
             videoAds.controller.txtPanelMessage.text = "به مدت 150 ثانیه سرعت شما 2 برابر شد";
             videoAds.controller.slotManager.UpdateEarningSpeedText();
             StartCoroutine(videoAds.controller.IESpeedRatio());
+            videoAds.controller.myGiftPanel.changeNum(0);
         }
         else if (itemNumber == 3)
         {
@@ -192,6 +195,7 @@ public class WheelFortuneScript : MonoBehaviour
                 videoAds.controller.SpawnABoxWheel();
             }
             videoAds.controller.txtPanelMessage.text = "4 جعبه طلایی به پارکینگ شما اضافه شد";
+            videoAds.controller.myGiftPanel.changeNum(1);
         }
         else if (itemNumber == 4)
         {
@@ -199,6 +203,7 @@ public class WheelFortuneScript : MonoBehaviour
             ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 0) + (videoAds.controller.slotManager.earnPerSec * 4 * 60 * 60));
             videoAds.controller.SetText();
             videoAds.controller.txtPanelMessage.text = "به اندازه 4 ساعت درآمد فعلی  به شما پرداخت شد";
+            videoAds.controller.myGiftPanel.changeNum(2);
         }
     }
     public void CheckLblFree()

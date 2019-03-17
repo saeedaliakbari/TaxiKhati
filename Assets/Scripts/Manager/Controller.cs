@@ -30,6 +30,7 @@ public class Controller : MonoBehaviour
     public MergeCar mergeCar;
     public SpeedPanel speedPanel;
     public LevelUpBonus levelBonus;
+    public GiftPanel myGiftPanel;
     public GameObject deleteBin, panelMessage, panelShopGem, btnVip, btnGoToVipPanelMessage;
     public GameObject /*coinEffectPrefab,*/ panelSplash, panelWait, panelNoGem, objSpeed, objEarning, hand, handRun;
     public List<GameObject> coinEffect;
