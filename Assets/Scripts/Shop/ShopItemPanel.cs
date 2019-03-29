@@ -22,21 +22,22 @@ public class ShopItemPanel : MonoBehaviour
         if (ObscuredPrefs.GetDouble("gem") >= Gem)
         {
             //Debug.Log("Buy Time");
-            int houers = 4;
+            int hours = 4;
             if (Gem == 225)
             {
-                houers = 24;
+                hours = 24;
             }
             else if (Gem == 400)
             {
-                houers = 48;
+                hours = 96;
             }
             ////Debug.Log("Plus Coin : " + runSlotManager.earnPerSec * houers * 60 * 60 + ">>" + controller.txtCoin.text);
-            ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) + (earnPerSec * houers * 60 * 60));
-            ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 0) + (earnPerSec * houers * 60 * 60));
+            double timeWrap = earnPerSec * hours * 60 * 60;
+            ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) + timeWrap);
+            ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 0) + timeWrap);
             ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem") - Gem);
             controller.SetText();
-            controller.txtError.text = Manager.ChangeNumber(earnPerSec * houers * 60 * 60) + "سکه اضافه شد";
+            controller.txtError.text = Manager.ChangeNumber(timeWrap) + "سکه اضافه شد";
             controller.txtError.gameObject.SetActive(true);
             Timer.Schedule(this, 1.5f, () =>
             {

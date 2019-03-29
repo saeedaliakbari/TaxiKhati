@@ -32,7 +32,7 @@ public class Controller : MonoBehaviour
     public LevelUpBonus levelBonus;
     public GiftPanel myGiftPanel;
     public GameObject deleteBin, panelMessage, panelShopGem, btnVip, btnGoToVipPanelMessage;
-    public GameObject /*coinEffectPrefab,*/ panelSplash, panelWait, panelNoGem, objSpeed, objEarning, hand, handRun;
+    public GameObject /*coinEffectPrefab,*/ panelSplash, panelWait, panelRetryCheck, panelNoGem, objSpeed, objEarning, hand, handRun;
     public List<GameObject> coinEffect;
     public OfflineEraning offEarning;
     public Text txtGem, txtSpeed, txtEarning;
@@ -59,13 +59,13 @@ public class Controller : MonoBehaviour
     private Coroutine lastRoutineSpecialBox = null, lastRoutineWheelBox = null, lastRoutineTime = null;
     void Awake()
     {
-      
         instance = this;
         ObscuredPrefs.SetInt("mainAchiv16", ObscuredPrefs.GetInt("mainAchiv16", 0) + 1);
         ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem", 5) /*+ 1000000*/);
         ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 21000));
         ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 21000));
         ObscuredPrefs.SetDouble("token", ObscuredPrefs.GetDouble("token", 0) /*+ 100000000000*/);
+        //ObscuredPrefs.SetInt("unlocked_car", 50);
         SetText();
     }
     public void SetText()
@@ -234,7 +234,7 @@ public class Controller : MonoBehaviour
     public void UpdatePrice()
     {//قیمت ماشین ها را می گذارد
         int index = ObscuredPrefs.GetInt("curr_car_index", 0);//az 0 shoro mishavad
-        buyPrice.text = (ObscuredPrefs.GetDouble("car_price_" + index, System.Math.Round(basePrice[index]))* (1 - ObscuredPrefs.GetFloat("offCar", 0))).ToString("0.##");
+        buyPrice.text = (ObscuredPrefs.GetDouble("car_price_" + index, System.Math.Round(basePrice[index])) * (1 - ObscuredPrefs.GetFloat("offCar", 0))).ToString("0.##");
         //txtLevelBuyCar.text = "خرید ماشین سطح " + (index + 1);
         //Debug.Log("index Car : " + index + " sprite Name :" + activeCar[index].name);
         imgBuyCar.sprite = activeCar[index];
@@ -307,8 +307,8 @@ public class Controller : MonoBehaviour
                     SpawnACar(index, parkPlace);
                 //}
                 //Debug.Log(price + "*((100+" + increaseRate[index] + ")/" + 100 + ")====>>>" + (price * ((100f + increaseRate[index]) / 100)) + ">>>>" + (System.Math.Round(price * ((100 + increaseRate[index]) / 100))));
-                double newPrice = System.Math.Round(ObscuredPrefs.GetDouble("car_price_" + index, System.Math.Round(basePrice[index])) * ((100f + increaseRate[index]) / 100) );//قیمت جدید را بدست می آورد
-                                                                                                  //Debug.Log("newPrice : " + newPrice);
+                double newPrice = System.Math.Round(ObscuredPrefs.GetDouble("car_price_" + index, System.Math.Round(basePrice[index])) * ((100f + increaseRate[index]) / 100));//قیمت جدید را بدست می آورد
+                                                                                                                                                                               //Debug.Log("newPrice : " + newPrice);
                 if (!useGem)
                     ObscuredPrefs.SetDouble("car_price_" + index, newPrice);
 
@@ -753,6 +753,7 @@ public class Controller : MonoBehaviour
         {
             if (!coinEffect[i].activeSelf)
             {
+                coinEffect[i].transform.position = position;
                 coinEffect[i].SetActive(true);
                 Timer.Schedule(this, 1f, () =>
                 {

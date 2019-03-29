@@ -73,10 +73,10 @@ public class ExchangeToken : MonoBehaviour
     public void MaxValue()
     {
         double token = System.Math.Floor(ObscuredPrefs.GetDouble("coin", 5000) / rate);
-        if (ObscuredPrefs.GetInt("helpStep", 0) == 22)
-        {
-            token -= 1;
-        }
+        //if (ObscuredPrefs.GetInt("helpStep", 0) == 22)
+        //{
+        //    token -= 1;
+        //}
         //Debug.Log("Token : " + token);
         inputTokenValue.text = token.ToString();
         //Debug.Log("Token : " + inputTokenValue.text);

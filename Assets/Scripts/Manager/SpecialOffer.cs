@@ -31,6 +31,10 @@ public class SpecialOffer : MonoBehaviour
         objGoldBox.SetActive(specialOfferObj.giftBox);
         objIncome.SetActive(!specialOfferObj.giftBox);
         specialOfferObj.DiverARound();//حرکت ماشین 
+        if (ObscuredPrefs.GetInt(controller.videoAds.zoneGiftPanel.zoneId) == 0)
+        {
+           controller.videoAds.LoadAd(controller.videoAds.zoneGiftPanel, false);
+        }
     }
 
 

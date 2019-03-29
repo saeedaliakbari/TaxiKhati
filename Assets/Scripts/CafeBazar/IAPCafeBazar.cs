@@ -61,4 +61,6 @@ public class IAPCafeBazar : MonoBehaviour
         ObscuredPrefs.SetString("developerPayload", ObscuredPrefs.GetString("username", "تاکسی ران ") + Random.Range(10000, 99999).ToString());
         BazaarIAB.purchaseProduct(sku, ObscuredPrefs.GetString("developerPayload"));
     }
+
+    
 }

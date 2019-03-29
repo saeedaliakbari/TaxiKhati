@@ -32,6 +32,7 @@ public class VideoAds : MonoBehaviour
         //ObscuredPrefs.SetDouble("coin", 93021943);
         Tapsell.initialize(sdkToken);
         LoadAd(zoneOfflineEarning, false);
+        LoadAd(zoneShopCar, false);
         shopPanel.UpdateCarItems();
     }
     #region Double Offline Earning
@@ -66,13 +67,15 @@ public class VideoAds : MonoBehaviour
                     else
                     {
                         LoadAd(zoneOfflineEarning, false);
+                        offlineEarning.gameObject.SetActive(true);//درصورتی ویدئو نبود پنل آفلاین رو نشون بده
                     }
                 }
             );
         }
-        //else
-        //{
-
+        else
+        {
+            offlineEarning.gameObject.SetActive(true);//درصورتی ویدئو نبود پنل آفلاین رو نشون بده
+        }
         //    //Debug.Log("Error");
         //    //panelError.SetActive(true);
         //    //txtPanelError.text = "خطا در لود ویدئو";
@@ -457,7 +460,7 @@ public class VideoAds : MonoBehaviour
                 if (ErrorHandling)
                 {
                     controller.panelMessage.SetActive(true);
-                    controller.txtPanelMessage.text = "در حال حاضر تبلیغی برای نمایش وجود ندارد";
+                    controller.txtPanelMessage.text = "در حال حاضر تبلیغی براي نمایش وجود ندارد";
                     controller.parkingManager.DisableCarInPark();
                     controller.panelWait.SetActive(false);
                     controller.parkingManager.EnableCarInPark();

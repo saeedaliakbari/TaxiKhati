@@ -13,6 +13,7 @@ public class BazaarIABEventListener : MonoBehaviour
     public IAPCafeBazar iapCafeBazar;
     private string[] str;
     private string strInsertBuy = "https://balootvas.ir/balootvas/TaxiKhati/insertBuy.php";
+    private BazaarPurchase currentPurchase;
     //void Start()
     //{
     //    StartCoroutine(IEBuyDate(iapCafeBazar.skus[1]));
@@ -106,10 +107,10 @@ public class BazaarIABEventListener : MonoBehaviour
         ObscuredPrefs.SetInt("removeAds", 0);
         ObscuredPrefs.SetInt("gemPerDay", 0);
         ObscuredPrefs.SetFloat("speedVip", 0);
-        //Debug.Log(string.Format("queryInventorySucceededEvent. total purchases: {0}, total skus: {1}", purchases.Count, skus.Count));
+        Debug.Log(string.Format("queryInventorySucceededEvent. total purchases: {0}, total skus: {1}", purchases.Count, skus.Count));
         for (int i = 0; i < purchases.Count; ++i)
         {
-            if (purchases[i].ProductId == iapCafeBazar.skus[6])
+            if (purchases[i].ProductId == iapCafeBazar.skus[2])
             {
                 //بقیه اطلاعات مربوط به اشتراک وارد شود
                 ObscuredPrefs.SetInt("num_of_places_vip", 2);//added 2 parking
@@ -124,10 +125,10 @@ public class BazaarIABEventListener : MonoBehaviour
                 iapCafeBazar.controller.GiftDaily();
                 iapCafeBazar.controller.btnVip.SetActive(false);
             }
-            else if (purchases[i].ProductId == iapCafeBazar.skus[7])
-            {
-                ObscuredPrefs.SetInt("removeAds", 1);//remove ads in shop
-            }
+            //else if (purchases[i].ProductId == iapCafeBazar.skus[7])
+            //{
+            //    ObscuredPrefs.SetInt("removeAds", 1);//remove ads in shop
+            //}
             else
             {
                 BazaarIAB.consumeProduct(purchases[i].ProductId);
@@ -137,7 +138,7 @@ public class BazaarIABEventListener : MonoBehaviour
 
     void queryInventoryFailedEvent(string error)
     {
-        //Debug.Log("queryInventoryFailedEvent: " + error);
+        Debug.Log("queryInventoryFailedEvent: " + error);
         BazaarIAB.queryInventory(str);
     }
     #endregion
@@ -179,22 +180,56 @@ public class BazaarIABEventListener : MonoBehaviour
     #region Purchase
     void purchaseSucceededEvent(BazaarPurchase purchase)
     {
-        //Debug.Log("purchaseSucceededEvent: "/* + purchase*/);
-        //Debug.Log("developerPayload" + purchase.DeveloperPayload);
-        //Debug.Log("Order ID: " + purchase.OrderId);
-        //Debug.Log("Time Kharid : " + purchase.PurchaseTime);
-        //Debug.Log("Token Yekta Kharid: " + purchase.PurchaseToken);
-        //Debug.Log("Type; " + purchase.Type);
-        //Debug.Log("PurchaseState; " + purchase.PurchaseState);
+        currentPurchase = purchase;
+        Debug.Log("purchaseSucceededEvent: "/* + purchase*/);
+        Debug.Log("developerPayload" + purchase.DeveloperPayload);
+        Debug.Log("Order ID: " + purchase.OrderId);
+        Debug.Log("Time Kharid : " + purchase.PurchaseTime);
+        Debug.Log("Token Yekta Kharid: " + purchase.PurchaseToken);
+        Debug.Log("Type; " + purchase.Type);
+        Debug.Log("PurchaseState; " + purchase.PurchaseState);
         if (purchase.DeveloperPayload == ObscuredPrefs.GetString("developerPayload"))
         {
             ObscuredPrefs.SetString("developerPayload", "");
-            //Debug.Log("developerPayload is Ok");
+            Debug.Log("developerPayload is Ok");
             if (purchase.PurchaseState == BazaarPurchase.BazaarPurchaseState.Purchased)
             {
-                if (purchase.ProductId == iapCafeBazar.skus[6])
+                iapCafeBazar.controller.panelWait.SetActive(true);
+                GetComponent<CheckIABValidate>().check(purchase, onPurchaseValidated);
+            }
+            else if (purchase.PurchaseState == BazaarPurchase.BazaarPurchaseState.Canceled)
+            {
+                Debug.Log("purchase is Canceled");
+                iapCafeBazar.controller.panelMessage.SetActive(true);
+                iapCafeBazar.controller.txtPanelMessage.text = "عملیات توسط شما لغو شد";
+            }
+            else
+            {
+                Debug.Log("purchase is 2 Refunded");
+                iapCafeBazar.controller.panelMessage.SetActive(true);
+                iapCafeBazar.controller.txtPanelMessage.text = "خطا در عملیات پرداخت";
+            }
+        }
+    }
+
+    void purchaseFailedEvent(string error)
+    {
+        //Debug.Log("purchaseFailedEvent: " + error);
+        iapCafeBazar.controller.txtPanelMessage.text = "خطا در پرداخت ";
+        iapCafeBazar.controller.panelMessage.SetActive(true);
+    }
+    #endregion
+    #region CheckPurchase
+    private void onPurchaseValidated(bool success, string message, validateResult result)
+    {
+        if (success)
+        {
+            if (!result.isRefund) // اگر خرید از طرف کافه‌بازار برگشت داده نشده
+            {
+                Debug.Log("purchase is not refund" + message);
+                if (currentPurchase.ProductId == iapCafeBazar.skus[2])
                 {
-                    GameAnalytics.NewBusinessEvent("IRR", 15000000, "VIP", purchase.ProductId, "Store");
+                    GameAnalytics.NewBusinessEvent("IRR", 15000000, "VIP", currentPurchase.ProductId, "Store");
                     ObscuredPrefs.SetInt("num_of_places_vip", 2);
                     iapCafeBazar.controller.panelMessage.SetActive(true);
                     iapCafeBazar.controller.txtPanelMessage.text = "پارکینگ به خطوط شما اضافه شد";
@@ -213,49 +248,52 @@ public class BazaarIABEventListener : MonoBehaviour
                     iapCafeBazar.controller.GiftDaily();
                     iapCafeBazar.controller.btnVip.SetActive(false);
                 }
-                else if (purchase.ProductId == iapCafeBazar.skus[7])
-                {
-                    GameAnalytics.NewBusinessEvent("IRR", 2000000, "No Ads", purchase.ProductId, "Store");
-                    ObscuredPrefs.SetInt("removeAds", 1);//remove ads in shop
-                    iapCafeBazar.controller.panelMessage.SetActive(true);
-                    iapCafeBazar.controller.txtPanelMessage.text = "تبلیغات بنري بازي حذف شد";
-                    iapCafeBazar.controller.videoAds.panelNoAds.SetActive(false);
-                    iapCafeBazar.controller.parkingManager.EnableCarInPark();
-                }
+                //else if (currentPurchase.ProductId == iapCafeBazar.skus[7])
+                //{
+                //    GameAnalytics.NewBusinessEvent("IRR", 2000000, "No Ads", currentPurchase.ProductId, "Store");
+                //    ObscuredPrefs.SetInt("removeAds", 1);//remove ads in shop
+                //    iapCafeBazar.controller.panelMessage.SetActive(true);
+                //    iapCafeBazar.controller.txtPanelMessage.text = "تبلیغات بنري بازي حذف شد";
+                //    iapCafeBazar.controller.videoAds.panelNoAds.SetActive(false);
+                //    iapCafeBazar.controller.parkingManager.EnableCarInPark();
+                //}
                 else {
                     iapCafeBazar.controller.panelWait.SetActive(true);
                     for (int i = 0; i < iapCafeBazar.skus.Length; i++)
                     {
-                        if (purchase.ProductId == iapCafeBazar.skus[i])
+                        if (currentPurchase.ProductId == iapCafeBazar.skus[i])
                         {
-                            GameAnalytics.NewBusinessEvent("IRR", iapCafeBazar.amount[i] * 100, "GemPack", purchase.ProductId, "Store");
+                            GameAnalytics.NewBusinessEvent("IRR", iapCafeBazar.amount[i] * 100, "GemPack", currentPurchase.ProductId, "Store");
                         }
                     }
-
-                    BazaarIAB.queryInventory(new string[] { purchase.ProductId });
+                    iapCafeBazar.controller.panelWait.SetActive(true);
+                    BazaarIAB.queryInventory(new string[] { currentPurchase.ProductId });
                 }
-                StartCoroutine(IEBuyDate(purchase.ProductId));
-            }
-            else if (purchase.PurchaseState == BazaarPurchase.BazaarPurchaseState.Canceled)
-            {
-                //Debug.Log("purchase is Canceled");
-                iapCafeBazar.controller.panelMessage.SetActive(true);
-                iapCafeBazar.controller.txtPanelMessage.text = "عملیات توسط شما لغو شد";
+                StartCoroutine(IEBuyDate(currentPurchase.ProductId));
             }
             else
             {
-                //Debug.Log("purchase is 2 Refunded");
                 iapCafeBazar.controller.panelMessage.SetActive(true);
-                iapCafeBazar.controller.txtPanelMessage.text = "خطا در عملیات پرداخت";
+                iapCafeBazar.controller.txtPanelMessage.text = "خرید ناموفق/nپول کسر شده از حساب شما برگشت داده می شود";
+                Debug.Log("the purchase is refund");
             }
         }
+        else
+        {
+            // error in validating, or purchase is not valid
+            // you can let user retry validating the purchase
+            iapCafeBazar.controller.panelRetryCheck.SetActive(true);
+            Debug.Log(message);
+        }
+        // hide loading here
+        iapCafeBazar.controller.panelWait.SetActive(false);
     }
 
-    void purchaseFailedEvent(string error)
+    public void retryValidatePurchase()
     {
-        //Debug.Log("purchaseFailedEvent: " + error);
-        iapCafeBazar.controller.txtPanelMessage.text = "خطا در پرداخت ";
-        iapCafeBazar.controller.panelMessage.SetActive(true);
+        iapCafeBazar.controller.panelRetryCheck.SetActive(false);
+        iapCafeBazar.controller.panelWait.SetActive(true);
+        GetComponent<CheckIABValidate>().check(currentPurchase, onPurchaseValidated);
     }
     #endregion
     #region Consume Purchase
@@ -276,12 +314,14 @@ public class BazaarIABEventListener : MonoBehaviour
                 }
             }
         }
+        iapCafeBazar.controller.panelWait.SetActive(false);
     }
 
     void consumePurchaseFailedEvent(string error)
     {
         //Debug.Log("consumePurchaseFailedEvent: " + error);
         BazaarIAB.queryInventory(str);
+        iapCafeBazar.controller.panelWait.SetActive(false);
     }
     #endregion
 #endif

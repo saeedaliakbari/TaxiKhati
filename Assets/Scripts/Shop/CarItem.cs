@@ -68,7 +68,7 @@ public class CarItem : MonoBehaviour
             {
                 txtGem.text = controller.baseGemPrice[index].ToString();
                 balance = ObscuredPrefs.GetDouble("gem", 0);
-                btnBuyGem.interactable = visible && balance >= controller.baseGemPrice[index];
+                btnBuyGem.interactable = visible /*&& balance >= controller.baseGemPrice[index]*/;
             }
         }
     }

@@ -50,6 +50,11 @@ public class OfflineEraning : MonoBehaviour
             controller.SetText();
             AnimValueChange(false);
         }
+        else
+        {
+            controller.parkingManager.DisableCarInPark();
+            controller.panelNoGem.SetActive(true);
+        }
     }
     public void AnimValueChange(bool doubleCoin)
     {

@@ -78,11 +78,26 @@ public class ParkingManager : MonoBehaviour
             //{
             //    //Debug.Log(i + ">" + carsLevel[i]);
             //}
-            ObscuredPrefs.SetInt("mainAchiv1", carsLevel[4]);
-            ObscuredPrefs.SetInt("mainAchiv2", carsLevel[6]);
-            ObscuredPrefs.SetInt("mainAchiv3", carsLevel[10]);
-            ObscuredPrefs.SetInt("mainAchiv6", carsLevel[14]);
-            ObscuredPrefs.SetInt("mainAchiv7", carsLevel[24]);
+            if (ObscuredPrefs.GetInt("mainAchiv1")< carsLevel[4])
+            {
+                ObscuredPrefs.SetInt("mainAchiv1", carsLevel[4]);
+            }
+            if (ObscuredPrefs.GetInt("mainAchiv2") < carsLevel[6])
+            {
+                ObscuredPrefs.SetInt("mainAchiv2", carsLevel[6]);
+            }
+            if (ObscuredPrefs.GetInt("mainAchiv3") < carsLevel[10])
+            {
+                ObscuredPrefs.SetInt("mainAchiv3", carsLevel[10]);
+            }
+            if (ObscuredPrefs.GetInt("mainAchiv6") < carsLevel[14])
+            {
+                ObscuredPrefs.SetInt("mainAchiv6", carsLevel[14]);
+            }
+            if (ObscuredPrefs.GetInt("mainAchiv7") < carsLevel[24])
+            {
+                ObscuredPrefs.SetInt("mainAchiv7", carsLevel[24]);
+            }
             controller.achivmentManager.CheckAchivments();
             CheckCarSpeedTycoon(carsLevel);
             CheckOfflineEarningTycoon(carsLevel);
