@@ -54,6 +54,7 @@ public class OfflineEraning : MonoBehaviour
         {
             controller.parkingManager.DisableCarInPark();
             controller.panelNoGem.SetActive(true);
+            controller.offEarning.gameObject.SetActive(true);
         }
     }
     public void AnimValueChange(bool doubleCoin)
