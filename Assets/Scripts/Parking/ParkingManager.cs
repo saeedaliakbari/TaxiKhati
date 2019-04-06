@@ -33,6 +33,8 @@ public class ParkingManager : MonoBehaviour
             SpawnNewPlace();
         }
         UpdatePlacePosition();
+       
+        
     }
     public void SpawnPlacesVIP()
     {
@@ -78,7 +80,7 @@ public class ParkingManager : MonoBehaviour
             //{
             //    //Debug.Log(i + ">" + carsLevel[i]);
             //}
-            if (ObscuredPrefs.GetInt("mainAchiv1")< carsLevel[4])
+            if (ObscuredPrefs.GetInt("mainAchiv1") < carsLevel[4])
             {
                 ObscuredPrefs.SetInt("mainAchiv1", carsLevel[4]);
             }
@@ -388,6 +390,18 @@ public class ParkingManager : MonoBehaviour
         catch (System.Exception)
         {
         }
+    }
+    public int NumberEmptyPark()
+    {
+        int number = 0;
+        foreach (ParkingPlace pl in places)
+        {
+            if (pl.IsEmpty())
+            {
+                number++;
+            }
+        }
+        return number;
     }
 }
 [System.Serializable]

@@ -22,6 +22,7 @@ public class Controller : MonoBehaviour
     public BatchPlugin batchPlugin;
     public GuideManager guideManager;
     public SettingPanel settingPanel;
+    public OfflineGiftCar offlineGiftCar;
     public CafeIntent cafeIntent;
     public AudioSource audioSourceCore, audioSourceCoreFast;
     public MoveAnim moveAnimHandRun;
@@ -302,7 +303,7 @@ public class Controller : MonoBehaviour
                 //else
                 //{
                 if (hasBox)
-                    SpawnABox(index, parkPlace, modelBox);
+                    SpawnABox(index, parkPlace, modelBox,3f);
                 else
                     SpawnACar(index, parkPlace);
                 //}
@@ -359,7 +360,7 @@ public class Controller : MonoBehaviour
         }
         else
         {
-            SpawnABox(index, parkPlace, 2);
+            SpawnABox(index, parkPlace, 2,3f);
         }
     }
     public Car SpawnACar(int carIndex, ParkingPlace parkPlace, bool scaleUp = false)
@@ -375,7 +376,7 @@ public class Controller : MonoBehaviour
         ObscuredPrefs.SetInt("checkLevel", 0);
         return car;//ماشین رو برمیگردونه
     }
-    public GiftBox SpawnABox(int carIndex, ParkingPlace parkPlace, int modelBox)
+    public GiftBox SpawnABox(int carIndex, ParkingPlace parkPlace, int modelBox,float delay)
     {
         ObscuredPrefs.SetInt("mainAchiv15", ObscuredPrefs.GetInt("mainAchiv15", 0) + 1);
         achivmentManager.CheckAchivments();
@@ -387,7 +388,7 @@ public class Controller : MonoBehaviour
         box.SetUpBox(carIndex, parkPlace, modelBox);
         if (ObscuredPrefs.GetInt("helpStep", 0) > 21)
         {
-            box.StartAutoOpen();
+            box.StartAutoOpen(delay);
         }
         return box;
     }
@@ -413,7 +414,7 @@ public class Controller : MonoBehaviour
             if (parkPlace.IsEmpty())
             {
                 //Debug.Log("parkPlace Is Empty");
-                SpawnABox(index - 1, parkPlace, 0);
+                SpawnABox(index - 1, parkPlace, 0,3f);
                 NewCarTimeing();
             }
             else
@@ -457,7 +458,7 @@ public class Controller : MonoBehaviour
             if (parkPlace.IsEmpty())
             {
                 //Debug.Log("parkPlace Is Empty");
-                SpawnABox(index - 1, parkPlace, 1);
+                SpawnABox(index - 1, parkPlace, 1,3f);
                 //NewCarTimeing();
             }
             else
@@ -499,7 +500,7 @@ public class Controller : MonoBehaviour
             if (parkPlace.IsEmpty())
             {
                 //Debug.Log("parkPlace Is Empty");
-                SpawnABox(index - 1, parkPlace, 1);
+                SpawnABox(index - 1, parkPlace, 1,3f);
                 //NewCarTimeing();
             }
             else
@@ -722,10 +723,12 @@ public class Controller : MonoBehaviour
             ParkingPlace place = parkingManager.GetPlace(boxObj.parkingIndex);// پارکینگ مورد نظر را برمیگرداند
             if (place != null)//اگر پارکینگ خالی نبود
             {
-                GiftBox box = SpawnABox(boxObj.carLevel - 1, place, 0);//یک پارکینگ با مشخصات داده شده ایجاد می کند
-                box.StartAutoOpen();
+                GiftBox box = SpawnABox(boxObj.carLevel - 1, place, 0,3f);//یک پارکینگ با مشخصات داده شده ایجاد می کند
+                box.StartAutoOpen(3f);
             }
         }
+        Debug.Log("parking empty :" + parkingManager.NumberEmptyPark());
+        offlineGiftCar.offGiftCar(parkingManager.NumberEmptyPark());
     }
     public void CheckAndShowOfflineEarning()
     {

@@ -34,7 +34,7 @@ public class ParkingPlace : MonoBehaviour
     {
         if (transform.childCount > 2 && transform.GetChild(2).tag == "Box")
         {
-            transform.GetChild(2).GetComponent<GiftBox>().StartAutoOpen();
+            transform.GetChild(2).GetComponent<GiftBox>().StartAutoOpen(3f);
         }
     }
 

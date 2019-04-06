@@ -54643,6 +54643,7 @@ GameObject:
   - component: {fileID: 1085018827}
   - component: {fileID: 1085018828}
   - component: {fileID: 1085018829}
+  - component: {fileID: 1085018830}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -54841,6 +54842,7 @@ MonoBehaviour:
   batchPlugin: {fileID: 1231707831}
   guideManager: {fileID: 905291734}
   settingPanel: {fileID: 1085018828}
+  offlineGiftCar: {fileID: 1085018830}
   cafeIntent: {fileID: 987241135}
   audioSourceCore: {fileID: 762322314}
   audioSourceCoreFast: {fileID: 1020187694}
@@ -54848,6 +54850,7 @@ MonoBehaviour:
   mergeCar: {fileID: 1202044279}
   speedPanel: {fileID: 774480590}
   levelBonus: {fileID: 1066917862}
+  myGiftPanel: {fileID: 0}
   deleteBin: {fileID: 1588907980}
   panelMessage: {fileID: 1814044181}
   panelShopGem: {fileID: 1831901871}
@@ -54855,6 +54858,7 @@ MonoBehaviour:
   btnGoToVipPanelMessage: {fileID: 1502681498}
   panelSplash: {fileID: 682656666}
   panelWait: {fileID: 845138326}
+  panelRetryCheck: {fileID: 0}
   panelNoGem: {fileID: 1158770786}
   objSpeed: {fileID: 55515033}
   objEarning: {fileID: 695448959}
@@ -55275,51 +55279,30 @@ MonoBehaviour:
     zoneName: zoneOfflineEarning
     zoneId: 5c6e4dc5a345580001d407a5
     cached: 0
-    ad:
-      adId: 
-      zoneId: 
   zoneShopCar:
     zoneName: zoneShopCar
     zoneId: 5c6e4e19a345580001d407aa
     cached: 0
-    ad:
-      adId: 
-      zoneId: 
   zoneCarUp:
     zoneName: zoneCarUp
     zoneId: 5c6e4e3fc16a660001bcb21f
     cached: 0
-    ad:
-      adId: 
-      zoneId: 
   zoneGiftPanel:
     zoneName: zoneGiftPanel
     zoneId: 5c6e4e66c16a660001bcb220
     cached: 0
-    ad:
-      adId: 
-      zoneId: 
   zoneWheelOfFurtune:
     zoneName: zoneWheelOfFurtune
     zoneId: 5c6e4e83c16a660001bcb221
     cached: 0
-    ad:
-      adId: 
-      zoneId: 
   zoneSpeedX2:
     zoneName: zoneSpeedX2
     zoneId: 5c6e4eaba345580001d407ab
     cached: 0
-    ad:
-      adId: 
-      zoneId: 
   zoneShopClose:
     zoneName: zoneShopClose
     zoneId: 5c6e4eddc16a660001bcb222
     cached: 0
-    ad:
-      adId: 
-      zoneId: 
 --- !u!114 &1085018825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55347,18 +55330,24 @@ MonoBehaviour:
   animationCurves:
   - serializedVersion: 2
     m_Curve:
-    - serializedVersion: 2
+    - serializedVersion: 3
       time: 0
       value: 0
       inSlope: 2
       outSlope: 2
       tangentMode: 0
-    - serializedVersion: 2
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
       time: 1.0034168
       value: 3.501906
       inSlope: 0
       outSlope: 0
       tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
@@ -55433,6 +55422,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   txtValue: {fileID: 1397339782}
+--- !u!114 &1085018830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1085018821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 051ea3864df61f844aaa39377240f225, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 1085018823}
 --- !u!1 &1087389257
 GameObject:
   m_ObjectHideFlags: 0
@@ -88615,7 +88616,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b6c67db77df4c54cb914527396d1474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myGameObject: {fileID: 0}
   num: 0
+  isShown: 1
   giftBoxes:
   - {fileID: 1989458160}
   - {fileID: 1475314594}
