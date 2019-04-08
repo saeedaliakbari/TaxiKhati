@@ -10,6 +10,7 @@ public class OfflineEraning : MonoBehaviour
     [HideInInspector]
     public TrimNumberText txtCoin;
     public Button btnDouble, btnThird;
+    public Animator animPanel;
     private double value;
     public void ShowEarning(int time)
     {
@@ -49,12 +50,14 @@ public class OfflineEraning : MonoBehaviour
             ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem") - 5);
             controller.SetText();
             AnimValueChange(false);
+            animPanel.Play("Close");
+            controller.Close(gameObject);
         }
         else
         {
             controller.parkingManager.DisableCarInPark();
             controller.panelNoGem.SetActive(true);
-            controller.offEarning.gameObject.SetActive(true);
+            gameObject.SetActive(true);
         }
     }
     public void AnimValueChange(bool doubleCoin)

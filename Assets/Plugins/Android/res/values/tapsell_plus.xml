@@ -1,6 +1,0 @@
-This XML file does not appear to have any style information associated with it. The document tree is shown below.
-<resources>
-<string name="TapsellPlusDefaultConfig">
-{ "adConfig":{ "providers":{ "Tapsell":{ "key":"fedgohakedmccekkdtmqhscjlogmoltgtisqgjbkokbefjepitkjhhasnekifchserifdg", "defaultOptions":null } }, "zones":{ "5b9e2695ada66f0001d2dac9":{ "providers":[ {"provider":"Tapsell","providerZoneId":"5b9e2695ada66f0001d2dac9","timeOut":2500,"options":null}, ], "type":"RewardedVideo" }, "5b9e2674e82f6f000153de30":{ "providers":[ {"provider":"Tapsell","providerZoneId":"5b9e2674e82f6f000153de30","timeOut":2500,"options":null}, ], "type":"RewardedVideo" }, "5b9e2646e82f6f000153de2f":{ "providers":[ {"provider":"Tapsell","providerZoneId":"5b9e2646e82f6f000153de2f","timeOut":2500,"options":null}, ], "type":"RewardedVideo" }, "5b9e25cc731d6f0001839ace":{ "providers":[ {"provider":"Tapsell","providerZoneId":"5b9e25cc731d6f0001839ace","timeOut":2500,"options":null}, ], "type":"RewardedVideo" }, "5b9e26caada66f0001d2daca":{ "providers":[ {"provider":"Tapsell","providerZoneId":"5b9e26caada66f0001d2daca","timeOut":2500,"options":null} ], "type":"NativeBanner" } } }, "version":1 }
-</string>
-</resources>

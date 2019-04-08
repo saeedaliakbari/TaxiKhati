@@ -1,22 +1,22 @@
 ﻿using CodeStage.AntiCheat.ObscuredTypes;
 using System.Collections;
 using System.Collections.Generic;
-using Tapsell;
+using TapsellPlusSDK;
 using UnityEngine;
 public class VideoAdsTapsellPlus : MonoBehaviour
 {
-    public string apiKey, signKey;
+    public string apiKey;
     public ZoneVideoPlus zoneOfflineEarning, zoneShopCar, zoneCarUp, zoneGiftPanel, zoneWheelOfFurtune, zoneSpeedX2, zoneShopClose;
     public Controller controller;
     // Use this for initialization
     void Start()
     {
-        TapsellPlus.Initialize(apiKey, signKey);
+        TapsellPlus.initialize(apiKey);
     }
     #region Main Method
     public void LoadAd(ZoneVideoPlus zone, bool ErrorHandling)
     {
-        TapsellPlus.RequestAd(zone.zoneId,
+        TapsellPlus.requestRewardedVideo(zone.zoneId,
             (string adId) =>
             {
                 //onAdReady
@@ -24,59 +24,60 @@ public class VideoAdsTapsellPlus : MonoBehaviour
                 ObscuredPrefs.SetInt(zone.zoneId, 1);
                 zone.ad = adId;
             },
-            (long code, string message) =>
+            (TapsellError error) =>
             {
                 //onError
-                Debug.Log("code: " + code + ", message: " + message);
+                Debug.Log("Error " + error.message);
                 ObscuredPrefs.SetInt(zone.zoneId, 0);
                 controller.panelMessage.SetActive(true);
                 controller.txtPanelMessage.text = "مشکلی در هنگام دریافت تبلیغ بوجود آمده است";
                 controller.parkingManager.DisableCarInPark();
                 controller.panelWait.SetActive(false);
                 controller.parkingManager.EnableCarInPark();
-            },
-            () =>
-            {
-                // onNoAdAvailable
-                Debug.Log("No Ad Available!");
-                ObscuredPrefs.SetInt(zone.zoneId, 0);
-                controller.panelMessage.SetActive(true);
-                controller.txtPanelMessage.text = "تبلیغی براي نمایش وجود ندارد";
-                controller.parkingManager.DisableCarInPark();
-                controller.panelWait.SetActive(false);
-                controller.parkingManager.EnableCarInPark();
-            },
-            () =>
-            {
-                // onNoNetwork
-                Debug.Log("No Network!");
-                ObscuredPrefs.SetInt(zone.zoneId, 0);
-                controller.panelMessage.SetActive(true);
-                controller.txtPanelMessage.text = "اتصال به اینترنت قطع است";
-                controller.parkingManager.DisableCarInPark();
-                controller.panelWait.SetActive(false);
-                controller.parkingManager.EnableCarInPark();
             }
+            //,
+            //() =>
+            //{
+            //    // onNoAdAvailable
+            //    Debug.Log("No Ad Available!");
+            //    ObscuredPrefs.SetInt(zone.zoneId, 0);
+            //    controller.panelMessage.SetActive(true);
+            //    controller.txtPanelMessage.text = "تبلیغی براي نمایش وجود ندارد";
+            //    controller.parkingManager.DisableCarInPark();
+            //    controller.panelWait.SetActive(false);
+            //    controller.parkingManager.EnableCarInPark();
+            //},
+            //() =>
+            //{
+            //    // onNoNetwork
+            //    Debug.Log("No Network!");
+            //    ObscuredPrefs.SetInt(zone.zoneId, 0);
+            //    controller.panelMessage.SetActive(true);
+            //    controller.txtPanelMessage.text = "اتصال به اینترنت قطع است";
+            //    controller.parkingManager.DisableCarInPark();
+            //    controller.panelWait.SetActive(false);
+            //    controller.parkingManager.EnableCarInPark();
+            //}
         );
     }
     public void ShowAd(ZoneVideoPlus zone)
     {
-        TapsellPlus.ShowAd(zone.ad,
-            (long code, string message) =>
+        TapsellPlus.showAd(zone.ad,
+            (string zoneId) =>
             {
-                // Error happened during request ad or show ad
-                Debug.Log("code: " + code + ", message: " + message);
+                Debug.Log("onOpenAd " + zoneId);
             },
-            (bool completed) =>
+            (string zoneId) =>
             {
-                // Ad was closed.
-                // completed indicates if the video completed before close or not.
-                Debug.Log("Ad Closed, completed: " + completed);
+                Debug.Log("onCloseAd " + zoneId);
             },
-            (string id, string reward) =>
+            (string zoneId) =>
             {
-                // The ad is rewarded.
-                Debug.Log("The ad is rewarded. (" + "adId: " + id + ", reward: " + reward + ")");
+                Debug.Log("onReward " + zoneId);
+            },
+            (TapsellError error) =>
+            {
+                Debug.Log("onError " + error.message);
             }
         );
     }
