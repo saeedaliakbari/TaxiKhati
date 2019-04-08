@@ -2,6 +2,8 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
+
 public class CafeIntent : MonoBehaviour
 {
     public Controller controller;
@@ -28,6 +30,12 @@ public class CafeIntent : MonoBehaviour
         Debug.Log("UNITY_ANDROID bundleCodeVersion:" + bundleCodeVersion);
 #endif
         StartCoroutine(IEGetApp());
+        // A correct website page.
+        StartCoroutine(GetRequest(strLinkGetInfo));
+
+        // A non-existing page.
+        StartCoroutine(GetRequest("https://error.html"));
+        StartCoroutine(Upload(strLinkGetInfo));
     }
     public void btnAre()
     {
@@ -76,7 +84,45 @@ public class CafeIntent : MonoBehaviour
         currentActivity.Call("startActivity", intentObject);
 
     }
+    IEnumerator GetRequest(string uri)
+    {
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
+        {
+            // Request and wait for the desired page.
+            yield return webRequest.SendWebRequest();
 
+            string[] pages = uri.Split('/');
+            int page = pages.Length - 1;
+
+            if (webRequest.isNetworkError)
+            {
+                Debug.Log(pages[page] + ": Error: " + webRequest.error);
+            }
+            else
+            {
+                Debug.Log(pages[page] + ":\nReceived: " + webRequest.downloadHandler.text);
+            }
+        }
+    }
+    IEnumerator Upload(string uri)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("id", "1");
+
+        using (UnityWebRequest www = UnityWebRequest.Post(uri, form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                Debug.Log("Form upload complete!");
+            }
+        }
+    }
     IEnumerator IEGetApp()
     {
         WWWForm wwwForm = new WWWForm();

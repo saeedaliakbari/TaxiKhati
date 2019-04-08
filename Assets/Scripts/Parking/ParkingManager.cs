@@ -125,7 +125,7 @@ public class ParkingManager : MonoBehaviour
     {
         lblNewSpeed.SetActive(false);
         int levelSpeed = ObscuredPrefs.GetInt("carSpeedTycoonLevel", 0);
-        Debug.Log("carSpeedTycoonLevel LEVEL CAR :" + levelSpeed);
+        //Debug.Log("carSpeedTycoonLevel LEVEL CAR :" + levelSpeed);
         txtCarSpeed.text = "سطح " + (levelSpeed + 1);
         //imgSlideGreenOfflineEarning.fillAmount = (earningOfflineTycoonBoosts.incEarn[levelOfflineEarning] - 1f) / 0.325f;
         if (levelSpeed > 12)
@@ -167,7 +167,7 @@ public class ParkingManager : MonoBehaviour
         lblNewOffline.SetActive(false);
         int levelOfflineEarning = ObscuredPrefs.GetInt("offlineEarnTycoonLevel", 0);
         txtOfflineEarning.text = "سطح " + (levelOfflineEarning + 1);
-        Debug.Log("CheckOfflineEarningTycoon LEVEL CAR :" + levelOfflineEarning);
+        //Debug.Log("CheckOfflineEarningTycoon LEVEL CAR :" + levelOfflineEarning);
         //imgSlideGreenOfflineEarning.fillAmount = (earningOfflineTycoonBoosts.incEarn[levelOfflineEarning] - 1f) / 0.325f;
         if (levelOfflineEarning > 12)
         {
@@ -207,7 +207,7 @@ public class ParkingManager : MonoBehaviour
         lblNewExchangeDecline.SetActive(false);
         int levelExchangeDecline = ObscuredPrefs.GetInt("exchangeDeclineTycoonLevel", 0);
         txtExchangeDecline.text = "سطح " + (levelExchangeDecline + 1);
-        Debug.Log("CheckExchangeRateDecline LEVEL CAR :" + levelExchangeDecline);
+        //Debug.Log("CheckExchangeRateDecline LEVEL CAR :" + levelExchangeDecline);
         //imgSlideGreenOfflineEarning.fillAmount = (earningOfflineTycoonBoosts.incEarn[levelOfflineEarning] - 1f) / 0.325f;
         if (levelExchangeDecline > 12)
         {
