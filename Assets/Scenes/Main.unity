@@ -38230,7 +38230,8 @@ MonoBehaviour:
   txtCoin: {fileID: 1896488206}
   btnDouble: {fileID: 1999449800}
   btnThird: {fileID: 2101536174}
-  animPanel: {fileID: 0}
+  animPanel: {fileID: 769815152}
+  CoinAnimator: {fileID: 1228418795}
 --- !u!95 &769815152
 Animator:
   serializedVersion: 3
@@ -54712,7 +54713,7 @@ MonoBehaviour:
   mergeCar: {fileID: 1202044279}
   speedPanel: {fileID: 774480590}
   levelBonus: {fileID: 1066917862}
-  myGiftPanel: {fileID: 0}
+  myGiftPanel: {fileID: 1757146670}
   deleteBin: {fileID: 1588907980}
   panelMessage: {fileID: 1814044181}
   panelShopGem: {fileID: 1831901871}
@@ -88477,7 +88478,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b6c67db77df4c54cb914527396d1474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myGameObject: {fileID: 0}
+  myGameObject: {fileID: 1757146665}
   num: 0
   isShown: 1
   giftBoxes:
