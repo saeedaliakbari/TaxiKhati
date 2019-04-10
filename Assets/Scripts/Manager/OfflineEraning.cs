@@ -10,7 +10,6 @@ public class OfflineEraning : MonoBehaviour
     [HideInInspector]
     public TrimNumberText txtCoin;
     public Button btnDouble, btnThird;
-    public Animator animPanel,CoinAnimator;
     private double value;
     public void ShowEarning(int time)
     {
@@ -40,7 +39,6 @@ public class OfflineEraning : MonoBehaviour
         txtCoin.text = ObscuredPrefs.GetDouble("coin", 5000).ToString("0.##");
         controller.CloseOffEarning();
         controller.SetText();
-        CoinAnimator.Play("earn");
     }
     public void ThirdClick()
     {
@@ -51,14 +49,12 @@ public class OfflineEraning : MonoBehaviour
             ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem") - 5);
             controller.SetText();
             AnimValueChange(false);
-            animPanel.Play("Close");
-            controller.Close(gameObject);
         }
         else
         {
             controller.parkingManager.DisableCarInPark();
             controller.panelNoGem.SetActive(true);
-            gameObject.SetActive(true);
+            controller.offEarning.gameObject.SetActive(true);
         }
     }
     public void AnimValueChange(bool doubleCoin)
@@ -74,52 +70,5 @@ public class OfflineEraning : MonoBehaviour
             valueTxt.text = value.ToString("0.##");
         }
         ClaimClick();
-
-    }
-
-    public void CounterCoin(double Earned,Text coinText)
-    {
-        StartCoroutine(counterCoinIEnumerator(Earned,coinText));
-    }
-
-    public IEnumerator counterCoinIEnumerator(double Earned,Text coinText)
-    {
-       yield return new WaitForSeconds(0f);
-       for (int i = 0; i < 10; i++)
-       {
-           if (Earned<1000)
-           {
-               
-           }
-           else if (Earned < 100000)
-           {
-               
-           }
-           else if (Earned < 10000000)
-           {
-
-           }
-           else if (Earned < 1000000000)
-           {
-
-           }
-           else if (Earned < 100000000000)
-           {
-
-           }
-           else if (Earned < 10000000000000)
-           {
-
-           }
-           else if (Earned < 1000000000000000)
-           {
-
-           }
-           else if (Earned < 100000000000000000)
-           {
-
-           }
-
-        }
     }
 }

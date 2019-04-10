@@ -24,22 +24,7 @@ public class Manager
         //ObscuredPrefs.SetFloat(action + "_time", (float)time);
         //Debug.Log(action + "_time: " + ObscuredPrefs.GetFloat(action + "_time"));
     }
-
-    public static IEnumerator IECouter(double start, double end, UnityEngine.UI.Text txt)
-    {
-        double adder = end - start;
-        double lentgh = end.ToString().Length;
-        adder = Math.Pow(10, lentgh > 3 ? lentgh - 3 : 0);
-        Debug.Log("adder : " + adder);
-        while (start < end)
-        {
-            start += adder;
-            Debug.Log("start :" + start);
-            txt.text = start.ToString();
-            yield return new WaitForSeconds(0.01f);
-        }
-        txt.text = end.ToString();
-    }
+   
     public static string ChangeNumber(double number)
     {
         string outStr = number.ToString();

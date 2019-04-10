@@ -89,7 +89,7 @@ public class GuideManager : MonoBehaviour
         if (ObscuredPrefs.GetInt("helpStep", 0) == 7)
         {
             returnPanelGuide.SetActive(false);
-            controller.SpawnABox(1, parkPlace[3], 0,3f);
+            controller.SpawnABox(1, parkPlace[3], 0);
             openBoxGuide.SetActive(true);
             PlusStep();
         }

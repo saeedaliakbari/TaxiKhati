@@ -76,7 +76,6 @@ public class UsersScripts : MonoBehaviour
         wwwForm.AddField("id", ObscuredPrefs.GetInt("userid", 0));
         WWW www = new WWW(strGetRankUser, wwwForm);
         yield return www;
-        Debug.Log("www.error: " + www.error);
         if (www.error == null)
         {
             if (www.isDone)

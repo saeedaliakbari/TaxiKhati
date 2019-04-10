@@ -23,10 +23,10 @@ public class GiftBox : MonoBehaviour
         parkPlace = place;//بهش پارکینگ را هم می دهد
 
     }
-    public void StartAutoOpen(float delay)//بعد از 3 ثانیه باکس خودش باز شود
+    public void StartAutoOpen()//بعد از 3 ثانیه باکس خودش باز شود
     {
         //Debug.Log("12");
-        Timer.Schedule(this, delay, () =>
+        Timer.Schedule(this, 3f, () =>
         {
             //Debug.Log("13");
             OnMouseUp();

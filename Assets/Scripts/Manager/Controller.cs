@@ -22,7 +22,6 @@ public class Controller : MonoBehaviour
     public BatchPlugin batchPlugin;
     public GuideManager guideManager;
     public SettingPanel settingPanel;
-    public OfflineGiftCar offlineGiftCar;
     public CafeIntent cafeIntent;
     public AudioSource audioSourceCore, audioSourceCoreFast;
     public MoveAnim moveAnimHandRun;
@@ -48,7 +47,7 @@ public class Controller : MonoBehaviour
     [Header("Config Cars")]
     public string[] carName;
     public Sprite[] activeCar;
-    public Sprite[] inActiveCar, inActiveCarWithNumber;
+    public Sprite[] inActiveCar;
     public string[] earning;
     public float[] speed;
     public float[] basePrice; public int[] increaseRate;
@@ -62,7 +61,7 @@ public class Controller : MonoBehaviour
     {
         instance = this;
         ObscuredPrefs.SetInt("mainAchiv16", ObscuredPrefs.GetInt("mainAchiv16", 0) + 1);
-        ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem", 5) + 1000000);
+        ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem", 5) /*+ 1000000*/);
         ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 21000));
         ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 21000));
         ObscuredPrefs.SetDouble("token", ObscuredPrefs.GetDouble("token", 0) /*+ 100000000000*/);
@@ -164,7 +163,6 @@ public class Controller : MonoBehaviour
         StartCoroutine(IESpeedRatio());
         StartCoroutine(IEEarningRatio());
         GlimGames.Phone.OnCollected += Gifts_Collected;
-        //StartCoroutine(Manager.IECouter(10000000000000d, 50000000000000d, txtCoin));
         //}
         //);
     }
@@ -304,7 +302,7 @@ public class Controller : MonoBehaviour
                 //else
                 //{
                 if (hasBox)
-                    SpawnABox(index, parkPlace, modelBox, 3f);
+                    SpawnABox(index, parkPlace, modelBox);
                 else
                     SpawnACar(index, parkPlace);
                 //}
@@ -361,7 +359,7 @@ public class Controller : MonoBehaviour
         }
         else
         {
-            SpawnABox(index, parkPlace, 2, 3f);
+            SpawnABox(index, parkPlace, 2);
         }
     }
     public Car SpawnACar(int carIndex, ParkingPlace parkPlace, bool scaleUp = false)
@@ -377,7 +375,7 @@ public class Controller : MonoBehaviour
         ObscuredPrefs.SetInt("checkLevel", 0);
         return car;//ماشین رو برمیگردونه
     }
-    public GiftBox SpawnABox(int carIndex, ParkingPlace parkPlace, int modelBox, float delay)
+    public GiftBox SpawnABox(int carIndex, ParkingPlace parkPlace, int modelBox)
     {
         ObscuredPrefs.SetInt("mainAchiv15", ObscuredPrefs.GetInt("mainAchiv15", 0) + 1);
         achivmentManager.CheckAchivments();
@@ -389,7 +387,7 @@ public class Controller : MonoBehaviour
         box.SetUpBox(carIndex, parkPlace, modelBox);
         if (ObscuredPrefs.GetInt("helpStep", 0) > 21)
         {
-            box.StartAutoOpen(delay);
+            box.StartAutoOpen();
         }
         return box;
     }
@@ -415,7 +413,7 @@ public class Controller : MonoBehaviour
             if (parkPlace.IsEmpty())
             {
                 //Debug.Log("parkPlace Is Empty");
-                SpawnABox(index - 1, parkPlace, 0, 3f);
+                SpawnABox(index - 1, parkPlace, 0);
                 NewCarTimeing();
             }
             else
@@ -459,7 +457,7 @@ public class Controller : MonoBehaviour
             if (parkPlace.IsEmpty())
             {
                 //Debug.Log("parkPlace Is Empty");
-                SpawnABox(index - 1, parkPlace, 1, 3f);
+                SpawnABox(index - 1, parkPlace, 1);
                 //NewCarTimeing();
             }
             else
@@ -501,7 +499,7 @@ public class Controller : MonoBehaviour
             if (parkPlace.IsEmpty())
             {
                 //Debug.Log("parkPlace Is Empty");
-                SpawnABox(index - 1, parkPlace, 1, 3f);
+                SpawnABox(index - 1, parkPlace, 1);
                 //NewCarTimeing();
             }
             else
@@ -724,12 +722,10 @@ public class Controller : MonoBehaviour
             ParkingPlace place = parkingManager.GetPlace(boxObj.parkingIndex);// پارکینگ مورد نظر را برمیگرداند
             if (place != null)//اگر پارکینگ خالی نبود
             {
-                GiftBox box = SpawnABox(boxObj.carLevel - 1, place, 0, 3f);//یک پارکینگ با مشخصات داده شده ایجاد می کند
-                box.StartAutoOpen(3f);
+                GiftBox box = SpawnABox(boxObj.carLevel - 1, place, 0);//یک پارکینگ با مشخصات داده شده ایجاد می کند
+                box.StartAutoOpen();
             }
         }
-        Debug.Log("parking empty :" + parkingManager.NumberEmptyPark());
-        offlineGiftCar.offGiftCar(parkingManager.NumberEmptyPark());
     }
     public void CheckAndShowOfflineEarning()
     {
@@ -742,7 +738,7 @@ public class Controller : MonoBehaviour
         {
             time = (int)(Manager.GetCurrentTime() - Manager.GetActionTime("offline_earning"));
         }
-        if (time >= 0 && slotManager.EarningPerSec > 0)
+        if (time >= 180 && slotManager.EarningPerSec > 0)
         {
 
             offEarning.txtCoin = txtCoin;

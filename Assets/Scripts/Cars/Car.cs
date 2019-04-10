@@ -256,7 +256,6 @@ public class Car : MonoBehaviour
         Hashtable hash = iTween.Hash("position", newPlace.transform.position, "speed", speed * 3, "easetype", iTween.EaseType.linear);//ماشین را به مکان مشخص شده حرکت می دهد
         iTween.MoveTo(gameObject, hash);
     }
-    private Coroutine lastCoroutine;
     public void FinishRound()
     {
         audioSource.outputAudioMixerGroup = audioMixerKhatePayan;
@@ -267,14 +266,6 @@ public class Car : MonoBehaviour
         ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) + (double)(earnings * ratio));
         ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 5000) + (double)(earnings * ratio));
         controller.SetText();
-        //if (lastCoroutine == null)
-        //{
-        //    lastCoroutine = StartCoroutine(Manager.IECouter(ObscuredPrefs.GetDouble("coin", 5000) - (double)(earnings * ratio), ObscuredPrefs.GetDouble("coin", 5000), txtCoin));
-        //}
-        //else {
-        //    StopCoroutine(lastCoroutine);
-        //    lastCoroutine = StartCoroutine(Manager.IECouter(ObscuredPrefs.GetDouble("coin", 5000) - (double)(earnings * ratio), ObscuredPrefs.GetDouble("coin", 5000), txtCoin));
-        //}
         controller.slotManager.ShowGoalAnimation();//وقتی به نقطه پایان می رسد
     }
 

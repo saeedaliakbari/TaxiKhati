@@ -299,7 +299,6 @@ public class BazaarIABEventListener : MonoBehaviour
     #region Consume Purchase
     void consumePurchaseSucceededEvent(BazaarPurchase purchase)
     {
-        iapCafeBazar.controller.panelWait.SetActive(true);
         //Debug.Log("consumePurchaseSucceededEvent: " + purchase);
         for (int i = 0; i < iapCafeBazar.skus.Length; i++)
         {

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class CarItem : MonoBehaviour
 {
-    public Image car, /*earnSlider, speedSlider,*/ imgLock, imgOff, imgCarInLockButton;
+    public Image car, /*earnSlider, speedSlider,*/ imgLock, imgOff;
     public Text txtCoin, txtGem, txtName, txtOff, txtEarn;
     public TrimNumberText txtTrimEarn;
     public Button btnBuyCoin, btnBuyGem, btnVideo;
@@ -24,7 +24,6 @@ public class CarItem : MonoBehaviour
         bool open = i < ObscuredPrefs.GetInt("unlocked_car", 1);
         txtName.text = open ? controller.carName[index] : "???";
         car.sprite = open ? controller.activeCar[index] : controller.inActiveCar[index];//با توجه به فعال یا غیرفعال بودن اسپرایت فعال یا غیرفعال می شود
-        imgCarInLockButton.sprite = open ? controller.activeCar[controller.lastSalableLevel[index]-1] : controller.inActiveCar[controller.lastSalableLevel[index] - 1];
         //earnSlider.fillAmount = controller.earning[index]/* / controller.earning[49]*/;
         //speedSlider.fillAmount = controller.speed[index] / controller.speed[49];
         txtTrimEarn.text = (double.Parse(controller.earning[index]) / controller.speed[index]).ToString("0.##");

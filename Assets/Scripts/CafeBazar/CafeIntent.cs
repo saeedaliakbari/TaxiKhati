@@ -2,8 +2,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Networking;
-
 public class CafeIntent : MonoBehaviour
 {
     public Controller controller;
@@ -18,7 +16,7 @@ public class CafeIntent : MonoBehaviour
     void Start()
     {
 #if UNITY_EDITOR
-        Debug.Log("UNITY_EDITOR bundleCodeVersion:" + UnityEditor.PlayerSettings.Android.bundleVersionCode);
+        //Debug.Log("UNITY_EDITOR bundleCodeVersion:" + UnityEditor.PlayerSettings.Android.bundleVersionCode);
         bundleCodeVersion = UnityEditor.PlayerSettings.Android.bundleVersionCode;
 #endif
 #if UNITY_ANDROID && !UNITY_EDITOR
@@ -30,12 +28,6 @@ public class CafeIntent : MonoBehaviour
         Debug.Log("UNITY_ANDROID bundleCodeVersion:" + bundleCodeVersion);
 #endif
         StartCoroutine(IEGetApp());
-        // A correct website page.
-        StartCoroutine(GetRequest(strLinkGetInfo));
-
-        // A non-existing page.
-        StartCoroutine(GetRequest("https://error.html"));
-        StartCoroutine(Upload(strLinkGetInfo));
     }
     public void btnAre()
     {
@@ -84,63 +76,21 @@ public class CafeIntent : MonoBehaviour
         currentActivity.Call("startActivity", intentObject);
 
     }
-    IEnumerator GetRequest(string uri)
-    {
-        using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
-        {
-            // Request and wait for the desired page.
-            yield return webRequest.SendWebRequest();
 
-            string[] pages = uri.Split('/');
-            int page = pages.Length - 1;
-
-            if (webRequest.isNetworkError)
-            {
-                Debug.Log(pages[page] + ": Error: " + webRequest.error);
-            }
-            else
-            {
-                Debug.Log(pages[page] + ":\nReceived: " + webRequest.downloadHandler.text);
-            }
-        }
-    }
-    IEnumerator Upload(string uri)
-    {
-        WWWForm form = new WWWForm();
-        form.AddField("id", "1");
-
-        using (UnityWebRequest www = UnityWebRequest.Post(uri, form))
-        {
-            yield return www.SendWebRequest();
-
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log(www.error);
-            }
-            else
-            {
-                Debug.Log("Form upload complete!");
-            }
-        }
-    }
     IEnumerator IEGetApp()
     {
-        using (UnityWebRequest webRequest = UnityWebRequest.Get(strLinkGetInfo))
+        WWWForm wwwForm = new WWWForm();
+        WWW www = new WWW(strLinkGetInfo, wwwForm);
+        yield return www;
+        if (www.error == null)
         {
-            // Request and wait for the desired page.
-            yield return webRequest.SendWebRequest();
-            if (webRequest.isNetworkError)
+            if (www.isDone)
             {
-                Debug.Log(strLinkGetInfo + ": Error: " + webRequest.error);
-            }
-            else
-            {
-                Debug.Log(strLinkGetInfo + ":\nReceived: " + webRequest.downloadHandler.text);
-                JsonData jsonBooks = JsonMapper.ToObject(webRequest.downloadHandler.text);
+                JsonData jsonBooks = JsonMapper.ToObject(www.text);
                 bundle = int.Parse(jsonBooks[0][1].ToString());
                 version = jsonBooks[0][2].ToString();
                 forceUpdate = int.Parse(jsonBooks[0][3].ToString());
-                Debug.Log("bundle: " + bundle + " forceUpdate: " + forceUpdate);
+                //Debug.Log("bundle: " + bundle + " forceUpdate: " + forceUpdate);
                 if (bundle > bundleCodeVersion)
                 {
                     panelUpdate.SetActive(true);
