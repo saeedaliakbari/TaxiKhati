@@ -125,16 +125,18 @@ public class CafeIntent : MonoBehaviour
     }
     IEnumerator IEGetApp()
     {
-        WWWForm wwwForm = new WWWForm();
-        WWW www = new WWW(strLinkGetInfo, wwwForm);
-        Debug.Log("bundle: " + bundle + " forceUpdate: " + forceUpdate);
-        yield return www;
-        Debug.Log("bundle: " + bundle + " forceUpdate: " + forceUpdate + www.error + " ? " + www.text);
-        if (www.error == null)
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(strLinkGetInfo))
         {
-            if (www.isDone)
+            // Request and wait for the desired page.
+            yield return webRequest.SendWebRequest();
+            if (webRequest.isNetworkError)
             {
-                JsonData jsonBooks = JsonMapper.ToObject(www.text);
+                Debug.Log(strLinkGetInfo + ": Error: " + webRequest.error);
+            }
+            else
+            {
+                Debug.Log(strLinkGetInfo + ":\nReceived: " + webRequest.downloadHandler.text);
+                JsonData jsonBooks = JsonMapper.ToObject(webRequest.downloadHandler.text);
                 bundle = int.Parse(jsonBooks[0][1].ToString());
                 version = jsonBooks[0][2].ToString();
                 forceUpdate = int.Parse(jsonBooks[0][3].ToString());
@@ -153,9 +155,7 @@ public class CafeIntent : MonoBehaviour
                     }
                 }
             }
-            Debug.Log("bundle: " + bundle + " forceUpdate: " + forceUpdate);
         }
-        Debug.Log("bundle: " + bundle + " forceUpdate: " + forceUpdate);
     }
     IEnumerator IESendComment()
     {

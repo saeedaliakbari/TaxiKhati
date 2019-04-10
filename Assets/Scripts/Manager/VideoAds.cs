@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-//using TapsellSDK;
+using TapsellSDK;
 using CodeStage.AntiCheat.ObscuredTypes;
 
 public class VideoAds : MonoBehaviour
@@ -30,7 +30,7 @@ public class VideoAds : MonoBehaviour
     void Start()
     {
         //ObscuredPrefs.SetDouble("coin", 93021943);
-        //Tapsell.initialize(sdkToken);
+        Tapsell.initialize(sdkToken);
         LoadAd(zoneOfflineEarning, false);
         LoadAd(zoneShopCar, false);
         shopPanel.UpdateCarItems();
@@ -57,25 +57,29 @@ public class VideoAds : MonoBehaviour
         {
             ObscuredPrefs.SetInt(zoneOfflineEarning.zoneId, 0);
             ShowAd(zoneOfflineEarning);
-            //Tapsell.setRewardListener(
-            //    (TapsellAdFinishedResult result) =>
-            //    {
-            //        if (result.completed && result.rewarded)
-            //        {
-            //            GiftDoubleOfflineEarn();
-            //        }
-            //        else
-            //        {
-            //            LoadAd(zoneOfflineEarning, false);
-            //            offlineEarning.gameObject.SetActive(true);//درصورتی ویدئو نبود پنل آفلاین رو نشون بده
-            //        }
-            //    }
-            //);
+            Tapsell.setRewardListener(
+                (TapsellAdFinishedResult result) =>
+                {
+                    if (result.completed && result.rewarded)
+                    {
+                        GiftDoubleOfflineEarn();
+                    }
+                    else
+                    {
+                        LoadAd(zoneOfflineEarning, false);
+                        offlineEarning.gameObject.SetActive(true);//درصورتی ویدئو نبود پنل آفلاین رو نشون بده
+                    }
+                }
+            );
         }
         else
         {
             offlineEarning.gameObject.SetActive(true);//درصورتی ویدئو نبود پنل آفلاین رو نشون بده
         }
+        //    //Debug.Log("Error");
+        //    //panelError.SetActive(true);
+        //    //txtPanelError.text = "خطا در لود ویدئو";
+        //}
     }
     private void GiftDoubleOfflineEarn()
     {
@@ -87,6 +91,7 @@ public class VideoAds : MonoBehaviour
     #region Btn SpecialOffer
     public void BtnSpecialOffer()
     {
+        //GiftGiftCar();
         specialOffer.btnGem.interactable = false;
         specialOffer.btnVideo.interactable = false;
         StartCoroutine(IEBtnSpecialOffer());
@@ -108,19 +113,19 @@ public class VideoAds : MonoBehaviour
         {
             ObscuredPrefs.SetInt(zoneGiftPanel.zoneId, 0);
             ShowAd(zoneGiftPanel);
-            //Tapsell.setRewardListener(
-            //    (TapsellAdFinishedResult result) =>
-            //    {
-            //        if (result.completed && result.rewarded)
-            //        {
-            //            specialOffer.ManageGift();
-            //        }
-            //        else
-            //        {
-            //            LoadAd(zoneGiftPanel, false);
-            //        }
-            //    }
-            //);
+            Tapsell.setRewardListener(
+                (TapsellAdFinishedResult result) =>
+                {
+                    if (result.completed && result.rewarded)
+                    {
+                        specialOffer.ManageGift();
+                    }
+                    else
+                    {
+                        LoadAd(zoneGiftPanel, false);
+                    }
+                }
+            );
         }
         else
         {
@@ -156,23 +161,32 @@ public class VideoAds : MonoBehaviour
         {
             ObscuredPrefs.SetInt(zoneShopCar.zoneId, 0);
             ShowAd(zoneShopCar);
-            //Tapsell.setRewardListener(
-            //    (TapsellAdFinishedResult result) =>
-            //    {
-            //        if (result.completed && result.rewarded)
-            //        {
-            //            ObscuredPrefs.SetInt("mergeCarForVideo", 1);
-            //            GiftShopCar(index - 1);
-            //        }
-            //        else
-            //        {
-            //            LoadAd(zoneShopCar, false);
-            //        }
-            //    }
-            //);
+            Tapsell.setRewardListener(
+                (TapsellAdFinishedResult result) =>
+                {
+                    if (result.completed && result.rewarded)
+                    {
+                        ObscuredPrefs.SetInt("mergeCarForVideo", 1);
+                        GiftShopCar(index - 1);
+                    }
+                    else
+                    {
+                        LoadAd(zoneShopCar, false);
+                    }
+                }
+            );
         }
         controller.panelWait.SetActive(false);
         controller.parkingManager.EnableCarInPark();
+        //else
+        //{
+        //    controller.panelMessage.SetActive(true);
+        //    controller.txtPanelMessage.text = "در حال حاضر امکان نمایش ویدئو وجود ندارد";
+        //    controller.parkingManager.DisableCarInPark();
+        //    Debug.Log("Error");
+        //    //panelError.SetActive(true);
+        //    //txtPanelError.text = "خطا در لود ویدئو";
+        //}
     }
     private void GiftShopCar(int index)
     {
@@ -201,23 +215,32 @@ public class VideoAds : MonoBehaviour
         {
             ObscuredPrefs.SetInt(zoneCarUp.zoneId, 0);
             ShowAd(zoneCarUp);
-            //Tapsell.setRewardListener(
-            //    (TapsellAdFinishedResult result) =>
-            //    {
-            //        if (result.completed && result.rewarded)
-            //        {
-            //            GiftCarUp(true);
-            //        }
-            //        else
-            //        {
-            //            GiftCarUp(false);
-            //            LoadAd(zoneShopCar, false);
-            //        }
-            //    }
-            //);
+            Tapsell.setRewardListener(
+                (TapsellAdFinishedResult result) =>
+                {
+                    if (result.completed && result.rewarded)
+                    {
+                        GiftCarUp(true);
+                    }
+                    else
+                    {
+                        GiftCarUp(false);
+                        LoadAd(zoneShopCar, false);
+                    }
+                }
+            );
         }
         controller.panelWait.SetActive(false);
         controller.parkingManager.EnableCarInPark();
+        //else
+        //{
+        //    Debug.Log("Error");
+        //    controller.panelMessage.SetActive(true);
+        //    controller.txtPanelMessage.text = "در حال حاضر امکان نمایش ویدئو وجود ندارد";
+        //    controller.parkingManager.DisableCarInPark();
+        //    //panelError.SetActive(true);
+        //    //txtPanelError.text = "خطا در لود ویدئو";
+        //}
     }
     private void GiftCarUp(bool status)
     {
@@ -262,22 +285,31 @@ public class VideoAds : MonoBehaviour
         {
             ObscuredPrefs.SetInt(zoneWheelOfFurtune.zoneId, 0);
             ShowAd(zoneWheelOfFurtune);
-            //Tapsell.setRewardListener(
-            //    (TapsellAdFinishedResult result) =>
-            //    {
-            //        if (result.completed && result.rewarded)
-            //        {
-            //            wheelFortuneScript.giftWheelVideo();
-            //        }
-            //        else
-            //        {
-            //            LoadAd(zoneShopCar, false);
-            //        }
-            //    }
-            //);
+            Tapsell.setRewardListener(
+                (TapsellAdFinishedResult result) =>
+                {
+                    if (result.completed && result.rewarded)
+                    {
+                        wheelFortuneScript.giftWheelVideo();
+                    }
+                    else
+                    {
+                        LoadAd(zoneShopCar, false);
+                    }
+                }
+            );
         }
         controller.panelWait.SetActive(false);
         controller.parkingManager.EnableCarInPark();
+        //else
+        //{
+        //    Debug.Log("Error");
+        //    controller.panelMessage.SetActive(true);
+        //    controller.txtPanelMessage.text = "در حال حاضر امکان نمایش ویدئو وجود ندارد";
+        //    controller.parkingManager.DisableCarInPark();
+        //    //panelError.SetActive(true);
+        //    //txtPanelError.text = "خطا در لود ویدئو";
+        //}
     }
     #endregion
     #region Btn Speeed X2
@@ -301,22 +333,29 @@ public class VideoAds : MonoBehaviour
         {
             ObscuredPrefs.SetInt(zoneSpeedX2.zoneId, 0);
             ShowAd(zoneSpeedX2);
-            //Tapsell.setRewardListener(
-            //    (TapsellAdFinishedResult result) =>
-            //    {
-            //        if (result.completed && result.rewarded)
-            //        {
-            //            GiftSpeedX2();
-            //        }
-            //        else
-            //        {
-            //            LoadAd(zoneSpeedX2, false);
-            //        }
-            //    }
-            //);
+            Tapsell.setRewardListener(
+                (TapsellAdFinishedResult result) =>
+                {
+                    if (result.completed && result.rewarded)
+                    {
+                        GiftSpeedX2();
+                    }
+                    else
+                    {
+                        LoadAd(zoneSpeedX2, false);
+                    }
+                }
+            );
         }
         controller.panelWait.SetActive(false);
         controller.parkingManager.EnableCarInPark();
+        //else
+        //{
+        //    controller.panelMessage.SetActive(true);
+        //    controller.txtPanelMessage.text = "در حال حاضر امکان نمایش ویدئو وجود ندارد";
+        //    controller.parkingManager.DisableCarInPark();
+        //    Debug.Log("Error");
+        //}
     }
     private void GiftSpeedX2()
     {
@@ -358,16 +397,23 @@ public class VideoAds : MonoBehaviour
             //Debug.Log("Ejra Tabligh");
             ObscuredPrefs.SetInt(zoneShopClose.zoneId, 0);
             ShowAd(zoneShopClose);
-            //Tapsell.setRewardListener(
-            //    (TapsellAdFinishedResult result) =>
-            //    {
-            //        GiftBtnCloseShopCar();
-            //        LoadAd(zoneShopClose, false);
-            //    }
-            //);
+            Tapsell.setRewardListener(
+                (TapsellAdFinishedResult result) =>
+                {
+                    GiftBtnCloseShopCar();
+                    LoadAd(zoneShopClose, false);
+                }
+            );
         }
         controller.panelWait.SetActive(false);
         controller.parkingManager.EnableCarInPark();
+        //else
+        //{
+        //    controller.panelMessage.SetActive(true);
+        //    controller.txtPanelMessage.text = "در حال حاضر امکان نمایش تبلیغ وجود ندارد";
+        //    controller.parkingManager.DisableCarInPark();
+        //    Debug.Log("Error");
+        //}
     }
     private void GiftBtnCloseShopCar()
     {
@@ -393,95 +439,95 @@ public class VideoAds : MonoBehaviour
     #region Main Methods
     public void LoadAd(ZoneVideo zone, bool ErrorHandling)//درخواست تبلیغ
     {
-        //Tapsell.requestAd(zone.zoneId, zone.cached,
-        //    (TapsellAd result) =>
-        //    {
-        //        // onAdAvailable
-        //        //Debug.Log("Action: onAdAvailable");
-        //        ObscuredPrefs.SetInt(zone.zoneId, 1);
-        //        zone.ad = result;
-        //        //Debug.Log("End Load ad : " + zone.ad == null ? "NULL" : "id :" + zone.ad.adId);
-        //        //Debug.Log(zone.zoneName + ": " + ObscuredPrefs.GetInt(zone.zoneId));
-        //    },
+        Tapsell.requestAd(zone.zoneId, zone.cached,
+            (TapsellAd result) =>
+            {
+                // onAdAvailable
+                //Debug.Log("Action: onAdAvailable");
+                ObscuredPrefs.SetInt(zone.zoneId, 1);
+                zone.ad = result;
+                //Debug.Log("End Load ad : " + zone.ad == null ? "NULL" : "id :" + zone.ad.adId);
+                //Debug.Log(zone.zoneName + ": " + ObscuredPrefs.GetInt(zone.zoneId));
+            },
 
-        //    (string zoneId) =>
-        //    {
-        //        // onNoAdAvailable
-        //        ObscuredPrefs.SetInt(zone.zoneId, 0);
-        //        //Debug.Log("No Ad Available");
-        //        //Debug.Log("End Load ad : " + zone.ad == null ? "NULL" : "id:" + zone.ad.adId);
-        //        //Debug.Log(zone.zoneName + ": " + ObscuredPrefs.GetInt(zone.zoneId));
-        //        if (ErrorHandling)
-        //        {
-        //            controller.panelMessage.SetActive(true);
-        //            controller.txtPanelMessage.text = "در حال حاضر تبلیغی براي نمایش وجود ندارد";
-        //            controller.parkingManager.DisableCarInPark();
-        //            controller.panelWait.SetActive(false);
-        //            controller.parkingManager.EnableCarInPark();
-        //        }
+            (string zoneId) =>
+            {
+                // onNoAdAvailable
+                ObscuredPrefs.SetInt(zone.zoneId, 0);
+                //Debug.Log("No Ad Available");
+                //Debug.Log("End Load ad : " + zone.ad == null ? "NULL" : "id:" + zone.ad.adId);
+                //Debug.Log(zone.zoneName + ": " + ObscuredPrefs.GetInt(zone.zoneId));
+                if (ErrorHandling)
+                {
+                    controller.panelMessage.SetActive(true);
+                    controller.txtPanelMessage.text = "در حال حاضر تبلیغی براي نمایش وجود ندارد";
+                    controller.parkingManager.DisableCarInPark();
+                    controller.panelWait.SetActive(false);
+                    controller.parkingManager.EnableCarInPark();
+                }
 
-        //    },
+            },
 
-        //    (TapsellError error) =>
-        //    {
-        //        // onError
-        //        ObscuredPrefs.SetInt(zone.zoneId, 0);
-        //        //Debug.Log(error.error);
-        //        //Debug.Log("End Load ad : " + zone.ad == null ? "NULL" : "id:" + zone.ad.adId);
-        //        //Debug.Log(zone.zoneName + ": " + ObscuredPrefs.GetInt(zone.zoneId));
-        //        if (ErrorHandling)
-        //        {
-        //            controller.panelMessage.SetActive(true);
-        //            controller.txtPanelMessage.text = "مشکلی بوجودآمده لطفا مجددا تلاش نمایید";
-        //            controller.parkingManager.DisableCarInPark();
-        //            controller.panelWait.SetActive(false);
-        //            controller.parkingManager.EnableCarInPark();
-        //        }
-        //    },
+            (TapsellError error) =>
+            {
+                // onError
+                ObscuredPrefs.SetInt(zone.zoneId, 0);
+                //Debug.Log(error.error);
+                //Debug.Log("End Load ad : " + zone.ad == null ? "NULL" : "id:" + zone.ad.adId);
+                //Debug.Log(zone.zoneName + ": " + ObscuredPrefs.GetInt(zone.zoneId));
+                if (ErrorHandling)
+                {
+                    controller.panelMessage.SetActive(true);
+                    controller.txtPanelMessage.text = "مشکلی بوجودآمده لطفا مجددا تلاش نمایید";
+                    controller.parkingManager.DisableCarInPark();
+                    controller.panelWait.SetActive(false);
+                    controller.parkingManager.EnableCarInPark();
+                }
+            },
 
-        //    (string zoneId) =>
-        //    {
-        //        // onNoNetwork
-        //        ObscuredPrefs.SetInt(zone.zoneId, 0);
-        //        //Debug.Log("No Network: " + zoneId);
-        //        //Debug.Log("End Load ad : " + zone.ad == null ? "NULL" : "id:" + zone.ad.adId);
-        //        //Debug.Log(zone.zoneName + ": " + ObscuredPrefs.GetInt(zone.zoneId));
-        //        if (ErrorHandling)
-        //        {
-        //            controller.panelMessage.SetActive(true);
-        //            controller.txtPanelMessage.text = "مشکل در برقراري ارتباط با اینترنت";
-        //            controller.parkingManager.DisableCarInPark();
-        //            controller.panelWait.SetActive(false);
-        //            controller.parkingManager.EnableCarInPark();
-        //        }
-        //    },
+            (string zoneId) =>
+            {
+                // onNoNetwork
+                ObscuredPrefs.SetInt(zone.zoneId, 0);
+                //Debug.Log("No Network: " + zoneId);
+                //Debug.Log("End Load ad : " + zone.ad == null ? "NULL" : "id:" + zone.ad.adId);
+                //Debug.Log(zone.zoneName + ": " + ObscuredPrefs.GetInt(zone.zoneId));
+                if (ErrorHandling)
+                {
+                    controller.panelMessage.SetActive(true);
+                    controller.txtPanelMessage.text = "مشکل در برقراري ارتباط با اینترنت";
+                    controller.parkingManager.DisableCarInPark();
+                    controller.panelWait.SetActive(false);
+                    controller.parkingManager.EnableCarInPark();
+                }
+            },
 
-        //    (TapsellAd result) =>
-        //    {
-        //        //onExpiring
-        //        //Debug.Log("Expiring");
-        //        ObscuredPrefs.SetInt(zone.zoneId, 0);
-        //        zone.ad = null;
-        //        //Debug.Log("End Load ad : " + zone.ad == null ? "NULL" : "id:" + zone.ad.adId);
-        //        LoadAd(zone, false);
-        //        controller.panelWait.SetActive(false);
-        //        controller.parkingManager.EnableCarInPark();
-        //    }
+            (TapsellAd result) =>
+            {
+                //onExpiring
+                //Debug.Log("Expiring");
+                ObscuredPrefs.SetInt(zone.zoneId, 0);
+                zone.ad = null;
+                //Debug.Log("End Load ad : " + zone.ad == null ? "NULL" : "id:" + zone.ad.adId);
+                LoadAd(zone, false);
+                controller.panelWait.SetActive(false);
+                controller.parkingManager.EnableCarInPark();
+            }
 
-        //);
+        );
 
     }
 
     public void ShowAd(ZoneVideo zone)
     {
-        ////Debug.Log("panel Error false");
-        ////panelError.SetActive(false);
-        //TapsellShowOptions options = new TapsellShowOptions();
-        //options.backDisabled = false;
-        //options.immersiveMode = false;
-        //options.rotationMode = TapsellShowOptions.ROTATION_LOCKED_PORTRAIT;
-        //options.showDialog = true;
-        //Tapsell.showAd(zone.ad, options); ;
+        //Debug.Log("panel Error false");
+        //panelError.SetActive(false);
+        TapsellShowOptions options = new TapsellShowOptions();
+        options.backDisabled = false;
+        options.immersiveMode = false;
+        options.rotationMode = TapsellShowOptions.ROTATION_LOCKED_PORTRAIT;
+        options.showDialog = true;
+        Tapsell.showAd(zone.ad, options); ;
     }
     #endregion
 }
@@ -491,6 +537,6 @@ public class ZoneVideo
     public string zoneName;
     public string zoneId;
     public bool cached;
-    //[HideInInspector]
-    //public TapsellAd ad = null;
+    [HideInInspector]
+    public TapsellAd ad = null;
 }
