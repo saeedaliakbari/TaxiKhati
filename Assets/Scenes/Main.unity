@@ -33415,7 +33415,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &682656667
 RectTransform:
   m_ObjectHideFlags: 0
@@ -37956,6 +37956,8 @@ MonoBehaviour:
   txtCoin: {fileID: 1896488206}
   btnDouble: {fileID: 1999449800}
   btnThird: {fileID: 2101536174}
+  animPanel: {fileID: 0}
+  CoinAnimator: {fileID: 0}
 --- !u!95 &769815152
 Animator:
   serializedVersion: 3
@@ -54223,6 +54225,7 @@ MonoBehaviour:
   batchPlugin: {fileID: 1231707831}
   guideManager: {fileID: 905291734}
   settingPanel: {fileID: 1085018828}
+  offlineGiftCar: {fileID: 0}
   cafeIntent: {fileID: 987241135}
   audioSourceCore: {fileID: 762322314}
   audioSourceCoreFast: {fileID: 1020187694}
@@ -54423,6 +54426,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 938d30b3863d8594a9cef0fb03790d62, type: 3}
   - {fileID: 21300000, guid: 488f0b85ef99ba741ae4fea58ad0c725, type: 3}
   - {fileID: 21300000, guid: dc98d32e904a99b4a936cae142ec055e, type: 3}
+  inActiveCarWithNumber: []
   earning:
   - 26
   - 53
