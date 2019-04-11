@@ -54,7 +54,7 @@ public class Controller : MonoBehaviour
     public float[] basePrice; public int[] increaseRate;
     public float[] baseGemPrice;
     public int[] lastSalableLevel;
-    public int[] lastSalableCoreLevel;
+    public int[] lastSalableCoreLevel,openLevel;
     public Transform XpBarTranform;///برای هدف پارتیکل میباشد
     private int def;
     private Coroutine lastRoutineSpecialBox = null, lastRoutineWheelBox = null, lastRoutineTime = null;
@@ -62,11 +62,13 @@ public class Controller : MonoBehaviour
     {
         instance = this;
         ObscuredPrefs.SetInt("mainAchiv16", ObscuredPrefs.GetInt("mainAchiv16", 0) + 1);
-        ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem", 5) + 1000000);
+        ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem", 5)/* + 1000000*/);
         ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 21000));
         ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 21000));
         ObscuredPrefs.SetDouble("token", ObscuredPrefs.GetDouble("token", 0) /*+ 100000000000*/);
-        //ObscuredPrefs.SetInt("unlocked_car", 50);
+        //ObscuredPrefs.SetInt("unlocked_car",50);
+        //ObscuredPrefs.SetInt("Level", 53);
+        //ObscuredPrefs.SetInt("Xp", 11000);
         SetText();
     }
     public void SetText()
@@ -728,7 +730,7 @@ public class Controller : MonoBehaviour
                 box.StartAutoOpen(3f);
             }
         }
-        Debug.Log("parking empty :" + parkingManager.NumberEmptyPark());
+        //Debug.Log("parking empty :" + parkingManager.NumberEmptyPark());
         offlineGiftCar.offGiftCar(parkingManager.NumberEmptyPark());
     }
     public void CheckAndShowOfflineEarning()
@@ -742,7 +744,7 @@ public class Controller : MonoBehaviour
         {
             time = (int)(Manager.GetCurrentTime() - Manager.GetActionTime("offline_earning"));
         }
-        if (time >= 0 && slotManager.EarningPerSec > 0)
+        if (time >= 180 && slotManager.EarningPerSec > 0)
         {
 
             offEarning.txtCoin = txtCoin;

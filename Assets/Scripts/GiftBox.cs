@@ -39,10 +39,10 @@ public class GiftBox : MonoBehaviour
         opened = true;
         animtor.Play("OpenBox");
         Timer.Schedule(this, (25 / 60f), () =>
-          {
-              //Debug.Log(" parkPlace.animLight.Pla");
-              parkPlace.animLight.Play("Merge");
-          });
+        {
+            //Debug.Log(" parkPlace.animLight.Pla");
+            parkPlace.animLight.Play("Merge");
+        });
 
         openGiftCar.Play();
     }
@@ -55,10 +55,10 @@ public class GiftBox : MonoBehaviour
         {
             OpenBox();//انیمیشن باز شدن اجرا شود
             Timer.Schedule(this, 0.5f, (Timer.Task)(() =>
-             {
-                 Controller.instance.SpawnACar((int)carIndex, (ParkingPlace)parkPlace);
-                 Destroy(gameObject);
-             }));//بعد از نیم ثانیه که انیمیشن تموم شد ماشین داخل پارکینگ مورد نظر ایجاد شود
+            {
+                Controller.instance.SpawnACar((int)carIndex, (ParkingPlace)parkPlace);
+                Destroy(gameObject);
+            }));//بعد از نیم ثانیه که انیمیشن تموم شد ماشین داخل پارکینگ مورد نظر ایجاد شود
             controller.guideManager.OpenGiftBox();
         }
     }

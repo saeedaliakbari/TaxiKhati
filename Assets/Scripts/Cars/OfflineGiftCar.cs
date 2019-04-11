@@ -21,7 +21,7 @@ public class OfflineGiftCar : MonoBehaviour
             time = (int)(Manager.GetCurrentTime() - Manager.GetActionTime("offline_earning"));
         }
         giftNumber = time / 20 - 1;
-        Debug.Log("gift number: " + giftNumber);
+        //Debug.Log("gift number: " + giftNumber);
         if (giftNumber > numEmptyPark)
         {
             giftNumber = numEmptyPark;
@@ -29,12 +29,12 @@ public class OfflineGiftCar : MonoBehaviour
         //while (controller.panelSplash.activeSelf) ;
         for (int i = 0; i < giftNumber; i++)
         {
-            Debug.Log("insert " + i + " gift");
+            //Debug.Log("insert " + i + " gift");
             ParkingPlace parkPlace = controller.parkingManager.GetEmptyPlace();
             int taxiLvl = ObscuredPrefs.GetInt("unlocked_car", 1);
             int index = taxiLvl - UnityEngine.Random.Range(controller.taxiDefferenceLvl[taxiLvl - 1].min, controller.taxiDefferenceLvl[taxiLvl - 1].max);
             index = index > 0 ? index : 1;
-            Debug.Log("index Car : " + index);
+            //Debug.Log("index Car : " + index);
             controller.SpawnABox(index - 1, parkPlace, 0, 8f);
         }
         giftNumber = 0;

@@ -49,7 +49,7 @@ public class PlayerLevel : MonoBehaviour
         int xptrailer = 0;
         while (xptrailer <= xp)
         {
-            Debug.Log("xptrailer" + xptrailer + " xp" + xp);
+            //Debug.Log("xptrailer" + xptrailer + " xp" + xp);
             if (ObscuredPrefs.GetInt("Level", 1) < 53)
             {
                 if ((nowXp + xptrailer) > levelsInfo[ObscuredPrefs.GetInt("Level", 1) - 1].maxXp)
@@ -71,7 +71,7 @@ public class PlayerLevel : MonoBehaviour
             else
             {
                 int maxXpOldLevel = ObscuredPrefs.GetInt("maxXp" + ObscuredPrefs.GetInt("Level", 1), 118000);
-                Debug.Log("maxXpOldLevel" + ObscuredPrefs.GetInt("Level", 1) + ">" + maxXpOldLevel);
+                //Debug.Log("maxXpOldLevel" + ObscuredPrefs.GetInt("Level", 1) + ">" + maxXpOldLevel);
                 if ((nowXp + xptrailer) > maxXpOldLevel)
                 {
                     ObscuredPrefs.SetInt("Xp", ObscuredPrefs.GetInt("Xp", 0) - maxXpOldLevel);
@@ -123,7 +123,9 @@ public class PlayerLevel : MonoBehaviour
         }
         else
         {
-            float slider = (nowXp + xpTrailer) / float.Parse(ObscuredPrefs.GetInt("maxXp" + ObscuredPrefs.GetInt("Level", 1)).ToString());
+            //Debug.Log("" + (nowXp + xpTrailer) +"/"+ ObscuredPrefs.GetInt("maxXp" + ObscuredPrefs.GetInt("Level", 1), 118000).ToString());
+            float slider = (nowXp + xpTrailer) / float.Parse(ObscuredPrefs.GetInt("maxXp" + ObscuredPrefs.GetInt("Level", 1), 118000).ToString());
+            //Debug.Log("slider : " + slider);
             imgProgress.fillAmount = slider;
         }
     }

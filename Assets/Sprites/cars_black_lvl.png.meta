@@ -1,9 +1,59 @@
 fileFormatVersion: 2
 guid: a88e28a9628ed3248bb6d0b37c220a44
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: cars_black_lvl_30
+    21300002: cars_black_lvl_31
+    21300004: cars_black_lvl_32
+    21300006: cars_black_lvl_33
+    21300008: cars_black_lvl_34
+    21300010: cars_black_lvl_35
+    21300012: cars_black_lvl_36
+    21300014: cars_black_lvl_37
+    21300016: cars_black_lvl_22
+    21300018: cars_black_lvl_23
+    21300020: cars_black_lvl_24
+    21300022: cars_black_lvl_26
+    21300024: cars_black_lvl_25
+    21300026: cars_black_lvl_27
+    21300028: cars_black_lvl_28
+    21300030: cars_black_lvl_29
+    21300032: cars_black_lvl_14
+    21300034: cars_black_lvl_15
+    21300036: cars_black_lvl_16
+    21300038: cars_black_lvl_17
+    21300040: cars_black_lvl_18
+    21300042: cars_black_lvl_19
+    21300044: cars_black_lvl_20
+    21300046: cars_black_lvl_21
+    21300048: cars_black_lvl_6
+    21300050: cars_black_lvl_7
+    21300052: cars_black_lvl_8
+    21300054: cars_black_lvl_9
+    21300056: cars_black_lvl_10
+    21300058: cars_black_lvl_11
+    21300060: cars_black_lvl_12
+    21300062: cars_black_lvl_13
+    21300064: cars_black_lvl_48
+    21300066: cars_black_lvl_49
+    21300068: cars_black_lvl_1
+    21300070: cars_black_lvl_2
+    21300072: cars_black_lvl_3
+    21300074: cars_black_lvl_4
+    21300076: cars_black_lvl_5
+    21300078: cars_black_lvl_50
+    21300080: cars_black_lvl_40
+    21300082: cars_black_lvl_41
+    21300084: cars_black_lvl_42
+    21300086: cars_black_lvl_43
+    21300088: cars_black_lvl_44
+    21300090: cars_black_lvl_45
+    21300092: cars_black_lvl_46
+    21300094: cars_black_lvl_47
+    21300096: cars_black_lvl_38
+    21300098: cars_black_lvl_39
   externalObjects: {}
-  serializedVersion: 9
+  serializedVersion: 4
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -21,8 +71,6 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
   isReadable: 0
-  streamingMipmaps: 0
-  streamingMipmapsPriority: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -40,7 +88,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -53,13 +101,11 @@ TextureImporter:
   spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
-  singleChannelComponent: 0
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
   platformSettings:
-  - serializedVersion: 2
-    buildTarget: DefaultTexturePlatform
+  - buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -69,20 +115,732 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - buildTarget: Android
+    maxTextureSize: 1024
+    resizeAlgorithm: 0
+    textureFormat: 47
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 1
+    androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: cars_black_lvl_30
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 918
+        width: 118
+        height: 87
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_31
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 915
+        width: 108
+        height: 83
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_32
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 910
+        width: 116
+        height: 83
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_33
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 915
+        width: 111
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_34
+      rect:
+        serializedVersion: 2
+        x: 535
+        y: 915
+        width: 103
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_35
+      rect:
+        serializedVersion: 2
+        x: 648
+        y: 922
+        width: 114
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_36
+      rect:
+        serializedVersion: 2
+        x: 772
+        y: 918
+        width: 114
+        height: 90
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_37
+      rect:
+        serializedVersion: 2
+        x: 898
+        y: 905
+        width: 110
+        height: 91
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_22
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 791
+        width: 101
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_23
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 791
+        width: 106
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_24
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 791
+        width: 126
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_26
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 804
+        width: 102
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_25
+      rect:
+        serializedVersion: 2
+        x: 540
+        y: 810
+        width: 102
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_27
+      rect:
+        serializedVersion: 2
+        x: 654
+        y: 806
+        width: 102
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_28
+      rect:
+        serializedVersion: 2
+        x: 774
+        y: 803
+        width: 108
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_29
+      rect:
+        serializedVersion: 2
+        x: 892
+        y: 797
+        width: 122
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_14
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 681
+        width: 119
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_15
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 684
+        width: 124
+        height: 91
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_16
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 695
+        width: 117
+        height: 83
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_17
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 693
+        width: 111
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_18
+      rect:
+        serializedVersion: 2
+        x: 519
+        y: 691
+        width: 110
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_19
+      rect:
+        serializedVersion: 2
+        x: 646
+        y: 692
+        width: 109
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_20
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 691
+        width: 114
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_21
+      rect:
+        serializedVersion: 2
+        x: 902
+        y: 691
+        width: 106
+        height: 87
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_6
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 571
+        width: 115
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_7
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 583
+        width: 108
+        height: 87
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_8
+      rect:
+        serializedVersion: 2
+        x: 279
+        y: 596
+        width: 108
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_9
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 590
+        width: 106
+        height: 85
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_10
+      rect:
+        serializedVersion: 2
+        x: 519
+        y: 583
+        width: 105
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_11
+      rect:
+        serializedVersion: 2
+        x: 639
+        y: 583
+        width: 106
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_12
+      rect:
+        serializedVersion: 2
+        x: 765
+        y: 591
+        width: 127
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_13
+      rect:
+        serializedVersion: 2
+        x: 908
+        y: 591
+        width: 116
+        height: 90
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_48
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 477
+        width: 101
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_49
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 480
+        width: 101
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_1
+      rect:
+        serializedVersion: 2
+        x: 281
+        y: 484
+        width: 94
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_2
+      rect:
+        serializedVersion: 2
+        x: 388
+        y: 481
+        width: 100
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_3
+      rect:
+        serializedVersion: 2
+        x: 507
+        y: 481
+        width: 111
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_4
+      rect:
+        serializedVersion: 2
+        x: 638
+        y: 481
+        width: 115
+        height: 85
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_5
+      rect:
+        serializedVersion: 2
+        x: 769
+        y: 481
+        width: 123
+        height: 90
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_50
+      rect:
+        serializedVersion: 2
+        x: 908
+        y: 494
+        width: 106
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_40
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 371
+        width: 107
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_41
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 381
+        width: 96
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_42
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 380
+        width: 106
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_43
+      rect:
+        serializedVersion: 2
+        x: 388
+        y: 379
+        width: 110
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_44
+      rect:
+        serializedVersion: 2
+        x: 509
+        y: 369
+        width: 103
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_45
+      rect:
+        serializedVersion: 2
+        x: 642
+        y: 381
+        width: 105
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_46
+      rect:
+        serializedVersion: 2
+        x: 786
+        y: 386
+        width: 96
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_47
+      rect:
+        serializedVersion: 2
+        x: 908
+        y: 386
+        width: 106
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_38
+      rect:
+        serializedVersion: 2
+        x: 777
+        y: 278
+        width: 108
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: cars_black_lvl_39
+      rect:
+        serializedVersion: 2
+        x: 903
+        y: 277
+        width: 111
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
     outline: []
     physicsShape: []
-    bones: []
-    spriteID: 234772ff2b92d0945911b4badd852b53
-    vertices: []
-    indices: 
-    edges: []
-    weights: []
   spritePackingTag: 
-  pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

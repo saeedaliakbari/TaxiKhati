@@ -16,7 +16,7 @@ public class CafeIntent : MonoBehaviour
     void Start()
     {
 #if UNITY_EDITOR
-        //Debug.Log("UNITY_EDITOR bundleCodeVersion:" + UnityEditor.PlayerSettings.Android.bundleVersionCode);
+        Debug.Log("UNITY_EDITOR bundleCodeVersion:" + UnityEditor.PlayerSettings.Android.bundleVersionCode);
         bundleCodeVersion = UnityEditor.PlayerSettings.Android.bundleVersionCode;
 #endif
 #if UNITY_ANDROID && !UNITY_EDITOR
@@ -90,7 +90,7 @@ public class CafeIntent : MonoBehaviour
                 bundle = int.Parse(jsonBooks[0][1].ToString());
                 version = jsonBooks[0][2].ToString();
                 forceUpdate = int.Parse(jsonBooks[0][3].ToString());
-                //Debug.Log("bundle: " + bundle + " forceUpdate: " + forceUpdate);
+                Debug.Log("bundle: " + bundle + " forceUpdate: " + forceUpdate);
                 if (bundle > bundleCodeVersion)
                 {
                     panelUpdate.SetActive(true);

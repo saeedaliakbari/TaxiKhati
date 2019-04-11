@@ -888,7 +888,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
@@ -37956,8 +37956,8 @@ MonoBehaviour:
   txtCoin: {fileID: 1896488206}
   btnDouble: {fileID: 1999449800}
   btnThird: {fileID: 2101536174}
-  animPanel: {fileID: 0}
-  CoinAnimator: {fileID: 0}
+  animPanel: {fileID: 769815152}
+  CoinAnimator: {fileID: 1228418795}
 --- !u!95 &769815152
 Animator:
   serializedVersion: 3
@@ -54027,6 +54027,7 @@ GameObject:
   - component: {fileID: 1085018827}
   - component: {fileID: 1085018828}
   - component: {fileID: 1085018829}
+  - component: {fileID: 1085018830}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -54225,7 +54226,7 @@ MonoBehaviour:
   batchPlugin: {fileID: 1231707831}
   guideManager: {fileID: 905291734}
   settingPanel: {fileID: 1085018828}
-  offlineGiftCar: {fileID: 0}
+  offlineGiftCar: {fileID: 1085018830}
   cafeIntent: {fileID: 987241135}
   audioSourceCore: {fileID: 762322314}
   audioSourceCoreFast: {fileID: 1020187694}
@@ -54426,7 +54427,57 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 938d30b3863d8594a9cef0fb03790d62, type: 3}
   - {fileID: 21300000, guid: 488f0b85ef99ba741ae4fea58ad0c725, type: 3}
   - {fileID: 21300000, guid: dc98d32e904a99b4a936cae142ec055e, type: 3}
-  inActiveCarWithNumber: []
+  inActiveCarWithNumber:
+  - {fileID: 21300068, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300070, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300072, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300074, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300076, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300048, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300050, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300052, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300054, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300056, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300058, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300060, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300062, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300032, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300034, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300036, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300038, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300040, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300042, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300044, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300046, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300016, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300018, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300020, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300024, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300022, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300026, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300028, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300030, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300000, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300002, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300004, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300006, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300008, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300010, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300012, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300014, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300096, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300098, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300080, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300082, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300084, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300086, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300088, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300090, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300092, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300094, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300064, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300066, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
+  - {fileID: 21300078, guid: a88e28a9628ed3248bb6d0b37c220a44, type: 3}
   earning:
   - 26
   - 53
@@ -54634,6 +54685,7 @@ MonoBehaviour:
   - 2200
   lastSalableLevel: 01000000020000000300000003000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f000000100000001100000012000000130000001400000015000000160000001700000018000000190000001a0000001b0000001c0000001d0000001e0000001f000000200000002100000022000000230000002400000025000000260000002700000028000000290000002a0000002b0000002c0000002d0000002e0000002f00000030000000
   lastSalableCoreLevel: 0100000001000000010000000100000001000000010000000100000001000000010000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f000000100000001100000012000000130000001400000015000000160000001700000018000000190000001a0000001b0000001c0000001d0000001e0000001f00000020000000210000002200000023000000240000002500000026000000270000002800000029000000
+  openLevel: 010000000200000003000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f000000100000001100000012000000130000001400000015000000160000001700000018000000190000001a0000001b0000001c0000001d0000001e0000001f000000200000002100000022000000230000002400000025000000260000002700000028000000290000002a0000002b0000002c0000002d0000002e0000002f0000003000000031000000320000000000000000000000
   XpBarTranform: {fileID: 1843249951}
 --- !u!114 &1085018824
 MonoBehaviour:
@@ -54821,6 +54873,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   txtValue: {fileID: 1397339782}
+--- !u!114 &1085018830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1085018821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 051ea3864df61f844aaa39377240f225, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 1085018823}
 --- !u!1 &1087389257
 GameObject:
   m_ObjectHideFlags: 0
@@ -57890,7 +57954,7 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 1152575610}
   m_TextComponent: {fileID: 1633176900}
-  m_Placeholder: {fileID: 1175476639}
+  m_Placeholder: {fileID: 0}
   m_ContentType: 0
   m_InputType: 0
   m_AsteriskChar: 42
@@ -71227,7 +71291,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 3}
     m_FontSize: 0
     m_FontStyle: 0
     m_BestFit: 0
@@ -99195,6 +99259,16 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 114600288565265224, guid: 262b238c2615a334caaae9abf30a0e0a,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2074816524}
+    - target: {fileID: 114600288565265224, guid: 262b238c2615a334caaae9abf30a0e0a,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1939709794}
     - target: {fileID: 114376260073009506, guid: 262b238c2615a334caaae9abf30a0e0a,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -99215,16 +99289,6 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1513628838}
-    - target: {fileID: 114600288565265224, guid: 262b238c2615a334caaae9abf30a0e0a,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 2074816524}
-    - target: {fileID: 114600288565265224, guid: 262b238c2615a334caaae9abf30a0e0a,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 1939709794}
     - target: {fileID: 1403940563376342, guid: 262b238c2615a334caaae9abf30a0e0a, type: 2}
       propertyPath: m_Name
       value: Car1
@@ -99234,46 +99298,6 @@ Prefab:
       propertyPath: controller
       value: 
       objectReference: {fileID: 1085018823}
-    - target: {fileID: 95298872609688446, guid: 262b238c2615a334caaae9abf30a0e0a,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 95330474467802896, guid: 262b238c2615a334caaae9abf30a0e0a,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 95980339021638972, guid: 262b238c2615a334caaae9abf30a0e0a,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114214604301207684, guid: 262b238c2615a334caaae9abf30a0e0a,
-        type: 2}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114214604301207684, guid: 262b238c2615a334caaae9abf30a0e0a,
-        type: 2}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114214604301207684, guid: 262b238c2615a334caaae9abf30a0e0a,
-        type: 2}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224753248193654462, guid: 262b238c2615a334caaae9abf30a0e0a,
-        type: 2}
-      propertyPath: m_LocalScale.x
-      value: 0.65
-      objectReference: {fileID: 0}
-    - target: {fileID: 224753248193654462, guid: 262b238c2615a334caaae9abf30a0e0a,
-        type: 2}
-      propertyPath: m_LocalScale.y
-      value: 0.65
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 262b238c2615a334caaae9abf30a0e0a, type: 2}
   m_IsPrefabParent: 0
@@ -108507,7 +108531,7 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 2074769219}
   m_TextComponent: {fileID: 121977547}
-  m_Placeholder: {fileID: 1034003909}
+  m_Placeholder: {fileID: 0}
   m_ContentType: 0
   m_InputType: 0
   m_AsteriskChar: 42
@@ -110232,28 +110256,6 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 769815152}
-        m_MethodName: Play
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Close
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1085018823}
-        m_MethodName: Close
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 769815147}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
