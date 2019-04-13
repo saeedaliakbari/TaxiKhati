@@ -10,7 +10,7 @@ public class OfflineEraning : MonoBehaviour
     [HideInInspector]
     public TrimNumberText txtCoin;
     public Button btnDouble, btnThird;
-    public Animator animPanel,CoinAnimator;
+    public Animator animPanel, CoinAnimator;
     private double value;
     public void ShowEarning(int time)
     {
@@ -77,49 +77,23 @@ public class OfflineEraning : MonoBehaviour
 
     }
 
-    public void CounterCoin(double Earned,Text coinText)
+    public void CounterCoin(double earned, double firstCoin, TrimNumberText coinText)
     {
-        StartCoroutine(counterCoinIEnumerator(Earned,coinText));
+        StartCoroutine(counterCoinIEnumerator(earned, firstCoin,coinText));
     }
 
-    public IEnumerator counterCoinIEnumerator(double Earned,Text coinText)
+    public IEnumerator counterCoinIEnumerator(double earned, double firstCoin, TrimNumberText coinText)
     {
-       yield return new WaitForSeconds(0f);
-       for (int i = 0; i < 10; i++)
-       {
-           if (Earned<1000)
-           {
-               
-           }
-           else if (Earned < 100000)
-           {
-               
-           }
-           else if (Earned < 10000000)
-           {
 
-           }
-           else if (Earned < 1000000000)
-           {
-
-           }
-           else if (Earned < 100000000000)
-           {
-
-           }
-           else if (Earned < 10000000000000)
-           {
-
-           }
-           else if (Earned < 1000000000000000)
-           {
-
-           }
-           else if (Earned < 100000000000000000)
-           {
-
-           }
-
+        double counter = (double)(earned / Random.Range(103, 109));
+        double counterCoin = firstCoin;
+        for (int i = 0; i < 103; i++)
+        {
+            counterCoin +=counter;
+            coinText.text = "" + counterCoin;
+            yield return new WaitForSeconds(0.01f);
         }
+
+        coinText.text = "" + (firstCoin + earned);
     }
 }
