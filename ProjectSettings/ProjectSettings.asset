@@ -162,10 +162,10 @@ PlayerSettings:
   applicationIdentifier:
     Android: ir.balootgames.taxi
   buildNumber: {}
-  AndroidBundleVersionCode: 24
+  AndroidBundleVersionCode: 32
   AndroidMinSdkVersion: 16
   AndroidTargetSdkVersion: 0
-  AndroidPreferredInstallLocation: 1
+  AndroidPreferredInstallLocation: 0
   aotOptions: 
   stripEngineCode: 1
   iPhoneStrippingLevel: 0
@@ -245,7 +245,7 @@ PlayerSettings:
   AndroidTargetDevice: 3
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: E:/Baloot Games/TaxiKhati/TaxiKhati/taxikhati.keystore
+  AndroidKeystoreName: E:/TaxiKhati/taxikhati.keystore
   AndroidKeyaliasName: taxikhati
   AndroidTVCompatibility: 1
   AndroidIsGame: 1

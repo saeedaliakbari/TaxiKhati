@@ -59,7 +59,7 @@ public class SpecialOffer : MonoBehaviour
         {
             if (Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m_special"))
             {
-                Manager.SetActionTime("5x_earning_for_1m_special", (Manager.GetActionTime("5x_earning_for_1m_special") + 60 + Manager.GetCurrentTime()));
+                Manager.SetActionTime("5x_earning_for_1m_special", (Manager.GetActionTime("5x_earning_for_1m_special") + 60));
             }
             else {
                 Manager.SetActionTime("5x_earning_for_1m_special", (60 + Manager.GetCurrentTime()));
