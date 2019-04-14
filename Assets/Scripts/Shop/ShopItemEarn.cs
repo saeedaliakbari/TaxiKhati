@@ -27,9 +27,12 @@ public class ShopItemEarn : MonoBehaviour
             itemsEarn[i].imgLock.gameObject.SetActive(true);
             //Debug.Log("upIncomeLevel i= " + i + " > Is Lock");
         }
-        itemsEarn[levelEarn].btnBuy.gameObject.SetActive(true);
-        itemsEarn[levelEarn].imgActive.gameObject.SetActive(false);
-        itemsEarn[levelEarn].imgLock.gameObject.SetActive(false);
+        if (levelEarn < 10)
+        {
+            itemsEarn[levelEarn].btnBuy.gameObject.SetActive(true);
+            itemsEarn[levelEarn].imgActive.gameObject.SetActive(false);
+            itemsEarn[levelEarn].imgLock.gameObject.SetActive(false);
+        }
         //Debug.Log("upIncomeLevel i= " + levelEarn + " > Is Buy");
     }
     public void BtnUpEarnLine(float price)
@@ -39,6 +42,7 @@ public class ShopItemEarn : MonoBehaviour
             ObscuredPrefs.SetDouble("token", ObscuredPrefs.GetDouble("token") - price);
             ObscuredPrefs.SetInt("upIncomeLevel", ObscuredPrefs.GetInt("upIncomeLevel", 0) + 1);
             int level = ObscuredPrefs.GetInt("upIncomeLevel", 0);
+            Debug.Log("level off is update : " + level + " off= " + upIncome[level - 1]);
             ObscuredPrefs.SetFloat("incomeLine", upIncome[level - 1]);
             runSlotManager.UpdateEarningSpeedText();
             StartCoroutine(controller.IEEarningRatio());

@@ -150,8 +150,8 @@ public class WheelFortuneScript : MonoBehaviour
     }
     private void ManageGift(int itemNumber)
     {
+        itemNumber = 1;
         audioGift.Play();
-        //itemNumber = 2;
         videoAds.controller.panelMessage.SetActive(true);
         if (itemNumber == 0)
         {
@@ -164,7 +164,8 @@ public class WheelFortuneScript : MonoBehaviour
         {
             if (Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m"))
             {
-                Manager.SetActionTime("5x_earning_for_1m", (Manager.GetActionTime("5x_earning_for_1m") + 60 + Manager.GetCurrentTime()));
+                Debug.Log(Manager.GetActionTime("5x_earning_for_1m")+">" + 60+">" + Manager.GetCurrentTime());
+                Manager.SetActionTime("5x_earning_for_1m", (Manager.GetActionTime("5x_earning_for_1m") + 60));
             }
             else {
                 Manager.SetActionTime("5x_earning_for_1m", (60 + Manager.GetCurrentTime()));

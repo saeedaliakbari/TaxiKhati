@@ -1,6 +1,7 @@
 ﻿using LitJson;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 public class CafeIntent : MonoBehaviour
 {
@@ -28,6 +29,7 @@ public class CafeIntent : MonoBehaviour
         Debug.Log("UNITY_ANDROID bundleCodeVersion:" + bundleCodeVersion);
 #endif
         StartCoroutine(IEGetApp());
+        GetData();
     }
     public void btnAre()
     {
@@ -76,12 +78,51 @@ public class CafeIntent : MonoBehaviour
         currentActivity.Call("startActivity", intentObject);
 
     }
+    private void GetData()
+    {
+        Debug.Log("start Get Data");
+        UnityWebRequest www = UnityWebRequest.Get(strLinkGetInfo);
+        StartCoroutine(WaitForRequestLoad(www));
+    }
+    private IEnumerator WaitForRequestLoad(UnityWebRequest www)
+    {
+        using (www)
+        {
+            yield return www.SendWebRequest();
+            Debug.Log("text :" + www.downloadHandler.text + " error: " + www.error + "/" + www.isHttpError + "/" + www.isNetworkError);
+            if (www.isHttpError)
+            {
+                // HttpError
+                Debug.Log("HttpError: " + www.isHttpError);
+            }
+            else if (www.isNetworkError)
+            {
+                // THIS IS WHERE THE PROBLEM OCCURS
+                // www.error = "Unable to complete SSL connection"
+                Debug.Log("NetworkError: " + www.isNetworkError);
+            }
+            else if (www.error != null)
+            {
+                // Double check no error messages
+                Debug.Log("error: " + www.error);
+            }
+            else
+            {
+                // EVERYTHING WORKS FINE, PROCEED NORMALLY
+                Debug.Log("text :" + www.downloadHandler.text);
+            }
+        }
 
+    }
     IEnumerator IEGetApp()
     {
-        WWWForm wwwForm = new WWWForm();
-        WWW www = new WWW(strLinkGetInfo, wwwForm);
+        Debug.Log("start IEGet App");
+        //yield return new WaitForSeconds(5);
+        //WWWForm wwwForm = new WWWForm();
+        //wwwForm.AddField("id", 1);
+        WWW www = new WWW(strLinkGetInfo/*, wwwForm*/);
         yield return www;
+        Debug.Log("IEGETAPP: " + www.text + " > > " + www.error);
         if (www.error == null)
         {
             if (www.isDone)
@@ -105,6 +146,11 @@ public class CafeIntent : MonoBehaviour
                     }
                 }
             }
+        }
+        else
+        {
+            Debug.Log("retry get app info");
+            //StartCoroutine(IEGetApp());
         }
     }
     IEnumerator IESendComment()

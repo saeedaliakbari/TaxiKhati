@@ -48,6 +48,7 @@ public class UsersScripts : MonoBehaviour
             }
         }
     }
+
     #region Get Rank User
     public void GetRanking()
     {//رتبه شخص را میگیرد
@@ -76,6 +77,7 @@ public class UsersScripts : MonoBehaviour
         wwwForm.AddField("id", ObscuredPrefs.GetInt("userid", 0));
         WWW www = new WWW(strGetRankUser, wwwForm);
         yield return www;
+        Debug.Log(strGetRankUser + " >>" + www.text + " ? " + www.error);
         if (www.error == null)
         {
             if (www.isDone)

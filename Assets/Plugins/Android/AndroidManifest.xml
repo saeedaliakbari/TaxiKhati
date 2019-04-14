@@ -1,46 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="ir.balootgames.taxi"
-          xmlns:tools="http://schemas.android.com/tools"
-          android:installLocation="auto"
-          android:versionName="1.0.1"
-          android:versionCode="19">
-  <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="26" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="ir.balootgames.taxi" xmlns:tools="http://schemas.android.com/tools" android:installLocation="auto" android:versionName="1.0.1" android:versionCode="24">
+  <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="28" />
   <supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" android:xlargeScreens="true" android:anyDensity="true" />
   <uses-permission android:name="android.permission.INTERNET" />
   <!--<uses-permission android:name="android.permission.GET_ACCOUNTS" />-->
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <!--Batch-->
-  <permission android:name="ir.balootgames.taxi.permission.C2D_MESSAGE" android:protectionLevel="signature"/>
-  <uses-permission android:name="ir.balootgames.taxi.permission.C2D_MESSAGE"/>
+  <permission android:name="ir.balootgames.taxi.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+  <uses-permission android:name="ir.balootgames.taxi.permission.C2D_MESSAGE" />
   <uses-permission android:name="android.permission.WAKE_LOCK" />
   <uses-permission android:name="android.permission.VIBRATE" />
-  <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+  <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
   <!--End Batch-->
   <uses-permission android:name="com.farsitel.bazaar.permission.PAY_THROUGH_BAZAAR" />
   <uses-permission android:name="android.permission.READ_PHONE_STATE" />
   <!--<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />-->
-  <application  android:debuggable="true"
-          android:icon="@drawable/app_icon"
-          android:label="@string/app_name"
-          android:supportsRtl="true"
-          android:allowBackup="false"
-          android:fullBackupOnly="false"
-          android:theme="@style/UnityThemeSelector">
-    <!--local notification--><!--
+  <application tools:replace="android:allowBackup" android:debuggable="true" android:icon="@drawable/app_icon" android:label="@string/app_name" android:supportsRtl="true" android:allowBackup="false" android:fullBackupOnly="false" android:theme="@style/UnityThemeSelector">
+    <!--local notification-->
+    <!--
     <receiver android:name="ir.balootgames.taxi.Controller" />
     <receiver android:name="ir.balootgames.taxi.RebootManager" >
         <intent-filter>
           <action android:name="android.intent.action.BOOT_COMPLETED" />
         </intent-filter>
     </receiver>
-    --><!--end local notificaiton-->
-    <activity android:name="ir.unity3d.cafebazarplugin.GateWay" android:theme="@android:style/Theme.NoDisplay"></activity>
-
+    -->
+    <!--end local notificaiton-->
+    <activity android:name="ir.unity3d.cafebazarplugin.GateWay" android:theme="@android:style/Theme.NoDisplay">
+    </activity>
     <activity android:name="ir.tapsell.sdk.TapsellAdActivity" android:configChanges="keyboardHidden|orientation|screenSize" />
-
-    <activity android:name="com.batch.android.unity.BatchNativeActivity" android:launchMode="singleTask"
-              android:label="@string/app_name" android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen">
+    <activity android:name="com.batch.android.unity.BatchNativeActivity" android:launchMode="singleTask" android:label="@string/app_name" android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
@@ -58,11 +47,7 @@
     </activity>
     <activity android:name="com.unity3d.player.VideoPlayer" android:label="@string/app_name" android:screenOrientation="behind" android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen">
     </activity>
-
-    <activity android:name="com.unity3d.player.UnityPlayerNativeActivity"
-                 android:launchMode="singleTask"
-                 android:label="@string/app_name"
-                 android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen">
+    <activity android:name="com.unity3d.player.UnityPlayerNativeActivity" android:launchMode="singleTask" android:label="@string/app_name" android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen">
       <meta-data android:name="unityplayer.ForwardNativeEventsToDalvik" android:value="true" />
     </activity>
     <!--Batch-->
@@ -75,18 +60,14 @@
       </intent-filter>
     </receiver>
     <!-- Batch Ads activity -->
-    <activity android:name="com.batch.android.AdActivity"
-        android:theme="@style/com.batch.android.AdActivityTheme" />
+    <activity android:name="com.batch.android.AdActivity" android:theme="@style/com.batch.android.AdActivityTheme" />
     <!-- For Google Play Services -->
-    <meta-data
-        android:name="com.google.android.gms.version"
-        android:value="@integer/google_play_services_version" />
+    <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
     <!--End Batch-->
     <activity android:name="com.bazaar.BazaarIABProxyActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
     <meta-data android:name="billing.service" android:value="bazaar.BazaarIabService" />
-
   </application>
-  <uses-permission android:name="android.permission.INTERNET" />
+  <!--<uses-permission android:name="android.permission.INTERNET" />-->
   <!--<uses-permission android:name="android.permission.GET_ACCOUNTS" />-->
   <!--<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />-->
   <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="26" />
