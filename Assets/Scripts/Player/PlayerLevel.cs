@@ -9,6 +9,7 @@ public class PlayerLevel : MonoBehaviour
     public Image imgProgress;
     public List<Levels> levelsInfo;
     public GameObject btnRank, btnQuest, btnWheel, btnTimeBoost, btnBoosters;
+    public GameObject rankParticle, questParticle, wheelParticle, timeBoostParticle, boostersParticle;
     public Controller controller;
     public Animator animPlayerLevel;
     public Move myMove;
@@ -136,24 +137,44 @@ public class PlayerLevel : MonoBehaviour
             if (level > 6)
             {
                 btnRank.SetActive(true);
+                if (ObscuredPrefs.GetBool("UnlockedRank", true))
+                {
+                    rankParticle.SetActive(true);
+                }
             }
             if (level > 7)
             {
                 btnQuest.SetActive(true);
+                if (ObscuredPrefs.GetBool("UnlockedQuest", true))
+                {
+                    questParticle.SetActive(true);
+                }
             }
             if (level > 8)
             {
                 btnWheel.SetActive(true);
+                if (ObscuredPrefs.GetBool("UnlockedWheel", true))
+                {
+                    wheelParticle.SetActive(true);
+                }
             }
 
             if (level > 9)
             {
                 btnTimeBoost.SetActive(true);
+                if (ObscuredPrefs.GetBool("UnlockedTimeBoost", true))
+                {
+                    timeBoostParticle.SetActive(true);
+                }
             }
 
             if (level > 10)
             {
                 btnBoosters.SetActive(true);
+                if (ObscuredPrefs.GetBool("UnlockedBoosters", true))
+                {
+                    boostersParticle.SetActive(true);
+                }
             }
         }
         else
@@ -162,54 +183,87 @@ public class PlayerLevel : MonoBehaviour
             if (level == 7)
             {
                 myMove.num = 0;
-                //myMove.target = btnRank.transform;
                 myMove.TargetObj = btnRank;
                 NewIteamPanel.SetActive(true);
                 moveObj.SetActive(true);
-                //btnRank.SetActive(true);
+                rankParticle.SetActive(true);
             }
             if (level == 8)
             {
                 myMove.num = 1;
-                //myMove.target = btnQuest.transform;
                 myMove.TargetObj = btnQuest;
                 NewIteamPanel.SetActive(true);
                 moveObj.SetActive(true);
-                //btnQuest.SetActive(true);
+                questParticle.SetActive(true);
             }
             if (level == 9)
             {
                 myMove.num = 2;
-                //myMove.target = btnWheel.transform;
                 myMove.TargetObj = btnWheel;
                 NewIteamPanel.SetActive(true);
-
                 moveObj.SetActive(true);
-                //btnWheel.SetActive(true);
-                //
+                wheelParticle.SetActive(true);
             }
             if (level == 10)
             {
                 myMove.num = 3;
-                //myMove.target = btnTimeBoost.transform;
                 myMove.TargetObj = btnTimeBoost;
                 NewIteamPanel.SetActive(true);
                 moveObj.SetActive(true);
-                //btnTimeBoost.SetActive(true);
+                timeBoostParticle.SetActive(true);
             }
             if (level == 11)
             {
                 myMove.num = 4;
-                //myMove.target = btnBoosters.transform;
                 myMove.TargetObj = btnBoosters;
-                //btnBoosters.SetActive(true);
                 NewIteamPanel.SetActive(true);
                 moveObj.SetActive(true);
+                boostersParticle.SetActive(true);
             }
 
         }
     }
+
+    public void disableBtnParticle(int num)
+    {
+        if (num == 0)
+        {
+            ObscuredPrefs.SetBool("UnlockedRank", false);
+            rankParticle.SetActive(false);
+
+        }
+        if (num == 1)
+        {
+            ObscuredPrefs.SetBool("UnlockedQuest", false);
+            questParticle.SetActive(false);
+
+        }
+        if (num == 2)
+        {
+            ObscuredPrefs.SetBool("UnlockedWheel", false);
+            wheelParticle.SetActive(false);
+
+        }
+
+        if (num == 3)
+        {
+            ObscuredPrefs.SetBool("UnlockedTimeBoost", false);
+            timeBoostParticle.SetActive(false);
+        }
+
+        if (num == 4)
+        {
+            ObscuredPrefs.SetBool("UnlockedBoosters", false);
+            boostersParticle.SetActive(false);
+        }
+    }
 }
+
+
+
+
+
+
 [System.Serializable]
 public class Levels
 {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public class ParkingPlace : MonoBehaviour
 {
-    public Animator animLight;
+    public Animator animLight,UnlockPlace;
     public GameObject objBack;
     public MoveXP XPTrail;
     public GameObject helpPlace;
@@ -41,5 +41,19 @@ public class ParkingPlace : MonoBehaviour
     public int GetPlaceIndex()
     {//عدد فرزندی را برمیگرداند
         return transform.GetSiblingIndex();//یعنی از نظر فرزندی برای پدر خود عدد چند است
+    }
+
+
+    public void UnlockAnimation()
+    {
+        StartCoroutine(UnlockParkingIEnumerator());
+    }
+
+    public IEnumerator UnlockParkingIEnumerator()
+    {
+        yield return new WaitForSeconds(0.1f);
+        UnlockPlace.Play("Open");
+        yield return new WaitForSeconds(0.11f);
+        animLight.Play("Open");
     }
 }

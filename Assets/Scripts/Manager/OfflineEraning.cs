@@ -35,12 +35,14 @@ public class OfflineEraning : MonoBehaviour
 
     public void ClaimClick()
     {
-        ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) + value);
-        ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 0) + value);
-        txtCoin.text = ObscuredPrefs.GetDouble("coin", 5000).ToString("0.##");
+       
+        //ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 0) + value);
+        //txtCoin.text = ObscuredPrefs.GetDouble("coin", 5000).ToString("0.##");
         controller.CloseOffEarning();
         controller.SetText();
         CoinAnimator.Play("earn");
+        CounterCoin(value, ObscuredPrefs.GetDouble("coin", 5000),txtCoin);
+        ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) + value);
     }
     public void ThirdClick()
     {

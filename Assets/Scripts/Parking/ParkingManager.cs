@@ -274,6 +274,7 @@ public class ParkingManager : MonoBehaviour
         place.transform.localScale = Vector3.one * 0.6f;
         places.Add(place);//به لیست پارکینگ ها اضافه ش میکنیم
         placesPosition.Add(place.gameObject);
+        place.UnlockAnimation();
         int numPlacesVIP = ObscuredPrefs.GetInt("num_of_places_vip", 0);
         if (numPlacesVIP == 0 && places.Count > 4 && VipPlace == false)
         {
