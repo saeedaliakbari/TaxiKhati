@@ -593,6 +593,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animLight: {fileID: 95461217237377144}
+  UnlockPlace: {fileID: 95180485025110894}
   objBack: {fileID: 1726971609944748}
   XPTrail: {fileID: 114540765781382306}
   helpPlace: {fileID: 1689134278616438}
