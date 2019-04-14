@@ -86,16 +86,14 @@ public class OfflineEraning : MonoBehaviour
 
     public IEnumerator counterCoinIEnumerator(double earned, double firstCoin, TrimNumberText coinText)
     {
-
-        double counter = (double)(earned / Random.Range(103, 109));
+        double counter = (double)(earned / 100);
         double counterCoin = firstCoin;
-        for (int i = 0; i < 103; i++)
+        for (int i = 0; i < 100; i++)
         {
             counterCoin +=counter;
             coinText.text = "" + counterCoin;
             yield return new WaitForSeconds(0.01f);
         }
-
-        coinText.text = "" + (firstCoin + earned);
+        coinText.text = (firstCoin + earned).ToString();
     }
 }

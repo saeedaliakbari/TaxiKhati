@@ -26,11 +26,19 @@ public class GiftBox : MonoBehaviour
     public void StartAutoOpen(float delay)//بعد از 3 ثانیه باکس خودش باز شود
     {
         //Debug.Log("12");
-        Timer.Schedule(this, delay, () =>
+        try
         {
-            //Debug.Log("13");
-            OnMouseUp();
-        });
+            Timer.Schedule(this, delay, () =>
+            {
+                //Debug.Log("13");
+                OnMouseUp();
+            });
+        }
+        catch
+        {
+            Debug.Log("Start Auto Open Gift Box Faild");
+        }
+
     }
 
     public void OpenBox()//باز شدن باکس 

@@ -258,15 +258,23 @@ public class Car : MonoBehaviour
     }
     public void FinishRound()
     {
-        audioSource.outputAudioMixerGroup = audioMixerKhatePayan;
-        audioSource.clip = khatePayan;
-        audioSource.Play();
-        int index = ObscuredPrefs.GetInt("unlocked_airline", 1) - 1;//لول آخرین ماشین باز شده را می دهد
-        float ratio = controller.EarningRatio();
-        ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) + (double)(earnings * ratio));
-        ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 5000) + (double)(earnings * ratio));
-        controller.SetText();
-        controller.slotManager.ShowGoalAnimation();//وقتی به نقطه پایان می رسد
+        try
+        {
+            audioSource.outputAudioMixerGroup = audioMixerKhatePayan;
+            audioSource.clip = khatePayan;
+            audioSource.Play();
+            int index = ObscuredPrefs.GetInt("unlocked_airline", 1) - 1;//لول آخرین ماشین باز شده را می دهد
+            float ratio = controller.EarningRatio();
+            ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) + (double)(earnings * ratio));
+            ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 5000) + (double)(earnings * ratio));
+            controller.SetText();
+            controller.slotManager.ShowGoalAnimation();//وقتی به نقطه پایان می رسد
+        }
+        catch
+        {
+            Debug.Log("Error in Finish Round");
+        }
+
     }
 
 }
