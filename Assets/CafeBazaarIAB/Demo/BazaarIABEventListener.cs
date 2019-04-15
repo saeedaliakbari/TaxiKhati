@@ -110,7 +110,7 @@ public class BazaarIABEventListener : MonoBehaviour
         Debug.Log(string.Format("queryInventorySucceededEvent. total purchases: {0}, total skus: {1}", purchases.Count, skus.Count));
         for (int i = 0; i < purchases.Count; ++i)
         {
-            if (purchases[i].ProductId == iapCafeBazar.skus[2])
+            if (purchases[i].ProductId == iapCafeBazar.skus[6])
             {
                 //بقیه اطلاعات مربوط به اشتراک وارد شود
                 ObscuredPrefs.SetInt("num_of_places_vip", 2);//added 2 parking
@@ -125,10 +125,10 @@ public class BazaarIABEventListener : MonoBehaviour
                 iapCafeBazar.controller.GiftDaily();
                 iapCafeBazar.controller.btnVip.SetActive(false);
             }
-            //else if (purchases[i].ProductId == iapCafeBazar.skus[7])
-            //{
-            //    ObscuredPrefs.SetInt("removeAds", 1);//remove ads in shop
-            //}
+            else if (purchases[i].ProductId == iapCafeBazar.skus[7])
+            {
+                ObscuredPrefs.SetInt("removeAds", 1);//remove ads in shop
+            }
             else
             {
                 BazaarIAB.consumeProduct(purchases[i].ProductId);

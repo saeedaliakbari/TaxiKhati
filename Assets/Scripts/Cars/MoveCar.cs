@@ -11,6 +11,8 @@ public class MoveCar : MonoBehaviour
     public bool returning = false;
     [HideInInspector]
     public bool getStart;
+    public GameObject[] objNitro;
+
     // Use this for initialization
     //void Start()
     //{
@@ -21,7 +23,22 @@ public class MoveCar : MonoBehaviour
     {
         getStart = true;
         float ratio = car.controller.SpeedRatio();
-        //Debug.Log("ratio: " + ratio);
+        float speed = Manager.GetCurrentTime() < Manager.GetActionTime("speed_x2") ? 2 : 0;
+        speed = speed + (Manager.GetCurrentTime() < Manager.GetActionTime("2x_speed_for_150s") ? 2 : 0);
+        if (ratio > 0)
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                objNitro[i].SetActive(true);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                objNitro[i].SetActive(false);
+            }
+        }
         Hashtable hash = iTween.Hash("path", iTweenPath.GetPath("Road"), "orienttopath", true, "speed", car.speed * ratio, "easetype", iTween.EaseType.linear,
             "oncomplete", "CompleteMoving");
         start = Time.realtimeSinceStartup;

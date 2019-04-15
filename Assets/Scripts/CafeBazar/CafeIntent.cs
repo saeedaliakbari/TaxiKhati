@@ -29,7 +29,9 @@ public class CafeIntent : MonoBehaviour
         Debug.Log("UNITY_ANDROID bundleCodeVersion:" + bundleCodeVersion);
 #endif
         StartCoroutine(IEGetApp());
-        GetData();
+        GetData(strLinkGetInfo);
+        //GetData("http://185.55.226.163/moshtary/TaxiKhati/getinfo.php");
+
     }
     public void btnAre()
     {
@@ -78,38 +80,38 @@ public class CafeIntent : MonoBehaviour
         currentActivity.Call("startActivity", intentObject);
 
     }
-    private void GetData()
+    private void GetData(string url)
     {
         Debug.Log("start Get Data");
-        UnityWebRequest www = UnityWebRequest.Get(strLinkGetInfo);
-        StartCoroutine(WaitForRequestLoad(www));
+        UnityWebRequest www = UnityWebRequest.Get(url);
+        StartCoroutine(WaitForRequestLoad(www,url));
     }
-    private IEnumerator WaitForRequestLoad(UnityWebRequest www)
+    private IEnumerator WaitForRequestLoad(UnityWebRequest www,string url)
     {
         using (www)
         {
             yield return www.SendWebRequest();
-            Debug.Log("text :" + www.downloadHandler.text + " error: " + www.error + "/" + www.isHttpError + "/" + www.isNetworkError);
+            Debug.Log(url + " text :" + www.downloadHandler.text + " error: " + www.error + "/" + www.isHttpError + "/" + www.isNetworkError);
             if (www.isHttpError)
             {
                 // HttpError
-                Debug.Log("HttpError: " + www.isHttpError);
+                Debug.Log(url + " HttpError: " + www.isHttpError);
             }
             else if (www.isNetworkError)
             {
                 // THIS IS WHERE THE PROBLEM OCCURS
                 // www.error = "Unable to complete SSL connection"
-                Debug.Log("NetworkError: " + www.isNetworkError);
+                Debug.Log(url + " NetworkError: " + www.isNetworkError);
             }
             else if (www.error != null)
             {
                 // Double check no error messages
-                Debug.Log("error: " + www.error);
+                Debug.Log(url + " error: " + www.error);
             }
             else
             {
                 // EVERYTHING WORKS FINE, PROCEED NORMALLY
-                Debug.Log("text :" + www.downloadHandler.text);
+                Debug.Log(url + " text :" + www.downloadHandler.text);
             }
         }
 
