@@ -277,6 +277,12 @@ MonoBehaviour:
   car: {fileID: 0}
   returning: 0
   getStart: 0
+  objNitro:
+  - {fileID: 1493901084022682}
+  - {fileID: 1493901084022682}
+  dodObjects:
+  - {fileID: 1825543381983986}
+  - {fileID: 1825543381983986}
 --- !u!198 &198719765937258982
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -3689,7 +3695,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 0
-  randomSeed: -2078142724
+  randomSeed: -1082009828
   InitialModule:
     serializedVersion: 3
     enabled: 1

@@ -277,6 +277,12 @@ MonoBehaviour:
   car: {fileID: 0}
   returning: 0
   getStart: 0
+  objNitro:
+  - {fileID: 1214971617064410}
+  - {fileID: 1214971617064410}
+  dodObjects:
+  - {fileID: 1060927978912120}
+  - {fileID: 1060927978912120}
 --- !u!198 &198377659367663078
 ParticleSystem:
   m_ObjectHideFlags: 1

@@ -12,6 +12,7 @@ public class MoveCar : MonoBehaviour
     [HideInInspector]
     public bool getStart;
     public GameObject[] objNitro;
+    public GameObject[] dodObjects;
 
     // Use this for initialization
     //void Start()
@@ -29,14 +30,38 @@ public class MoveCar : MonoBehaviour
         {
             for (int i = 0; i < 2; i++)
             {
-                objNitro[i].SetActive(true);
+                if (objNitro[i] != null)
+                {
+                    objNitro[i].SetActive(true);
+                }
+
+            }
+            for (int i = 0; i < 2; i++)
+            {
+                if (dodObjects[i] != null)
+                {
+                    dodObjects[i].SetActive(false);
+                }
+
             }
         }
         else
         {
             for (int i = 0; i < 2; i++)
             {
-                objNitro[i].SetActive(false);
+                if (objNitro[i] != null)
+                {
+                    objNitro[i].SetActive(false);
+                }
+
+            }
+            for (int i = 0; i < 2; i++)
+            {
+                if (dodObjects[i] != null)
+                {
+                    dodObjects[i].SetActive(true);
+                }
+
             }
         }
         Hashtable hash = iTween.Hash("path", iTweenPath.GetPath("Road"), "orienttopath", true, "speed", car.speed * ratio, "easetype", iTween.EaseType.linear,
