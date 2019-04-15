@@ -23732,7 +23732,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1766223939}
         m_MethodName: Play
@@ -27581,7 +27581,7 @@ Prefab:
     - target: {fileID: 114074173559242960, guid: 045eacde3e118804e9415d45a33640a7,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: test100
+      value: gemPack1
       objectReference: {fileID: 0}
     - target: {fileID: 224390736575398152, guid: 045eacde3e118804e9415d45a33640a7,
         type: 2}
@@ -33191,7 +33191,7 @@ Prefab:
     - target: {fileID: 114074173559242960, guid: 045eacde3e118804e9415d45a33640a7,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: consume1
+      value: gemPack3
       objectReference: {fileID: 0}
     - target: {fileID: 114505479754171484, guid: 045eacde3e118804e9415d45a33640a7,
         type: 2}
@@ -43600,7 +43600,7 @@ Prefab:
     - target: {fileID: 114074173559242960, guid: 045eacde3e118804e9415d45a33640a7,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: test200
+      value: gemPack2
       objectReference: {fileID: 0}
     - target: {fileID: 1593047036887880, guid: 045eacde3e118804e9415d45a33640a7, type: 2}
       propertyPath: m_IsActive
@@ -49649,22 +49649,47 @@ MonoBehaviour:
     fakeValueActive: 1
   skus:
   - currentCryptoKey: 4441
-    hiddenValue: 4000510047004500050004000400
+    hiddenValue: 5300510059006100550057005f000000
     inited: 1
-    fakeValue: test100
+    fakeValue: gemPack1
     fakeValueActive: 1
   - currentCryptoKey: 4441
-    hiddenValue: 4000510047004500060004000400
+    hiddenValue: 5300510059006100550057005f000300
     inited: 1
-    fakeValue: test200
+    fakeValue: gemPack2
     fakeValueActive: 1
   - currentCryptoKey: 4441
-    hiddenValue: 57005b005a0042004100590051000000
+    hiddenValue: 5300510059006100550057005f000200
     inited: 1
-    fakeValue: consume1
+    fakeValue: gemPack3
     fakeValueActive: 1
-  gem: 1e000000b4000000
-  amount: ac260000ecc20000
+  - currentCryptoKey: 4441
+    hiddenValue: 5300510059006100550057005f000500
+    inited: 1
+    fakeValue: gemPack4
+    fakeValueActive: 1
+  - currentCryptoKey: 4441
+    hiddenValue: 5300510059006100550057005f000400
+    inited: 1
+    fakeValue: gemPack5
+    fakeValueActive: 1
+  - currentCryptoKey: 4441
+    hiddenValue: 5300510059006100550057005f000700
+    inited: 1
+    fakeValue: gemPack6
+    fakeValueActive: 1
+  - currentCryptoKey: 4441
+    hiddenValue: 42005d004400
+    inited: 1
+    fakeValue: vip
+    fakeValueActive: 1
+  - currentCryptoKey: 4441
+    hiddenValue: 7a005b00750055004700
+    inited: 1
+    fakeValue: NoAds
+    fakeValueActive: 1
+  gem: 1e000000b4000000a4010000c0030000ca08000044160000
+  amount: ac260000ecc200003c860100dc0c0300bca00700dc410f00f0490200d0070000
   controller: {fileID: 1085018823}
 --- !u!4 &987241133
 Transform:

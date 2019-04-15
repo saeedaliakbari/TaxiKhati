@@ -12,7 +12,7 @@ public class BazaarIABEventListener : MonoBehaviour
     //public Text[] txtPrice, txtTitle;
     public IAPCafeBazar iapCafeBazar;
     private string[] str;
-    private string strInsertBuy = "https://balootvas.ir/balootvas/TaxiKhati/insertBuy.php";
+    private string strInsertBuy = "https://balootvas.ir/balootvas/TaxiKhati/insertBuyAntihack.php";
     private BazaarPurchase currentPurchase;
     //void Start()
     //{
@@ -227,7 +227,7 @@ public class BazaarIABEventListener : MonoBehaviour
             if (!result.isRefund) // اگر خرید از طرف کافه‌بازار برگشت داده نشده
             {
                 Debug.Log("purchase is not refund" + message);
-                if (currentPurchase.ProductId == iapCafeBazar.skus[2])
+                if (currentPurchase.ProductId == iapCafeBazar.skus[6])
                 {
                     GameAnalytics.NewBusinessEvent("IRR", 15000000, "VIP", currentPurchase.ProductId, "Store");
                     ObscuredPrefs.SetInt("num_of_places_vip", 2);
@@ -248,15 +248,15 @@ public class BazaarIABEventListener : MonoBehaviour
                     iapCafeBazar.controller.GiftDaily();
                     iapCafeBazar.controller.btnVip.SetActive(false);
                 }
-                //else if (currentPurchase.ProductId == iapCafeBazar.skus[7])
-                //{
-                //    GameAnalytics.NewBusinessEvent("IRR", 2000000, "No Ads", currentPurchase.ProductId, "Store");
-                //    ObscuredPrefs.SetInt("removeAds", 1);//remove ads in shop
-                //    iapCafeBazar.controller.panelMessage.SetActive(true);
-                //    iapCafeBazar.controller.txtPanelMessage.text = "تبلیغات بنري بازي حذف شد";
-                //    iapCafeBazar.controller.videoAds.panelNoAds.SetActive(false);
-                //    iapCafeBazar.controller.parkingManager.EnableCarInPark();
-                //}
+                else if (currentPurchase.ProductId == iapCafeBazar.skus[7])
+                {
+                    GameAnalytics.NewBusinessEvent("IRR", 2000000, "No Ads", currentPurchase.ProductId, "Store");
+                    ObscuredPrefs.SetInt("removeAds", 1);//remove ads in shop
+                    iapCafeBazar.controller.panelMessage.SetActive(true);
+                    iapCafeBazar.controller.txtPanelMessage.text = "تبلیغات بنري بازي حذف شد";
+                    iapCafeBazar.controller.videoAds.panelNoAds.SetActive(false);
+                    iapCafeBazar.controller.parkingManager.EnableCarInPark();
+                }
                 else {
                     iapCafeBazar.controller.panelWait.SetActive(true);
                     for (int i = 0; i < iapCafeBazar.skus.Length; i++)
@@ -330,16 +330,10 @@ public class BazaarIABEventListener : MonoBehaviour
     {
         //Debug.Log("start" + PersianDate(new DateTime(2019, 11, 30)));
         WWWForm wwwForm = new WWWForm();
-        wwwForm.AddField("date", PersianDate(DateTime.Now));
         wwwForm.AddField("packNo", packName);
         WWW www = new WWW(strInsertBuy, wwwForm);
         yield return www;
         //Debug.Log("END INSRT");
-    }
-    string PersianDate(DateTime DateTime1)
-    {
-        System.Globalization.PersianCalendar PersianCalendar1 = new System.Globalization.PersianCalendar();
-        return (PersianCalendar1.GetYear(DateTime1).ToString("0000") + "/" + PersianCalendar1.GetMonth(DateTime1).ToString("00") + "/" + PersianCalendar1.GetDayOfMonth(DateTime1).ToString("00"));
     }
     #endregion
 }

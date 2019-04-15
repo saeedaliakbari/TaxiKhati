@@ -77,7 +77,7 @@ public class UsersScripts : MonoBehaviour
         wwwForm.AddField("id", ObscuredPrefs.GetInt("userid", 0));
         WWW www = new WWW(strGetRankUser, wwwForm);
         yield return www;
-        Debug.Log(strGetRankUser + " >>" + www.text + " ? " + www.error);
+        //Debug.Log(strGetRankUser + " >>" + www.text + " ? " + www.error);
         if (www.error == null)
         {
             if (www.isDone)
@@ -168,7 +168,8 @@ public class UsersScripts : MonoBehaviour
                 Timer.Schedule(this, 120f, () =>
                 {
                     //Debug.Log("Schedule(thiss");
-                    StartCoroutine(IEGetRanking());
+                    //StartCoroutine(IEGetRanking());
+                    StartRanking(false);
                 });
             }
         }

@@ -9,7 +9,6 @@ public class Manager
         TimeSpan span = DateTime.Now.Subtract(new DateTime(2010, 1, 1, 0, 0, 0));
         return span.TotalSeconds;
     }
-
     public static double GetActionTime(String action)
     {//زمان مربوط به اکشن مورد نظر را بصورت جمع ثانیه ها برمیگرداند
         //Debug.Log(action + "_time: " + ObscuredPrefs.GetFloat(action + "_time"));
