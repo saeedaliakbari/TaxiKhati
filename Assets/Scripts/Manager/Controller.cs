@@ -32,6 +32,7 @@ public class Controller : MonoBehaviour
     public SpeedPanel speedPanel;
     public LevelUpBonus levelBonus;
     public GiftPanel myGiftPanel;
+    public ToolsGet toolsGet;
     public GameObject deleteBin, panelMessage, panelShopGem, btnVip, btnGoToVipPanelMessage;
     public GameObject /*coinEffectPrefab,*/ panelSplash, panelWait, panelRetryCheck, panelNoGem, objSpeed, objEarning, hand, handRun;
     public List<GameObject> coinEffect;
@@ -56,7 +57,7 @@ public class Controller : MonoBehaviour
     public float[] basePrice; public int[] increaseRate;
     public float[] baseGemPrice;
     public int[] lastSalableLevel;
-    public int[] lastSalableCoreLevel,openLevel;
+    public int[] lastSalableCoreLevel, openLevel;
     public Transform XpBarTranform;///برای هدف پارتیکل میباشد
     private int def;
     private Coroutine lastRoutineSpecialBox = null, lastRoutineWheelBox = null, lastRoutineTime = null;

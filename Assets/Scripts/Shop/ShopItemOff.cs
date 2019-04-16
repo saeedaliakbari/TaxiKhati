@@ -45,6 +45,7 @@ public class ShopItemOff : MonoBehaviour
             ObscuredPrefs.SetFloat("offCar", offShopCar[level - 1]);
             runSlotManager.UpdateEarningSpeedText();
             OpenPanel();
+            controller.toolsGet.changeNum(1, level-1);
         }
         else
         {

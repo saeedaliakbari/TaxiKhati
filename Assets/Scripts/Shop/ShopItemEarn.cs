@@ -47,6 +47,7 @@ public class ShopItemEarn : MonoBehaviour
             runSlotManager.UpdateEarningSpeedText();
             StartCoroutine(controller.IEEarningRatio());
             OpenPanel();
+            controller.toolsGet.changeNum(0, level-1);
         }
         else
         {

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class ToolsGet : MonoBehaviour {
 
     public GameObject myGameObject;
-    public int num,lvl;
+    private int num,lvl;
     public bool isShown = true;
     
     public GameObject[] toolstBoxes = new GameObject[2];
@@ -50,7 +50,6 @@ public class ToolsGet : MonoBehaviour {
         isShown = false;
         num = number;
         lvl = level;
-
     }
 
     public void openPanel()

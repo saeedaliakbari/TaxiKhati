@@ -29,7 +29,7 @@ public class CafeIntent : MonoBehaviour
         Debug.Log("UNITY_ANDROID bundleCodeVersion:" + bundleCodeVersion);
 #endif
         StartCoroutine(IEGetApp());
-        GetData(strLinkGetInfo);
+        //GetData(strLinkGetInfo);
         //GetData("http://185.55.226.163/moshtary/TaxiKhati/getinfo.php");
 
     }
@@ -120,9 +120,9 @@ public class CafeIntent : MonoBehaviour
     {
         Debug.Log("start IEGet App");
         //yield return new WaitForSeconds(5);
-        //WWWForm wwwForm = new WWWForm();
-        //wwwForm.AddField("id", 1);
-        WWW www = new WWW(strLinkGetInfo/*, wwwForm*/);
+        WWWForm wwwForm = new WWWForm();
+        wwwForm.AddField("id", 1);
+        WWW www = new WWW(strLinkGetInfo, wwwForm);
         yield return www;
         Debug.Log("IEGETAPP: " + www.text + " > > " + www.error);
         if (www.error == null)
