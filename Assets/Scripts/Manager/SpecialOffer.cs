@@ -11,6 +11,8 @@ public class SpecialOffer : MonoBehaviour
     public SpecialOfferObj specialOfferObj;
     public GameObject panelOffer, objIncome, objGoldBox;
     public Button btnVideo, btnGem;
+
+    private int farmingtime;
     // Use this for initialization
     void Start()
     {
@@ -60,10 +62,13 @@ public class SpecialOffer : MonoBehaviour
             if (Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m_special"))
             {
                 Manager.SetActionTime("5x_earning_for_1m_special", (Manager.GetActionTime("5x_earning_for_1m_special") + 60));
+
             }
             else {
                 Manager.SetActionTime("5x_earning_for_1m_special", (60 + Manager.GetCurrentTime()));
+
             }
+            controller.earning5X.cheeck();
             //controller.txtPanelMessage.text = "به مدت 1 دقیقه در آمد شما 5 برابر شد";
             controller.slotManager.UpdateEarningSpeedText();
             controller.myGiftPanel.changeNum(3);
@@ -90,5 +95,6 @@ public class SpecialOffer : MonoBehaviour
             //Debug.Log("Gem<5");
         }
     }
+    
 }
 

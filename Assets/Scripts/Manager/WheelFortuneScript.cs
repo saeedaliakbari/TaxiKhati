@@ -170,6 +170,7 @@ public class WheelFortuneScript : MonoBehaviour
             else {
                 Manager.SetActionTime("5x_earning_for_1m", (60 + Manager.GetCurrentTime()));
             }
+            videoAds.controller.earning5X.cheeck();
             videoAds.controller.txtPanelMessage.text = "به مدت 1 دقیقه در آمد شما 5 برابر شد";
             videoAds.controller.slotManager.UpdateEarningSpeedText();
             StartCoroutine(videoAds.controller.IEEarningRatio());

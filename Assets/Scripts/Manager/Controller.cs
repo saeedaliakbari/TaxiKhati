@@ -40,6 +40,8 @@ public class Controller : MonoBehaviour
     public TrimNumberText txtCoin, txtCoinTop;
     public TrimNumberText txtToken, buyPrice;
     public Animator animIncome;
+
+    public Earning5X earning5X;
     //public RubyShop rubyShop;
     public static Controller instance;
     [HideInInspector]
