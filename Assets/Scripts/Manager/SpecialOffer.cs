@@ -21,6 +21,28 @@ public class SpecialOffer : MonoBehaviour
              if (ObscuredPrefs.GetInt("helpStep", 0) == 22)
                  NewOffer();
          });
+        Debug.Log("5x_earning_for_1m_special: " + (Manager.GetActionTime("5x_earning_for_1m_special") - Manager.GetCurrentTime()));
+        Debug.Log("5x_earning_for_1m: " + (Manager.GetActionTime("5x_earning_for_1m") - Manager.GetCurrentTime()));
+        Debug.Log("2x_speed_for_150s: " + (Manager.GetActionTime("2x_speed_for_150s") - Manager.GetCurrentTime()));
+        if (ObscuredPrefs.GetBool("setTimer", true))
+        {
+            ObscuredPrefs.SetBool("setTimer", false);
+            if (Manager.GetActionTime("5x_earning_for_1m_special") - Manager.GetCurrentTime() > 120)
+            {
+                Manager.SetActionTime("5x_earning_for_1m_special", 120);
+            }
+            if (Manager.GetActionTime("5x_earning_for_1m") - Manager.GetCurrentTime() > 120)
+            {
+                Manager.SetActionTime("5x_earning_for_1m", 120);
+            }
+            if (Manager.GetActionTime("2x_speed_for_150s") - Manager.GetCurrentTime() > 120)
+            {
+                Manager.SetActionTime("2x_speed_for_150s", 120);
+            }
+        }
+        Debug.Log("5x_earning_for_1m_special: " + (Manager.GetActionTime("5x_earning_for_1m_special") - Manager.GetCurrentTime()));
+        Debug.Log("5x_earning_for_1m: " + (Manager.GetActionTime("5x_earning_for_1m") - Manager.GetCurrentTime()));
+        Debug.Log("2x_speed_for_150s: " + (Manager.GetActionTime("2x_speed_for_150s") - Manager.GetCurrentTime()));
     }
     private void NewOffer()
     {
@@ -35,7 +57,7 @@ public class SpecialOffer : MonoBehaviour
         specialOfferObj.DiverARound();//حرکت ماشین 
         if (ObscuredPrefs.GetInt(controller.videoAds.zoneGiftPanel.zoneId) == 0)
         {
-           controller.videoAds.LoadAd(controller.videoAds.zoneGiftPanel, false);
+            controller.videoAds.LoadAd(controller.videoAds.zoneGiftPanel, false);
         }
     }
 
@@ -68,7 +90,7 @@ public class SpecialOffer : MonoBehaviour
                 Manager.SetActionTime("5x_earning_for_1m_special", (60 + Manager.GetCurrentTime()));
 
             }
-            controller.earning5X.cheeck();
+            controller.earning5X.check();
             //controller.txtPanelMessage.text = "به مدت 1 دقیقه در آمد شما 5 برابر شد";
             controller.slotManager.UpdateEarningSpeedText();
             controller.myGiftPanel.changeNum(3);
@@ -95,6 +117,6 @@ public class SpecialOffer : MonoBehaviour
             //Debug.Log("Gem<5");
         }
     }
-    
+
 }
 

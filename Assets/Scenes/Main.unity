@@ -54254,6 +54254,7 @@ GameObject:
   - component: {fileID: 1085018828}
   - component: {fileID: 1085018829}
   - component: {fileID: 1085018830}
+  - component: {fileID: 1085018831}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -54474,7 +54475,6 @@ MonoBehaviour:
   objEarning: {fileID: 695448959}
   hand: {fileID: 1968763690}
   handRun: {fileID: 1521785999}
-  farming5XParticle: {fileID: 434438017}
   coinEffect:
   - {fileID: 2131999058}
   - {fileID: 1691347174}
@@ -54500,6 +54500,7 @@ MonoBehaviour:
   txtToken: {fileID: 692236895}
   buyPrice: {fileID: 419569177}
   animIncome: {fileID: 1896488204}
+  earning5X: {fileID: 1085018831}
   colliderCarHelp: {fileID: 0}
   carName:
   - "\u0698\u064A\u0627\u0646"
@@ -55112,6 +55113,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 1085018823}
+--- !u!114 &1085018831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1085018821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b23e407a2774f0499aeaa9161fdcc6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coinRainParticle: {fileID: 434438017}
 --- !u!1 &1087389257
 GameObject:
   m_ObjectHideFlags: 0

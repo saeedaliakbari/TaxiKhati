@@ -26,7 +26,7 @@ public class MoveCar : MonoBehaviour
         float ratio = car.controller.SpeedRatio();
         float speed = Manager.GetCurrentTime() < Manager.GetActionTime("speed_x2") ? 2 : 0;
         speed = speed + (Manager.GetCurrentTime() < Manager.GetActionTime("2x_speed_for_150s") ? 2 : 0);
-        if (ratio > 0)
+        if (speed > 0)
         {
             for (int i = 0; i < 2; i++)
             {
