@@ -12,6 +12,7 @@ public class AchivmentPrefab : MonoBehaviour
     public Color inActvie;
     public Image imgBack, imgSlider, imgTik;
     public GameObject objSlider, objGemIcon, objGemTxt;
+    public AudioSource audioSource;
     [HideInInspector]
     public Controller controller;
     public void Setup(Achivment achv, string stringPrefs, List<GameObject> listAchvGet, List<GameObject> listAchvDone, List<GameObject> listAchv)
@@ -50,6 +51,7 @@ public class AchivmentPrefab : MonoBehaviour
     }
     public void GetGift()
     {
+        audioSource.Play();
         imgBack.color = inActvie;
         imgTik.gameObject.SetActive(true);
         //Debug.Log("GEM> " + ObscuredPrefs.GetDouble("gem", 0));
@@ -62,6 +64,12 @@ public class AchivmentPrefab : MonoBehaviour
         objGemIcon.SetActive(false);
         objGemTxt.SetActive(false);
         objSlider.SetActive(false);
+        StartCoroutine(IERefresh());
+
+    }
+    IEnumerator IERefresh()
+    {
+        yield return new WaitForSeconds(1f);
         controller.achivmentManager.OpenPanel();
     }
 }
