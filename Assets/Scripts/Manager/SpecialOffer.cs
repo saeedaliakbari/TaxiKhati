@@ -27,17 +27,17 @@ public class SpecialOffer : MonoBehaviour
         if (ObscuredPrefs.GetBool("setTimer", true))
         {
             ObscuredPrefs.SetBool("setTimer", false);
-            if (Manager.GetActionTime("5x_earning_for_1m_special") - Manager.GetCurrentTime() > 120)
+            if (Manager.GetActionTime("5x_earning_for_1m_special") - Manager.GetCurrentTime() > 180)
             {
-                Manager.SetActionTime("5x_earning_for_1m_special", 120);
+                Manager.SetActionTime("5x_earning_for_1m_special", Manager.GetCurrentTime() + 180);
             }
-            if (Manager.GetActionTime("5x_earning_for_1m") - Manager.GetCurrentTime() > 120)
+            if (Manager.GetActionTime("5x_earning_for_1m") - Manager.GetCurrentTime() > 180)
             {
-                Manager.SetActionTime("5x_earning_for_1m", 120);
+                Manager.SetActionTime("5x_earning_for_1m", Manager.GetCurrentTime() + 180);
             }
-            if (Manager.GetActionTime("2x_speed_for_150s") - Manager.GetCurrentTime() > 120)
+            if (Manager.GetActionTime("2x_speed_for_150s") - Manager.GetCurrentTime() > 450)
             {
-                Manager.SetActionTime("2x_speed_for_150s", 120);
+                Manager.SetActionTime("2x_speed_for_150s", Manager.GetCurrentTime() + 450);
             }
         }
         Debug.Log("5x_earning_for_1m_special: " + (Manager.GetActionTime("5x_earning_for_1m_special") - Manager.GetCurrentTime()));

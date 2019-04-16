@@ -38,6 +38,7 @@ public class VideoAds : MonoBehaviour
     #region Double Offline Earning
     public void BtnDoubleOfflineEarn()
     {
+        offlineEarning.btnDouble.interactable = false;
         StartCoroutine(IEDoubleOfflineEarn());
     }
     IEnumerator IEDoubleOfflineEarn()
@@ -68,6 +69,7 @@ public class VideoAds : MonoBehaviour
                     {
                         LoadAd(zoneOfflineEarning, false);
                         offlineEarning.gameObject.SetActive(true);//درصورتی ویدئو نبود پنل آفلاین رو نشون بده
+                        offlineEarning.btnDouble.interactable = true;
                     }
                 }
             );
@@ -75,6 +77,7 @@ public class VideoAds : MonoBehaviour
         else
         {
             offlineEarning.gameObject.SetActive(true);//درصورتی ویدئو نبود پنل آفلاین رو نشون بده
+            offlineEarning.btnDouble.interactable = true;
         }
         //    //Debug.Log("Error");
         //    //panelError.SetActive(true);
@@ -83,6 +86,7 @@ public class VideoAds : MonoBehaviour
     }
     private void GiftDoubleOfflineEarn()
     {
+        offlineEarning.gameObject.SetActive(false);
         offlineEarning.btnDouble.interactable = false;
         offlineEarning.btnThird.interactable = false;
         offlineEarning.AnimValueChange(true);
