@@ -9,17 +9,32 @@ public class ToolsGet : MonoBehaviour {
     public GameObject myGameObject;
     public int num,lvl;
     public bool isShown = true;
+    
     public GameObject[] toolstBoxes = new GameObject[2];
-    public Sprite[] lineSpeedSprite = new Sprite[9],shopOffSprite=new Sprite[9];
+    public Image[] changImages;
+    public Text[] changeTexts;
+
+    public Sprite[] linespeedSprite, shopOffSprite;
+    
+    public string[] lineSpeedStr={"+5%","+10%","+20%","+40%","+70%","+110%","+160%","+225%","+500%","+1000%"}, shopOffStr = { "ﻒﯿﻔﺨﺗ 5%", "ﻒﯿﻔﺨﺗ 15%", "ﻒﯿﻔﺨﺗ 25%", "ﻒﯿﻔﺨﺗ 35%", "ﻒﯿﻔﺨﺗ 50%", "ﻒﯿﻔﺨﺗ 55%", "ﻒﯿﻔﺨﺗ 60%", "ﻒﯿﻔﺨﺗ 65%", "ﻒﯿﻔﺨﺗ 75%", "ﻒﯿﻔﺨﺗ 85%" };
     // Use this for initialization
  
     private void OnEnable()
     {
-        for (int i = 0; i < toolstBoxes.Length; i++)
+        if (num==0)
         {
-            toolstBoxes[i].SetActive(false);
+            toolstBoxes[num].SetActive(true);
+            toolstBoxes[1].SetActive(false);
+            changImages[num].sprite = linespeedSprite[lvl];
+            changeTexts[num].text = lineSpeedStr[lvl];
         }
-        toolstBoxes[num].SetActive(true);
+        else
+        {
+            toolstBoxes[0].SetActive(false);
+            toolstBoxes[num].SetActive(true);
+            changImages[num].sprite = shopOffSprite[lvl];
+            changeTexts[num].text = shopOffStr[lvl];
+        }
         StartCoroutine(waitForDeactive());
         isShown = true;
     }

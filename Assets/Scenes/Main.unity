@@ -82391,18 +82391,44 @@ MonoBehaviour:
   m_GameObject: {fileID: 1609024979}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b6c67db77df4c54cb914527396d1474, type: 3}
+  m_Script: {fileID: 11500000, guid: f40a2980e693f65488e80633e8cf1bf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   myGameObject: {fileID: 1609024979}
   num: 0
+  lvl: 0
   isShown: 1
-  giftBoxes:
+  toolstBoxes:
   - {fileID: 1731388890}
   - {fileID: 1833295732}
-  - {fileID: 1808887980}
-  - {fileID: 1238213142}
-  - {fileID: 1249493410}
+  changImages:
+  - {fileID: 233932386}
+  - {fileID: 205794905}
+  changeTexts:
+  - {fileID: 1252609104}
+  - {fileID: 683537479}
+  lineSpeedSprite:
+  - {fileID: 21300032, guid: f5f51b881b0ac0744aeafc751858577a, type: 3}
+  - {fileID: 21300036, guid: f5f51b881b0ac0744aeafc751858577a, type: 3}
+  - {fileID: 21300040, guid: f5f51b881b0ac0744aeafc751858577a, type: 3}
+  - {fileID: 21300042, guid: f5f51b881b0ac0744aeafc751858577a, type: 3}
+  - {fileID: 21300046, guid: f5f51b881b0ac0744aeafc751858577a, type: 3}
+  - {fileID: 21300048, guid: f5f51b881b0ac0744aeafc751858577a, type: 3}
+  - {fileID: 21300052, guid: f5f51b881b0ac0744aeafc751858577a, type: 3}
+  - {fileID: 21300056, guid: f5f51b881b0ac0744aeafc751858577a, type: 3}
+  - {fileID: 21300058, guid: f5f51b881b0ac0744aeafc751858577a, type: 3}
+  - {fileID: 21300072, guid: f5f51b881b0ac0744aeafc751858577a, type: 3}
+  shopOffSprite:
+  - {fileID: 21300030, guid: f5f51b881b0ac0744aeafc751858577a, type: 3}
+  - {fileID: 21300034, guid: f5f51b881b0ac0744aeafc751858577a, type: 3}
+  - {fileID: 21300038, guid: f5f51b881b0ac0744aeafc751858577a, type: 3}
+  - {fileID: 21300044, guid: f5f51b881b0ac0744aeafc751858577a, type: 3}
+  - {fileID: 21300050, guid: f5f51b881b0ac0744aeafc751858577a, type: 3}
+  - {fileID: 21300054, guid: f5f51b881b0ac0744aeafc751858577a, type: 3}
+  - {fileID: 21300060, guid: f5f51b881b0ac0744aeafc751858577a, type: 3}
+  - {fileID: 21300064, guid: f5f51b881b0ac0744aeafc751858577a, type: 3}
+  - {fileID: 21300062, guid: f5f51b881b0ac0744aeafc751858577a, type: 3}
+  - {fileID: 21300070, guid: f5f51b881b0ac0744aeafc751858577a, type: 3}
 --- !u!95 &1609024982
 Animator:
   serializedVersion: 3
