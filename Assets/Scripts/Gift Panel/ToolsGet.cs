@@ -14,7 +14,7 @@ public class ToolsGet : MonoBehaviour {
     public Image[] changImages;
     public Text[] changeTexts;
 
-    public Sprite[] linespeedSprite, shopOffSprite;
+    public Sprite[] lineSpeedSprite, shopOffSprite;
     
     public string[] lineSpeedStr={"+5%","+10%","+20%","+40%","+70%","+110%","+160%","+225%","+500%","+1000%"}, shopOffStr = { "ﻒﯿﻔﺨﺗ 5%", "ﻒﯿﻔﺨﺗ 15%", "ﻒﯿﻔﺨﺗ 25%", "ﻒﯿﻔﺨﺗ 35%", "ﻒﯿﻔﺨﺗ 50%", "ﻒﯿﻔﺨﺗ 55%", "ﻒﯿﻔﺨﺗ 60%", "ﻒﯿﻔﺨﺗ 65%", "ﻒﯿﻔﺨﺗ 75%", "ﻒﯿﻔﺨﺗ 85%" };
     // Use this for initialization
@@ -25,7 +25,7 @@ public class ToolsGet : MonoBehaviour {
         {
             toolstBoxes[num].SetActive(true);
             toolstBoxes[1].SetActive(false);
-            changImages[num].sprite = linespeedSprite[lvl];
+            changImages[num].sprite = lineSpeedSprite[lvl];
             changeTexts[num].text = lineSpeedStr[lvl];
         }
         else

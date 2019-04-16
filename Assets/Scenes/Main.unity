@@ -82358,7 +82358,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1609024980
 RectTransform:
   m_ObjectHideFlags: 0
@@ -82429,6 +82429,28 @@ MonoBehaviour:
   - {fileID: 21300064, guid: f5f51b881b0ac0744aeafc751858577a, type: 3}
   - {fileID: 21300062, guid: f5f51b881b0ac0744aeafc751858577a, type: 3}
   - {fileID: 21300070, guid: f5f51b881b0ac0744aeafc751858577a, type: 3}
+  lineSpeedStr:
+  - +5%
+  - +10%
+  - +20%
+  - +40%
+  - +70%
+  - +110%
+  - +160%
+  - +225%
+  - +500%
+  - +1000%
+  shopOffStr:
+  - "\uFED2\uFBFF\uFED4\uFEA8\uFE97 5%"
+  - "\uFED2\uFBFF\uFED4\uFEA8\uFE97 15%"
+  - "\uFED2\uFBFF\uFED4\uFEA8\uFE97 25%"
+  - "\uFED2\uFBFF\uFED4\uFEA8\uFE97 35%"
+  - "\uFED2\uFBFF\uFED4\uFEA8\uFE97 50%"
+  - "\uFED2\uFBFF\uFED4\uFEA8\uFE97 55%"
+  - "\uFED2\uFBFF\uFED4\uFEA8\uFE97 60%"
+  - "\uFED2\uFBFF\uFED4\uFEA8\uFE97 65%"
+  - "\uFED2\uFBFF\uFED4\uFEA8\uFE97 75%"
+  - "\uFED2\uFBFF\uFED4\uFEA8\uFE97 85%"
 --- !u!95 &1609024982
 Animator:
   serializedVersion: 3
