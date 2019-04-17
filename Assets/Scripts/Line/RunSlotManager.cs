@@ -42,8 +42,6 @@ public class RunSlotManager : MonoBehaviour
     }
     public void UpdateEarningSpeedText()
     {
-        int index = ObscuredPrefs.GetInt("unlocked_airline", 1) - 1;//عدد آخرین هواپیمای باز شده
-        //Debug.Log("index unlocked_airline: " + index + ">>>earningPerSec: " + earningPerSec);
         float ratio = ((Manager.GetCurrentTime() < Manager.GetActionTime("speed_x2")) ? 2 : 0) /** Const.AIRLINE_INCREASE_PERCENT[index]*/;//ریت بدست آوردن سکه
         ratio += ((Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m")) ? 5 : 0);
         ratio += ((Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m_special")) ? 5 : 0);
@@ -122,8 +120,7 @@ public class RunSlotManager : MonoBehaviour
     public void UpdateStartGoal()
     {
         UpdateState();
-        int index = ObscuredPrefs.GetInt("unlocked_airline", 1) - 1;
-        goal.sprite = goalSprites[index];//اسپرایت خط پایان را با توجه به مدل لاین شروع تغییر می دهد
+        goal.sprite = goalSprites[0];//اسپرایت خط پایان را با توجه به مدل لاین شروع تغییر می دهد
         UpdateEarningSpeedText();
     }
     public bool IsFull()//آیا جایگاه های استارت پر است؟
