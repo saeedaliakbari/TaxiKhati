@@ -1,4 +1,5 @@
-﻿using LitJson;
+﻿using CodeStage.AntiCheat.ObscuredTypes;
+using LitJson;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -17,7 +18,7 @@ public class CafeIntent : MonoBehaviour
     void Start()
     {
 #if UNITY_EDITOR
-        Debug.Log("UNITY_EDITOR bundleCodeVersion:" + UnityEditor.PlayerSettings.Android.bundleVersionCode);
+        //Debug.Log("UNITY_EDITOR bundleCodeVersion:" + UnityEditor.PlayerSettings.Android.bundleVersionCode);
         bundleCodeVersion = UnityEditor.PlayerSettings.Android.bundleVersionCode;
 #endif
 #if UNITY_ANDROID && !UNITY_EDITOR
@@ -28,10 +29,12 @@ public class CafeIntent : MonoBehaviour
         bundleCodeVersion = pInfo.Get<int>("versionCode");
         Debug.Log("UNITY_ANDROID bundleCodeVersion:" + bundleCodeVersion);
 #endif
-        StartCoroutine(IEGetApp());
+        if (ObscuredPrefs.GetInt("helpStep", 0) >= 22)//اگر راهنما تمام شده است بررسی شود آپدیت بازی
+        {
+            StartCoroutine(IEGetApp());
+        }
         //GetData(strLinkGetInfo);
         //GetData("http://185.55.226.163/moshtary/TaxiKhati/getinfo.php");
-
     }
     public void btnAre()
     {
@@ -84,9 +87,9 @@ public class CafeIntent : MonoBehaviour
     {
         Debug.Log("start Get Data");
         UnityWebRequest www = UnityWebRequest.Get(url);
-        StartCoroutine(WaitForRequestLoad(www,url));
+        StartCoroutine(WaitForRequestLoad(www, url));
     }
-    private IEnumerator WaitForRequestLoad(UnityWebRequest www,string url)
+    private IEnumerator WaitForRequestLoad(UnityWebRequest www, string url)
     {
         using (www)
         {
@@ -118,13 +121,13 @@ public class CafeIntent : MonoBehaviour
     }
     IEnumerator IEGetApp()
     {
-        Debug.Log("start IEGet App");
+        //Debug.Log("start IEGet App");
         //yield return new WaitForSeconds(5);
         WWWForm wwwForm = new WWWForm();
         wwwForm.AddField("id", 1);
         WWW www = new WWW(strLinkGetInfo, wwwForm);
         yield return www;
-        Debug.Log("IEGETAPP: " + www.text + " > > " + www.error);
+        //Debug.Log("IEGETAPP: " + www.text + " > > " + www.error);
         if (www.error == null)
         {
             if (www.isDone)
@@ -133,7 +136,7 @@ public class CafeIntent : MonoBehaviour
                 bundle = int.Parse(jsonBooks[0][1].ToString());
                 version = jsonBooks[0][2].ToString();
                 forceUpdate = int.Parse(jsonBooks[0][3].ToString());
-                Debug.Log("bundle: " + bundle + " forceUpdate: " + forceUpdate);
+                //Debug.Log("bundle: " + bundle + " forceUpdate: " + forceUpdate);
                 if (bundle > bundleCodeVersion)
                 {
                     panelUpdate.SetActive(true);
@@ -152,7 +155,8 @@ public class CafeIntent : MonoBehaviour
         else
         {
             Debug.Log("retry get app info");
-            //StartCoroutine(IEGetApp());
+            yield return new WaitForSeconds(5);
+            StartCoroutine(IEGetApp());
         }
     }
     IEnumerator IESendComment()

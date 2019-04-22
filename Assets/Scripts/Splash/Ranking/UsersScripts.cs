@@ -25,24 +25,24 @@ public class UsersScripts : MonoBehaviour
             GetRanking();
             Timer.Schedule(this, 120f, () =>
             {
-                //Debug.Log("Schedule(thiss");
+                Debug.Log("Schedule(thiss");
                 GetRanking();
             });
         }
         else {
             if (listRanking.Count == 0 || Manager.GetCurrentTime() > Manager.GetActionTime("updateRank"))
             {
-                //Debug.Log(Manager.GetCurrentTime() + "< " + Manager.GetActionTime("updateRank"));
-                //Debug.Log("count " + listRanking.Count);
+                Debug.Log(Manager.GetCurrentTime() + "< " + Manager.GetActionTime("updateRank"));
+                Debug.Log("count " + listRanking.Count);
                 GetRanking();
             }
             else
             {
                 double delay = Manager.GetActionTime("updateRank") - Manager.GetCurrentTime();
-                //Debug.Log("Delay : " + delay);
+                Debug.Log("Delay : " + delay);
                 Timer.Schedule(this, (float)delay, () =>
                 {
-                    //Debug.Log("Schedule(thiss");
+                    Debug.Log("Schedule(thiss");
                     GetRanking();
                 });
             }
@@ -77,7 +77,7 @@ public class UsersScripts : MonoBehaviour
         wwwForm.AddField("id", ObscuredPrefs.GetInt("userid", 0));
         WWW www = new WWW(strGetRankUser, wwwForm);
         yield return www;
-        //Debug.Log(strGetRankUser + " >>" + www.text + " ? " + www.error);
+        Debug.Log(strGetRankUser + " >>" + www.text + " ? " + www.error);
         if (www.error == null)
         {
             if (www.isDone)
@@ -93,7 +93,7 @@ public class UsersScripts : MonoBehaviour
                     ObscuredPrefs.SetInt("mainAchiv4", 1);
                 }
                 controller.achivmentManager.CheckAchivments();
-                //Debug.Log(rankUser.ToString());
+                Debug.Log(rankUser.ToString());
                 myRank.txtRank.text = rankUser.ToString();
                 myRank.txtCoin.text = jsonBooks[0]["coin"].ToString();
                 myRank.txtName.text = ObscuredPrefs.GetString("username", "تاکسی ران");
@@ -105,8 +105,8 @@ public class UsersScripts : MonoBehaviour
                     length = 232 * 2;
                 }
                 btnRename.transform.localPosition = new Vector3(isLeft ? -length / 2f : length / 2.5f, 5f);
-                ////Debug.Log("length: " + length + "/ " + myRank.txtName.text.Length + "/ " + myRank.txtName.fontSize);
-                ////Debug.Log(btnRename.transform.localPosition);
+                //Debug.Log("length: " + length + "/ " + myRank.txtName.text.Length + "/ " + myRank.txtName.fontSize);
+                //Debug.Log(btnRename.transform.localPosition);
                 if (rankUser < 4)
                 {
                     myRank.txtRank.gameObject.SetActive(false);
@@ -124,7 +124,7 @@ public class UsersScripts : MonoBehaviour
                     GameObject objUser;
                     if (i == rankUser)
                     {
-                        //Debug.Log("YOUUUUU" + rankUser);
+                        Debug.Log("YOUUUUU" + rankUser);
                         objUser = Instantiate(userRankMe);
                     }
                     else
@@ -148,7 +148,7 @@ public class UsersScripts : MonoBehaviour
                     GameObject objUser;
                     if (i == rankUser)
                     {
-                        //Debug.Log("YOUUUUU" + rankUser);
+                        Debug.Log("YOUUUUU" + rankUser);
                         objUser = Instantiate(userRankMe);
                     }
                     else
@@ -167,7 +167,7 @@ public class UsersScripts : MonoBehaviour
                 panelWait.SetActive(false);
                 Timer.Schedule(this, 120f, () =>
                 {
-                    //Debug.Log("Schedule(thiss");
+                    Debug.Log("Schedule(thiss");
                     //StartCoroutine(IEGetRanking());
                     StartRanking(false);
                 });
@@ -175,7 +175,7 @@ public class UsersScripts : MonoBehaviour
         }
         else
         {
-            //Debug.LogError("error to connet internet");
+            Debug.LogError("error to connet internet");
             controller.panelMessage.SetActive(true);
             controller.txtPanelMessage.text = "اتصال به اینترنت برقرار نشد بعدا تلاش نمایید";
             gameObject.SetActive(false);
@@ -210,12 +210,13 @@ public class UsersScripts : MonoBehaviour
     IEnumerator IEInsertUser(bool GetRank)
     {
         //panelWait.SetActive(true);
-        //Debug.Log("IEInsertUser");
+        Debug.Log("IEInsertUser");
         WWWForm wwwForm = new WWWForm();
         wwwForm.AddField("username", ObscuredPrefs.GetString("username", "").ToString());
         wwwForm.AddField("coin", ObscuredPrefs.GetDouble("coinTotal", 100).ToString());
         WWW www = new WWW(strInsertUser, wwwForm);
         yield return www;
+        Debug.Log(">>" + www.text + ">>" + www.error);
         if (www.error == null)
         {
             if (www.isDone)
@@ -243,12 +244,16 @@ public class UsersScripts : MonoBehaviour
         wwwForm.AddField("username", ObscuredPrefs.GetString("username", "").ToString());
         wwwForm.AddField("coin", ObscuredPrefs.GetDouble("coinTotal", 100).ToString());
         WWW www = new WWW(strUpdateUser, wwwForm);
+        Debug.Log("id" + ObscuredPrefs.GetInt("userid", 0).ToString());
+        Debug.Log("username" + ObscuredPrefs.GetString("username", "").ToString());
+        Debug.Log("coin" + ObscuredPrefs.GetDouble("coinTotal", 100).ToString());
+
         yield return www;
         if (www.error == null)
         {
             if (www.isDone)
             {
-                //Debug.Log("Update www : " + www.text);
+                Debug.Log("Update www : " + www.text);
                 JsonData jsonBooks = JsonMapper.ToObject(ChangeToJson(www.text));
                 ObscuredPrefs.SetInt("userid", int.Parse(jsonBooks[0][0].ToString()));
                 ObscuredPrefs.SetString("username", jsonBooks[0][1].ToString());
@@ -262,6 +267,7 @@ public class UsersScripts : MonoBehaviour
         else
         {
             controller.panelMessage.SetActive(true);
+            Debug.LogError(www.error);
             controller.txtPanelMessage.text = "اتصال به اینترنت برقرار نشد بعدا تلاش نمایید";
             gameObject.SetActive(false);
             panelWait.SetActive(false);

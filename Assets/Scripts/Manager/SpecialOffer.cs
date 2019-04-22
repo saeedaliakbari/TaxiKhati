@@ -21,9 +21,9 @@ public class SpecialOffer : MonoBehaviour
              if (ObscuredPrefs.GetInt("helpStep", 0) == 22)
                  NewOffer();
          });
-        Debug.Log("5x_earning_for_1m_special: " + (Manager.GetActionTime("5x_earning_for_1m_special") - Manager.GetCurrentTime()));
-        Debug.Log("5x_earning_for_1m: " + (Manager.GetActionTime("5x_earning_for_1m") - Manager.GetCurrentTime()));
-        Debug.Log("2x_speed_for_150s: " + (Manager.GetActionTime("2x_speed_for_150s") - Manager.GetCurrentTime()));
+        //Debug.Log("5x_earning_for_1m_special: " + (Manager.GetActionTime("5x_earning_for_1m_special") - Manager.GetCurrentTime()));
+        //Debug.Log("5x_earning_for_1m: " + (Manager.GetActionTime("5x_earning_for_1m") - Manager.GetCurrentTime()));
+        //Debug.Log("2x_speed_for_150s: " + (Manager.GetActionTime("2x_speed_for_150s") - Manager.GetCurrentTime()));
         if (ObscuredPrefs.GetBool("setTimer", true))
         {
             ObscuredPrefs.SetBool("setTimer", false);
@@ -40,9 +40,9 @@ public class SpecialOffer : MonoBehaviour
                 Manager.SetActionTime("2x_speed_for_150s", Manager.GetCurrentTime() + 450);
             }
         }
-        Debug.Log("5x_earning_for_1m_special: " + (Manager.GetActionTime("5x_earning_for_1m_special") - Manager.GetCurrentTime()));
-        Debug.Log("5x_earning_for_1m: " + (Manager.GetActionTime("5x_earning_for_1m") - Manager.GetCurrentTime()));
-        Debug.Log("2x_speed_for_150s: " + (Manager.GetActionTime("2x_speed_for_150s") - Manager.GetCurrentTime()));
+        //Debug.Log("5x_earning_for_1m_special: " + (Manager.GetActionTime("5x_earning_for_1m_special") - Manager.GetCurrentTime()));
+        //Debug.Log("5x_earning_for_1m: " + (Manager.GetActionTime("5x_earning_for_1m") - Manager.GetCurrentTime()));
+        //Debug.Log("2x_speed_for_150s: " + (Manager.GetActionTime("2x_speed_for_150s") - Manager.GetCurrentTime()));
     }
     private void NewOffer()
     {
@@ -74,7 +74,7 @@ public class SpecialOffer : MonoBehaviour
         {
             for (int i = 0; i < 4; i++)
             {
-                controller.SpawnABoxSpecialOffer();
+                controller.SpawnABoxSpecialOffer(i);
             }
             //controller.txtPanelMessage.text = "4 جعبه طلایی به پارکینگ شما اضافه شد";
             controller.myGiftPanel.changeNum(1);

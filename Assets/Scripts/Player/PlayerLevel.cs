@@ -19,11 +19,13 @@ public class PlayerLevel : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        Debug.Log("Start Xp: " + ObscuredPrefs.GetInt("Xp", 0)+" Start Level :"+ ObscuredPrefs.GetInt("Level", 1));
         SetEleman(ObscuredPrefs.GetInt("Xp", 0), 0);
         CheckLevel(ObscuredPrefs.GetInt("Level", 1), false);
     }
     public void UpdateProgress(int xp)
     {
+        //Debug.Log("Update Xp: " + ObscuredPrefs.GetInt("Xp", 0) + " Update Level :" + ObscuredPrefs.GetInt("Level", 1));
         if (lastRoutine != null)
         {
             StopCoroutine(lastRoutine);
@@ -67,7 +69,6 @@ public class PlayerLevel : MonoBehaviour
                     float slider = (nowXp + xptrailer) / float.Parse(levelsInfo[ObscuredPrefs.GetInt("Level", 1) - 1].maxXp.ToString());
                     imgProgress.fillAmount = slider;
                 }
-
             }
             else
             {
@@ -79,19 +80,21 @@ public class PlayerLevel : MonoBehaviour
                     ObscuredPrefs.DeleteKey("maxXp" + ObscuredPrefs.GetInt("Level", 1));
                     ObscuredPrefs.DeleteKey("gem" + ObscuredPrefs.GetInt("Level", 1));
                     ObscuredPrefs.SetInt("Level", ObscuredPrefs.GetInt("Level", 1) + 1);
-                    Debug.Log("new Level :" + ObscuredPrefs.GetInt("Level", 1));
-                    controller.ShowLevelBonus(ObscuredPrefs.GetInt("Level", 1));
+                    //Debug.Log("new Level :" + ObscuredPrefs.GetInt("Level", 1));
                     ObscuredPrefs.SetInt("maxXp" + ObscuredPrefs.GetInt("Level", 1), maxXpOldLevel + 3000);
-                    Debug.Log("maxXp newLevel" + ObscuredPrefs.GetInt("Level", 1) + ">" + ObscuredPrefs.GetInt("maxXp" + ObscuredPrefs.GetInt("Level", 1), 118000));
+                    //Debug.Log("maxXp newLevel" + ObscuredPrefs.GetInt("Level", 1) + ">" + ObscuredPrefs.GetInt("maxXp" + ObscuredPrefs.GetInt("Level", 1), 118000));
                     int levelNew = ObscuredPrefs.GetInt("Level", 1);
                     if ((levelNew - 50) % 3 == 0)
                     {
                         ObscuredPrefs.SetInt("gem" + levelNew, 18 + ((levelNew - 50) / 9) * 5);
+                        Debug.Log("gem level up : " + levelNew+ ">"+ 18 + ((levelNew - 50) / 9) * 5);
                     }
                     else
                     {
                         ObscuredPrefs.SetInt("gem" + levelNew, 0);
+                        Debug.Log("gem level up :0 " );
                     }
+                    controller.ShowLevelBonus(ObscuredPrefs.GetInt("Level", 1));
                     ObscuredPrefs.SetInt("mainAchiv11", ObscuredPrefs.GetInt("Level", 1));
                     ObscuredPrefs.SetInt("mainAchiv12", ObscuredPrefs.GetInt("Level", 1));
                     ObscuredPrefs.SetInt("mainAchiv13", ObscuredPrefs.GetInt("Level", 1));
@@ -119,12 +122,12 @@ public class PlayerLevel : MonoBehaviour
         if (ObscuredPrefs.GetInt("Level", 1) < 53)
         {
             float slider = (nowXp + xpTrailer) / float.Parse(levelsInfo[ObscuredPrefs.GetInt("Level", 1) - 1].maxXp.ToString());
-            ////Debug.Log("XP: " + ObscuredPrefs.GetInt("Xp", 0) + "MaxXP:" + levelsInfo[ObscuredPrefs.GetInt("Level", 1) - 1].maxXp + ">>" + slider);
+            //Debug.Log("XP: " + ObscuredPrefs.GetInt("Xp", 0) + "MaxXP:" + levelsInfo[ObscuredPrefs.GetInt("Level", 1) - 1].maxXp + ">>" + slider);
             imgProgress.fillAmount = slider;
         }
         else
         {
-            //Debug.Log("" + (nowXp + xpTrailer) +"/"+ ObscuredPrefs.GetInt("maxXp" + ObscuredPrefs.GetInt("Level", 1), 118000).ToString());
+            //Debug.Log("" + (nowXp + xpTrailer) + "/" + ObscuredPrefs.GetInt("maxXp" + ObscuredPrefs.GetInt("Level", 1), 118000).ToString());
             float slider = (nowXp + xpTrailer) / float.Parse(ObscuredPrefs.GetInt("maxXp" + ObscuredPrefs.GetInt("Level", 1), 118000).ToString());
             //Debug.Log("slider : " + slider);
             imgProgress.fillAmount = slider;

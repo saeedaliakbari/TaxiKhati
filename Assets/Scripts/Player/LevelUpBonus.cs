@@ -18,6 +18,7 @@ public class LevelUpBonus : MonoBehaviour
     {
         if (newLevel > 53)
         {
+            Debug.Log("newlevel: " + newLevel + ">>" + ObscuredPrefs.GetInt("gem" + newLevel));
             this.newLevel = newLevel;
             txtGem.text = "+" + ObscuredPrefs.GetInt("gem" + newLevel).ToString();
             txtLevel.text = newLevel.ToString();

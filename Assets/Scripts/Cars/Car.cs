@@ -132,7 +132,6 @@ public class Car : MonoBehaviour
                             nearPlace.XPTrail.MyGameObject.SetActive(true);
                             //Debug.Log("XP: " + ObscuredPrefs.GetInt("Xp", 0));
                             controller.playerLevel.UpdateProgress(xp);//مقدار ایکس و لول ست شود
-
                         }
                         else
                         {//دوتاماشین با هم جابه جا می شوند

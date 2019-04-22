@@ -60,7 +60,8 @@ public class Controller : MonoBehaviour
     public int[] lastSalableCoreLevel, openLevel;
     public Transform XpBarTranform;///برای هدف پارتیکل میباشد
     private int def;
-    private Coroutine lastRoutineSpecialBox = null, lastRoutineWheelBox = null, lastRoutineTime = null;
+    private Coroutine lastRoutineWheelBox = null, lastRoutineTime = null;
+    private Coroutine[] lastRoutineSpecialBox = new Coroutine[4];
     void Awake()
     {
         instance = this;
@@ -68,10 +69,10 @@ public class Controller : MonoBehaviour
         ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem", 5) /*+ 1000000*/);
         ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 21000));
         ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 21000));
-        ObscuredPrefs.SetDouble("token", ObscuredPrefs.GetDouble("token", 0) /*+ 1000000000000000000d*/);
-        //ObscuredPrefs.SetInt("unlocked_car",50);
+        ObscuredPrefs.SetDouble("token",0/* ObscuredPrefs.GetDouble("token", 0)*/ /*+ 1000000000000000000d*/);
+        //ObscuredPrefs.SetInt("unlocked_car", 50);
         //ObscuredPrefs.SetInt("Level", 53);
-        //ObscuredPrefs.SetInt("Xp", 11000);
+        ObscuredPrefs.SetInt("Xp", 137000);
         SetText();
     }
     public void SetText()
@@ -492,7 +493,7 @@ public class Controller : MonoBehaviour
         yield return new WaitForSeconds(UnityEngine.Random.Range(2f, 3f));
         SpawnABoxWheel();
     }
-    public void SpawnABoxSpecialOffer()
+    public void SpawnABoxSpecialOffer(int i)
     {
         ObscuredPrefs.SetInt("mainAchiv10", ObscuredPrefs.GetInt("mainAchiv10", 0) + 1);
         achivmentManager.CheckAchivments();
@@ -512,27 +513,27 @@ public class Controller : MonoBehaviour
             else
             {
                 //Debug.Log("Try new Place For Car time");
-                if (lastRoutineSpecialBox != null)
+                if (lastRoutineSpecialBox[i] != null)
                 {
-                    StopCoroutine(lastRoutineSpecialBox);
+                    StopCoroutine(lastRoutineSpecialBox[i]);
                 }
-                lastRoutineSpecialBox = StartCoroutine(IESpawnABoxSpecialOffer());
+                lastRoutineSpecialBox[i] = StartCoroutine(IESpawnABoxSpecialOffer(i));
             }
         }
         catch (System.Exception)
         {
             //Debug.Log("Catch New Spawn");
-            if (lastRoutineSpecialBox != null)
+            if (lastRoutineSpecialBox[i] != null)
             {
-                StopCoroutine(lastRoutineSpecialBox);
+                StopCoroutine(lastRoutineSpecialBox[i]);
             }
-            lastRoutineSpecialBox = StartCoroutine(IESpawnABoxSpecialOffer());
+            lastRoutineSpecialBox[i] = StartCoroutine(IESpawnABoxSpecialOffer(i));
         }
     }
-    IEnumerator IESpawnABoxSpecialOffer()
+    IEnumerator IESpawnABoxSpecialOffer(int i)
     {
         yield return new WaitForSeconds(UnityEngine.Random.Range(2f, 3f));
-        SpawnABoxSpecialOffer();
+        SpawnABoxSpecialOffer(i);
     }
     //public void ShowCareerDialog()
     //{
@@ -734,7 +735,10 @@ public class Controller : MonoBehaviour
             }
         }
         //Debug.Log("parking empty :" + parkingManager.NumberEmptyPark());
-        offlineGiftCar.offGiftCar(parkingManager.NumberEmptyPark());
+        if (ObscuredPrefs.GetInt("helpStep", 0) >= 22)//اگر راهنما تمام شده است ماشین های جایزه آفلاین را بدهد
+        {
+            offlineGiftCar.offGiftCar(parkingManager.NumberEmptyPark());
+        }
     }
     public void CheckAndShowOfflineEarning()
     {
