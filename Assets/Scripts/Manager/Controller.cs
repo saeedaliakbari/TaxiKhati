@@ -72,7 +72,7 @@ public class Controller : MonoBehaviour
         ObscuredPrefs.SetDouble("token",0/* ObscuredPrefs.GetDouble("token", 0)*/ /*+ 1000000000000000000d*/);
         //ObscuredPrefs.SetInt("unlocked_car", 50);
         //ObscuredPrefs.SetInt("Level", 53);
-        ObscuredPrefs.SetInt("Xp", 137000);
+        //ObscuredPrefs.SetInt("Xp", 137000);
         SetText();
     }
     public void SetText()
@@ -94,8 +94,8 @@ public class Controller : MonoBehaviour
     }
     public float EarningRatio()
     {
-        float ratio = ((Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m")) ? 5 : 0);
-        ratio += ((Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m_special")) ? 5 : 0);
+        float ratio = ((Manager.GetCurrentTime() < Manager.GetActionTime("earning_5x_for_1m")) ? 5 : 0);
+        ratio += ((Manager.GetCurrentTime() < Manager.GetActionTime("earning_5x_for_1m_special")) ? 5 : 0);
         ratio += ObscuredPrefs.GetFloat("incomeLine", 1);
         txtEarning.text = ratio + " برابر";
         if (ratio == 1)
@@ -128,7 +128,7 @@ public class Controller : MonoBehaviour
     public float SpeedRatio()
     {
         float ratio = Manager.GetCurrentTime() < Manager.GetActionTime("speed_x2") ? 2 : 1;
-        ratio = ratio + (Manager.GetCurrentTime() < Manager.GetActionTime("2x_speed_for_150s") ? 2 : 0);
+        ratio = ratio + (Manager.GetCurrentTime() < Manager.GetActionTime("speed_2x_for_150s") ? 2 : 0);
         ratio = ratio + (ObscuredPrefs.GetFloat("carsSpeedTycoon", 1) - 1);//carsSpeedBoostsTycoon
         txtSpeed.text = ratio + " برابر";
         if (ratio == 1)
@@ -218,6 +218,7 @@ public class Controller : MonoBehaviour
         }
         else
         {
+
             Destroy(guideManager.panelLockGuide);
             Destroy(guideManager.gameObject);
         }

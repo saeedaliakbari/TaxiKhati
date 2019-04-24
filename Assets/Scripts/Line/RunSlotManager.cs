@@ -43,9 +43,9 @@ public class RunSlotManager : MonoBehaviour
     public void UpdateEarningSpeedText()
     {
         float ratio = ((Manager.GetCurrentTime() < Manager.GetActionTime("speed_x2")) ? 2 : 0) /** Const.AIRLINE_INCREASE_PERCENT[index]*/;//ریت بدست آوردن سکه
-        ratio += ((Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m")) ? 5 : 0);
-        ratio += ((Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m_special")) ? 5 : 0);
-        ratio += ((Manager.GetCurrentTime() < Manager.GetActionTime("2x_speed_for_150s")) ? 2 : 0);
+        ratio += ((Manager.GetCurrentTime() < Manager.GetActionTime("earning_5x_for_1m")) ? 5 : 0);
+        ratio += ((Manager.GetCurrentTime() < Manager.GetActionTime("earning_5x_for_1m_special")) ? 5 : 0);
+        ratio += ((Manager.GetCurrentTime() < Manager.GetActionTime("speed_2x_for_150s")) ? 2 : 0);
         ratio += ObscuredPrefs.GetFloat("speedVip", 0);
         ratio += ObscuredPrefs.GetFloat("incomeLine", 1);
         earnPerSec = System.Math.Round(earningPerSec * ratio);

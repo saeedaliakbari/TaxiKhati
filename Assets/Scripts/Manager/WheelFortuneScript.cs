@@ -162,13 +162,13 @@ public class WheelFortuneScript : MonoBehaviour
         }
         else if (itemNumber == 1)
         {
-            if (Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m"))
+            if (Manager.GetCurrentTime() < Manager.GetActionTime("earning_5x_for_1m"))
             {
-                //Debug.Log(Manager.GetActionTime("5x_earning_for_1m")+">" + 60+">" + Manager.GetCurrentTime());
-                Manager.SetActionTime("5x_earning_for_1m", (Manager.GetActionTime("5x_earning_for_1m") + 60));
+                //Debug.Log(Manager.GetActionTime("earning_5x_for_1m")+">" + 60+">" + Manager.GetCurrentTime());
+                Manager.SetActionTime("earning_5x_for_1m", (Manager.GetActionTime("earning_5x_for_1m") + 60));
             }
             else {
-                Manager.SetActionTime("5x_earning_for_1m", (60 + Manager.GetCurrentTime()));
+                Manager.SetActionTime("earning_5x_for_1m", (60 + Manager.GetCurrentTime()));
             }
             videoAds.controller.earning5X.check();
             videoAds.controller.txtPanelMessage.text = "به مدت 1 دقیقه در آمد شما 5 برابر شد";
@@ -178,12 +178,12 @@ public class WheelFortuneScript : MonoBehaviour
         }
         else if (itemNumber == 2)
         {
-            if (Manager.GetCurrentTime() < Manager.GetActionTime("2x_speed_for_150s"))
+            if (Manager.GetCurrentTime() < Manager.GetActionTime("speed_2x_for_150s"))
             {
-                Manager.SetActionTime("2x_speed_for_150s", (150 + Manager.GetActionTime("2x_speed_for_150s")));
+                Manager.SetActionTime("speed_2x_for_150s", (150 + Manager.GetActionTime("speed_2x_for_150s")));
             }
             else {
-                Manager.SetActionTime("2x_speed_for_150s", (150 + Manager.GetCurrentTime()));
+                Manager.SetActionTime("speed_2x_for_150s", (150 + Manager.GetCurrentTime()));
             }
             videoAds.controller.txtPanelMessage.text = "به مدت 150 ثانیه سرعت شما 2 برابر شد";
             videoAds.controller.slotManager.UpdateEarningSpeedText();

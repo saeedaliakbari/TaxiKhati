@@ -25,7 +25,7 @@ public class MoveCar : MonoBehaviour
         getStart = true;
         float ratio = car.controller.SpeedRatio();
         float speed = Manager.GetCurrentTime() < Manager.GetActionTime("speed_x2") ? 2 : 0;
-        speed = speed + (Manager.GetCurrentTime() < Manager.GetActionTime("2x_speed_for_150s") ? 2 : 0);
+        speed = speed + (Manager.GetCurrentTime() < Manager.GetActionTime("speed_2x_for_150s") ? 2 : 0);
         if (speed > 0)
         {
             for (int i = 0; i < 2; i++)
@@ -97,7 +97,7 @@ public class MoveCar : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D col)
     {//وقتی وارد کلایدر با تگ پایان شد
         //Debug.Log("Coilder Tag: " + col.tag);
-        if (getStart && col.tag == "FinishGoal")
+        if (getStart && col.CompareTag("FinishGoal"))
         {
             getStart = false;
             car.FinishRound();
