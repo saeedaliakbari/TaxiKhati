@@ -11,16 +11,16 @@ public class Earning5X : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        if (Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m") || Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m_special"))
+        if (Manager.GetCurrentTime() < Manager.GetActionTime("earning_5x_for_1m") || Manager.GetCurrentTime() < Manager.GetActionTime("earning_5x_for_1m_special"))
         {
             coinRainParticle.SetActive(true);
-            if (Manager.GetActionTime("5x_earning_for_1m") > Manager.GetActionTime("5x_earning_for_1m_special"))
+            if (Manager.GetActionTime("earning_5x_for_1m") > Manager.GetActionTime("earning_5x_for_1m_special"))
             {
-                StartCoroutine(NextCheck(Manager.GetActionTime("5x_earning_for_1m") - Manager.GetCurrentTime()));
+                StartCoroutine(NextCheck(Manager.GetActionTime("earning_5x_for_1m") - Manager.GetCurrentTime()));
             }
             else
             {
-                StartCoroutine(NextCheck(Manager.GetActionTime("5x_earning_for_1m_special") - Manager.GetCurrentTime()));
+                StartCoroutine(NextCheck(Manager.GetActionTime("earning_5x_for_1m_special") - Manager.GetCurrentTime()));
             }
         }
         else
