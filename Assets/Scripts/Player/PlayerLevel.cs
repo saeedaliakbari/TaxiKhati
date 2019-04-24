@@ -19,7 +19,8 @@ public class PlayerLevel : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        Debug.Log("Start Xp: " + ObscuredPrefs.GetInt("Xp", 0)+" Start Level :"+ ObscuredPrefs.GetInt("Level", 1));
+        
+        //Debug.Log("Start Xp: " + ObscuredPrefs.GetInt("Xp", 0)+" Start Level :"+ ObscuredPrefs.GetInt("Level", 1));
         SetEleman(ObscuredPrefs.GetInt("Xp", 0), 0);
         CheckLevel(ObscuredPrefs.GetInt("Level", 1), false);
     }
@@ -72,16 +73,16 @@ public class PlayerLevel : MonoBehaviour
             }
             else
             {
-                int maxXpOldLevel = ObscuredPrefs.GetInt("maxXp" + ObscuredPrefs.GetInt("Level", 1), 118000);
+                int maxXpOldLevel = ObscuredPrefs.GetInt("maxXp", 118000);
                 //Debug.Log("maxXpOldLevel" + ObscuredPrefs.GetInt("Level", 1) + ">" + maxXpOldLevel);
                 if ((nowXp + xptrailer) > maxXpOldLevel)
                 {
                     ObscuredPrefs.SetInt("Xp", ObscuredPrefs.GetInt("Xp", 0) - maxXpOldLevel);
-                    ObscuredPrefs.DeleteKey("maxXp" + ObscuredPrefs.GetInt("Level", 1));
+                    //ObscuredPrefs.DeleteKey("maxXp" + ObscuredPrefs.GetInt("Level", 1));
                     ObscuredPrefs.DeleteKey("gem" + ObscuredPrefs.GetInt("Level", 1));
                     ObscuredPrefs.SetInt("Level", ObscuredPrefs.GetInt("Level", 1) + 1);
                     //Debug.Log("new Level :" + ObscuredPrefs.GetInt("Level", 1));
-                    ObscuredPrefs.SetInt("maxXp" + ObscuredPrefs.GetInt("Level", 1), maxXpOldLevel + 3000);
+                    ObscuredPrefs.SetInt("maxXp" , maxXpOldLevel + 3000);
                     //Debug.Log("maxXp newLevel" + ObscuredPrefs.GetInt("Level", 1) + ">" + ObscuredPrefs.GetInt("maxXp" + ObscuredPrefs.GetInt("Level", 1), 118000));
                     int levelNew = ObscuredPrefs.GetInt("Level", 1);
                     if ((levelNew - 50) % 3 == 0)
@@ -128,7 +129,7 @@ public class PlayerLevel : MonoBehaviour
         else
         {
             //Debug.Log("" + (nowXp + xpTrailer) + "/" + ObscuredPrefs.GetInt("maxXp" + ObscuredPrefs.GetInt("Level", 1), 118000).ToString());
-            float slider = (nowXp + xpTrailer) / float.Parse(ObscuredPrefs.GetInt("maxXp" + ObscuredPrefs.GetInt("Level", 1), 118000).ToString());
+            float slider = (nowXp + xpTrailer) / float.Parse(ObscuredPrefs.GetInt("maxXp" , 118000).ToString());
             //Debug.Log("slider : " + slider);
             imgProgress.fillAmount = slider;
         }
@@ -148,7 +149,7 @@ public class PlayerLevel : MonoBehaviour
             if (level > 7)
             {
                 btnQuest.SetActive(true);
-                if (ObscuredPrefs.GetBool("UnlockedQuest", true))
+                if (ObscuredPrefs.GetBool("UnlockedQuest", false))
                 {
                     questParticle.SetActive(true);
                 }
@@ -156,7 +157,7 @@ public class PlayerLevel : MonoBehaviour
             if (level > 8)
             {
                 btnWheel.SetActive(true);
-                if (ObscuredPrefs.GetBool("UnlockedWheel", true))
+                if (ObscuredPrefs.GetBool("UnlockedWheel", false))
                 {
                     wheelParticle.SetActive(true);
                 }
@@ -165,7 +166,7 @@ public class PlayerLevel : MonoBehaviour
             if (level > 9)
             {
                 btnTimeBoost.SetActive(true);
-                if (ObscuredPrefs.GetBool("UnlockedTimeBoost", true))
+                if (ObscuredPrefs.GetBool("UnlockedTimeBoost", false))
                 {
                     timeBoostParticle.SetActive(true);
                 }
@@ -174,7 +175,7 @@ public class PlayerLevel : MonoBehaviour
             if (level > 10)
             {
                 btnBoosters.SetActive(true);
-                if (ObscuredPrefs.GetBool("UnlockedBoosters", true))
+                if (ObscuredPrefs.GetBool("UnlockedBoosters", false))
                 {
                     boostersParticle.SetActive(true);
                 }
@@ -231,32 +232,32 @@ public class PlayerLevel : MonoBehaviour
     {
         if (num == 0)
         {
-            ObscuredPrefs.SetBool("UnlockedRank", false);
+            ObscuredPrefs.SetBool("UnlockedRank", true);
             rankParticle.SetActive(false);
 
         }
         if (num == 1)
         {
-            ObscuredPrefs.SetBool("UnlockedQuest", false);
+            ObscuredPrefs.SetBool("UnlockedQuest", true);
             questParticle.SetActive(false);
 
         }
         if (num == 2)
         {
-            ObscuredPrefs.SetBool("UnlockedWheel", false);
+            ObscuredPrefs.SetBool("UnlockedWheel", true);
             wheelParticle.SetActive(false);
 
         }
 
         if (num == 3)
         {
-            ObscuredPrefs.SetBool("UnlockedTimeBoost", false);
+            ObscuredPrefs.SetBool("UnlockedTimeBoost", true);
             timeBoostParticle.SetActive(false);
         }
 
         if (num == 4)
         {
-            ObscuredPrefs.SetBool("UnlockedBoosters", false);
+            ObscuredPrefs.SetBool("UnlockedBoosters", true);
             boostersParticle.SetActive(false);
         }
     }
