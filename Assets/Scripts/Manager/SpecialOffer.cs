@@ -21,28 +21,28 @@ public class SpecialOffer : MonoBehaviour
              if (ObscuredPrefs.GetInt("helpStep", 0) == 22)
                  NewOffer();
          });
-        //Debug.Log("5x_earning_for_1m_special: " + (Manager.GetActionTime("5x_earning_for_1m_special") - Manager.GetCurrentTime()));
-        //Debug.Log("5x_earning_for_1m: " + (Manager.GetActionTime("5x_earning_for_1m") - Manager.GetCurrentTime()));
-        //Debug.Log("2x_speed_for_150s: " + (Manager.GetActionTime("2x_speed_for_150s") - Manager.GetCurrentTime()));
-        if (ObscuredPrefs.GetBool("setTimer", true))
+        //Debug.Log("5x_earning_for_1m_special: " + (Manager.GetActionTime("earning_5x_for_1m_special") - Manager.GetCurrentTime()));
+        //Debug.Log("5x_earning_for_1m: " + (Manager.GetActionTime("earning_5x_for_1m") - Manager.GetCurrentTime()));
+        //Debug.Log("2x_speed_for_150s: " + (Manager.GetActionTime("speed_2x_for_150s") - Manager.GetCurrentTime()));
+        if (ObscuredPrefs.GetBool("setTimer", false))
         {
-            ObscuredPrefs.SetBool("setTimer", false);
-            if (Manager.GetActionTime("5x_earning_for_1m_special") - Manager.GetCurrentTime() > 180)
+            ObscuredPrefs.SetBool("setTimer", true);
+            if (Manager.GetActionTime("earning_5x_for_1m_special") - Manager.GetCurrentTime() > 180)
             {
-                Manager.SetActionTime("5x_earning_for_1m_special", Manager.GetCurrentTime() + 180);
+                Manager.SetActionTime("earning_5x_for_1m_special", Manager.GetCurrentTime() + 180);
             }
-            if (Manager.GetActionTime("5x_earning_for_1m") - Manager.GetCurrentTime() > 180)
+            if (Manager.GetActionTime("earning_5x_for_1m") - Manager.GetCurrentTime() > 180)
             {
-                Manager.SetActionTime("5x_earning_for_1m", Manager.GetCurrentTime() + 180);
+                Manager.SetActionTime("earning_5x_for_1m", Manager.GetCurrentTime() + 180);
             }
-            if (Manager.GetActionTime("2x_speed_for_150s") - Manager.GetCurrentTime() > 450)
+            if (Manager.GetActionTime("speed_2x_for_150s") - Manager.GetCurrentTime() > 450)
             {
-                Manager.SetActionTime("2x_speed_for_150s", Manager.GetCurrentTime() + 450);
+                Manager.SetActionTime("speed_2x_for_150s", Manager.GetCurrentTime() + 450);
             }
         }
-        //Debug.Log("5x_earning_for_1m_special: " + (Manager.GetActionTime("5x_earning_for_1m_special") - Manager.GetCurrentTime()));
-        //Debug.Log("5x_earning_for_1m: " + (Manager.GetActionTime("5x_earning_for_1m") - Manager.GetCurrentTime()));
-        //Debug.Log("2x_speed_for_150s: " + (Manager.GetActionTime("2x_speed_for_150s") - Manager.GetCurrentTime()));
+        //Debug.Log("5x_earning_for_1m_special: " + (Manager.GetActionTime("earning_5x_for_1m_special") - Manager.GetCurrentTime()));
+        //Debug.Log("5x_earning_for_1m: " + (Manager.GetActionTime("earning_5x_for_1m") - Manager.GetCurrentTime()));
+        //Debug.Log("2x_speed_for_150s: " + (Manager.GetActionTime("speed_2x_for_150s") - Manager.GetCurrentTime()));
     }
     private void NewOffer()
     {
@@ -81,13 +81,13 @@ public class SpecialOffer : MonoBehaviour
         }
         else//درآمد 5 برابر برای یک دقیقه
         {
-            if (Manager.GetCurrentTime() < Manager.GetActionTime("5x_earning_for_1m_special"))
+            if (Manager.GetCurrentTime() < Manager.GetActionTime("earning_5x_for_1m_special"))
             {
-                Manager.SetActionTime("5x_earning_for_1m_special", (Manager.GetActionTime("5x_earning_for_1m_special") + 60));
+                Manager.SetActionTime("earning_5x_for_1m_special", (Manager.GetActionTime("earning_5x_for_1m_special") + 60));
 
             }
             else {
-                Manager.SetActionTime("5x_earning_for_1m_special", (60 + Manager.GetCurrentTime()));
+                Manager.SetActionTime("earning_5x_for_1m_special", (60 + Manager.GetCurrentTime()));
 
             }
             controller.earning5X.check();
