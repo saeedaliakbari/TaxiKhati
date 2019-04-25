@@ -7,10 +7,10 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class InternetStorageSpace : MonoBehaviour
 {
-    public GameObject panelAutoRetrive, guideManager, panelLockGuide, panelWait, panelSave;
-    public Text txtLevelPanelAutoRetrive, txtBtnSavePanelSave;
-    public InputField inputPhonePanelSave, inputPassPanelSave;
-    public Image imgLastCarPanelAutoRetrice;
+    public GameObject panelAutoRetrive, guideManager, panelLockGuide, panelWait, panelSave,panelMessage,btnUpdateInfo,btnOptionalSave,panelRecovery,panelConfirmRecovery;
+    public Text txtLevelPanelAutoRetrive, txtPanelMessage,txtLevelPanelRecovery;
+    public InputField inputPhonePanelSave, inputPassPanelSave,inputPhonePanelLoad,inputPassPanelLoad;
+    public Image imgLastCarPanelAutoRetrice,imgLastCarPanelRecovery;
     public Controller controller;
 
     [HideInInspector]
@@ -23,6 +23,7 @@ public class InternetStorageSpace : MonoBehaviour
     private const string urlCheckAccount = url + "checkAccount";
     private const string urlLoadDataRetrive = url + "loadDataRetrive";
     #endregion
+    private string phone,pass;
     private UserData LoadUserData { get; set; }
     private UserData autoRetrive { get; set; }
     void Awake()
@@ -53,8 +54,16 @@ public class InternetStorageSpace : MonoBehaviour
         }
     }
     #region Load Data
+    public void LoadData(){
+        if (inputPhonePanelLoad.text == "")
+            inputPhonePanelLoad.ActivateInputField();
+        else if (inputPassPanelLoad.text == "")
+            inputPassPanelLoad.ActivateInputField();
+        else
+            StartCoroutine(IEInfoRetrive(inputPhonePanelLoad.text,inputPassPanelLoad.text));
+    }
     //برای نمایش دادن اطلاعات قبل از لودشدن
-    public IEnumerator IEInfoRetrive(string phone, string pass)
+    private IEnumerator IEInfoRetrive(string phone, string pass)
     {
         var postData = new WWWForm();
         postData.AddField("phone", phone);
@@ -66,16 +75,31 @@ public class InternetStorageSpace : MonoBehaviour
             if (www.text.Trim() == "4")
             {
                 isValidUserAndPass = false;
+                txtPanelMessage.text="اطلاعات وارد شده نامعتبر است";
+                panelMessage.SetActive(true);
             }
             else
             {
                 isValidUserAndPass = true;
                 //درصورتی که لود موفقیت آمیز بود یوزر و پسورد ذخیره شده و هنگام ذخیره سازی از همین یوزر و پسورد استفاده خواهد شد
-                ObscuredPrefs.SetString("phoneNumber", phone);
-                ObscuredPrefs.SetString("pass", pass);
+                this.phone=phone;
+                this.pass=pass;
                 LoadUserData = JsonMapper.ToObject<UserData>(www.text.Trim());
+                int level = LoadUserData.GameData.UserInfoData.Level;
+                txtLevelPanelRecovery.text = level == -1 || level == 0 ? "1" : level.ToString();
+                imgLastCarPanelRecovery.sprite = controller.activeCar[LoadUserData.GameData.CarsData.unlocked_car - 1];
+                panelRecovery.SetActive(false);
+                panelConfirmRecovery.SetActive(true);
             }
         }
+    }
+    public void ConfirmLoad(){
+        panelWait.SetActive(true);
+        ObscuredPrefs.SetString("phoneNumber", this.phone);
+        ObscuredPrefs.SetString("pass", this.pass);
+        SetDataToPlayerPrfs(LoadUserData);
+        panelWait.SetActive(false);
+        SceneManager.LoadScene(0);
     }
     // لود اطلاعات بازی از سرور
     public IEnumerator IEloadData(string phone = "", string pass = "")
@@ -113,44 +137,6 @@ public class InternetStorageSpace : MonoBehaviour
     }
     #endregion
     #region Update Profile
-    // بروزرسانی اطلاعات پروفایل کاربر
-    public IEnumerator IEupdateUserInfo(UpdateUserInfo updateUserInfo)
-    {
-        var postData = new WWWForm();
-        postData.AddField("phone", updateUserInfo.profilePhoneNumber);
-        postData.AddField("pass", updateUserInfo.profilePass);
-        postData.AddField("gender", updateUserInfo.gender == 0 ? PlayerPrefs.GetInt("gender") : updateUserInfo.gender);
-        postData.AddField("age", updateUserInfo.age == 0 ? PlayerPrefs.GetInt("age") : updateUserInfo.age);
-        postData.AddField("province", updateUserInfo.province == 0 ? PlayerPrefs.GetInt("province") : updateUserInfo.province);
-        postData.AddField("deviceUniqueIdentifier", ObscuredPrefs.GetString("deviceUniqueIdentifier"));
-        WWW www = new WWW(urlUpdateInfo, postData);
-        yield return www;
-        if (www.isDone)
-        {
-            if (www.text.Trim() == "4")//شماره تلفن قبلا ثبت شده است
-            {
-                isPhoneNumberExist = true;
-            }
-            else if (www.text.Trim() == "1" || www.text.Trim() == "0") // باموفقیت آپدیت شد
-            {
-                isPhoneNumberExist = false;
-                if (updateUserInfo.profilePhoneNumber != string.Empty && updateUserInfo.profilePass != string.Empty)
-                {
-                    PlayerPrefs.SetString("profilePhoneNumber", updateUserInfo.profilePhoneNumber);
-                    PlayerPrefs.SetString("profilePass", updateUserInfo.profilePass);
-                }
-                if (updateUserInfo.age > 0 && updateUserInfo.age > 0 && updateUserInfo.age > 0)
-                {
-                    PlayerPrefs.SetInt("age", updateUserInfo.age);
-                    PlayerPrefs.SetInt("gender", updateUserInfo.gender);
-                    PlayerPrefs.SetInt("province", updateUserInfo.province);
-                }
-                SaveData();// ذخیره اطلاعات پلیرپرفس سرور
-            }
-        }
-    }
-    #endregion
-    #region Save In Server
     public void BtnSaveSetting()
     {
         panelSave.SetActive(true);
@@ -158,17 +144,18 @@ public class InternetStorageSpace : MonoBehaviour
         {
             inputPassPanelSave.interactable = true;
             inputPhonePanelSave.interactable = true;
-            txtBtnSavePanelSave.text = "تایید";
-            txtBtnSavePanelSave.fontSize = 45;
+            btnOptionalSave.SetActive(false);
+            btnUpdateInfo.SetActive(true);
         }
         else
         {
+            Debug.Log("else");
             inputPhonePanelSave.interactable = false;
             inputPhonePanelSave.text = ObscuredPrefs.GetString("phoneNumber", "");
             inputPassPanelSave.interactable = false;
             inputPassPanelSave.text = ObscuredPrefs.GetString("pass", "");
-            txtBtnSavePanelSave.text = "ذخیره سازی";
-            txtBtnSavePanelSave.fontSize = 30;
+            btnOptionalSave.SetActive(true);
+            btnUpdateInfo.SetActive(false);
         }
     }
     public void BtnSaveInPanelSave()
@@ -183,12 +170,57 @@ public class InternetStorageSpace : MonoBehaviour
         }
         else
         {
-            ObscuredPrefs.SetString("phoneNumber", inputPhonePanelSave.text);
-            ObscuredPrefs.SetString("pass", inputPassPanelSave.text);
+            panelSave.SetActive(false);
             panelWait.SetActive(true);
-            StartCoroutine(IEsaveData(true));
+            UpdateUserInfo updateUserInfo=new UpdateUserInfo();
+            updateUserInfo.profilePhoneNumber=inputPhonePanelSave.text;
+            updateUserInfo.profilePass=inputPassPanelSave.text;
+            StartCoroutine(IEupdateUserInfo(updateUserInfo));
         }
     }
+    // بروزرسانی اطلاعات پروفایل کاربر
+    public IEnumerator IEupdateUserInfo(UpdateUserInfo updateUserInfo)
+    {
+        var postData = new WWWForm();
+        postData.AddField("phone", updateUserInfo.profilePhoneNumber);
+        postData.AddField("pass", updateUserInfo.profilePass);
+        postData.AddField("gender", updateUserInfo.gender == 0 ? ObscuredPrefs.GetInt("gender") : updateUserInfo.gender);
+        postData.AddField("age", updateUserInfo.age == 0 ? ObscuredPrefs.GetInt("age") : updateUserInfo.age);
+        postData.AddField("province", updateUserInfo.province == 0 ? ObscuredPrefs.GetInt("province") : updateUserInfo.province);
+        postData.AddField("deviceUniqueIdentifier", ObscuredPrefs.GetString("deviceUniqueIdentifier"));
+        WWW www = new WWW(urlUpdateInfo, postData);
+        yield return www;
+        if (www.isDone)
+        {
+            if (www.text.Trim() == "4")//شماره تلفن قبلا ثبت شده است
+            {
+                isPhoneNumberExist = true;
+                txtPanelMessage.text="این شماره قبلا ثبت شده است";
+            }
+            else if (www.text.Trim() == "1" || www.text.Trim() == "0") // باموفقیت آپدیت شد
+            {
+                isPhoneNumberExist = false;
+                if (updateUserInfo.profilePhoneNumber != string.Empty && updateUserInfo.profilePass != string.Empty)
+                {
+                    ObscuredPrefs.SetString("phoneNumber", updateUserInfo.profilePhoneNumber);
+                    ObscuredPrefs.SetString("pass", updateUserInfo.profilePass);
+                    BtnSaveSetting();
+                }
+                if (updateUserInfo.age > 0 && updateUserInfo.age > 0 && updateUserInfo.age > 0)
+                {
+                    ObscuredPrefs.SetInt("age", updateUserInfo.age);
+                    ObscuredPrefs.SetInt("gender", updateUserInfo.gender);
+                    ObscuredPrefs.SetInt("province", updateUserInfo.province);
+                }
+                txtPanelMessage.text="اطلاعات با موفقیت ثبت شد";
+                SaveData();// ذخیره اطلاعات پلیرپرفس سرور
+            }
+            panelMessage.SetActive(true);
+        }
+        panelWait.SetActive(false);
+    }
+    #endregion
+    #region Save In Server
     public void SaveData()
     {
         // درصورتی که یک بار لود شده باشد و یا اکانتی نداشته باشد یا یک دفعه ذخیره شده باشد 
@@ -197,7 +229,7 @@ public class InternetStorageSpace : MonoBehaviour
         if ((PlayerPrefs.GetInt("isFirstLoadedAfterInstallation", 0) == 1 || PlayerPrefs.GetInt("isAccount", -1) != -1 ||
             PlayerPrefs.GetInt("isDontRetrieveAndAutoRetrieve", 0) == 1 || PlayerPrefs.GetInt("isFirstSave", 0) == 1) && (ObscuredPrefs.GetInt("helpStep", 0) >= 22))
         {
-            StartCoroutine(IEsaveData(false));
+            StartCoroutine(IEsaveData());
         }
         else
         {
@@ -205,7 +237,7 @@ public class InternetStorageSpace : MonoBehaviour
         }
     }
     // ذخیره کردن اطلاعات بازی در سرور
-    private IEnumerator IEsaveData(bool optional)
+    private IEnumerator IEsaveData()
     {
         LoadUserData = new UserData()
         {
@@ -240,8 +272,6 @@ public class InternetStorageSpace : MonoBehaviour
                     PlayerPrefs.SetInt("isFirstSave", 1);
                 }
                 Debug.Log("Save All");
-                if (optional)
-                    BtnSaveSetting();
             }
         }
         else
@@ -296,8 +326,6 @@ public class InternetStorageSpace : MonoBehaviour
         SceneManager.LoadScene(0);
     }
     #endregion
-
-
     #region PlayerPrefs
     static void SetDataToPlayerPrfs(object propValue)
     {
