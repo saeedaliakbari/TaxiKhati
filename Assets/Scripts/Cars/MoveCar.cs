@@ -23,7 +23,7 @@ public class MoveCar : MonoBehaviour
     public void DiverARound()
     {
         getStart = true;
-        float ratio = car.controller.SpeedRatio();
+        float ratio = car.controller.SpeedRatio(false);
         float speed = Manager.GetCurrentTime() < Manager.GetActionTime("speed_x2") ? 2 : 0;
         speed = speed + (Manager.GetCurrentTime() < Manager.GetActionTime("speed_2x_for_150s") ? 2 : 0);
         if (speed > 0)

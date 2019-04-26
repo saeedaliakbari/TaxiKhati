@@ -110,9 +110,9 @@ public class Controller : MonoBehaviour
     }
     public IEnumerator IESpeedRatio()
     {
-        while (SpeedRatio() > 1)
+        while (SpeedRatio(true) > 1)
         {
-            SpeedRatio();
+            SpeedRatio(true);
             if (!audioSourceCoreFast.isPlaying)
             {
                 audioSourceCore.Stop();
@@ -121,17 +121,18 @@ public class Controller : MonoBehaviour
             yield return new WaitForSeconds(8f);
         }
 
-        SpeedRatio();
+        SpeedRatio(true);
 
         //Debug.Log("speed normal");
     }
-    public float SpeedRatio()
+    public float SpeedRatio(bool bSpeed)
     {
         float ratio = Manager.GetCurrentTime() < Manager.GetActionTime("speed_x2") ? 2 : 1;
+        float speed=ratio;
         ratio = ratio + (Manager.GetCurrentTime() < Manager.GetActionTime("speed_2x_for_150s") ? 2 : 0);
         ratio = ratio + (ObscuredPrefs.GetFloat("carsSpeedTycoon", 1) - 1);//carsSpeedBoostsTycoon
         txtSpeed.text = ratio + " برابر";
-        if (ratio == 1)
+        if (speed == 1)
         {
             objSpeed.SetActive(false);
             if (!audioSourceCore.isPlaying)
@@ -144,7 +145,10 @@ public class Controller : MonoBehaviour
         {
             objSpeed.SetActive(true);
         }
-        return ratio;
+        if(bSpeed)
+            return speed;
+        else
+            return ratio;
     }
     // Use this for initialization
     void Start()

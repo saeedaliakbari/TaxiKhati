@@ -23,6 +23,7 @@ public class ShopPanel : MonoBehaviour
     }
     public void OpenPanel()
     {
+        controller.toolsGet.isShown=true;
         int unloacked = ObscuredPrefs.GetInt("unlocked_car", 1);
         //Debug.Log("unload Car : " + unloacked);
         scrCar.verticalNormalizedPosition = 1;

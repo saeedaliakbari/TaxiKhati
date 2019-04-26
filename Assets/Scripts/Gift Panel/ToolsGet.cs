@@ -51,7 +51,6 @@ public class ToolsGet : MonoBehaviour {
         num = number;
         lvl = level;
     }
-
     public void openPanel()
     {
         if (!isShown)
