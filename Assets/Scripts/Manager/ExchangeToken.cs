@@ -15,6 +15,7 @@ public class ExchangeToken : MonoBehaviour
     public Button btnExchange;
     public void SetTxtTokenValue()
     {
+        //Debug.Log("Rete Exchange: " + ObscuredPrefs.GetFloat("exchangeDeclineTycoon", 0) + " >" + ((1 - ObscuredPrefs.GetFloat("exchangeDeclineTycoon", 0)) * 10000));
         rate = (1 - ObscuredPrefs.GetFloat("exchangeDeclineTycoon", 0)) * 10000;
         txtRate.text = "(" + rate.ToString();
         try
@@ -286,7 +287,7 @@ public class ExchangeToken : MonoBehaviour
         {
             power = 10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000d;
         }
-        Debug.Log("power : " + power + "din : " + dIn);
+        //Debug.Log("power : " + power + "din : " + dIn);
 
         return power * dIn;
     }

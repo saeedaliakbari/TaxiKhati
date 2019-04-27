@@ -236,7 +236,7 @@ public class ParkingManager : MonoBehaviour
     public void GetGiftExchangeRateDecline()
     {
         btnExchangeDecline.interactable = false;
-        ObscuredPrefs.SetFloat("exchangeDeclineTycoon", exchangeDeclineTycoonBoosts.rateDecline[ObscuredPrefs.GetInt("ExchangeDeclineTycoonLevel", 0)]);
+        ObscuredPrefs.SetFloat("exchangeDeclineTycoon", exchangeDeclineTycoonBoosts.rateDecline[ObscuredPrefs.GetInt("exchangeDeclineTycoonLevel", 0)]);
         ObscuredPrefs.SetInt("exchangeDeclineTycoonLevel", ObscuredPrefs.GetInt("exchangeDeclineTycoonLevel", 0) + 1);
         //txtExchangeDecline.text = "Level Offline Earn " + (ObscuredPrefs.GetInt("exchangeDeclineTycoonLevel", 0) + 1);
         PrintLevelsCarsInPark();
