@@ -171,6 +171,7 @@ public class VideoAds : MonoBehaviour
                     if (result.completed && result.rewarded)
                     {
                         ObscuredPrefs.SetInt("mergeCarForVideo", 1);
+                        shopPanel.UpdateCarItems();
                         GiftShopCar(index - 1);
                     }
                     else
