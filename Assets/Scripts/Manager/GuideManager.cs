@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CodeStage.AntiCheat.ObscuredTypes;
 using UnityEngine.UI;
+using GameAnalyticsSDK;
 
 public class GuideManager : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class GuideManager : MonoBehaviour
     public void PlusStep()
     {
         ObscuredPrefs.SetInt("helpStep", ObscuredPrefs.GetInt("helpStep", 0) + 1);
+        GameAnalytics.NewDesignEvent("Help Step", ObscuredPrefs.GetInt("helpStep", 0));
     }
     public void InActiveBuyCar()
     {
@@ -84,7 +86,7 @@ public class GuideManager : MonoBehaviour
         if (ObscuredPrefs.GetInt("helpStep", 0) == 7)
         {
             returnPanelGuide.SetActive(false);
-            controller.SpawnABox(1, parkPlace[3], 0,3f);
+            controller.SpawnABox(1, parkPlace[3], 0, 3f);
             openBoxGuide.SetActive(true);
             PlusStep();
         }
