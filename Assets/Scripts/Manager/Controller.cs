@@ -24,6 +24,7 @@ public class Controller : MonoBehaviour
     public SettingPanel settingPanel;
     public OfflineGiftCar offlineGiftCar;
     public CafeIntent cafeIntent;
+    public InternetStorageSpace internetStorageSpace;
     public AudioSource audioSourceCore, audioSourceCoreFast;
     public MoveAnim moveAnimHandRun;
     //public ShopDialog shop;
@@ -67,11 +68,11 @@ public class Controller : MonoBehaviour
         instance = this;
         ObscuredPrefs.SetInt("mainAchiv16", ObscuredPrefs.GetInt("mainAchiv16", 0) + 1);
         ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem", 5) /*+ 1000000*/);
-        ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 21000));
+        ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 21000) /*+ 1000000000000000000d*/);
         ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 21000));
-        ObscuredPrefs.SetDouble("token",0/* ObscuredPrefs.GetDouble("token", 0)*/ /*+ 1000000000000000000d*/);
+        ObscuredPrefs.SetDouble("token", 0/* ObscuredPrefs.GetDouble("token", 0)*/ /*+ 1000000000000000000d*/);
         //ObscuredPrefs.SetInt("unlocked_car", 50);
-        //ObscuredPrefs.SetInt("Level", 53);
+        //ObscuredPrefs.SetInt("Level", 15);
         //ObscuredPrefs.SetInt("Xp", 137000);
         SetText();
     }
@@ -87,7 +88,9 @@ public class Controller : MonoBehaviour
         while (EarningRatio() > 1)
         {
             EarningRatio();
+            //Debug.Log("start Yeild earn");
             yield return new WaitForSeconds(2f);
+            //Debug.Log("End Yeild earn");
         }
         yield return new WaitForSeconds(2f);
         EarningRatio();
@@ -98,6 +101,7 @@ public class Controller : MonoBehaviour
         ratio += ((Manager.GetCurrentTime() < Manager.GetActionTime("earning_5x_for_1m_special")) ? 5 : 0);
         ratio += ObscuredPrefs.GetFloat("incomeLine", 1);
         txtEarning.text = ratio + " برابر";
+        //Debug.Log("Earn Ratio : " + ratio);
         if (ratio == 1)
         {
             objEarning.SetActive(false);
@@ -118,34 +122,34 @@ public class Controller : MonoBehaviour
                 audioSourceCore.Stop();
                 audioSourceCoreFast.Play();
             }
-            yield return new WaitForSeconds(8f);
+            //Debug.Log("start Yeild Speed");
+            yield return new WaitForSeconds(2f);
+            //Debug.Log("End Yeild Speed");
         }
-
         SpeedRatio(true);
-
         //Debug.Log("speed normal");
     }
     public float SpeedRatio(bool bSpeed)
     {
         float ratio = Manager.GetCurrentTime() < Manager.GetActionTime("speed_x2") ? 2 : 1;
-        float speed=ratio;
+        float speed = ratio;
         ratio = ratio + (Manager.GetCurrentTime() < Manager.GetActionTime("speed_2x_for_150s") ? 2 : 0);
         ratio = ratio + (ObscuredPrefs.GetFloat("carsSpeedTycoon", 1) - 1);//carsSpeedBoostsTycoon
         txtSpeed.text = ratio + " برابر";
+        //Debug.Log("speed ratio : " + ratio + ">" + speed);
         if (speed == 1)
         {
-            objSpeed.SetActive(false);
             if (!audioSourceCore.isPlaying)
             {
                 audioSourceCore.Play();
             }
             audioSourceCoreFast.Stop();
         }
+        if (ratio == 1)
+            objSpeed.SetActive(false);
         else
-        {
             objSpeed.SetActive(true);
-        }
-        if(bSpeed)
+        if (bSpeed)
             return speed;
         else
             return ratio;
@@ -874,6 +878,7 @@ public class Controller : MonoBehaviour
             timeValue--;
             Manager.SetActionTime("speed_x2", (Manager.GetActionTime("speed_x2") - 1));
         }
+        SpeedRatio(true);
         speedPanel.imgProgress.fillAmount = 0;
         speedPanel.txtTimer.text = "00:00";
         yield return 0;

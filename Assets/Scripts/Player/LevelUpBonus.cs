@@ -16,6 +16,7 @@ public class LevelUpBonus : MonoBehaviour
     int newLevel;
     public void ShowLevelUpBonus(int newLevel)
     {
+        controller.internetStorageSpace.SaveData(false);
         if (newLevel > 53)
         {
             Debug.Log("newlevel: " + newLevel + ">>" + ObscuredPrefs.GetInt("gem" + newLevel));
