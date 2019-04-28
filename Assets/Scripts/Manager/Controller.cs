@@ -70,7 +70,7 @@ public class Controller : MonoBehaviour
         ObscuredPrefs.SetDouble("gem", ObscuredPrefs.GetDouble("gem", 5) /*+ 1000000*/);
         ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 21000) /*+ 1000000000000000000d*/);
         ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 21000));
-        ObscuredPrefs.SetDouble("token", 0/* ObscuredPrefs.GetDouble("token", 0)*/ /*+ 1000000000000000000d*/);
+        ObscuredPrefs.SetDouble("token", ObscuredPrefs.GetDouble("token", 0) /*+ 1000000000000000000d*/);
         //ObscuredPrefs.SetInt("unlocked_car", 50);
         //ObscuredPrefs.SetInt("Level", 15);
         //ObscuredPrefs.SetInt("Xp", 137000);
