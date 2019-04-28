@@ -117,7 +117,7 @@ public class Car : MonoBehaviour
                             {//اگر لول بیشتر از لول ماشین ماکس باشد
                                 controller.guideManager.MergeStep2();
                                 ObscuredPrefs.SetInt("unlocked_car", level + 1);
-                                GameAnalytics.NewDesignEvent("Car Level", ObscuredPrefs.GetInt("unlocked_car", 1));
+                                GameAnalytics.NewDesignEvent("Car Level:" + ObscuredPrefs.GetInt("unlocked_car", 1));
                                 ObscuredPrefs.SetInt("curr_car_index", controller.lastSalableCoreLevel[ObscuredPrefs.GetInt("unlocked_car", 1) - 1] - 1);
                                 controller.ShowMergeNewCar(level - 1);//در صورتی که ماشین جدید باز شود پنل مرج باز می شود که مرج انجام می شود
                                 controller.UpdatePrice();//برای اینکه باتن کور آپدیت شود

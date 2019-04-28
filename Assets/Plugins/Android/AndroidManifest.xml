@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="ir.balootgames.taxi" xmlns:tools="http://schemas.android.com/tools" android:installLocation="auto" android:versionName="1.0.3" android:versionCode="42">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="ir.balootgames.taxi" xmlns:tools="http://schemas.android.com/tools" android:installLocation="auto" android:versionName="1.0.3" android:versionCode="43">
   <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="28" />
   <supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" android:xlargeScreens="true" android:anyDensity="true" />
   <uses-permission android:name="android.permission.INTERNET" />

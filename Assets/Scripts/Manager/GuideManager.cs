@@ -25,7 +25,7 @@ public class GuideManager : MonoBehaviour
     public void PlusStep()
     {
         ObscuredPrefs.SetInt("helpStep", ObscuredPrefs.GetInt("helpStep", 0) + 1);
-        GameAnalytics.NewDesignEvent("Help Step", ObscuredPrefs.GetInt("helpStep", 0));
+        GameAnalytics.NewDesignEvent("Help Step:" + ObscuredPrefs.GetInt("helpStep", 0));
     }
     public void InActiveBuyCar()
     {
