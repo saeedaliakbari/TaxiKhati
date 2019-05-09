@@ -138,7 +138,7 @@ public class UsersScripts : MonoBehaviour
                     scrUser.txtRank.gameObject.SetActive(false);
                     scrUser.imgMedal.gameObject.SetActive(true);
                     scrUser.imgMedal.sprite = sprMedal[i - 1];
-                    scrUser.txtName.text = jsonBooks[i][1].ToString().Replace('ی','ي');
+                    scrUser.txtName.text = jsonBooks[i][1].ToString();
                     scrUser.txtCoin.text = jsonBooks[i][2].ToString();
 
                 }
@@ -160,7 +160,7 @@ public class UsersScripts : MonoBehaviour
                     listRanking.Add(objUser);
                     UserRank scrUser = objUser.GetComponent<UserRank>();
                     scrUser.txtRank.text = i.ToString();
-                    scrUser.txtName.text = jsonBooks[i][1].ToString().Replace('ی', 'ي');
+                    scrUser.txtName.text = jsonBooks[i][1].ToString();
                     scrUser.txtCoin.text = jsonBooks[i][2].ToString();
                 }
                 Manager.SetActionTime("updateRank", Manager.GetCurrentTime() + 120f);
