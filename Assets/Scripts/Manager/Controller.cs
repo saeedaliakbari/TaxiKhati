@@ -25,6 +25,7 @@ public class Controller : MonoBehaviour
     public OfflineGiftCar offlineGiftCar;
     public CafeIntent cafeIntent;
     public InternetStorageSpace internetStorageSpace;
+    public InvitedScript invitedScript;
     public AudioSource audioSourceCore, audioSourceCoreFast;
     public MoveAnim moveAnimHandRun;
     //public ShopDialog shop;

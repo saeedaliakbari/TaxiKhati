@@ -13,7 +13,6 @@ public class InternetStorageSpace : MonoBehaviour
     public InputField inputPhonePanelSave, inputPassPanelSave, inputPhonePanelLoad, inputPassPanelLoad;
     public Image imgLastCarPanelAutoRetrice, imgLastCarPanelRecovery;
     public Controller controller;
-
     [HideInInspector]
     public bool isNetConnect, isValidUserAndPass = false /*در قسمت لود اطلاعات از سرور استفاده شده است*/  , isPhoneNumberExist = false;// درقسمت بروزرسانی اطلاعات پروفایل استفاده شده است
     #region urls
@@ -342,7 +341,7 @@ public class InternetStorageSpace : MonoBehaviour
             else if (Status == "0")
             { // اکانت وجود ندارد
                 PlayerPrefs.SetInt("isAccount", 0);
-                //پنل وارد کردن کد معرف باز شود
+                controller.invitedScript.panelInvite.SetActive(true); //پنل وارد کردن کد معرف باز شود
                 SaveData(false);
             }
             else
@@ -353,6 +352,8 @@ public class InternetStorageSpace : MonoBehaviour
             PlayerPrefs.SetInt("isAccount", -1); //نامشخص
         }
     }
+
+
     public void AutoRetrive()
     {
         panelWait.SetActive(true);
@@ -491,6 +492,7 @@ public class InternetStorageSpace : MonoBehaviour
         }
     }
     #endregion
+
 }
 public class UserData
 {
@@ -647,6 +649,7 @@ public class UserInfoData
 {
     public int userid { get; set; }
     public string username { get; set; }
+    public string inviteCode { get; set; }
     public double coinTotal { get; set; }
     public double coin { get; set; }
     public double gem { get; set; }

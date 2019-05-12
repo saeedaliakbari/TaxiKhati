@@ -10,6 +10,7 @@ public class Splash : MonoBehaviour
 
     void Start()
     {
+        ObscuredPrefs.SetInt("enterFromSplash", 1);
 #if UNITY_ANDROID && !UNITY_EDITOR
                 GameAnalytics.Initialize();
 #endif
