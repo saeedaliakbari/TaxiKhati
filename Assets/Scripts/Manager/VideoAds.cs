@@ -17,7 +17,7 @@ public class VideoAds : MonoBehaviour
     public GameObject panelTaxiUpVideo, panelNoAds;
     public Image imgNowCar, imgUpCar;
     [HideInInspector]
-    public int indexCar = 0;
+    public int indexOld = 0, indexNew = 0;
 
     private string sdkToken = "ntmnrcicifbdkgjlgqcnnqqcmkedhbbjdgmldpmnmhehcsjctdrfkoobmidbjkimkggbig";
 
@@ -33,6 +33,7 @@ public class VideoAds : MonoBehaviour
         Tapsell.initialize(sdkToken);
         LoadAd(zoneOfflineEarning, false);
         LoadAd(zoneShopCar, false);
+        LoadAd(zoneCarUp, false);
         shopPanel.UpdateCarItems();
     }
     #region Double Offline Earning
@@ -230,7 +231,7 @@ public class VideoAds : MonoBehaviour
                     else
                     {
                         GiftCarUp(false);
-                        LoadAd(zoneShopCar, false);
+                        LoadAd(zoneCarUp, true);
                     }
                 }
             );
@@ -251,11 +252,14 @@ public class VideoAds : MonoBehaviour
     {
         if (status)
         {
-            indexCar += 1;
+            controller.SpawnBoxLevelUpCar(controller.videoAds.indexNew, controller.parkingManager.GetEmptyPlace(), 2, 3f);
         }
-        controller.SpawnACarWithVideo(indexCar);
+        else
+        {
+            controller.SpawnBoxLevelUpCar(controller.videoAds.indexOld, controller.parkingManager.GetEmptyPlace(), 2, 3f);
+        }
+        controller.parkingManager.EnableCarInPark();
         panelTaxiUpVideo.SetActive(false);
-
     }
     #endregion
     #region Video Wheel Of Fourtune

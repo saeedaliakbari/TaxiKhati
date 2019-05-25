@@ -19,6 +19,7 @@ public class Controller : MonoBehaviour
     public PlayerLevel playerLevel;
     public AchivmentManager achivmentManager;
     public VideoAds videoAds;
+    public LevelUpCar levelUpCar;
     public BatchPlugin batchPlugin;
     public GuideManager guideManager;
     public SettingPanel settingPanel;
@@ -309,21 +310,75 @@ public class Controller : MonoBehaviour
                     ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) - price);
                 }
                 SetText();
-                //if (index == 3)//این برای این است که بعضی مواقع ماشینی که خریده جدید پنل بالا بردن لول براش بیاد که که لولش بره بالا با ویدئو
-                //{
-                //    Debug.Log("index: " + index);
-                //    videoAds.imgNowCar.sprite = mergeCar.showSprites[index];
-                //    videoAds.imgUpCar.sprite = mergeCar.showSprites[index + 1];
-                //    videoAds.panelTaxiUpVideo.SetActive(true);
-                //    videoAds.indexCar = index;
-                //}
-                //else
-                //{
+                Debug.Log("index: " + index + "lastSalableTaxiLevel : " + lastSalableTaxiLevel);
+                if (lastSalableTaxiLevel - index == 4)//این برای این است که بعضی مواقع ماشینی که خریده جدید پنل بالا بردن لول براش بیاد که که لولش بره بالا با ویدئو
+                {
+                    Debug.Log("index3: " + index);
+                    ObscuredPrefs.SetInt("level_up_3", ObscuredPrefs.GetInt("level_up_3", 0) + 1);
+                }
+                else if (lastSalableTaxiLevel - index == 5)
+                {
+                    Debug.Log("index4: " + index);
+                    ObscuredPrefs.SetInt("level_up_4", ObscuredPrefs.GetInt("level_up_4", 0) + 1);
+                }
+                else if (lastSalableTaxiLevel - index == 6)
+                {
+                    Debug.Log("index5: " + index);
+                    ObscuredPrefs.SetInt("level_up_5", ObscuredPrefs.GetInt("level_up_5", 0) + 1);
+                }
+
                 if (hasBox)
-                    SpawnABox(index, parkPlace, modelBox, 3f);
+                {
+                    int random3 = UnityEngine.Random.Range(4, 7);
+                    int random4 = UnityEngine.Random.Range(5, 8);
+                    int random5 = UnityEngine.Random.Range(7, 11);
+                    Debug.Log("random3: " + random3 + " >>> " + ObscuredPrefs.GetInt("level_up_3", 0));
+                    Debug.Log("random4: " + random4 + " >>> " + ObscuredPrefs.GetInt("level_up_4", 0));
+                    Debug.Log("random5: " + random5 + " >>> " + ObscuredPrefs.GetInt("level_up_5", 0));
+                    if (ObscuredPrefs.GetInt("level_up_3", 0) == random3 || ObscuredPrefs.GetInt("level_up_3", 0) > 6)
+                    {
+                        ObscuredPrefs.SetInt("level_up_3", 0);
+                        videoAds.imgNowCar.sprite = activeCar[index];
+                        videoAds.imgUpCar.sprite = activeCar[lastSalableTaxiLevel - 1];
+                        videoAds.panelTaxiUpVideo.SetActive(true);
+                        videoAds.indexOld = index;
+                        videoAds.indexNew = lastSalableTaxiLevel - 1;
+                        levelUpCar.price = 5;
+                        levelUpCar.txtGem.text = "5";
+                        //levelUpCar.parkPlace = parkPlace;
+                    }
+                    else if (ObscuredPrefs.GetInt("level_up_4", 0) == random4 || ObscuredPrefs.GetInt("level_up_4", 0) > 7)
+                    {
+                        ObscuredPrefs.SetInt("level_up_4", 0);
+                        videoAds.imgNowCar.sprite = activeCar[index];
+                        videoAds.imgUpCar.sprite = activeCar[lastSalableTaxiLevel - 2];
+                        videoAds.panelTaxiUpVideo.SetActive(true);
+                        videoAds.indexOld = index;
+                        videoAds.indexNew = lastSalableTaxiLevel - 2;
+                        levelUpCar.price = 4;
+                        levelUpCar.txtGem.text = "4";
+                        //levelUpCar.parkPlace = parkPlace;
+                    }
+                    else if (ObscuredPrefs.GetInt("level_up_5", 0) == random5 || ObscuredPrefs.GetInt("level_up_5", 0) > 10)
+                    {
+                        ObscuredPrefs.SetInt("level_up_5", 0);
+                        videoAds.imgNowCar.sprite = activeCar[index];
+                        videoAds.imgUpCar.sprite = activeCar[lastSalableTaxiLevel - 2];
+                        videoAds.panelTaxiUpVideo.SetActive(true);
+                        videoAds.indexOld = index;
+                        videoAds.indexNew = lastSalableTaxiLevel - 2;
+                        levelUpCar.price = 4;
+                        levelUpCar.txtGem.text = "4";
+                        //levelUpCar.parkPlace = parkPlace;
+                    }
+                    else
+                    {
+                        SpawnABox(index, parkPlace, modelBox, 3f);
+                    }
+                }
                 else
                     SpawnACar(index, parkPlace);
-                //}
+
                 //Debug.Log(price + "*((100+" + increaseRate[index] + ")/" + 100 + ")====>>>" + (price * ((100f + increaseRate[index]) / 100)) + ">>>>" + (System.Math.Round(price * ((100 + increaseRate[index]) / 100))));
                 double newPrice = System.Math.Round(ObscuredPrefs.GetDouble("car_price_" + index, System.Math.Round(basePrice[index])) * ((100f + increaseRate[index]) / 100));//قیمت جدید را بدست می آورد
                                                                                                                                                                                //Debug.Log("newPrice : " + newPrice);
@@ -408,6 +463,28 @@ public class Controller : MonoBehaviour
             box.StartAutoOpen(delay);
         }
         return box;
+    }
+    public IEnumerator SpawnBoxLevelUpCar(int carIndex, ParkingPlace parkPlace, int modelBox, float delay)
+    {
+        if (parkPlace == null)
+        {
+            yield return new WaitForSeconds(2f);
+            parkPlace = parkingManager.GetEmptyPlace();
+            StartCoroutine(SpawnBoxLevelUpCar(carIndex, parkPlace, modelBox, delay));
+        }
+        else {
+            if (parkPlace.IsEmpty())
+            {
+                SpawnABox(videoAds.indexNew, parkPlace, 2, 3f);
+            }
+            else
+            {
+                yield return new WaitForSeconds(2f);
+                parkPlace = parkingManager.GetEmptyPlace();
+                StartCoroutine(SpawnBoxLevelUpCar(carIndex, parkPlace, modelBox, delay));
+
+            }
+        }
     }
     public void NewCarTimeing()
     {
@@ -545,41 +622,11 @@ public class Controller : MonoBehaviour
         yield return new WaitForSeconds(UnityEngine.Random.Range(2f, 3f));
         SpawnABoxSpecialOffer(i);
     }
-    //public void ShowCareerDialog()
-    //{
-    //    //Sound.instance.PlayButton();
-    //    career.gameObject.SetActive(true);
-    //    career.ShowDialog();
-    //    //CUtils.ShowInterstitialAd();//پخش تبلیغات
-    //}
-    public void ShowShopDialog()
-    {
-        //shop.gameObject.SetActive(true);
-        //shop.ShowDialog();
-        ////CUtils.ShowInterstitialAd();
-    }
-    public void ShowExchangeDialog()
-    {
-        ////Sound.instance.PlayButton();
-        //exchangeDialog.gameObject.SetActive(true);
-        //exchangeDialog.ShowDialog();
-        ////CUtils.ShowInterstitialAd();
-    }
-
-    public void ShowSpeedX2Dialog()
-    {
-        ////Sound.instance.PlayButton();
-        //speedX2Dialog.gameObject.SetActive(true);
-        //speedX2Dialog.ShowDialog();
-        ////CUtils.ShowInterstitialAd();
-    }
-
     public void ShowMergeNewCar(int fromIndex)
     {
         mergeCar.gameObject.SetActive(true);
         mergeCar.ShowMergeCar(fromIndex);
     }
-
     public void ShowLevelBonus(int newLevel)
     {
         StartCoroutine(IEShowBonus(newLevel));
@@ -598,13 +645,9 @@ public class Controller : MonoBehaviour
     public bool IsDialogShowed()
     {
         return false;
-        //return mergeCar.gameObject.activeSelf || shop.gameObject.activeSelf /*|| career.gameObject.activeSelf*/ ||
-        //    exchangeDialog.gameObject.activeSelf || speedX2Dialog.gameObject.activeSelf || levelBonus.gameObject.activeSelf;
     }
     public void CloseOffEarning()
     {//بستن پنل بدست آوردن سکه
-     //Sound.instance.PlayButton();
-     //offEarning.gameObject.SetActive(false);
         Close(offEarning.gameObject);
     }
     public void CloseSetting()

@@ -6,10 +6,9 @@ using UnityEngine.UI;
 
 public class InvitedScript : MonoBehaviour
 {
-    public Image imgSlider;
-    public Text inviteCode, txtMessage, txtGem, txtMessageInviteReward;
-    public SpriteRenderer sprReward;
-    public GameObject btnInvite, panelInvite, panelMessage, panelInviteReward, objCopy, panelWait;
+    public Image imgSlider, imgReward;
+    public Text inviteCode, txtMessage, txtGem, txtMessageInviteReward, txtMessageReward;
+    public GameObject btnInvite, panelInvite, panelMessage, panelMessageReward, panelInviteReward, objCopy, panelWait;
     public inviteReward[] InviteReward;
     private int countNotReceived;
     private CountInvitedStatus countInvitedStatus;
@@ -41,6 +40,7 @@ public class InvitedScript : MonoBehaviour
             if (ObscuredPrefs.GetInt("enterFromSplash", 0) == 1)//اگر از اسپلش وارد شد
             {
                 ObscuredPrefs.SetInt("enterFromSplash", 0);
+                //Debug.Log("showInvitePanelCount:> " + ObscuredPrefs.GetInt("showInvitePanelCount", 0));
                 if (ObscuredPrefs.GetInt("showInvitePanelCount", 0) % 2 == 0)//اگر دفعات زوج بود براش پنل جایزه های دعوت از دوستان را نمایش بده
                 {
                     GetCountInvitedStatus();
@@ -54,6 +54,7 @@ public class InvitedScript : MonoBehaviour
     }
     public void GetCountInvitedStatus()
     {
+        Debug.Log("GetCountInvitedStatus");
         int index = ObscuredPrefs.GetInt("countRewardReceived", 0);
         if (index >= 6)
         {
@@ -61,13 +62,13 @@ public class InvitedScript : MonoBehaviour
             imgSlider.fillAmount = InviteReward[index].fillAmount;
             txtMessageInviteReward.text = "جایزه دعوت از نفر بعدی: " + InviteReward[index].txtReward;
             //txtMessageInviteReward.text = string.Format(strTemplateNext5, );
-            sprReward.sprite = InviteReward[index].spriteReward;
+            imgReward.sprite = InviteReward[index].spriteReward;
         }
         else
         {
             imgSlider.fillAmount = InviteReward[index].fillAmount;
             txtMessageInviteReward.text = "جایزه دعوت از " + InviteReward[index].txtFriends + " نفر: " + InviteReward[index].txtReward;//string.Format(strTemplate, , );
-            sprReward.sprite = InviteReward[index].spriteReward;
+            imgReward.sprite = InviteReward[index].spriteReward;
         }
         if (ObscuredPrefs.GetString("inviteCode", "") != "")
         {
@@ -235,6 +236,7 @@ public class InvitedScript : MonoBehaviour
 
     public void CheckCountReward()
     {
+        Debug.Log("CheckCountReward");
         int index = ObscuredPrefs.GetInt("countRewardReceived", 0);
         if (index >= 6)
         {
@@ -250,7 +252,7 @@ public class InvitedScript : MonoBehaviour
             Debug.Log("index + plus :" + index + plus);
             txtMessageInviteReward.text = "جایزه دعوت از " + InviteReward[index + plus].txtFriends + " نفر: " + InviteReward[index + plus].txtReward;
             //txtMessageInviteReward.text = string.Format(strTemplate, InviteReward[index + plus].txtFriends, InviteReward[index + plus].txtReward);
-            sprReward.sprite = InviteReward[index + plus].spriteReward;
+            imgReward.sprite = InviteReward[index + plus].spriteReward;
             imgSlider.fillAmount = InviteReward[index + plus].fillAmount;
             if (ObscuredPrefs.GetString("inviteCode", "") != "")
             {
@@ -260,12 +262,12 @@ public class InvitedScript : MonoBehaviour
                 }
             }
             if (ObscuredPrefs.GetInt("countRewardReceived", 0) >= 6)// تعداد نفراتی که جایزه را دریافت کردند
-                txtMessage.text = "شما برنده" + InviteReward[5].txtRewardMessage + " شدید"; //string.Format(strTemplateMessageInviteReward, ObscuredPrefs.GetInt("countRewardReceived", 0), );
+                txtMessageReward.text = "شما برنده" + InviteReward[5].txtRewardMessage + " شدید"; //string.Format(strTemplateMessageInviteReward, ObscuredPrefs.GetInt("countRewardReceived", 0), );
             else
             {
-                txtMessage.text = "شما برنده" + InviteReward[index].txtRewardMessage + " شدید"; //string.Format(strTemplateMessageInviteReward, InviteReward[index].txtFriends, InviteReward[index].txtRewardMessage);
+                txtMessageReward.text = "شما برنده" + InviteReward[index].txtRewardMessage + " شدید"; //string.Format(strTemplateMessageInviteReward, InviteReward[index].txtFriends, InviteReward[index].txtRewardMessage);
             }
-            StartCoroutine(IEOpenPanelDelayed(panelMessage));
+            StartCoroutine(IEOpenPanelDelayed(panelMessageReward));
         }
     }
 
@@ -275,7 +277,7 @@ public class InvitedScript : MonoBehaviour
         panel.SetActive(true);
     }
 
-    public void subtractCountReward()
+    public void subtractCountReward()//کلید حله پنل دریافت جایزه
     {
         ObscuredPrefs.SetInt("countRewardReceived", ObscuredPrefs.GetInt("countRewardReceived", 0) + 1);
         int countReceived = ObscuredPrefs.GetInt("countRewardReceived", 0);

@@ -5,6 +5,8 @@ TextureImporter:
     21300000: New Gift
     21300002: new gift khat1
     21300004: New Gift Khat
+    21300006: other-sprite3_0
+    21300008: other-sprite3_1
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -100,7 +102,7 @@ TextureImporter:
         width: 813
         height: 432
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -114,7 +116,7 @@ TextureImporter:
         width: 159
         height: 36
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -127,6 +129,34 @@ TextureImporter:
         y: 541
         width: 99
         height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: other-sprite3_0
+      rect:
+        serializedVersion: 2
+        x: 395
+        y: 475
+        width: 118
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: other-sprite3_1
+      rect:
+        serializedVersion: 2
+        x: 526
+        y: 471
+        width: 99
+        height: 104
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

@@ -31,6 +31,7 @@ public class Splash : MonoBehaviour
             ObscuredPrefs.SetInt("maxXp", ObscuredPrefs.GetInt("maxXp" + ObscuredPrefs.GetInt("Level", 1), 118000));
             ObscuredPrefs.DeleteKey("maxXp" + ObscuredPrefs.GetInt("Level", 1));
         }
+        ObscuredPrefs.SetInt("showInvitePanelCount", ObscuredPrefs.GetInt("showInvitePanelCount", 0) + 1);
         goToSecne.go("Main");
     }
 
