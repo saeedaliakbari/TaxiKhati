@@ -66,6 +66,12 @@
     <!--End Batch-->
     <activity android:name="com.bazaar.BazaarIABProxyActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
     <meta-data android:name="billing.service" android:value="bazaar.BazaarIabService" />
+    <activity
+	  android:name="com.rahnema.dokan.sdk.activity.PurchaseActivity"
+	  android:hardwareAccelerated="true"
+	  android:screenOrientation="portrait"
+	  android:windowSoftInputMode="adjustResize" />
+    <meta-data android:name="dokanToken" android:value="56a9a89da8074e7db2428db6ec1f44e8" />
   </application>
   <!--<uses-permission android:name="android.permission.INTERNET" />-->
   <!--<uses-permission android:name="android.permission.GET_ACCOUNTS" />-->
