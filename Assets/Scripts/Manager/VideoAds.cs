@@ -11,7 +11,6 @@ public class VideoAds : MonoBehaviour
     public Controller controller;
     public OfflineEraning offlineEarning;
     public ShopPanel shopPanel;
-    public RandomGift randomGift;
     public WheelFortuneScript wheelFortuneScript;
     public SpecialOffer specialOffer;
     public GameObject panelTaxiUpVideo, panelNoAds;
@@ -20,10 +19,6 @@ public class VideoAds : MonoBehaviour
     public int indexOld = 0, indexNew = 0;
 
     private string sdkToken = "ntmnrcicifbdkgjlgqcnnqqcmkedhbbjdgmldpmnmhehcsjctdrfkoobmidbjkimkggbig";
-
-    public GameObject panelError;
-
-    public Text txtPanelError;
 
     public ZoneVideo zoneOfflineEarning, zoneShopCar, zoneCarUp, zoneGiftPanel, zoneWheelOfFurtune, zoneSpeedX2, zoneShopClose;
     // Use this for initialization

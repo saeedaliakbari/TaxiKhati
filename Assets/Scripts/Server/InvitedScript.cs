@@ -63,12 +63,14 @@ public class InvitedScript : MonoBehaviour
             txtMessageInviteReward.text = "جایزه دعوت از نفر بعدی: " + InviteReward[index].txtReward;
             //txtMessageInviteReward.text = string.Format(strTemplateNext5, );
             imgReward.sprite = InviteReward[index].spriteReward;
+            imgReward.SetNativeSize();
         }
         else
         {
             imgSlider.fillAmount = InviteReward[index].fillAmount;
             txtMessageInviteReward.text = "جایزه دعوت از " + InviteReward[index].txtFriends + " نفر: " + InviteReward[index].txtReward;//string.Format(strTemplate, , );
             imgReward.sprite = InviteReward[index].spriteReward;
+            imgReward.SetNativeSize();
         }
         if (ObscuredPrefs.GetString("inviteCode", "") != "")
         {
@@ -253,6 +255,7 @@ public class InvitedScript : MonoBehaviour
             txtMessageInviteReward.text = "جایزه دعوت از " + InviteReward[index + plus].txtFriends + " نفر: " + InviteReward[index + plus].txtReward;
             //txtMessageInviteReward.text = string.Format(strTemplate, InviteReward[index + plus].txtFriends, InviteReward[index + plus].txtReward);
             imgReward.sprite = InviteReward[index + plus].spriteReward;
+            imgReward.SetNativeSize();
             imgSlider.fillAmount = InviteReward[index + plus].fillAmount;
             if (ObscuredPrefs.GetString("inviteCode", "") != "")
             {
