@@ -144,7 +144,7 @@ public class ParkingManager : MonoBehaviour
         {
             imgCarSpeed.gameObject.SetActive(false);
             txtSpeedNew.gameObject.SetActive(false);
-            txtSpeedOld.text = ((Mathf.RoundToInt((carSpeedTycoonBoosts.incSpeed[12] - 1f) * 1000)) / 10f).ToString() + "%";
+            txtSpeedOld.text = ((Mathf.RoundToInt((carSpeedTycoonBoosts.incSpeed[19] - 1f) * 1000)) / 10f).ToString() + "%";
             imgPeykanSpeed.gameObject.SetActive(false);
             btnCarSpeed.gameObject.SetActive(false);
             lblNewSpeed.SetActive(false);
@@ -185,7 +185,7 @@ public class ParkingManager : MonoBehaviour
         {
             imgCarOfflienEarn.gameObject.SetActive(false);
             txtOfflineEarnNew.gameObject.SetActive(false);
-            txtOfflineEarnOld.text = ((Mathf.RoundToInt((earningOfflineTycoonBoosts.incEarn[12] - 1f) * 1000)) / 10f).ToString() + "%";
+            txtOfflineEarnOld.text = ((Mathf.RoundToInt((earningOfflineTycoonBoosts.incEarn[19] - 1f) * 1000)) / 10f).ToString() + "%";
             imgPeykanOfflineEarn.gameObject.SetActive(false);
             btnOfflineEarning.gameObject.SetActive(false);
             lblNewOffline.SetActive(false);
@@ -225,7 +225,7 @@ public class ParkingManager : MonoBehaviour
         {
             imgCarExchangeDecline.gameObject.SetActive(false);
             txtExchangeDeclineNew.gameObject.SetActive(false);
-            txtExchangeDeclineOld.text = (Mathf.RoundToInt((exchangeDeclineTycoonBoosts.rateDecline[12]) * 100)).ToString() + "%";
+            txtExchangeDeclineOld.text = (Mathf.RoundToInt((exchangeDeclineTycoonBoosts.rateDecline[19]) * 100)).ToString() + "%";
             imgPeykanExchangeDecline.gameObject.SetActive(false);
             btnExchangeDecline.gameObject.SetActive(false);
             lblNewExchangeDecline.SetActive(false);

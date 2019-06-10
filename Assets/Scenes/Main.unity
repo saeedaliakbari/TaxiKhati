@@ -121837,7 +121837,7 @@ MonoBehaviour:
   imgCarOfflienEarn: {fileID: 1317951053}
   imgPeykanSpeed: {fileID: 1055623187}
   imgCarSpeed: {fileID: 429482706}
-  imgPeykanExchangeDecline: {fileID: 1966446380}
+  imgPeykanExchangeDecline: {fileID: 1436250861}
   imgCarExchangeDecline: {fileID: 1551486572}
   txtCarSpeed: {fileID: 126882709}
   txtSpeedNew: {fileID: 1867956856}

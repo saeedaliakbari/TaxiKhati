@@ -162,7 +162,7 @@ PlayerSettings:
   applicationIdentifier:
     Android: ir.balootgames.taxi
   buildNumber: {}
-  AndroidBundleVersionCode: 58
+  AndroidBundleVersionCode: 59
   AndroidMinSdkVersion: 16
   AndroidTargetSdkVersion: 26
   AndroidPreferredInstallLocation: 0
