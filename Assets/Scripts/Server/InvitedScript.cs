@@ -195,7 +195,7 @@ public class InvitedScript : MonoBehaviour
         postData.AddField("inviteCode", ObscuredPrefs.GetString("inviteCode", ""));
         WWW www = new WWW(urlGetCountInvitedStatus, postData);
         yield return www;
-        Debug.Log("IEGetCountInvitedStatus : " + www.text + "/" + www.error);
+        //Debug.Log("IEGetCountInvitedStatus : " + www.text + "/" + www.error);
         if (www.error == null)
         {
             if (www.text.Trim() != "")

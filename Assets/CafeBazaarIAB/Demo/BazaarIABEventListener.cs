@@ -139,7 +139,15 @@ public class BazaarIABEventListener : MonoBehaviour
     void queryInventoryFailedEvent(string error)
     {
         Debug.Log("queryInventoryFailedEvent: " + error);
-        BazaarIAB.queryInventory(str);
+        if (!error.Contains("6"))
+        {
+
+            BazaarIAB.queryInventory(str);
+        }
+        else
+        {
+            Debug.LogError("vared accunt nistid");
+        }
     }
     #endregion
     #region SKU Details

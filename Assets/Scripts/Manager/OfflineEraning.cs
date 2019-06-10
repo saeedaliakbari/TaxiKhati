@@ -35,6 +35,20 @@ public class OfflineEraning : MonoBehaviour
 
     public void ClaimClick()
     {
+        ObscuredPrefs.SetDouble("offlineEarn", ObscuredPrefs.GetDouble("offlineEarn") + value);
+        if (ObscuredPrefs.GetDouble("offlineEarn") > 1000000000000000000)
+        {
+            ObscuredPrefs.SetInt("mainAchiv23", 1);
+            if (ObscuredPrefs.GetDouble("offlineEarn") > 2000000000000000000000d)
+            {
+                ObscuredPrefs.SetInt("mainAchiv24", 1);
+                if (ObscuredPrefs.GetDouble("offlineEarn") > 3000000000000000000000000d)
+                {
+                    ObscuredPrefs.SetInt("mainAchiv25", 1);
+                }
+            }
+        }
+
         ObscuredPrefs.SetDouble("coinTotal", ObscuredPrefs.GetDouble("coinTotal", 0) + value);
         ObscuredPrefs.SetDouble("coin", ObscuredPrefs.GetDouble("coin", 5000) + value);
         txtCoin.text = ObscuredPrefs.GetDouble("coin", 5000).ToString("0.##");
@@ -81,7 +95,7 @@ public class OfflineEraning : MonoBehaviour
 
     public void CounterCoin(double earned, double firstCoin, TrimNumberText coinText)
     {
-        StartCoroutine(counterCoinIEnumerator(earned, firstCoin,coinText));
+        StartCoroutine(counterCoinIEnumerator(earned, firstCoin, coinText));
     }
 
     public IEnumerator counterCoinIEnumerator(double earned, double firstCoin, TrimNumberText coinText)
@@ -90,7 +104,7 @@ public class OfflineEraning : MonoBehaviour
         double counterCoin = firstCoin;
         for (int i = 0; i < 100; i++)
         {
-            counterCoin +=counter;
+            counterCoin += counter;
             coinText.text = "" + counterCoin;
             yield return new WaitForSeconds(0.01f);
         }

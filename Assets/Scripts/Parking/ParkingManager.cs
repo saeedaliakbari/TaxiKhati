@@ -62,7 +62,7 @@ public class ParkingManager : MonoBehaviour
     }
     private void PrintLevelsCarsInPark()
     {
-        int[] carsLevel = new int[50];
+        int[] carsLevel = new int[70];
         ObscuredPrefs.SetInt("checkLevel", 1);
         Timer.Schedule(this, 0.5f, (Timer.Task)(() =>
         {
@@ -100,6 +100,18 @@ public class ParkingManager : MonoBehaviour
             {
                 ObscuredPrefs.SetInt("mainAchiv7", carsLevel[24]);
             }
+            if (ObscuredPrefs.GetInt("mainAchiv19") < carsLevel[37])
+            {
+                ObscuredPrefs.SetInt("mainAchiv19", carsLevel[37]);
+            }
+            if (ObscuredPrefs.GetInt("mainAchiv28") < carsLevel[49])
+            {
+                ObscuredPrefs.SetInt("mainAchiv28", carsLevel[49]);
+            }
+            if (ObscuredPrefs.GetInt("mainAchiv29") < carsLevel[66])
+            {
+                ObscuredPrefs.SetInt("mainAchiv29", carsLevel[66]);
+            }
             controller.achivmentManager.CheckAchivments();
             CheckCarSpeedTycoon(carsLevel);
             CheckOfflineEarningTycoon(carsLevel);
@@ -128,7 +140,7 @@ public class ParkingManager : MonoBehaviour
         //Debug.Log("carSpeedTycoonLevel LEVEL CAR :" + levelSpeed);
         txtCarSpeed.text = "سطح " + (levelSpeed + 1);
         //imgSlideGreenOfflineEarning.fillAmount = (earningOfflineTycoonBoosts.incEarn[levelOfflineEarning] - 1f) / 0.325f;
-        if (levelSpeed > 12)
+        if (levelSpeed > 19)
         {
             imgCarSpeed.gameObject.SetActive(false);
             txtSpeedNew.gameObject.SetActive(false);
@@ -169,7 +181,7 @@ public class ParkingManager : MonoBehaviour
         txtOfflineEarning.text = "سطح " + (levelOfflineEarning + 1);
         //Debug.Log("CheckOfflineEarningTycoon LEVEL CAR :" + levelOfflineEarning);
         //imgSlideGreenOfflineEarning.fillAmount = (earningOfflineTycoonBoosts.incEarn[levelOfflineEarning] - 1f) / 0.325f;
-        if (levelOfflineEarning > 12)
+        if (levelOfflineEarning > 19)
         {
             imgCarOfflienEarn.gameObject.SetActive(false);
             txtOfflineEarnNew.gameObject.SetActive(false);
@@ -209,7 +221,7 @@ public class ParkingManager : MonoBehaviour
         txtExchangeDecline.text = "سطح " + (levelExchangeDecline + 1);
         //Debug.Log("CheckExchangeRateDecline LEVEL CAR :" + levelExchangeDecline);
         //imgSlideGreenOfflineEarning.fillAmount = (earningOfflineTycoonBoosts.incEarn[levelOfflineEarning] - 1f) / 0.325f;
-        if (levelExchangeDecline > 12)
+        if (levelExchangeDecline > 19)
         {
             imgCarExchangeDecline.gameObject.SetActive(false);
             txtExchangeDeclineNew.gameObject.SetActive(false);

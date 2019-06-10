@@ -239,8 +239,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: 70
-  xp: 1338
-  earnings: 31772000000000000
+  xp: 2568
+  earnings: 4.4841e+22
   speed: 32.2542
   txtCoin: {fileID: 0}
   moving: 0
@@ -290,7 +290,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 16
-  m_Sprite: {fileID: 21300000, guid: 52e5344169d30604a9d01e12390f0f67, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8fb3a5b988faa24478ba0a811e657902, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -378,7 +378,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 16
-  m_Sprite: {fileID: 21300000, guid: 52e5344169d30604a9d01e12390f0f67, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8fb3a5b988faa24478ba0a811e657902, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

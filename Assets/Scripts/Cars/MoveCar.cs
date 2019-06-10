@@ -96,7 +96,7 @@ public class MoveCar : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D col)
     {//وقتی وارد کلایدر با تگ پایان شد
-        //Debug.Log("Coilder Tag: " + col.tag);
+        Debug.Log("Coilder Tag: " + col.tag);
         if (getStart && col.CompareTag("FinishGoal"))
         {
             getStart = false;

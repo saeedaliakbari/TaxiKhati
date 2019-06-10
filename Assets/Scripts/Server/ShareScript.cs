@@ -5,6 +5,7 @@ using System.IO;
 
 public class ShareScript : MonoBehaviour
 {
+    public Sprite sprIcon;
     private bool isFocus = false;
     private string shareSubject, shareMessage;
     void OnApplicationFocus(bool focus)
@@ -24,6 +25,16 @@ public class ShareScript : MonoBehaviour
     private IEnumerator TakeSSAndShare()
     {
         yield return new WaitForEndOfFrame();
+        //var croppedTexture = new Texture2D((int)sprIcon.rect.width, (int)sprIcon.rect.height);
+        //var pixels = sprIcon.texture.GetPixels((int)sprIcon.textureRect.x,
+        //                                        (int)sprIcon.textureRect.y,
+        //                                        (int)sprIcon.textureRect.width,
+        //                                        (int)sprIcon.textureRect.height);
+        //croppedTexture.SetPixels(pixels);
+        //croppedTexture.Apply();
+        //string filePath1 = Path.Combine(Application.temporaryCachePath, "img1.png");
+        //File.WriteAllBytes(filePath1, croppedTexture.EncodeToPNG());
+        //Destroy(croppedTexture);
         Texture2D ss = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
         ss.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
         ss.Apply();

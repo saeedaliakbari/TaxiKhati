@@ -91,6 +91,8 @@ public class Car : MonoBehaviour
                             //Homecontroller.guideManager.HideGsuides();
                             //Homecontroller.guideManager.UpdateAfter(1);
                             ObscuredPrefs.SetInt("mergeCarForVideo", ObscuredPrefs.GetInt("mergeCarForVideo", 1) + 1);
+                            ObscuredPrefs.SetInt("mainAchiv20", ObscuredPrefs.GetInt("mainAchiv20")+1);
+                            ObscuredPrefs.SetInt("mainAchiv21", ObscuredPrefs.GetInt("mainAchiv21") + 1);
                             GetComponent<Animator>().Play("Merge");//انیمیشن مرج اجرا شود
 
                             GetComponent<SpriteRenderer>().enabled = false;

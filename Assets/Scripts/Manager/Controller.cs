@@ -295,8 +295,17 @@ public class Controller : MonoBehaviour
         //Debug.Log("Price Car: " + price);
         if ((useGem ? ObscuredPrefs.GetDouble("gem", 0) : ObscuredPrefs.GetDouble("coin", 5000)) >= price)//روی سکه و روبی که اینجا نوشته شده است دقت شود که چه مقداری باید باشد
         {
-            ObscuredPrefs.SetInt("mainAchiv8", ObscuredPrefs.GetInt("mainAchiv8", 0) + 1);
-            ObscuredPrefs.SetInt("mainAchiv14", ObscuredPrefs.GetInt("mainAchiv14", 0) + 1);
+            if (hasBox)
+            {
+                int count = ObscuredPrefs.GetInt("mainAchiv8", 0);
+                ObscuredPrefs.SetInt("mainAchiv8", count + 1);
+                ObscuredPrefs.SetInt("mainAchiv14", count + 1);
+                ObscuredPrefs.SetInt("mainAchiv26", count + 1);
+            }
+            if (index == 29)
+            {
+                ObscuredPrefs.SetInt("mainAchiv18", ObscuredPrefs.GetInt("mainAchiv18", 0) + 1);
+            }
             achivmentManager.CheckAchivments();
             ParkingPlace parkPlace = parkingManager.GetEmptyPlace();
             if (parkPlace != null)
@@ -450,7 +459,9 @@ public class Controller : MonoBehaviour
     }
     public GiftBox SpawnABox(int carIndex, ParkingPlace parkPlace, int modelBox, float delay)
     {
-        ObscuredPrefs.SetInt("mainAchiv15", ObscuredPrefs.GetInt("mainAchiv15", 0) + 1);
+        int count = ObscuredPrefs.GetInt("mainAchiv15", 0);
+        ObscuredPrefs.SetInt("mainAchiv15", count + 1);
+        ObscuredPrefs.SetInt("mainAchiv27", count + 1);
         achivmentManager.CheckAchivments();
         GiftBox box = Instantiate(boxPrefab, Vector3.zero, Quaternion.identity);//ایجاد کرد یک باکس
         box.controller = this;

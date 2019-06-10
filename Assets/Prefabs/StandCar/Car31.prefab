@@ -241,7 +241,7 @@ MonoBehaviour:
   level: 31
   xp: 540
   earnings: 45056000000
-  speed: 16.3702
+  speed: 9.1507
   txtCoin: {fileID: 0}
   moving: 0
   parkingPlace: {fileID: 0}

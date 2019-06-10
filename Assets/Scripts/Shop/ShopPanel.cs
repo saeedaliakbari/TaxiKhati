@@ -38,7 +38,7 @@ public class ShopPanel : MonoBehaviour
         //else 
         if (unloacked >6)
         {
-            scrCar.verticalNormalizedPosition = 1 - ((unloacked - 6) * 0.0213f);
+            scrCar.verticalNormalizedPosition = 1 - ((unloacked - 6) * 0.0150f);
             //sbrCar.value = scrCar.verticalNormalizedPosition;
         }
         //else if (unloacked > 6)

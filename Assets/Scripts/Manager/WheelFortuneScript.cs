@@ -75,7 +75,9 @@ public class WheelFortuneScript : MonoBehaviour
     }
     public void WheelStart(bool video)
     {
-        ObscuredPrefs.SetInt("mainAchiv9", ObscuredPrefs.GetInt("mainAchiv9", 0) + 1);
+        int count = ObscuredPrefs.GetInt("mainAchiv9", 0);
+        ObscuredPrefs.SetInt("mainAchiv9", count + 1);
+        ObscuredPrefs.SetInt("mainAchiv22", count + 1);
         videoAds.controller.achivmentManager.CheckAchivments();
         btnWheelVideo.interactable = false;
         btnWheelGem.interactable = false;
@@ -95,7 +97,7 @@ public class WheelFortuneScript : MonoBehaviour
             {
                 itemNumber = 1;
             }
-            else if (iPercent <75)//150 s speed
+            else if (iPercent < 75)//150 s speed
             {
                 itemNumber = 2;
             }
@@ -150,7 +152,7 @@ public class WheelFortuneScript : MonoBehaviour
     }
     private void ManageGift(int itemNumber)
     {
-        //itemNumber = 1;
+        //itemNumber = 2;
         audioGift.Play();
         videoAds.controller.panelMessage.SetActive(true);
         if (itemNumber == 0)

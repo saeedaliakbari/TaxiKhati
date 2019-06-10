@@ -247,8 +247,8 @@ public class InternetStorageSpace : MonoBehaviour
     public void SaveData(bool ErrorHandle)
     {
         // درصورتی که یک بار لود شده باشد و یا اکانتی نداشته باشد یا یک دفعه ذخیره شده باشد 
-        Debug.Log("Save Data " + PlayerPrefs.GetInt("isFirstLoadedAfterInstallation", 0) + "/" + PlayerPrefs.GetInt("isAccount", -1) + "/" + PlayerPrefs.GetInt("isDontRetrieveAndAutoRetrieve", 0) + "/" + PlayerPrefs.GetInt("isFirstSave", 0) + "/" + (ObscuredPrefs.GetInt("helpStep", 0) >= 22) + "&&" + (PlayerPrefs.GetInt("isFirstLoadedAfterInstallation", 0) == 1 || PlayerPrefs.GetInt("isAccount", -1) == 0 ||
-            PlayerPrefs.GetInt("isDontRetrieveAndAutoRetrieve", 0) == 1 || PlayerPrefs.GetInt("isFirstSave", 0) == 1));
+        //Debug.Log("Save Data " + PlayerPrefs.GetInt("isFirstLoadedAfterInstallation", 0) + "/" + PlayerPrefs.GetInt("isAccount", -1) + "/" + PlayerPrefs.GetInt("isDontRetrieveAndAutoRetrieve", 0) + "/" + PlayerPrefs.GetInt("isFirstSave", 0) + "/" + (ObscuredPrefs.GetInt("helpStep", 0) >= 22) + "&&" + (PlayerPrefs.GetInt("isFirstLoadedAfterInstallation", 0) == 1 || PlayerPrefs.GetInt("isAccount", -1) == 0 ||
+            //PlayerPrefs.GetInt("isDontRetrieveAndAutoRetrieve", 0) == 1 || PlayerPrefs.GetInt("isFirstSave", 0) == 1));
         if (((PlayerPrefs.GetInt("isFirstLoadedAfterInstallation", 0) == 1 || PlayerPrefs.GetInt("isAccount", -1) != -1 ||
             PlayerPrefs.GetInt("isDontRetrieveAndAutoRetrieve", 0) == 1 || PlayerPrefs.GetInt("isFirstSave", 0) == 1) && (ObscuredPrefs.GetInt("helpStep", 0) >= 22)) || ErrorHandle)
         {
@@ -281,7 +281,7 @@ public class InternetStorageSpace : MonoBehaviour
         postData.AddField("pass", ObscuredPrefs.GetString("pass", ""));
         postData.AddField("deviceUniqueIdentifier", ObscuredPrefs.GetString("deviceUniqueIdentifier"));
         postData.AddField("gameData", jsonGameData);
-        Debug.Log(jsonGameData);
+        //Debug.Log(jsonGameData);
         WWW www = new WWW(urlSaveData, postData);
         yield return www;
         if (www.error == null)
@@ -567,6 +567,19 @@ public class AchivmentData
     public int mainAchiv14 { get; set; }
     public int mainAchiv15 { get; set; }
     public int mainAchiv16 { get; set; }
+    public int mainAchiv17 { get; set; }
+    public int mainAchiv18 { get; set; }
+    public int mainAchiv19 { get; set; }
+    public int mainAchiv20 { get; set; }
+    public int mainAchiv21 { get; set; }
+    public int mainAchiv22 { get; set; }
+    public int mainAchiv23 { get; set; }
+    public int mainAchiv24 { get; set; }
+    public int mainAchiv25 { get; set; }
+    public int mainAchiv26 { get; set; }
+    public int mainAchiv27 { get; set; }
+    public int mainAchiv28 { get; set; }
+    public int mainAchiv29 { get; set; }
     #endregion
     #region mainAchivGet
     public int mainAchivGet1 { get; set; }
@@ -585,6 +598,19 @@ public class AchivmentData
     public int mainAchivGet14 { get; set; }
     public int mainAchivGet15 { get; set; }
     public int mainAchivGet16 { get; set; }
+    public int mainAchivGet17 { get; set; }
+    public int mainAchivGet18 { get; set; }
+    public int mainAchivGet19 { get; set; }
+    public int mainAchivGet20 { get; set; }
+    public int mainAchivGet21 { get; set; }
+    public int mainAchivGet22 { get; set; }
+    public int mainAchivGet23 { get; set; }
+    public int mainAchivGet24 { get; set; }
+    public int mainAchivGet25 { get; set; }
+    public int mainAchivGet26 { get; set; }
+    public int mainAchivGet27 { get; set; }
+    public int mainAchivGet28 { get; set; }
+    public int mainAchivGet29 { get; set; }
     #endregion
 }
 public class CarsData
@@ -643,6 +669,26 @@ public class CarsData
     public double car_price_47 { get; set; }
     public double car_price_48 { get; set; }
     public double car_price_49 { get; set; }
+    public double car_price_50 { get; set; }
+    public double car_price_51 { get; set; }
+    public double car_price_52 { get; set; }
+    public double car_price_53 { get; set; }
+    public double car_price_54 { get; set; }
+    public double car_price_55 { get; set; }
+    public double car_price_56 { get; set; }
+    public double car_price_57 { get; set; }
+    public double car_price_58 { get; set; }
+    public double car_price_59 { get; set; }
+    public double car_price_60 { get; set; }
+    public double car_price_61 { get; set; }
+    public double car_price_62 { get; set; }
+    public double car_price_63 { get; set; }
+    public double car_price_64 { get; set; }
+    public double car_price_65 { get; set; }
+    public double car_price_66 { get; set; }
+    public double car_price_67 { get; set; }
+    public double car_price_68 { get; set; }
+    public double car_price_69 { get; set; }
     #endregion
 }
 public class UserInfoData
@@ -653,6 +699,7 @@ public class UserInfoData
     public double coinTotal { get; set; }
     public double coin { get; set; }
     public double gem { get; set; }
+    public double offlineEarn { get; set; }
     public int Level { get; set; }
     public int Xp { get; set; }
     public int maxXp { get; set; }

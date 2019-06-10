@@ -54,7 +54,7 @@ public class CarItem : MonoBehaviour
                 imgCarInLockButton.sprite = controller.inActiveCarWithNumber[openlevel - 1];
             }
         }
-        if (i>47)
+        if (i>67)
         {
             imgCarInLockButton.gameObject.SetActive(false);
             imgLockinLock.transform.localPosition = new Vector3(0f, imgLockinLock.transform.localPosition.y, 0);

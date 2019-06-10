@@ -65,6 +65,7 @@ public class PlayerLevel : MonoBehaviour
                     ObscuredPrefs.SetInt("mainAchiv11", ObscuredPrefs.GetInt("Level", 1));
                     ObscuredPrefs.SetInt("mainAchiv12", ObscuredPrefs.GetInt("Level", 1));
                     ObscuredPrefs.SetInt("mainAchiv13", ObscuredPrefs.GetInt("Level", 1));
+                    ObscuredPrefs.SetInt("mainAchiv17", ObscuredPrefs.GetInt("Level", 1));
                     controller.achivmentManager.CheckAchivments();
                     CheckLevel(ObscuredPrefs.GetInt("Level", 1), true);
                     float slider = (nowXp + xptrailer) / float.Parse(levelsInfo[ObscuredPrefs.GetInt("Level", 1) - 1].maxXp.ToString());
@@ -99,6 +100,7 @@ public class PlayerLevel : MonoBehaviour
                     ObscuredPrefs.SetInt("mainAchiv11", ObscuredPrefs.GetInt("Level", 1));
                     ObscuredPrefs.SetInt("mainAchiv12", ObscuredPrefs.GetInt("Level", 1));
                     ObscuredPrefs.SetInt("mainAchiv13", ObscuredPrefs.GetInt("Level", 1));
+                    ObscuredPrefs.SetInt("mainAchiv17", ObscuredPrefs.GetInt("Level", 1));
                     controller.achivmentManager.CheckAchivments();
                     CheckLevel(ObscuredPrefs.GetInt("Level", 1), true);
                 }
