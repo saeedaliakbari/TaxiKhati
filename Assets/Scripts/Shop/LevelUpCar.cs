@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class LevelUpCar : MonoBehaviour
 {
     public Controller controller;
+    public GameObject[] objParticle;
     public Text txtGem;
     [HideInInspector]
     public int price = 0;
@@ -13,7 +14,7 @@ public class LevelUpCar : MonoBehaviour
     //public ParkingPlace parkPlace = null;
     public void btnClose()
     {
-        controller.SpawnBoxLevelUpCar(controller.videoAds.indexOld, controller.parkingManager.GetEmptyPlace(), 2, 3f);
+        StartCoroutine(controller.SpawnBoxLevelUpCar(controller.videoAds.indexOld, controller.parkingManager.GetEmptyPlace(), 2, 3f));
         controller.videoAds.panelTaxiUpVideo.SetActive(false);
     }
     public void buyWithGem()
@@ -30,6 +31,21 @@ public class LevelUpCar : MonoBehaviour
         {
             controller.panelMessage.SetActive(true);
             controller.txtPanelMessage.text = "مقدار کافی الماس ندارید";
+            DiableParitcle();
+        }
+    }
+    private void DiableParitcle()
+    {
+        for (int i = 0; i < objParticle.Length; i++)
+        {
+            objParticle[i].SetActive(false);
+        }
+    }
+    public void EnableParticle()
+    {
+        for (int i = 0; i < objParticle.Length; i++)
+        {
+            objParticle[i].SetActive(true);
         }
     }
 }

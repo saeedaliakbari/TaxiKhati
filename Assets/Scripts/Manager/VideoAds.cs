@@ -245,13 +245,14 @@ public class VideoAds : MonoBehaviour
     }
     private void GiftCarUp(bool status)
     {
+        //Debug.Log("Gift Car Up oldindex: " + controller.videoAds.indexOld + " new index:" + controller.videoAds.indexNew + " >>>status:" + status);
         if (status)
         {
-            controller.SpawnBoxLevelUpCar(controller.videoAds.indexNew, controller.parkingManager.GetEmptyPlace(), 2, 3f);
+            StartCoroutine(controller.SpawnBoxLevelUpCar(controller.videoAds.indexNew, controller.parkingManager.GetEmptyPlace(), 2, 3f));
         }
         else
         {
-            controller.SpawnBoxLevelUpCar(controller.videoAds.indexOld, controller.parkingManager.GetEmptyPlace(), 2, 3f);
+            StartCoroutine(controller.SpawnBoxLevelUpCar(controller.videoAds.indexOld, controller.parkingManager.GetEmptyPlace(), 2, 3f));
         }
         controller.parkingManager.EnableCarInPark();
         panelTaxiUpVideo.SetActive(false);
